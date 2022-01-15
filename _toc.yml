@@ -7,3 +7,6 @@ chapters:
 - file: markdown
 - file: notebooks
 - file: mymarkdownfile
+- file: workflow
+- file: distribution-parallel
+- file: reproducibility
