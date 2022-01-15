@@ -27,4 +27,13 @@ conda installl -c conda-forge jupyter-book
 jb --help
 jb create mybookname
 jb build mybookname
+
+
+git clone https://github.com/mikenguyen13/mlpy
+
+pip install ghp-import
+ghp-import -n -p -f _build/html/
 ```
+ghp-import pushes collections of HTMLL files onto the "gh-pages" braanch of a GitHub repo
+
+push only the ghp page to GitHub 
