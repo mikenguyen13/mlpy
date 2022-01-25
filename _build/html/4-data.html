@@ -1,0 +1,494 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data &#8212; Machine Learning in Python</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://mikenguyen13.github.io/mlpy/4-data.html" />
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Workflow" href="4-workflow.html" />
+    <link rel="prev" title="Here’s my title" href="3-mymarkdownfile.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Machine Learning in Python</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Welcome to your Jupyter Book
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="1-markdown.html">
+   Markdown Files
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2-notebooks.html">
+   Content with notebooks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="3-mymarkdownfile.html">
+   Here’s my title
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="4-workflow.html">
+   Workflow
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="5-distribution-parallel.html">
+   Distributed
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="6-reproducibility.html">
+   Reproducibility
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="7-bigdatacloud.html">
+   Big Data
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/4-data.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/mikenguyen13/mlpy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/mikenguyen13/mlpy/issues/new?title=Issue%20on%20page%20%2F4-data.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/mikenguyen13/mlpy/edit/main/4-data.md"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tiledb">
+   TileDB
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#submodular-optimization-for-minimizing-redundancy-in-massive-datasets">
+   Submodular Optimization for Minimizing Redundancy in Massive DataSets
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#feature-based-function">
+     Feature-based Function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#graph-based-function">
+     Graph-based Function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#summary">
+     Summary
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Data</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tiledb">
+   TileDB
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#submodular-optimization-for-minimizing-redundancy-in-massive-datasets">
+   Submodular Optimization for Minimizing Redundancy in Massive DataSets
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#feature-based-function">
+     Feature-based Function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#graph-based-function">
+     Graph-based Function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#summary">
+     Summary
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="data">
+<h1>Data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h1>
+<p>Services to check the quality of your data:</p>
+<ul class="simple">
+<li><p>Azure Purview</p></li>
+<li><p>Collibra</p></li>
+<li><p>Profisee</p></li>
+<li><p>Apache Griffin</p></li>
+<li><p>Apache Atlas</p></li>
+<li><p>admunsen</p></li>
+</ul>
+<p>Data Storage</p>
+<ul class="simple">
+<li><p>PostgreSQL</p></li>
+</ul>
+<br>
+<div class="section" id="tiledb">
+<h2>TileDB<a class="headerlink" href="#tiledb" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=aWWJlDA42aE">Data Economics</a></p>
+<ul class="simple">
+<li><p>Production: How the data is produced, and stored?</p></li>
+<li><p>Distribution: Who has access to the data? and by which channel?</p></li>
+<li><p>Consumption: How to consume the data (i.e., computation).</p>
+<ul>
+<li><p>Usually the focus</p></li>
+<li><p>But usually domain-specific</p></li>
+</ul>
+</li>
+</ul>
+<p>Solution:</p>
+<ul class="simple">
+<li><p>Data in a universal analysis-ready format</p>
+<ul>
+<li><p>No ETL, no copies</p></li>
+<li><p>Unified governance</p></li>
+<li><p>Built-in marketplace</p></li>
+</ul>
+</li>
+<li><p>Universal data management platform</p>
+<ul>
+<li><p>One infrastructure, any backend, any scale</p></li>
+<li><p>Common for all data app</p></li>
+</ul>
+</li>
+</ul>
+<p>TileDB is likely be your solution</p>
+<ul class="simple">
+<li><p>MultiDimensional arrays</p></li>
+<li><p>secure governance &amp; collaboration</p></li>
+<li><p>Scalable, serverless compute</p></li>
+<li><p>ta and code sharing and monetization</p></li>
+<li><p>Pay-as-you-go, consumer pays</p></li>
+</ul>
+</div>
+<div class="section" id="submodular-optimization-for-minimizing-redundancy-in-massive-datasets">
+<h2><a class="reference external" href="https://www.youtube.com/watch?v=vJ3ErkmUpLU">Submodular Optimization for Minimizing Redundancy in Massive DataSets</a><a class="headerlink" href="#submodular-optimization-for-minimizing-redundancy-in-massive-datasets" title="Permalink to this headline">¶</a></h2>
+<p>Increases in size mean increases in redundancy:</p>
+<ul class="simple">
+<li><p>Duplicates</p>
+<ul>
+<li><p>in training sets can waste computational resources</p></li>
+<li><p>between training and test sets can cause overly optimistic estimates of performance</p></li>
+</ul>
+</li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+f(X \cup \{v\}) - f(X) \ge f(Y \cup \{v\}) - f(Y)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(X \in Y\)</span> and <span class="math notranslate nohighlight">\(v \notin Y\)</span></p>
+<ul class="simple">
+<li><p>Diminishing returns property: the gain from adding in some specific element <span class="math notranslate nohighlight">\(v\)</span> to <span class="math notranslate nohighlight">\(X\)</span> decreases, or stays the same, as other elements are added to <span class="math notranslate nohighlight">\(X\)</span></p></li>
+<li><p>These functions don’t require <strong>continuous</strong> or <strong>differentiable</strong></p></li>
+<li><p>It’s been shown that greedy algorithm will find a subset within a constant factor of <span class="math notranslate nohighlight">\(1-e^{-1}\)</span> of the optimal subset, and empirical results show that the subset if almost always much closer</p></li>
+</ul>
+<div class="section" id="feature-based-function">
+<h3>Feature-based Function<a class="headerlink" href="#feature-based-function" title="Permalink to this headline">¶</a></h3>
+<p>A simple class of submodular function are feature-based functions</p>
+<div class="math notranslate nohighlight">
+\[
+f(X) = \sum_{d=1}^D \phi ( \sum_{x \in X} x_d)
+\]</div>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{X}\)</span> is the set of selected examples,</p></li>
+<li><p><span class="math notranslate nohighlight">\(x\)</span> is an individual example</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{D}\)</span> is the number of dimensions</p></li>
+<li><p><span class="math notranslate nohighlight">\(d\)</span> is the index of a particular dimension</p></li>
+<li><p><span class="math notranslate nohighlight">\(\phi\)</span> is a concave function (e..g, sqrt or log)</p></li>
+</ul>
+</div>
+<div class="section" id="graph-based-function">
+<h3>Graph-based Function<a class="headerlink" href="#graph-based-function" title="Permalink to this headline">¶</a></h3>
+<p>Facility location is another submodular function, and has been used to specify the location of new facilitate</p>
+<div class="math notranslate nohighlight">
+\[
+f(X) = \sum_{y \in Y} \max_{x\in X} \phi (x,y)
+\]</div>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{Y}\)</span> is the full set of items</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{X}\)</span> is the set of selected items,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\phi\)</span> is a similarity function that returns the similarity between 2 examples (i.e., a graph)</p></li>
+<li><p><span class="math notranslate nohighlight">\(y, x\)</span> are individual examples</p></li>
+</ul>
+</div>
+<div class="section" id="summary">
+<h3>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h3>
+<p>It’s important to choose the right sumodular function</p>
+<ol class="simple">
+<li><p>[Feature-based functions][Feature-based Function]hen each feature is a “quality of the data,” they work well. A higher value means more of that quality in the data (i.e., word counts work well, pixel values do not)</p></li>
+<li><p>[Graph-based Function] (e.g., facility location)can be used in a wide range of situations, but they need quadratic memory to store the similarity matrix, which takes up a lot of space.</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">apricot</span></code> plays nice with <code class="docutils literal notranslate"><span class="pre">PyTorch</span></code> or <code class="docutils literal notranslate"><span class="pre">TensorFlow</span></code></p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="3-mymarkdownfile.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Here’s my title</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="4-workflow.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Workflow</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Mike Nguyen<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
