@@ -54,7 +54,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Distributed" href="5-distribution-parallel.html" />
-    <link rel="prev" title="Here’s my title" href="3-mymarkdownfile.html" />
+    <link rel="prev" title="Data" href="4-data.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -112,6 +112,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="3-mymarkdownfile.html">
    Here’s my title
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="4-data.html">
+   Data
   </a>
  </li>
  <li class="toctree-l1 current active">
@@ -218,6 +223,34 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#agile-data-science">
+   Agile Data Science
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hydra-hydrazen">
+   Hydra &amp; hydrazen
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ray">
+   Ray
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#snowflake-and-tecton">
+   Snowflake and Tecton
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -230,6 +263,34 @@
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#agile-data-science">
+   Agile Data Science
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hydra-hydrazen">
+   Hydra &amp; hydrazen
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ray">
+   Ray
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#snowflake-and-tecton">
+   Snowflake and Tecton
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -329,6 +390,104 @@
 </ul>
 </li>
 </ul>
+<div class="section" id="agile-data-science">
+<h2>Agile Data Science<a class="headerlink" href="#agile-data-science" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Agile is a work management technique that uses time-limited iterations to complete tasks.</p></li>
+<li><p>Sprint: 1-4 week cycle delivering working increment (i.e., output that can be tested).</p></li>
+<li><p>Story: single unit of work completed within a sprint</p></li>
+<li><p>Epic: collection of related stories</p></li>
+</ul>
+</div>
+<div class="section" id="hydra-hydrazen">
+<h2>Hydra &amp; hydrazen<a class="headerlink" href="#hydra-hydrazen" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Standardize the process of designing your project</p></li>
+<li><p>Make your project configurable</p>
+<ul>
+<li><p>Configure deeply-nested parameters</p></li>
+<li><p>Change algorithms and models robustly</p></li>
+</ul>
+</li>
+<li><p>Make your code reproducible (leave breadcrumb)</p></li>
+<li><p>Enable <strong>scalable</strong> workflow</p></li>
+</ul>
+<p>Can be used for creating games</p>
+</div>
+<div class="section" id="ray">
+<h2><a class="reference external" href="https://www.youtube.com/watch?v=wl4tvru9_Cg&amp;ab_channel=PyData">Ray</a><a class="headerlink" href="#ray" title="Permalink to this headline">¶</a></h2>
+<p>Overall: Kubeflow or Apache Airflow</p>
+<ol class="simple">
+<li><p>Preprocess: Spark or Dask</p></li>
+<li><p>Checkpoint: HDF5, S3</p></li>
+<li><p>Train: XGBoost</p></li>
+</ol>
+<p>Challenges:</p>
+<ul class="simple">
+<li><p>Performance overheads</p>
+<ul>
+<li><p>Serialization/Deserialization</p></li>
+<li><p>data materialized to external storage</p></li>
+</ul>
+</li>
+<li><p>Implementation/Operinal compelxity</p>
+<ul>
+<li><p>Croos-lang, cross-workload</p></li>
+<li><p>CPUs vs. GPUs</p></li>
+</ul>
+</li>
+<li><p>Misisng opreations</p>
+<ul>
+<li><p>Per-epoch shuffling</p></li>
+</ul>
+</li>
+</ul>
+<p>Why Ray?</p>
+<ul class="simple">
+<li><p>Efficient data layer</p>
+<ul>
+<li><p>Zero-copy reads, shared -memory ojbect sotre</p></li>
+<li><p>Locality-aware cheduling</p></li>
+<li><p>Object transfer protocosl</p></li>
+</ul>
+</li>
+<li><p>General purpose</p>
+<ul>
+<li><p>Resoruce-based scheudling</p></li>
+<li><p>Higly scalable</p></li>
+<li><p>Robust primtives</p></li>
+<li><p>Easy to program distirubted programs</p></li>
+</ul>
+</li>
+</ul>
+<p>Ray Datasets (not a dataframe library)</p>
+<ol class="simple">
+<li><p>Universal Data loading</p></li>
+<li><p>Last Mile Preprocessing</p></li>
+<li><p>Parallel GPU/CPU Compute</p></li>
+</ol>
+<p>Universal Data Loader</p>
+<ul class="simple">
+<li><p>HDF5</p></li>
+<li><p>S3</p></li>
+<li><p>Spark</p></li>
+<li><p>Dask</p></li>
+<li><p>Modin</p></li>
+</ul>
+<p>powered by Apache Arrow</p>
+</div>
+<div class="section" id="snowflake-and-tecton">
+<h2><a class="reference external" href="https://www.youtube.com/watch?v=tETMa7xStr4&amp;ab_channel=PyData">Snowflake and Tecton</a><a class="headerlink" href="#snowflake-and-tecton" title="Permalink to this headline">¶</a></h2>
+<p>production ML pipelines must:</p>
+<ul class="simple">
+<li><p>Transform raw data from batch, streaming (e.g., Kafka), and real-time (RPC) sources</p></li>
+<li><p>Serve data with point-in-time correctness for model training</p></li>
+<li><p>Serve data at low latency and high concurrency for model serving</p></li>
+<li><p>Ensure model training/serving parity</p></li>
+<li><p>Backfill streaming and real-time features</p></li>
+</ul>
+<p>Snowflake and Tecton can fix these roadblocks.</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -356,11 +515,11 @@
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="3-mymarkdownfile.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="4-data.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Here’s my title</p>
+            <p class="prev-next-title">Data</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="5-distribution-parallel.html" title="next page">

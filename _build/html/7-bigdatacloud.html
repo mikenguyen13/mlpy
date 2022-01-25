@@ -114,6 +114,11 @@
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="4-data.html">
+   Data
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="4-workflow.html">
    Workflow
   </a>
@@ -217,6 +222,24 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Big Data
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#high-performance-python">
+   High Performance Python
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -229,6 +252,24 @@
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Big Data
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#high-performance-python">
+   High Performance Python
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -241,6 +282,40 @@
 We then can use only zarr to access the data in the form of HDF5, TIFF or grib2.
 For documentation: <a class="reference external" href="https://github.com/fsspec/kerchunk">check</a>
 For example, <a class="reference external" href="https://nbviewer.org/gist/rsignell-usgs/02da7d9257b4b26d84d053be1af2ceeb">check</a></p>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="high-performance-python">
+<h1>High Performance Python<a class="headerlink" href="#high-performance-python" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>numba instead of numpy (just in time)  using C++ and Fortran</p></li>
+<li><p>rapid instead of pandas</p>
+<ul>
+<li><p>pandas -&gt; cudf</p></li>
+<li><p>numpy -&gt; cupy</p></li>
+<li><p>scikit-learn -&gt; cuml</p></li>
+</ul>
+</li>
+<li><p>Memory error: Read book High performance Python: practical performance programming for humans</p>
+<ul>
+<li><p>Use DASK (recommended), also Pysparak is similar. will be compatible with <code class="docutils literal notranslate"><span class="pre">afar</span></code> (Dask cluster)</p></li>
+</ul>
+</li>
+</ul>
+<p>Deploy Rapids Client</p>
+<ul class="simple">
+<li><p>Local machine (with GPU)</p></li>
+<li><p>AWS Sagemaker</p></li>
+<li><p>Google Cloud vertex AI</p></li>
+<li><p>Azure Machine Learning</p></li>
+</ul>
+<p>Deploy Dask Cluster</p>
+<ul class="simple">
+<li><p>Manual Installation</p></li>
+<li><p>Dask-cloudprovider</p></li>
+<li><p>Dask Kubernetes</p></li>
+<li><p>Coiled</p></li>
+<li><p>Saturn Cloud</p></li>
+<li><p>Google Cloud Dataproc</p></li>
+</ul>
 </div>
 
     <script type="text/x-thebe-config">

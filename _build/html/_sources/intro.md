@@ -38,7 +38,7 @@ git clone https://github.com/mikenguyen13/mlpy
 
 then to push to github, make sure you are inside the `mybookname` folder using `cd mybookname`. Then, 
 
-```
+```{bash}
 pip install ghp-import
 ghp-import -n -p -f _build/html/
 ```

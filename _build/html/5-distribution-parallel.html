@@ -115,6 +115,11 @@
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="4-data.html">
+   Data
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="4-workflow.html">
    Workflow
   </a>
@@ -218,6 +223,19 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dask-using-saturn-cloud-https-www-youtube-com-watch-v-g303arawsoe">
+   Dask Using Saturn Cloud [https://www.youtube.com/watch?v=G303aRAwsoE]
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -230,6 +248,19 @@
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dask-using-saturn-cloud-https-www-youtube-com-watch-v-g303arawsoe">
+   Dask Using Saturn Cloud [https://www.youtube.com/watch?v=G303aRAwsoE]
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -262,6 +293,49 @@
 </li>
 <li><p>Workflow orchestration</p></li>
 </ul>
+<div class="section" id="dask-using-saturn-cloud-https-www-youtube-com-watch-v-g303arawsoe">
+<h2>Dask Using Saturn Cloud [<a class="reference external" href="https://www.youtube.com/watch?v=G303aRAwsoE">https://www.youtube.com/watch?v=G303aRAwsoE</a>]<a class="headerlink" href="#dask-using-saturn-cloud-https-www-youtube-com-watch-v-g303arawsoe" title="Permalink to this headline">¶</a></h2>
+<p>Parallel computing</p>
+<ul class="simple">
+<li><p>Python is friendly but not fast</p></li>
+<li><p>cant utilize multithreading (due to Global Interpreter Lock)</p></li>
+<li><p>enable distribution of work across multiple cores and machines</p></li>
+<li><p>allows us to</p>
+<ul>
+<li><p>train models faster</p></li>
+<li><p>tune hyper parameters</p></li>
+<li><p>feature engineer</p></li>
+</ul>
+</li>
+</ul>
+<p>Dask</p>
+<ul class="simple">
+<li><p>free</p></li>
+<li><p>in python</p></li>
+<li><p>great computing speed</p></li>
+</ul>
+<p>User Interfaces</p>
+<ul class="simple">
+<li><p>High-level: scalable venison of NumPy, Pandas</p>
+<ul>
+<li><p>same syntax, but computation is faster</p></li>
+</ul>
+</li>
+<li><p>Low level: parallelized custom algorithm</p></li>
+</ul>
+<p>Dask Terminologies</p>
+<ul class="simple">
+<li><p>Dask Dataframe is a collection of smaller pandas dataframes that are distributed across your cluster (Dask Dataframe only reads smaller chunk of lines).</p></li>
+<li><p>Dask Array: mimic the functionality of NumPy arrays using a distributed backend.</p></li>
+<li><p>Dask Bags:</p>
+<ul>
+<li><p>Used for taking a collection of Python objects and processing them in parallel</p></li>
+<li><p>Parallelized simple computations on unstructured or semi-structured data</p></li>
+<li><p>then handing off to Dask Dataframes</p></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

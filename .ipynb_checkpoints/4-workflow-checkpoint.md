@@ -68,3 +68,24 @@ Argo Workflows
 	* Server: REST & GRPC interfaces
 	* UI: manage and visualize workflows, artifacts, logs, resource usages analytic, etc.
 	* Python and Java SDKS
+    
+## Agile Data Science
+
+ * Agile is a work management technique that uses time-limited iterations to complete tasks.
+ * Sprint: 1-4 week cycle delivering working increment (i.e., output that can be tested). 
+ * Story: single unit of work completed within a sprint 
+ * Epic: collection of related stories 
+ 
+ 
+
+## Hydra & hydrazen
+
+ * Standardize the process of designing your project 
+ * Make your project configurable 
+     * Configure deeply-nested parameters 
+     * Change algorithms and models robustly 
+ * Make your code reproducible (leave breadcrumb)
+ * Enable **scalable** workflow
+
+Can be used for creating games 
+
