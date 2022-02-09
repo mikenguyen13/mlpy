@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Workflow &#8212; Machine Learning in Python</title>
+    <title>Data &#8212; Machine Learning in Python</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -42,6 +42,8 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -49,12 +51,12 @@
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <link rel="canonical" href="https://mikenguyen13.github.io/mlpy/4-workflow.html" />
+    <link rel="canonical" href="https://mikenguyen13.github.io/mlpy/4-data.html" />
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Distributed" href="5-distribution-parallel.html" />
-    <link rel="prev" title="Data" href="4-data.html" />
+    <link rel="next" title="Workflow" href="4-workflow.html" />
+    <link rel="prev" title="Here’s my title" href="3-mymarkdownfile.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -114,13 +116,13 @@
    Here’s my title
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="4-data.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Data
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="4-workflow.html">
    Workflow
   </a>
  </li>
@@ -180,7 +182,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/4-workflow.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/4-data.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -200,10 +202,10 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/mikenguyen13/mlpy/issues/new?title=Issue%20on%20page%20%2F4-workflow.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/mikenguyen13/mlpy/issues/new?title=Issue%20on%20page%20%2F4-data.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/mikenguyen13/mlpy/edit/main/4-workflow.md"><button
+        <a class="edit-button" href="https://github.com/mikenguyen13/mlpy/edit/main/4-data.md"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -229,31 +231,31 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#agile-data-science">
-   Agile Data Science
+  <a class="reference internal nav-link" href="#tiledb">
+   TileDB
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#hydra-hydrazen">
-   Hydra &amp; hydrazen
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ray">
-   Ray
+  <a class="reference internal nav-link" href="#submodular-optimization-for-minimizing-redundancy-in-massive-datasets">
+   Submodular Optimization for Minimizing Redundancy in Massive DataSets
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ray-tune">
-     Ray Tune
+    <a class="reference internal nav-link" href="#feature-based-function">
+     Feature-based Function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#graph-based-function">
+     Graph-based Function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#summary">
+     Summary
     </a>
    </li>
   </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#snowflake-and-tecton">
-   Snowflake and Tecton
-  </a>
  </li>
 </ul>
 
@@ -265,7 +267,7 @@
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Workflow</h1>
+                <h1>Data</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -276,31 +278,31 @@
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#agile-data-science">
-   Agile Data Science
+  <a class="reference internal nav-link" href="#tiledb">
+   TileDB
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#hydra-hydrazen">
-   Hydra &amp; hydrazen
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ray">
-   Ray
+  <a class="reference internal nav-link" href="#submodular-optimization-for-minimizing-redundancy-in-massive-datasets">
+   Submodular Optimization for Minimizing Redundancy in Massive DataSets
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ray-tune">
-     Ray Tune
+    <a class="reference internal nav-link" href="#feature-based-function">
+     Feature-based Function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#graph-based-function">
+     Graph-based Function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#summary">
+     Summary
     </a>
    </li>
   </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#snowflake-and-tecton">
-   Snowflake and Tecton
-  </a>
  </li>
 </ul>
 
@@ -311,266 +313,121 @@
             
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="workflow">
-<h1>Workflow<a class="headerlink" href="#workflow" title="Permalink to this headline">¶</a></h1>
-<p>Workflow management:</p>
+  <div class="tex2jax_ignore mathjax_ignore section" id="data">
+<h1>Data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h1>
+<p>Services to check the quality of your data:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://github.com/kubeflow/pipelines/">https://github.com/kubeflow/pipelines/</a></p></li>
-<li><p><a class="reference external" href="https://github.com/couler-proj/couler">https://github.com/couler-proj/couler</a></p></li>
-<li><p><a class="reference external" href="https://github.com/argoproj/argo-workflows/tree/master/sdks/python">https://github.com/argoproj/argo-workflows/tree/master/sdks/python</a></p></li>
+<li><p>Azure Purview</p></li>
+<li><p>Collibra</p></li>
+<li><p>Profisee</p></li>
+<li><p>Apache Griffin</p></li>
+<li><p>Apache Atlas</p></li>
+<li><p>admunsen</p></li>
 </ul>
-<p>Reality of AI workloads</p>
+<p>Data Storage</p>
 <ul class="simple">
-<li><p>Data ingestion</p></li>
-<li><p>Concept drift monitoring</p></li>
-<li><p>Data Drift monitoring</p></li>
-<li><p>Feature storage</p></li>
-<li><p>Retraining</p></li>
-<li><p>Workload upgrades</p></li>
-<li><p>Building a model</p></li>
-<li><p>Resource scaling</p></li>
-<li><p>Security</p></li>
-<li><p>Model versioning</p></li>
-<li><p>Pipeline Monitoring</p></li>
-<li><p>A/B testing traffic routing</p></li>
-<li><p>Model API serving</p></li>
-<li><p>Accuracy Tracking</p></li>
-<li><p>Maintenance</p></li>
+<li><p>PostgreSQL</p></li>
 </ul>
-<p>Programs for enterprise ML platform</p>
+<br>
+<div class="section" id="tiledb">
+<h2>TileDB<a class="headerlink" href="#tiledb" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=aWWJlDA42aE">Data Economics</a></p>
 <ul class="simple">
-<li><p>Snowflake (all-in-one) to store both structured and unstructured data</p></li>
-<li><p>SaturnCloud: data science cloud environment.</p></li>
+<li><p>Production: How the data is produced, and stored?</p></li>
+<li><p>Distribution: Who has access to the data? and by which channel?</p></li>
+<li><p>Consumption: How to consume the data (i.e., computation).</p>
+<ul>
+<li><p>Usually the focus</p></li>
+<li><p>But usually domain-specific</p></li>
 </ul>
-<p>ML Life Cycle</p>
+</li>
+</ul>
+<p>Solution:</p>
+<ul class="simple">
+<li><p>Data in a universal analysis-ready format</p>
+<ul>
+<li><p>No ETL, no copies</p></li>
+<li><p>Unified governance</p></li>
+<li><p>Built-in marketplace</p></li>
+</ul>
+</li>
+<li><p>Universal data management platform</p>
+<ul>
+<li><p>One infrastructure, any backend, any scale</p></li>
+<li><p>Common for all data app</p></li>
+</ul>
+</li>
+</ul>
+<p>TileDB is likely be your solution</p>
+<ul class="simple">
+<li><p>MultiDimensional arrays</p></li>
+<li><p>secure governance &amp; collaboration</p></li>
+<li><p>Scalable, serverless compute</p></li>
+<li><p>ta and code sharing and monetization</p></li>
+<li><p>Pay-as-you-go, consumer pays</p></li>
+</ul>
+</div>
+<div class="section" id="submodular-optimization-for-minimizing-redundancy-in-massive-datasets">
+<h2><a class="reference external" href="https://www.youtube.com/watch?v=vJ3ErkmUpLU">Submodular Optimization for Minimizing Redundancy in Massive DataSets</a><a class="headerlink" href="#submodular-optimization-for-minimizing-redundancy-in-massive-datasets" title="Permalink to this headline">¶</a></h2>
+<p>Increases in size mean increases in redundancy:</p>
+<ul class="simple">
+<li><p>Duplicates</p>
+<ul>
+<li><p>in training sets can waste computational resources</p></li>
+<li><p>between training and test sets can cause overly optimistic estimates of performance</p></li>
+</ul>
+</li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+f(X \cup \{v\}) - f(X) \ge f(Y \cup \{v\}) - f(Y)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(X \in Y\)</span> and <span class="math notranslate nohighlight">\(v \notin Y\)</span></p>
+<ul class="simple">
+<li><p>Diminishing returns property: the gain from adding in some specific element <span class="math notranslate nohighlight">\(v\)</span> to <span class="math notranslate nohighlight">\(X\)</span> decreases, or stays the same, as other elements are added to <span class="math notranslate nohighlight">\(X\)</span></p></li>
+<li><p>These functions don’t require <strong>continuous</strong> or <strong>differentiable</strong></p></li>
+<li><p>It’s been shown that greedy algorithm will find a subset within a constant factor of <span class="math notranslate nohighlight">\(1-e^{-1}\)</span> of the optimal subset, and empirical results show that the subset if almost always much closer</p></li>
+</ul>
+<div class="section" id="feature-based-function">
+<h3>Feature-based Function<a class="headerlink" href="#feature-based-function" title="Permalink to this headline">¶</a></h3>
+<p>A simple class of submodular function are feature-based functions</p>
+<div class="math notranslate nohighlight">
+\[
+f(X) = \sum_{d=1}^D \phi ( \sum_{x \in X} x_d)
+\]</div>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{X}\)</span> is the set of selected examples,</p></li>
+<li><p><span class="math notranslate nohighlight">\(x\)</span> is an individual example</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{D}\)</span> is the number of dimensions</p></li>
+<li><p><span class="math notranslate nohighlight">\(d\)</span> is the index of a particular dimension</p></li>
+<li><p><span class="math notranslate nohighlight">\(\phi\)</span> is a concave function (e..g, sqrt or log)</p></li>
+</ul>
+</div>
+<div class="section" id="graph-based-function">
+<h3>Graph-based Function<a class="headerlink" href="#graph-based-function" title="Permalink to this headline">¶</a></h3>
+<p>Facility location is another submodular function, and has been used to specify the location of new facilitate</p>
+<div class="math notranslate nohighlight">
+\[
+f(X) = \sum_{y \in Y} \max_{x\in X} \phi (x,y)
+\]</div>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{Y}\)</span> is the full set of items</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{X}\)</span> is the set of selected items,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\phi\)</span> is a similarity function that returns the similarity between 2 examples (i.e., a graph)</p></li>
+<li><p><span class="math notranslate nohighlight">\(y, x\)</span> are individual examples</p></li>
+</ul>
+</div>
+<div class="section" id="summary">
+<h3>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h3>
+<p>It’s important to choose the right sumodular function</p>
 <ol class="simple">
-<li><p>Raw data</p>
-<ul class="simple">
-<li><p>File</p></li>
-<li><p>Batch</p></li>
-<li><p>Streaming</p></li>
-</ul>
-</li>
-<li><p>Data Prep</p>
-<ul class="simple">
-<li><p>Data preprocessing</p></li>
-<li><p>Feature engineering</p></li>
-<li><p>Data transformation</p></li>
-</ul>
-</li>
-<li><p>Training</p>
-<ul class="simple">
-<li><p>Multiple algorithm s</p></li>
-<li><p>Hyperparameter</p></li>
-<li><p>Model comparison</p></li>
-<li><p>Model evaluation</p></li>
-</ul>
-</li>
-<li><p>Deploy</p>
-<ul class="simple">
-<li><p>Integration</p></li>
-<li><p>Monitoring</p></li>
-</ul>
-</li>
+<li><p>[Feature-based functions][Feature-based Function]hen each feature is a “quality of the data,” they work well. A higher value means more of that quality in the data (i.e., word counts work well, pixel values do not)</p></li>
+<li><p>[Graph-based Function] (e.g., facility location)can be used in a wide range of situations, but they need quadratic memory to store the similarity matrix, which takes up a lot of space.</p></li>
 </ol>
-<p>Argo Project : a a set of Kubernetes-native tools for deploying and running apps, managing clusters, and do GitOps right</p>
-<ul class="simple">
-<li><p>Argo Workflows: Kubernetes-native workflow engine</p></li>
-<li><p>Argo Events: Event-based dependency management for Kubernetes</p></li>
-<li><p>Argo CD: Declarative continuous delivery with a fully-loaded UI</p></li>
-<li><p>Argo Rollouts: Advanced K8s progressive deployment strategies</p></li>
-</ul>
-<p>Argo Workflows</p>
-<ul class="simple">
-<li><p>The container-native workflow engine for Kubernetes</p>
-<ul>
-<li><p>ML pipelines</p></li>
-<li><p>Data processing</p></li>
-<li><p>Infrastructure automation</p></li>
-<li><p>continuous delivery/Integration</p></li>
-</ul>
-</li>
-<li><p>CRDS and Controllers</p>
-<ul>
-<li><p>Kubernetes custom resources that natively integrates with other K8s resources (volumes, secrets, etc.)</p></li>
-</ul>
-</li>
-<li><p>Interfaces</p>
-<ul>
-<li><p>CLI: manage workflows and perform operations (submit, suspend, delete/etc.)</p></li>
-<li><p>Server: REST &amp; GRPC interfaces</p></li>
-<li><p>UI: manage and visualize workflows, artifacts, logs, resource usages analytic, etc.</p></li>
-<li><p>Python and Java SDKS</p></li>
-</ul>
-</li>
-</ul>
-<div class="section" id="agile-data-science">
-<h2>Agile Data Science<a class="headerlink" href="#agile-data-science" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>Agile is a work management technique that uses time-limited iterations to complete tasks.</p></li>
-<li><p>Sprint: 1-4 week cycle delivering working increment (i.e., output that can be tested).</p></li>
-<li><p>Story: single unit of work completed within a sprint</p></li>
-<li><p>Epic: collection of related stories</p></li>
-</ul>
+<p><code class="docutils literal notranslate"><span class="pre">apricot</span></code> plays nice with <code class="docutils literal notranslate"><span class="pre">PyTorch</span></code> or <code class="docutils literal notranslate"><span class="pre">TensorFlow</span></code></p>
 </div>
-<div class="section" id="hydra-hydrazen">
-<h2>Hydra &amp; hydrazen<a class="headerlink" href="#hydra-hydrazen" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>Standardize the process of designing your project</p></li>
-<li><p>Make your project configurable</p>
-<ul>
-<li><p>Configure deeply-nested parameters</p></li>
-<li><p>Change algorithms and models robustly</p></li>
-</ul>
-</li>
-<li><p>Make your code reproducible (leave breadcrumb)</p></li>
-<li><p>Enable <strong>scalable</strong> workflow</p></li>
-</ul>
-<p>Can be used for creating games</p>
-</div>
-<div class="section" id="ray">
-<h2><a class="reference external" href="https://www.youtube.com/watch?v=wl4tvru9_Cg&amp;ab_channel=PyData">Ray</a><a class="headerlink" href="#ray" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>RAY: simple and universal framework for distributed computing</p></li>
-<li><p>can be run on AWS, Google Cloud, Azure, local machine.</p></li>
-<li><p>Ray has library and app ecosystem that cover all steps in a machine learning process:</p>
-<ul>
-<li><p>tune: Hyperparam tuning (has domain specific libraries)</p></li>
-<li><p>raysgd: training</p></li>
-<li><p>rllib: training + simulation</p></li>
-<li><p>Ray Serve: Model serving</p></li>
-</ul>
-</li>
-</ul>
-<p>Overall: Kubeflow or Apache Airflow</p>
-<ol class="simple">
-<li><p>Preprocess: Spark or Dask</p></li>
-<li><p>Checkpoint: HDF5, S3</p></li>
-<li><p>Train: XGBoost</p></li>
-</ol>
-<p>Challenges:</p>
-<ul class="simple">
-<li><p>Performance overheads</p>
-<ul>
-<li><p>Serialization/Deserialization</p></li>
-<li><p>data materialized to external storage</p></li>
-</ul>
-</li>
-<li><p>Implementation/Operational complexity</p>
-<ul>
-<li><p>Cross-lang, cross-workload</p></li>
-<li><p>CPUs vs. GPUs</p></li>
-</ul>
-</li>
-<li><p>Missing operations</p>
-<ul>
-<li><p>Per-epoch shuffling</p></li>
-</ul>
-</li>
-</ul>
-<p>Why Ray?</p>
-<ul class="simple">
-<li><p>Efficient data layer</p>
-<ul>
-<li><p>Zero-copy reads, shared -memory object store</p></li>
-<li><p>Locality-aware scheduling</p></li>
-<li><p>Object transfer protocol</p></li>
-</ul>
-</li>
-<li><p>General purpose</p>
-<ul>
-<li><p>Resource-based scheduling</p></li>
-<li><p>Highly scalable</p></li>
-<li><p>Robust primitives</p></li>
-<li><p>Easy to program distributed programs</p></li>
-</ul>
-</li>
-</ul>
-<p>Ray Datasets (not a dataframe library)</p>
-<ol class="simple">
-<li><p>Universal Data loading</p></li>
-<li><p>Last Mile Preprocessing</p></li>
-<li><p>Parallel GPU/CPU Compute</p></li>
-</ol>
-<p>Universal Data Loader</p>
-<ul class="simple">
-<li><p>HDF5</p></li>
-<li><p>S3</p></li>
-<li><p>Spark</p></li>
-<li><p>Dask</p></li>
-<li><p>Modin</p></li>
-</ul>
-<p>powered by Apache Arrow</p>
-<div class="section" id="ray-tune">
-<h3>Ray Tune<a class="headerlink" href="#ray-tune" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>Distributed Hyperparameter Optimization</p>
-<ul>
-<li><p>Provides efficient HPO algorithms</p></li>
-<li><p>Distributes and coordinates parallel trials</p></li>
-</ul>
-</li>
-</ul>
-<p>HPO Challenges:</p>
-<ul class="simple">
-<li><p>Time consuming</p></li>
-<li><p>Expensive Resource</p></li>
-</ul>
-<p>Ray Tune - distrusted HPO</p>
-<ul class="simple">
-<li><p>Efficient parallel algorithms for running trials</p></li>
-<li><p>Effective resource management</p></li>
-</ul>
-<p>Exhaustive vs. Random Search</p>
-<p>Bayesian Optimization with popular libraries:</p>
-<ul class="simple">
-<li><p>HyperOpt</p></li>
-<li><p>Optuna</p></li>
-<li><p>Scikit-Optimize</p></li>
-<li><p>Nevergrad</p></li>
-</ul>
-<p>Advanced Scheduling</p>
-<ul class="simple">
-<li><p>Early stopping</p></li>
-<li><p>Population-based Training</p></li>
-</ul>
-<p>Advanced Sampling</p>
-<ul class="simple">
-<li><p>BlendSearch</p></li>
-<li><p>Heteroskedastic Evolutionary Bayesian Optimization</p></li>
-<li><p>BOHB: combines BO with HyperBand</p></li>
-</ul>
-<p>Architecture requirements</p>
-<ul class="simple">
-<li><p>Control over when to</p>
-<ul>
-<li><p>start</p></li>
-<li><p>pause</p></li>
-<li><p>early stop</p></li>
-<li><p>restore</p></li>
-<li><p>mutate</p></li>
-</ul>
-</li>
-<li><p>Master-worker for decision making</p>
-<ul>
-<li><p>Sampler</p></li>
-<li><p>Scheduler</p></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="snowflake-and-tecton">
-<h2><a class="reference external" href="https://www.youtube.com/watch?v=tETMa7xStr4&amp;ab_channel=PyData">Snowflake and Tecton</a><a class="headerlink" href="#snowflake-and-tecton" title="Permalink to this headline">¶</a></h2>
-<p>production ML pipelines must:</p>
-<ul class="simple">
-<li><p>Transform raw data from batch, streaming (e.g., Kafka), and real-time (RPC) sources</p></li>
-<li><p>Serve data with point-in-time correctness for model training</p></li>
-<li><p>Serve data at low latency and high concurrency for model serving</p></li>
-<li><p>Ensure model training/serving parity</p></li>
-<li><p>Backfill streaming and real-time features</p></li>
-</ul>
-<p>Snowflake and Tecton can fix these roadblocks.</p>
 </div>
 </div>
 
@@ -599,17 +456,17 @@
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="4-data.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="3-mymarkdownfile.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Data</p>
+            <p class="prev-next-title">Here’s my title</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="5-distribution-parallel.html" title="next page">
+    <a class='right-next' id="next-link" href="4-workflow.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Distributed</p>
+        <p class="prev-next-title">Workflow</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
