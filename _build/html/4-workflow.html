@@ -242,6 +242,13 @@
   <a class="reference internal nav-link" href="#ray">
    Ray
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ray-tune">
+     Ray Tune
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#snowflake-and-tecton">
@@ -282,6 +289,13 @@
   <a class="reference internal nav-link" href="#ray">
    Ray
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ray-tune">
+     Ray Tune
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#snowflake-and-tecton">
@@ -416,6 +430,18 @@
 </div>
 <div class="section" id="ray">
 <h2><a class="reference external" href="https://www.youtube.com/watch?v=wl4tvru9_Cg&amp;ab_channel=PyData">Ray</a><a class="headerlink" href="#ray" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>RAY: simple and universal framework for distributed computing</p></li>
+<li><p>can be run on AWS, Google Cloud, Azure, local machine.</p></li>
+<li><p>Ray has library and app ecosystem that cover all steps in a machine learning process:</p>
+<ul>
+<li><p>tune: Hyperparam tuning (has domain specific libraries)</p></li>
+<li><p>raysgd: training</p></li>
+<li><p>rllib: training + simulation</p></li>
+<li><p>Ray Serve: Model serving</p></li>
+</ul>
+</li>
+</ul>
 <p>Overall: Kubeflow or Apache Airflow</p>
 <ol class="simple">
 <li><p>Preprocess: Spark or Dask</p></li>
@@ -430,13 +456,13 @@
 <li><p>data materialized to external storage</p></li>
 </ul>
 </li>
-<li><p>Implementation/Operinal compelxity</p>
+<li><p>Implementation/Operational complexity</p>
 <ul>
-<li><p>Croos-lang, cross-workload</p></li>
+<li><p>Cross-lang, cross-workload</p></li>
 <li><p>CPUs vs. GPUs</p></li>
 </ul>
 </li>
-<li><p>Misisng opreations</p>
+<li><p>Missing operations</p>
 <ul>
 <li><p>Per-epoch shuffling</p></li>
 </ul>
@@ -446,17 +472,17 @@
 <ul class="simple">
 <li><p>Efficient data layer</p>
 <ul>
-<li><p>Zero-copy reads, shared -memory ojbect sotre</p></li>
-<li><p>Locality-aware cheduling</p></li>
-<li><p>Object transfer protocosl</p></li>
+<li><p>Zero-copy reads, shared -memory object store</p></li>
+<li><p>Locality-aware scheduling</p></li>
+<li><p>Object transfer protocol</p></li>
 </ul>
 </li>
 <li><p>General purpose</p>
 <ul>
-<li><p>Resoruce-based scheudling</p></li>
-<li><p>Higly scalable</p></li>
-<li><p>Robust primtives</p></li>
-<li><p>Easy to program distirubted programs</p></li>
+<li><p>Resource-based scheduling</p></li>
+<li><p>Highly scalable</p></li>
+<li><p>Robust primitives</p></li>
+<li><p>Easy to program distributed programs</p></li>
 </ul>
 </li>
 </ul>
@@ -475,6 +501,64 @@
 <li><p>Modin</p></li>
 </ul>
 <p>powered by Apache Arrow</p>
+<div class="section" id="ray-tune">
+<h3>Ray Tune<a class="headerlink" href="#ray-tune" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Distributed Hyperparameter Optimization</p>
+<ul>
+<li><p>Provides efficient HPO algorithms</p></li>
+<li><p>Distributes and coordinates parallel trials</p></li>
+</ul>
+</li>
+</ul>
+<p>HPO Challenges:</p>
+<ul class="simple">
+<li><p>Time consuming</p></li>
+<li><p>Expensive Resource</p></li>
+</ul>
+<p>Ray Tune - distrusted HPO</p>
+<ul class="simple">
+<li><p>Efficient parallel algorithms for running trials</p></li>
+<li><p>Effective resource management</p></li>
+</ul>
+<p>Exhaustive vs. Random Search</p>
+<p>Bayesian Optimization with popular libraries:</p>
+<ul class="simple">
+<li><p>HyperOpt</p></li>
+<li><p>Optuna</p></li>
+<li><p>Scikit-Optimize</p></li>
+<li><p>Nevergrad</p></li>
+</ul>
+<p>Advanced Scheduling</p>
+<ul class="simple">
+<li><p>Early stopping</p></li>
+<li><p>Population-based Training</p></li>
+</ul>
+<p>Advanced Sampling</p>
+<ul class="simple">
+<li><p>BlendSearch</p></li>
+<li><p>Heteroskedastic Evolutionary Bayesian Optimization</p></li>
+<li><p>BOHB: combines BO with HyperBand</p></li>
+</ul>
+<p>Architecture requirements</p>
+<ul class="simple">
+<li><p>Control over when to</p>
+<ul>
+<li><p>start</p></li>
+<li><p>pause</p></li>
+<li><p>early stop</p></li>
+<li><p>restore</p></li>
+<li><p>mutate</p></li>
+</ul>
+</li>
+<li><p>Master-worker for decision making</p>
+<ul>
+<li><p>Sampler</p></li>
+<li><p>Scheduler</p></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 <div class="section" id="snowflake-and-tecton">
 <h2><a class="reference external" href="https://www.youtube.com/watch?v=tETMa7xStr4&amp;ab_channel=PyData">Snowflake and Tecton</a><a class="headerlink" href="#snowflake-and-tecton" title="Permalink to this headline">¶</a></h2>

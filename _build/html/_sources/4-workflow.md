@@ -91,6 +91,15 @@ Can be used for creating games
 
 ## [Ray](https://www.youtube.com/watch?v=wl4tvru9_Cg&ab_channel=PyData)
 
+ * RAY: simple and universal framework for distributed computing
+ * can be run on AWS, Google Cloud, Azure, local machine. 
+ * Ray has library and app ecosystem that cover all steps in a machine learning process:
+     * tune: Hyperparam tuning (has domain specific libraries)
+     * raysgd: training
+     * rllib: training + simulation
+     * Ray Serve: Model serving
+ 
+
 Overall: Kubeflow or Apache Airflow
  1. Preprocess: Spark or Dask 
  2. Checkpoint: HDF5, S3
@@ -100,23 +109,23 @@ Challenges:
  * Performance overheads
      * Serialization/Deserialization 
      * data materialized to external storage 
- * Implementation/Operinal compelxity 
-     * Croos-lang, cross-workload
+ * Implementation/Operational complexity 
+     * Cross-lang, cross-workload
      * CPUs vs. GPUs
- * Misisng opreations
+ * Missing operations
      * Per-epoch shuffling
 
 Why Ray?
 
  * Efficient data layer 
-     * Zero-copy reads, shared -memory ojbect sotre 
-     * Locality-aware cheduling 
-     * Object transfer protocosl 
+     * Zero-copy reads, shared -memory object store 
+     * Locality-aware scheduling 
+     * Object transfer protocol 
  * General purpose 
-     * Resoruce-based scheudling 
-     * Higly scalable 
-     * Robust primtives 
-     * Easy to program distirubted programs 
+     * Resource-based scheduling 
+     * Highly scalable 
+     * Robust primitives 
+     * Easy to program distributed programs 
      
 Ray Datasets (not a dataframe library)
 1. Universal Data loading 
@@ -136,6 +145,71 @@ powered by Apache Arrow
 ds = ray.data.read_csv("") 
 
 ```
+
+### Ray Tune 
+
+* Distributed Hyperparameter Optimization 
+    * Provides efficient HPO algorithms 
+    * Distributes and coordinates parallel trials
+
+HPO Challenges: 
+
+* Time consuming
+* Expensive Resource 
+
+Ray Tune - distrusted HPO
+
+* Efficient parallel algorithms for running trials
+* Effective resource management 
+
+Exhaustive vs. Random Search 
+
+Bayesian Optimization with popular libraries: 
+* HyperOpt
+* Optuna
+* Scikit-Optimize
+* Nevergrad
+
+Advanced Scheduling 
+* Early stopping
+* Population-based Training 
+
+Advanced Sampling
+* BlendSearch
+* Heteroskedastic Evolutionary Bayesian Optimization 
+* BOHB: combines BO with HyperBand
+
+Architecture requirements 
+* Control over when to 
+    * start
+    * pause
+    * early stop
+    * restore
+    * mutate
+* Master-worker for decision making 
+    * Sampler 
+    * Scheduler
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## [Snowflake and Tecton](https://www.youtube.com/watch?v=tETMa7xStr4&ab_channel=PyData)
 

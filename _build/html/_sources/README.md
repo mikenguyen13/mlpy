@@ -3,8 +3,9 @@
 <a target="_blank" rel="noopener noreferrer" href="https://github.com/shawnrhoads/gu-psyc-347">![GitHub last update](https://img.shields.io/github/last-commit/mikenguyen13/mlpy?color=blue&label=last%20update)</a>
 
 # Machine Learning in Python
-This is a repository for Machine Learning in Pythonn book. 
+This is a repository for Machine Learning in Python book. 
 
+Here is the [rendered version of this book](https://mikenguyen13.github.io/mlpy)
 
 <hr>
 

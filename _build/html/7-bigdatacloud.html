@@ -236,6 +236,40 @@
   <a class="reference internal nav-link" href="#high-performance-python">
    High Performance Python
   </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#amazon-web-services">
+     Amazon Web Services
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#create-a-aws-account">
+       Create a AWS account
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#create-cluster-emr">
+       Create Cluster EMR
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#data-storage-amazon-s3">
+       Data Storage Amazon S3
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#specify-putty">
+       Specify PuTTY
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#web-interface-winscp">
+       Web Interface WinSCP
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -266,6 +300,40 @@
   <a class="reference internal nav-link" href="#high-performance-python">
    High Performance Python
   </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#amazon-web-services">
+     Amazon Web Services
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#create-a-aws-account">
+       Create a AWS account
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#create-cluster-emr">
+       Create Cluster EMR
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#data-storage-amazon-s3">
+       Data Storage Amazon S3
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#specify-putty">
+       Specify PuTTY
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#web-interface-winscp">
+       Web Interface WinSCP
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -316,6 +384,65 @@ For example, <a class="reference external" href="https://nbviewer.org/gist/rsign
 <li><p>Saturn Cloud</p></li>
 <li><p>Google Cloud Dataproc</p></li>
 </ul>
+<div class="section" id="amazon-web-services">
+<h2>Amazon Web Services<a class="headerlink" href="#amazon-web-services" title="Permalink to this headline">¶</a></h2>
+<p>When working with big data that are stored online, we can utilize AWS to <strong>store</strong>, and <strong>process</strong> data.</p>
+<p>To work with AWS, we have to follow these steps:</p>
+<ol class="simple">
+<li><p>[Create a AWS account]</p></li>
+<li><p>[Create Cluster EMR]</p></li>
+<li><p>[Data Storage Amazon S3]</p></li>
+<li><p>[Specify PUTTY]</p></li>
+<li><p>[Web Interface WinSCP]</p></li>
+</ol>
+<div class="section" id="create-a-aws-account">
+<h3>Create a AWS account<a class="headerlink" href="#create-a-aws-account" title="Permalink to this headline">¶</a></h3>
+<p>Create a AWS account with your credit card (Amazon use the pay-as-you-go service charge)</p>
+</div>
+<div class="section" id="create-cluster-emr">
+<h3>Create Cluster EMR<a class="headerlink" href="#create-cluster-emr" title="Permalink to this headline">¶</a></h3>
+<ol class="simple">
+<li><p>Under <code class="docutils literal notranslate"><span class="pre">Services</span></code> tab on the top left, select <code class="docutils literal notranslate"><span class="pre">Analytics</span></code>, then <code class="docutils literal notranslate"><span class="pre">EMR</span></code></p></li>
+<li><p>Choose <code class="docutils literal notranslate"><span class="pre">Cluster</span> <span class="pre">on</span> <span class="pre">EC2</span></code></p></li>
+<li><p>Create a new cluster (the default setting you get you going)</p></li>
+<li><p>If you’ve already a cluster before, and want all of the previous setting, mark the clusters you want to clone, then hit “Clone”</p></li>
+</ol>
+<p>Recommendation: Setup <code class="docutils literal notranslate"><span class="pre">auto-terminate</span></code>  so that you won’t be overcharged.</p>
+</div>
+<div class="section" id="data-storage-amazon-s3">
+<h3>Data Storage Amazon S3<a class="headerlink" href="#data-storage-amazon-s3" title="Permalink to this headline">¶</a></h3>
+<ol class="simple">
+<li><p>Under <code class="docutils literal notranslate"><span class="pre">Services</span></code> tab, scroll all the way down to <code class="docutils literal notranslate"><span class="pre">Storage</span></code>, pick <code class="docutils literal notranslate"><span class="pre">S3</span></code> Scalable storage in the Cloud).</p></li>
+<li><p>In the <code class="docutils literal notranslate"><span class="pre">Buckets</span></code> tab, hit <code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">bucket</span></code> (A bucket on the cloud is equivalent to a drive on your local machine).</p></li>
+<li><p>Inside a bucket, you can start creating folders just like you do on your local machine.</p></li>
+<li><p>In side the folder, under <code class="docutils literal notranslate"><span class="pre">Properties</span></code>, the “S3 URI” is your folder directory.</p></li>
+</ol>
+</div>
+<div class="section" id="specify-putty">
+<h3>Specify PuTTY<a class="headerlink" href="#specify-putty" title="Permalink to this headline">¶</a></h3>
+<ol class="simple">
+<li><p><a class="reference external" href="https://www.putty.org/">Download PuTTY</a></p></li>
+<li><p><a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html">Set up key with AWS</a></p></li>
+<li><p>After having your private key file for authentication in the <code class="docutils literal notranslate"><span class="pre">.ppk</span></code> format, you can go back to your clusters on <code class="docutils literal notranslate"><span class="pre">EMR</span> <span class="pre">on</span> <span class="pre">EC2</span></code>.</p></li>
+<li><p>Under “Summary” tab, click <code class="docutils literal notranslate"><span class="pre">Connect</span> <span class="pre">to</span> <span class="pre">the</span> <span class="pre">Master</span> <span class="pre">Node</span> <span class="pre">Using</span> <span class="pre">SSH</span></code>, there you will see instructions for Windows or Mac/Linux.</p></li>
+<li><p>For Windows, copy the Host Name field in the form of username&#64;… (e.g., hadoop&#64;ec2-…)</p></li>
+<li><p>Go back to PuTTY, paste the Host Name field to the “Host Name (or IP address)” box under Session</p></li>
+<li><p>Expand <code class="docutils literal notranslate"><span class="pre">SSH</span></code>, then expand <code class="docutils literal notranslate"><span class="pre">Auth</span></code>, browse your private key file for authentication. If you see EMR, then you are there.</p></li>
+</ol>
+</div>
+<div class="section" id="web-interface-winscp">
+<h3>Web Interface WinSCP<a class="headerlink" href="#web-interface-winscp" title="Permalink to this headline">¶</a></h3>
+<p>To move your files (data, script) to AWS, you can use WinSCP</p>
+<ol class="simple">
+<li><p><a class="reference external" href="https://winscp.net/eng/download.php">Download WinSCP </a></p></li>
+<li><p>Click <code class="docutils literal notranslate"><span class="pre">New</span> <span class="pre">Session</span></code> close to top left</p></li>
+<li><p>Host name is the long character after the &#64; sign on your EMR Clusters</p></li>
+<li><p>User name is the character before the &#64; sign on your EMR Clusters</p></li>
+<li><p>Password is the private key you have. Click <code class="docutils literal notranslate"><span class="pre">Advanced</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">SSH</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Authentication</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">...</span></code> to browse you key. Click OK.</p></li>
+<li><p>Click <code class="docutils literal notranslate"><span class="pre">Login</span></code>. Voila! You’re there.</p></li>
+</ol>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

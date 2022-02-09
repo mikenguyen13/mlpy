@@ -42,6 +42,8 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -221,6 +223,19 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#counter-factual-analysis-for-explainble-ai-xai-https-www-youtube-com-watch-v-dgzykrlxiau-ab-channel-pydata">
+   Counter Factual Analysis for Explainble AI (XAI) (https://www.youtube.com/watch?v=DgzyKrLxIaU&amp;ab_channel=PyData)
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -233,6 +248,19 @@
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#counter-factual-analysis-for-explainble-ai-xai-https-www-youtube-com-watch-v-dgzykrlxiau-ab-channel-pydata">
+   Counter Factual Analysis for Explainble AI (XAI) (https://www.youtube.com/watch?v=DgzyKrLxIaU&amp;ab_channel=PyData)
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -271,6 +299,97 @@
 <li><p>Positivity - every cohort has a non-zero probability</p></li>
 <li><p>Ignorability - “No unmeasured confounders” assumption (i.e., no alternative explanation).</p></li>
 </ul>
+<div class="section" id="counter-factual-analysis-for-explainble-ai-xai-https-www-youtube-com-watch-v-dgzykrlxiau-ab-channel-pydata">
+<h2>Counter Factual Analysis for Explainble AI (XAI) (<a class="reference external" href="https://www.youtube.com/watch?v=DgzyKrLxIaU&amp;ab_channel=PyData">https://www.youtube.com/watch?v=DgzyKrLxIaU&amp;ab_channel=PyData</a>)<a class="headerlink" href="#counter-factual-analysis-for-explainble-ai-xai-https-www-youtube-com-watch-v-dgzykrlxiau-ab-channel-pydata" title="Permalink to this headline">¶</a></h2>
+<p>A counterfactual explanation of a prediction describes the smallest change to the feature values that changes the prediction to a predefined output</p>
+<p>Actionable Counterfactuals: those values that can be changed
+Desirable Properties</p>
+<ol class="simple">
+<li><p>Interpretable and human friendly explanations</p></li>
+<li><p>Small number of feature changes</p></li>
+<li><p>Avoid contradictions</p></li>
+<li><p>Produce the predefined prediction</p></li>
+<li><p>Similar to the instance regarding feature values</p></li>
+<li><p>Generate multiple counterfactual explanations</p></li>
+<li><p>Should have feature values that are likely</p></li>
+</ol>
+<p>Optimization Challenges</p>
+<ol class="simple">
+<li><p>Prediction of counterfactual should be as close to desired prediction</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+o_1 (f(x_{cf}), y_{cf}) = 
+\begin{cases}
+0, &amp; \text{if} f(x_{cf}) \in y_{cf} \\
+\inf_{cf}| f(x_{cf} - y_{cf}| &amp; \text{else}
+\end{cases}
+\end{split}\]</div>
+<ol class="simple">
+<li><p>Counterfactual should be as similar as possible to the instance</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+o_2 (x_0, x_{cf}) = \frac{1}{p} \sum_{j=1}^p \delta_G (x_0^j , x_{cf}^j)
+\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\delta_G(x_0^j, x_{cf}^j) = 
+\begin{cases}
+\frac{1}{R_j} |x_0^j - x_{cf}^j | &amp; \text{if } x_0^j \text{ is numerical} \\
+\Pi_{x_0^j \neq x_{cf}^j} &amp; \text{if } x_0^j \text{ is categorical}
+\end{cases}
+\end{split}\]</div>
+<ol class="simple">
+<li><p>Sparse feature change
+$<span class="math notranslate nohighlight">\(
+o_3(x_0 , x_{cf}) = ||x_0 - x_{cf}||_0 = \sum_{j=1}^p \Pi_{x_0^j \neq x_{cf}^j}
+\)</span>$</p></li>
+<li><p>Counterfactuals should have likely feature values
+$<span class="math notranslate nohighlight">\(
+o_4 (x_{cf}, X^{obs}) = \frac{1}{p} \sum_{j=1}^p \delta_G(x_{cf}^j, x_{[1]}^j)
+\)</span>$</p></li>
+</ol>
+<p>Algorithms for Counterfactuals</p>
+<ol class="simple">
+<li><p>Base method [&#64;wachter2017counterfactual]: Optimizes criterion 1 &amp; 2</p></li>
+<li><p>Multi-objective Counter Factual Explanations: Optimize all criteria</p></li>
+<li><p>Diverse Counterfactual Explanations (DiCE)</p>
+<ul class="simple">
+<li><p>Generates multiple CFs</p></li>
+<li><p>Optimizes criterion 1 &amp; 2 along with an extra diversity criterion</p></li>
+</ul>
+</li>
+<li><p>Interpretable CFs guided by prototypes</p>
+<ul class="simple">
+<li><p>generates interpretable CFs that lies closer to data distribution an actionable</p></li>
+<li><p>Optimizes criterion 1, 2, and 3</p></li>
+<li><p>can apply to image data</p></li>
+</ul>
+</li>
+</ol>
+<br>
+<p>Diverse CF Explanations (DiCE)
+The loss function optimized is
+$<span class="math notranslate nohighlight">\(
+L = \underset{x_{cf_1}, \dots, x_{cf_k}}{\operatorname{argmin}} \frac{1}{k} \sum_{i=1}^k y \text{loss} (x_{cf}, y_{cf}) + \frac{\lambda_1}{k} \sum_{i=1}^k \text{dist}(x_{cf}, x_0) - \lambda_2 \text{dpp_diverrsitty}(x_{cf_1}, \dots, x_{cf_k})
+\)</span>$</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x_{cf_1}\)</span> is a CF example</p></li>
+<li><p>k -total no. of CFs to be generated</p></li>
+<li><p><span class="math notranslate nohighlight">\(f(.)\)</span> model</p></li>
+<li><p><span class="math notranslate nohighlight">\(x_0\)</span> original input</p></li>
+<li><p><span class="math notranslate nohighlight">\(\lambda_1, \lambda_2\)</span> - hyper parameter</p></li>
+<li><p>yloss = <span class="math notranslate nohighlight">\(l_1\)</span> or <span class="math notranslate nohighlight">\(l_2\)</span> loss</p></li>
+<li><p>dist = a distance function</p>
+<ul>
+<li><p>continuous variables: <span class="math notranslate nohighlight">\(\text{dist_cont}(x_{cf}, x_0) = \frac{1}{d_{cont}}\sum_{j=1}^{d_{cont}} \frac{|x_{cf}^j - x_0^j|}{MAD_j}\)</span></p></li>
+<li><p>categorical variables: <span class="math notranslate nohighlight">\(\text{dist_cat}(x_{cf}, x_0) = \frac{1}{d_{cont}}\sum_{j=1}^{d_{cat}}\Pi(x_{cf}^j \neq x_0^j)\)</span></p></li>
+</ul>
+</li>
+<li><p>dpp_diversity: term based on determinantal point processes to ensure diversity among CFs <span class="math notranslate nohighlight">\(dpp_diversity = det(K), K_{i,j}= \frac{1}{1 + dist (x_{cf_i}, x_{cf_j})}\)</span></p></li>
+</ul>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
