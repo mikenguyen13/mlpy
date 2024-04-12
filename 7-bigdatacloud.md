@@ -86,4 +86,61 @@ To move your files (data, script) to AWS, you can use WinSCP
 6. Click `Login`. Voila! You're there.
 
 
+# Big Data Storage
+## Hadoop 
 
+Core Components of Hadoop:
+
+ * HDFS (Hadoop Distributed File System): The primary storage system of Hadoop, designed for storing large datasets on commodity hardware, providing high throughput access to data.
+ * Hadoop MapReduce: A data processing layer that manages the processing of data stored in HDFS. It involves two main stages:
+ 	* Map Stage: Data blocks are read and processed.
+ 	* Reduce Stage: Processed data is aggregated or summarized.
+ * YARN (Yet Another Resource Negotiator): Manages resources in the Hadoop ecosystem and supports multiple data processing engines for tasks like real-time streaming and batch processing.
+
+Features of Hadoop:
+
+ * Distributed Processing: Facilitates quick processing by distributing data and tasks across multiple nodes.
+ * Open Source: Free to use and modify, allowing customization as per user requirements.
+ * Fault Tolerance: Automatically creates multiple data replicas (default is three) to handle node failures without data loss.
+ * Scalability: Easily integrates with various hardware configurations, supporting easy expansion.
+ * Reliability: Data is safely stored across a cluster, independent of individual machine failures.
+
+Differences Between HDFS and Traditional NFS:
+
+ * Fault Tolerance and Replication: HDFS is designed to handle failures with built-in replication, unlike NFS which lacks fault tolerance.
+ * Performance and Scalability: HDFS supports better performance and scalability by distributing data and replicas across multiple machines, reducing bottlenecks compared to NFS which struggles with multiple clients accessing a single file.
+
+
+Modes Hadoop Can Operate In:
+
+ * Local Mode or Standalone Mode:
+ 	* Runs as a single Java process using the local file system instead of HDFS.
+ 	* Useful for debugging with no need for complex configuration of Hadoop system files.
+ 	* Generally the fastest mode due to its simplicity and lack of distribution.
+ * Pseudo-distributed Mode:
+ 	* Each Hadoop daemon runs in a separate Java process.
+ 	* Utilizes HDFS for input and output; requires configuration of Hadoop system files.
+ 	* Beneficial for testing and debugging in a distributed manner but on a single machine.
+ * Fully Distributed Mode:
+ 	* Production mode where Hadoop runs across a cluster with designated master and slave roles.
+ 	* Masters handle coordination (NameNode, Resource Manager) and slaves handle data storage and processing (Data Nodes, Node Managers).
+ 	* Offers full benefits of distributed computing, including scalability, security, and fault tolerance.
+
+Common Input Formats in Hadoop:
+
+ * Text Input Format: Default format for reading data; treats each line of input as a separate value.
+ * Key-Value Input Format: Used for reading plain text files where files are split into lines.
+ * Sequence File Input Format: Used for reading files in a sequence; useful for binary data formats.
+
+
+Common Output Formats in Hadoop:
+
+ * TextOutputFormat: Default output format, writing data as plain text.
+ * MapFileOutputFormat: Writes output as map files, useful for indexed storage of key-value pairs.
+ * DBOutputFormat: Facilitates writing output directly to relational databases or HBase.
+ * SequenceFileOutputFormat: Writes outputs as sequence files, ideal for binary format storage.
+ * SequenceFileAsBinaryOutputFormat: Specialized for writing keys and values in a binary format in sequence files.
+
+ ## Apache Spark
+
+ ## Pig

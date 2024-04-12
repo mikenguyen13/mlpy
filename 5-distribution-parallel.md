@@ -44,3 +44,7 @@ Dask Terminologies
      * then handing off to Dask Dataframes 
 
 
+# Parallel
+
+`multiprocessing` is similar to `threading`.
+Can be used for both Unix and Windows

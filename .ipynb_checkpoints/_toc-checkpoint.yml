@@ -7,9 +7,5 @@ chapters:
 - file: 1-markdown
 - file: 2-notebooks
 - file: 3-mymarkdownfile
-- file: 4-data
-- file: 4-workflow
-- file: 5-distribution-parallel
-- file: 6-reproducibility
-- file: 7-bigdatacloud
+- file: 3-approximate-nearest-neighbors
 
