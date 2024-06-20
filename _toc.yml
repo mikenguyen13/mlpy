@@ -3,9 +3,9 @@
 
 format: jb-book
 root: intro # landing page
-chapters:
-- file: 1-markdown
-- file: 2-notebooks
-- file: 3-mymarkdownfile
-- file: 3-approximate-nearest-neighbors
-
+parts:
+  - caption: Industry Applications
+    chapters:
+    - file: 3-approximate-nearest-neighbors.ipynb
+    - file: 4-credit-score.ipynb
+    - file: satellite_image_welfare.md

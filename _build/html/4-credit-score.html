@@ -1,0 +1,1317 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Credit Score Model &#8212; Machine Learning in Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '4-credit-score';</script>
+    <link rel="canonical" href="https://mikenguyen13.github.io/mlpy/4-credit-score.html" />
+    <link rel="icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Satellite Image" href="satellite_image_welfare.html" />
+    <link rel="prev" title="Approximate Nearest Neighbors" href="3-approximate-nearest-neighbors.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Machine Learning in Python - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Machine Learning in Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Machine Learning in Python
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Industry Applications</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="3-approximate-nearest-neighbors.html">Approximate Nearest Neighbors</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Credit Score Model</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="satellite_image_welfare.html">Satellite Image</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/edit/main/4-credit-score.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/issues/new?title=Issue%20on%20page%20%2F4-credit-score.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/4-credit-score.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Credit Score Model</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Credit Score Model</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-techniques-in-credit-scoring-model-development-and-validation">Common Techniques in Credit Scoring Model Development and Validation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#credit-score-model-types">Credit Score Model Types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-of-implementations">Examples of Implementations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#augmenting-hybrid-credit-score-models-with-alternative-datasets">Augmenting Hybrid Credit Score Models with Alternative Datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-workflow">Example Workflow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-selection">Feature Selection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#credit-score-for-business">Credit Score for Business</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-data-sources">Alternative Data Sources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#related-issues">Related Issues</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approaches-to-handle-imbalanced-data">Approaches to Handle Imbalanced Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-level-approachs">1. Data-Level Approachs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id23"></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-oversampling-techniques">a. Oversampling Techniques</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-undersampling-techniques">b. Undersampling Techniques</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-hybrid-techniques">c. Hybrid Techniques</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#algorith-m-level-approaches">2. Algorith#m-Level Approaches</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-cost-sensitive-learning">a. Cost-Sensitive Learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-ensemble-methods">b. Ensemble Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-anomaly-detection">c. Anomaly Detection</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-learning-approaches">3. Deep Learning Approaches</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-data-augmentation">a. Data Augmentation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-transfer-learning">b. Transfer Learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-specialized-architectures">c. Specialized Architectures</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation">Cross-Validation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nested-cross-validation">1. Nested Cross-Validation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#monte-carlo-cross-validation-repeated-random-subsampling-validation">2. Monte Carlo Cross-Validation (Repeated Random Subsampling Validation)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stratified-k-fold-cross-validation">3. Stratified K-Fold Cross-Validation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#leave-one-out-cross-validation-loocv">4. Leave-One-Out Cross-Validation (LOOCV)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#group-k-fold-cross-validation">5. Group K-Fold Cross-Validation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-series-cross-validation-rolling-forecasting-origin">6. Time Series Cross-Validation (Rolling Forecasting Origin)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#profitability-calculation">Profitability Calculation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-concepts">Key Concepts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculation">Calculation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cost-ratios-and-scenarios">Cost Ratios and Scenarios</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization-and-comparison">Normalization and Comparison</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-for-clarification">Example for Clarification</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="credit-score-model">
+<h1>Credit Score Model<a class="headerlink" href="#credit-score-model" title="Link to this heading">#</a></h1>
+<p>Credit Scoring</p>
+<ul class="simple">
+<li><p>Tool for classifying customers to reduce current and expected credit risk.</p></li>
+<li><p>Defined as the process of modeling creditworthiness (Hand and Jacka, 1998).</p></li>
+<li><p>Involves transforming relevant data into numerical measures for guiding credit decisions (Anderson, 2007).</p></li>
+<li><p>A credit scoring model estimates the probability of default, indicating the likelihood of a credit event like bankruptcy or failure to pay.</p></li>
+<li><p>The output of such a model is typically a credit score; a higher score indicates a lower risk of default.</p></li>
+<li><p>Credit factors vary by loan type: for credit card loans, factors might include payment history and credit utilization, while for mortgages they could include down payment and job history.</p></li>
+<li><p>The accuracy of these models is crucial for maximizing financial institutions’ risk-adjusted returns.</p></li>
+<li><p>Economic fluctuations like recessions or expansions necessitate that models be adaptable and quickly adjustable by risk managers and credit analysts.</p></li>
+</ul>
+<section id="common-techniques-in-credit-scoring-model-development-and-validation">
+<h2>Common Techniques in Credit Scoring Model Development and Validation<a class="headerlink" href="#common-techniques-in-credit-scoring-model-development-and-validation" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Logistic regression and linear regression</strong></p></li>
+<li><p><strong>Machine learning and predictive analytics</strong></p></li>
+<li><p><strong>Gini Coefficients</strong></p></li>
+<li><p><strong>Binning algorithms</strong> (e.g., monotone, equal frequency, and equal width)</p></li>
+<li><p><strong>Cumulative Accuracy Profile (CAP)</strong></p></li>
+<li><p><strong>Receiver operating characteristic (ROC)</strong></p></li>
+<li><p><strong>Kolmogorov-Smirnov (K-S) statistic</strong></p></li>
+</ul>
+</section>
+<section id="credit-score-model-types">
+<h2>Credit Score Model Types<a class="headerlink" href="#credit-score-model-types" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Traditional Statistical Models</strong></p>
+<ul class="simple">
+<li><p><strong>Logistic Regression</strong>: Still widely used for its simplicity and interpretability.</p></li>
+<li><p><strong>Decision Trees</strong>: Used for their ability to handle non-linear relationships and interactions between variables.</p></li>
+</ul>
+</li>
+<li><p><strong>Machine Learning Models</strong></p>
+<ul class="simple">
+<li><p><strong>Random Forests</strong>: An ensemble method that uses multiple decision trees to improve predictive accuracy and control over-fitting.</p></li>
+<li><p><strong>Gradient Boosting Machines (GBM)</strong>: Such as XGBoost and LightGBM, which build models in a stage-wise fashion and are highly effective for classification tasks like credit scoring.</p></li>
+<li><p><strong>Support Vector Machines (SVM)</strong>: Effective in high-dimensional spaces and used for both regr</p></li>
+<li><p><strong>Reinforcement Learning</strong></p></li>
+<li><p><strong>Graph-based model</strong>ession and classification.</p></li>
+</ul>
+</li>
+<li><p><strong>Deep Learning Models</strong></p>
+<ul class="simple">
+<li><p><strong>Neural Networks</strong>: Including feedforward neural networks and more complex architectures like Convolutional Neural Networks (CNNs) and Recurrent Neural Networks (RNNs). These models can capture complex patterns in large datasets.</p></li>
+<li><p><strong>Autoencoders</strong>: Used for anomaly detection and feature extraction in credit scoring.</p></li>
+</ul>
+</li>
+<li><p><strong>Hybrid Models</strong></p>
+<ul class="simple">
+<li><p><strong>Ensemble Methods</strong>: Combining multiple models (e.g., blending logistic regression with gradient boosting) to improve robus</p>
+<ul>
+<li><p>Homogenous ensemble classifiers: (1) independent base models (e.g., bagging algo), (2) dependent base models (e.g., boosting algo).</p></li>
+<li><p>Heterogenous ensemble classifiers: different classification algos (e.g., logistic, random forests, etc.). If you prune some base models beforehand, it’s called selective ensembles (either static or dynamic). tness and predictive performance.</p></li>
+</ul>
+</li>
+<li><p><strong>Stacking</strong>: A technique where predictions from multiple models are used as inputs to a higher-level model.</p></li>
+</ul>
+</li>
+<li><p><strong>Alternative Data and Big Data Techniques</strong></p>
+<ul class="simple">
+<li><p><strong>Use of Alternative Data</strong>: Incorporating non-traditional data sources such as social media activity, utility payments, and other digital footprints to enhance credit scoring models.</p></li>
+<li><p><strong>Big Data Analytics</strong>: Leveraging large and diverse datasets to improve model accuracy and insights.</p></li>
+</ul>
+</li>
+<li><p><strong>Explainable AI (XAI) Models</strong></p>
+<ul class="simple">
+<li><p><strong>SHAP (SHapley Additive exPlanations)</strong>: Used to interpret complex models by assigning importance values to each feature.</p></li>
+<li><p><strong>LIME (Local Interpretable Model-agnostic Explanations)</strong>: Provides explanations for individual predictions made by black-box models.</p></li>
+</ul>
+</li>
+<li><p><strong>Regulatory and Ethical Considerations</strong></p>
+<ul class="simple">
+<li><p><strong>Fairness and Bias Mitigation</strong>: Incorporating techniques to ensure models are fair and do not discriminate against protected groups.</p></li>
+<li><p><strong>Transparency</strong>: Ensuring that models can be explained and understood by stakeholders, including regulatory bodies.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="examples-of-implementations">
+<h2>Examples of Implementations<a class="headerlink" href="#examples-of-implementations" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>FICO Score 10</strong>: Incorporates trended data to provide a more comprehensive view of an individual’s credit behavior over time.</p></li>
+<li><p><strong>VantageScore 4.0</strong>: Uses machine learning techniques and includes data on credit usage patterns, payment history, and total debt.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="augmenting-hybrid-credit-score-models-with-alternative-datasets">
+<h2>Augmenting Hybrid Credit Score Models with Alternative Datasets<a class="headerlink" href="#augmenting-hybrid-credit-score-models-with-alternative-datasets" title="Link to this heading">#</a></h2>
+<p><strong>Steps to Approach this:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Data Integration</strong></p>
+<ul class="simple">
+<li><p><strong>Identify Relevant Features</strong>: Determine which aspects of social media activity are relevant to credit scoring (e.g., frequency of posts, sentiment analysis, network size, engagement metrics).</p></li>
+<li><p><strong>Combine Datasets</strong>: Merge traditional credit data with social media data for individuals who have a social media presence. Ensure that data from different sources are aligned properly.</p></li>
+</ul>
+</li>
+<li><p><strong>Handling Missing Data</strong></p>
+<ul class="simple">
+<li><p><strong>Indicator Variables</strong>: Create binary indicator variables to mark the presence or absence of social media data for each individual.</p></li>
+<li><p><strong>Separate Models</strong>: Train separate models for individuals with and without social media data. Combine the predictions using a meta-model.</p></li>
+<li><p><strong>Imputation</strong>: Use imputation techniques to handle missing social media data, though this should be done cautiously to avoid introducing bias.</p></li>
+</ul>
+</li>
+<li><p><strong>Feature Engineering</strong></p>
+<ul class="simple">
+<li><p><strong>Extract Features</strong>: Use natural language processing (NLP) and other techniques to extract features from social media text (e.g., sentiment scores, topic modeling).</p></li>
+<li><p><strong>Engagement Metrics</strong>: Include metrics like the number of friends/followers, frequency of posts, and interaction rates.</p></li>
+</ul>
+</li>
+<li><p><strong>Modeling Approach</strong></p>
+<ul class="simple">
+<li><p><strong>Hybrid Model Structure</strong>: Use a hybrid model structure where social media features are added as additional inputs for the machine learning model. This could be an ensemble model where different data sources contribute to the final prediction.</p></li>
+<li><p><strong>Stacking and Blending</strong>: Employ stacking or blending techniques where base models (one using traditional data and one using augmented data) are combined by a meta-learner.</p></li>
+</ul>
+</li>
+<li><p><strong>Training and Validation</strong></p>
+<ul class="simple">
+<li><p><strong>Separate Training</strong>: Train the model on individuals with complete traditional and social media data. Validate on a subset to ensure robustness.</p></li>
+<li><p><strong>Cross-validation</strong>: Use cross-validation to test the performance of the model and prevent overfitting.</p></li>
+<li><p><strong>Fairness Checks</strong>: Ensure that the inclusion of social media data does not introduce bias or unfair discrimination.</p></li>
+</ul>
+</li>
+<li><p><strong>Model Interpretation and Explainability</strong></p>
+<ul class="simple">
+<li><p><strong>Explainable AI Tools</strong>: Use tools like SHAP or LIME to interpret the impact of social media features on the model’s predictions.</p></li>
+<li><p><strong>Transparency</strong>: Maintain transparency about how social media data is used and ensure compliance with privacy regulations.</p></li>
+</ul>
+</li>
+<li><p><strong>Ethical and Privacy Considerations</strong></p>
+<ul class="simple">
+<li><p><strong>Consent and Privacy</strong>: Ensure that individuals consent to the use of their social media data and that privacy regulations (e.g., GDPR) are strictly followed.</p></li>
+<li><p><strong>Ethical Use</strong>: Be transparent about the use of social media data and ensure it is used ethically, without leading to discriminatory practices.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="example-workflow">
+<h2>Example Workflow<a class="headerlink" href="#example-workflow" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Data Collection</strong>:</p>
+<ul class="simple">
+<li><p>Collect traditional credit data (e.g., credit history, loan repayment).</p></li>
+<li><p>Collect social media data (e.g., public posts, engagement metrics) for consenting individuals.</p></li>
+</ul>
+</li>
+<li><p><strong>Feature Engineering</strong>:</p>
+<ul class="simple">
+<li><p>Extract features from both datasets.</p></li>
+<li><p>Create indicator variables for the presence of social media data.</p></li>
+</ul>
+</li>
+<li><p><strong>Model Development</strong>:</p>
+<ul class="simple">
+<li><p>Develop base models for traditional data and augmented data separately.</p></li>
+<li><p>Combine these models using an ensemble or stacking approach.</p></li>
+</ul>
+</li>
+<li><p><strong>Model Training</strong>:</p>
+<ul class="simple">
+<li><p>Train the hybrid model using a combined dataset.</p></li>
+<li><p>Validate using cross-validation techniques.</p></li>
+</ul>
+</li>
+<li><p><strong>Model Interpretation</strong>:</p>
+<ul class="simple">
+<li><p>Use SHAP/LIME to understand the contribution of social media features.</p></li>
+</ul>
+</li>
+<li><p><strong>Implementation</strong>:</p>
+<ul class="simple">
+<li><p>Deploy the model ensuring it meets regulatory and ethical standards.
+s.</p></li>
+</ul>
+</li>
+</ol>
+<p>According to <span id="id1">West [<a class="reference internal" href="1-markdown.html#id25" title="David West. Neural network credit scoring models. Computers &amp; operations research, 27(11-12):1131–1152, 2000.">Wes00</a>]</span>:</p>
+<ul class="simple">
+<li><p><strong>Neural Network Models:</strong></p>
+<ul>
+<li><p><strong>Multilayer Perceptron</strong></p></li>
+<li><p><strong>Mixture-of-Experts</strong> (recommended)</p></li>
+<li><p><strong>Radial Basis Function</strong> (recommended)</p></li>
+<li><p><strong>Learning Vector Quantization</strong></p></li>
+<li><p><strong>Fuzzy Adaptive Resonance</strong></p></li>
+</ul>
+</li>
+<li><p><strong>Traditional Methods:</strong></p>
+<ul>
+<li><p><strong>Linear Discriminant Analysis</strong></p></li>
+<li><p><strong>Logistic Regression</strong> (best among traditional methods)</p></li>
+<li><p><strong>k-Nearest Neighbor</strong></p></li>
+<li><p><strong>Kernel Density Estimation</strong></p></li>
+<li><p><strong>Decision Trees</strong></p></li>
+</ul>
+</li>
+</ul>
+<p><span id="id2">Chuang and Lin [<a class="reference internal" href="1-markdown.html#id24" title="Chun-Ling Chuang and Rong-Ho Lin. Constructing a reassigning credit scoring model. Expert Systems with Applications, 36(2):1685–1694, 2009.">CL09</a>]</span> introduces a two-stage Reassigning Credit Scoring Model (RCSM) to improve accuracy and reduce Type I errors.</p>
+<ol class="arabic simple">
+<li><p>The first stage involves constructing an ANN-based model to classify credit applicants as either accepted (good) or rejected (bad).</p></li>
+<li><p>The second stage reduces Type I errors by reassigning mistakenly rejected good applicants to a “conditionally accepted” category using a CBR-based classification technique.</p></li>
+</ol>
+<ul class="simple">
+<li><p>The RCSM was tested on a credit card dataset from the UCI repository and demonstrated greater accuracy compared to four other commonly used approaches.</p>
+<ul>
+<li><p>Linear Discriminant Analysis</p></li>
+<li><p>Logistic Regression</p></li>
+<li><p>CART (Classification and regression tree)</p></li>
+<li><p>MARS (Multivariate adaptive regression spline)</p></li>
+<li><p>ANNs (Artificial neural networks)</p></li>
+<li><p>CBR (Case-based reasoning)</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Credit Score card model</strong> is easier to interpret and deploy <span id="id3">Yap <em>et al.</em> [<a class="reference internal" href="1-markdown.html#id23" title="Bee Wah Yap, Seng Huat Ong, and Nor Huselina Mohamed Husain. Using data mining to improve assessment of credit worthiness via credit scoring models. Expert Systems with Applications, 38(10):13274–13283, 2011.">YOH11</a>]</span>.</p>
+<p><span id="id4">Hlongwane <em>et al.</em> [<a class="reference internal" href="1-markdown.html#id7" title="Rivalani Hlongwane, Kutlwano KKM Ramaboa, and Wilson Mongwe. Enhancing credit scoring accuracy with a comprehensive evaluation of alternative data. Plos one, 19(5):e0303566, 2024.">HRM24</a>]</span> implement</p>
+<ul class="simple">
+<li><p>XGBoost ( <span id="id5">[<a class="reference internal" href="1-markdown.html#id5" title="Björn Rafn Gunnarsson, Seppe Vanden Broucke, Bart Baesens, María Óskarsdóttir, and Wilfried Lemahieu. Deep learning for credit scoring: do or don’t? European Journal of Operational Research, 295(1):292–305, 2021.">GVBB+21</a>]</span> prefers)</p></li>
+<li><p>LightGBM</p></li>
+<li><p>CatBoost</p></li>
+<li><p>Model-X knockoffs</p></li>
+</ul>
+</section>
+<section id="feature-selection">
+<h2>Feature Selection<a class="headerlink" href="#feature-selection" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Information gain, gain ratio, and chi-square</strong>: Trivedi et al. (2020) <span id="id6">[<a class="reference internal" href="1-markdown.html#id10" title="Shrawan Kumar Trivedi. A study on credit scoring modeling with different feature selection and machine learning approaches. Technology in Society, 63:101413, 2020.">Tri20</a>]</span></p></li>
+<li><p><strong>Neighbourhood rough set (NRS)</strong>: Tripathi and Aggarwal (2018) <span id="id7">[<a class="reference internal" href="1-markdown.html#id9" title="Diwakar Tripathi, Damodar Reddy Edla, and Ramalingaswamy Cheruku. Hybrid credit scoring model using neighborhood rough set and multi-layer ensemble classification. Journal of Intelligent &amp; Fuzzy Systems, 34(3):1543–1549, 2018.">TEC18</a>]</span></p></li>
+<li><p><strong>Other methods</strong>: Nalic et al. (2020) <span id="id8">[<a class="reference internal" href="1-markdown.html#id8" title="Jasmina Nalić, Goran Martinović, and Drago Žagar. New hybrid data mining model for credit scoring based on feature selection algorithm and ensemble classifiers. Advanced Engineering Informatics, 45:101130, 2020.">NalicMartinovicvZagar20</a>]</span></p></li>
+</ul>
+</section>
+<section id="credit-score-for-business">
+<h2>Credit Score for Business<a class="headerlink" href="#credit-score-for-business" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>SMEs</strong>: Roy et al. (2023) <span id="id9">[<a class="reference internal" href="1-markdown.html#id22" title="Pranith K Roy and Krishnendu Shaw. A credit scoring model for smes using ahp and topsis. International Journal of Finance &amp; Economics, 28(1):372–391, 2023.">RS23</a>]</span></p></li>
+</ul>
+</section>
+<section id="alternative-data-sources">
+<h2>Alternative Data Sources<a class="headerlink" href="#alternative-data-sources" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Email usage and psychometric variables</strong>: Djeundje et al. (2021) <span id="id10">[<a class="reference internal" href="1-markdown.html#id21" title="Viani B Djeundje, Jonathan Crook, Raffaella Calabrese, and Mona Hamid. Enhancing credit scoring with alternative data. Expert Systems with Applications, 163:113766, 2021.">DCCH21</a>]</span>, Arraiz et al. (2017) <span id="id11">[<a class="reference internal" href="1-markdown.html#id20" title="Irani Arráiz, Miriam Bruhn, and Rodolfo Stucchi. Psychometrics as a tool to improve credit information. The World Bank Economic Review, 30(Supplement_1):S67–S76, 2017.">ArraizBS17</a>]</span></p></li>
+<li><p><strong>Social Media data</strong>: Wei et al. (2016) <span id="id12">[<a class="reference internal" href="1-markdown.html#id19" title="Yanhao Wei, Pinar Yildirim, Christophe Van den Bulte, and Chrysanthos Dellarocas. Credit scoring with social network data. Marketing Science, 35(2):234–258, 2016.">WYVdBD16</a>]</span>, Ge et al. (2017) <span id="id13">[<a class="reference internal" href="1-markdown.html#id18" title="Ruyi Ge, Juan Feng, Bin Gu, and Pengzhu Zhang. Predicting and deterring default with social media information in peer-to-peer lending. Journal of Management Information Systems, 34(2):401–424, 2017.">GFGZ17</a>]</span>, de Souza et al. (2019) <span id="id14">[<a class="reference internal" href="1-markdown.html#id17" title="Sofie De Cnudde, Julie Moeyersoms, Marija Stankova, Ellen Tobback, Vinayak Javaly, and David Martens. What does your facebook profile reveal about your creditworthiness? using alternative data for microfinance. Journal of the Operational Research Society, 70(3):353–363, 2019.">DCMS+19</a>]</span></p></li>
+<li><p><strong>Telecommunication</strong>: Oskarsdottir et al. (2019) <span id="id15">[<a class="reference internal" href="1-markdown.html#id16" title="María Óskarsdóttir, Cristián Bravo, Carlos Sarraute, Jan Vanthienen, and Bart Baesens. The value of big data for credit scoring: enhancing financial inclusion using mobile phone data and social network analytics. Applied Soft Computing, 74:26–39, 2019.">OskarsdottirBS+19</a>]</span>, Ots and Li (2020) <span id="id16">[<a class="reference internal" href="1-markdown.html#id15" title="Henri Ots, Innar Liiv, and Diana Tur. Mobile phone usage data for credit scoring. In Databases and Information Systems: 14th International Baltic Conference, DB&amp;IS 2020, Tallinn, Estonia, June 16–19, 2020, Proceedings 14, 82–95. Springer, 2020.">OLT20</a>]</span>, de Montjoye et al. (2011) <span id="id17">[<a class="reference internal" href="1-markdown.html#id14" title="Rodrigo de Oliveira, Alexandros Karatzoglou, Pedro Concejero Cerezo, Ana Armenta Lopez de Vicuña, and Nuria Oliver. Towards a psychographic user model from mobile phone usage. In CHI'11 Extended Abstracts on Human Factors in Computing Systems, pages 2191–2196. 2011.">dOKCC+11</a>]</span>, Pedro et al. (2015) <span id="id18">[<a class="reference internal" href="1-markdown.html#id13" title="Jose San Pedro, Davide Proserpio, and Nuria Oliver. Mobiscore: towards universal credit scoring from mobile phone data. In International conference on user modeling, adaptation, and personalization, 195–207. Springer, 2015.">PPO15</a>]</span>, Agarwal et al. (2018) <span id="id19">[<a class="reference internal" href="1-markdown.html#id12" title="Rishav Raj Agarwal, Chia-Ching Lin, Kuan-Ta Chen, and Vivek Kumar Singh. Predicting financial trouble using call data—on social capital, phone logs, and financial trouble. PloS one, 13(2):e0191863, 2018.">ALCS18</a>]</span></p></li>
+</ul>
+</section>
+<section id="related-issues">
+<h2>Related Issues<a class="headerlink" href="#related-issues" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Credit card fraud detection</strong>: Zhang et al. (2021) <span id="id20">[<a class="reference internal" href="1-markdown.html#id11" title="Xinwei Zhang, Yaoci Han, Wei Xu, and Qili Wang. Hoba: a novel feature engineering methodology for credit card fraud detection with a deep learning architecture. Information Sciences, 557:302–316, 2021.">ZHXW21</a>]</span>
+ng2021hoba</p></li>
+</ul>
+<p>According to <span id="id21">[<a class="reference internal" href="1-markdown.html#id6" title="Hussein A Abdou and John Pointon. Credit scoring, statistical techniques and evaluation criteria: a review of the literature. Intelligent systems in accounting, finance and management, 18(2-3):59–88, 2011.">AP11</a>]</span>, common models include:</p>
+<ul class="simple">
+<li><p>MOE: Mixture of Experts</p></li>
+<li><p>RBF: Radial Basis Function</p></li>
+<li><p>MLP: Multilayer Perceptron</p></li>
+<li><p>LVQ: Learning Vector Quantization</p></li>
+<li><p>FAR: Fuzzy Adaptive Resonance (all of which are neural network models)</p></li>
+<li><p>Multilayer Feed-Forward Neural Network</p></li>
+<li><p>Weight-of-Evidence Model</p></li>
+<li><p>Genetic Programming</p></li>
+<li><p>Support Vector Machines</p></li>
+</ul>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Criteria</strong></p></th>
+<th class="head"><p><strong>Calculation</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+<th class="head"><p><strong>Pros</strong></p></th>
+<th class="head"><p><strong>Cons</strong></p></th>
+<th class="head"><p><strong>Applications</strong></p></th>
+<th class="head"><p><strong>Global/Local</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Confusion Matrix</strong></p></td>
+<td><p>NA</p></td>
+<td><p>Summarizes prediction results, showing the number of true positives, false positives, true negatives, and false negatives.</p></td>
+<td><p>Simple to understand and interpret; useful for binary classification.</p></td>
+<td><p>Doesn’t provide information on the cost of misclassification; limited to binary classification.</p></td>
+<td><p>Binary classification problems.</p></td>
+<td><p>Local</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>MSE/RMSE</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2\)</span> <br> <span class="math notranslate nohighlight">\(\text{RMSE} = \sqrt{\text{MSE}}\)</span></p></td>
+<td><p>Measures the average squared difference between actual and predicted values. RMSE is the square root of MSE, giving error in the same unit as the output.</p></td>
+<td><p>Provides a clear indication of prediction accuracy; RMSE is in the same units as the output.</p></td>
+<td><p>Sensitive to outliers; may not reflect actual performance for non-normally distributed errors.</p></td>
+<td><p>Regression problems.</p></td>
+<td><p>Global</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>MAE</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\text{MAE} = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y}_i|\)</span></p></td>
+<td><p>Measures the average absolute difference between actual and predicted values, less sensitive to outliers than MSE.</p></td>
+<td><p>Robust to outliers; easier interpretation compared to MSE.</p></td>
+<td><p>Doesn’t penalize larger errors more than smaller ones; less sensitive to large deviations.</p></td>
+<td><p>Regression problems.</p></td>
+<td><p>Global</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Mean Error</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\text{Mean Error} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)\)</span></p></td>
+<td><p>Measures the average difference between actual and predicted values, giving a simple error estimate.</p></td>
+<td><p>Simple to compute and interpret; good for initial assessment.</p></td>
+<td><p>Can be misleading if not combined with other metrics; does not penalize larger errors.</p></td>
+<td><p>Initial error assessment.</p></td>
+<td><p>Global</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>R² / Adj R²</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(R² = 1 - \frac{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}{\sum_{i=1}^{n} (y_i - \bar{y})^2}\)</span> <br> <span class="math notranslate nohighlight">\(\text{Adj R²} = 1 - \frac{(1-R²)(n-1)}{n-p-1}\)</span></p></td>
+<td><p>Measures the proportion of variance in the dependent variable explained by the model. Adjusted R² adjusts for the number of predictors.</p></td>
+<td><p>Gives insight into model’s explanatory power; Adjusted R² corrects for overfitting.</p></td>
+<td><p>May not indicate model’s performance on different datasets; Adjusted R² can be complex to interpret.</p></td>
+<td><p>Evaluating explanatory power of regression models.</p></td>
+<td><p>Global</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Sensitivity/Specificity (ROC Curve)</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\text{Sensitivity} = \frac{\text{TP}}{\text{TP} + \text{FN}}\)</span> <br> <span class="math notranslate nohighlight">\(\text{Specificity} = \frac{\text{TN}}{\text{TN} + \text{FP}}\)</span></p></td>
+<td><p>Analyzes the true positive rate against the false positive rate, used to evaluate the diagnostic ability of a binary classifier.</p></td>
+<td><p>Useful for evaluating the trade-off between sensitivity and specificity; provides a graphical representation.</p></td>
+<td><p>Doesn’t consider the costs of false positives and false negatives; ROC analysis can be complex.</p></td>
+<td><p>Evaluating diagnostic tests, medical testing.</p></td>
+<td><p>Global</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Discrimination (C-statistic/AUC)</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(AUC = \int_{0}^{1} \text{ROC}(t) \, dt\)</span></p></td>
+<td><p>Measures the model’s ability to discriminate between different classes, AUC is the area under the ROC curve.</p></td>
+<td><p>Provides a single metric for model’s discriminative power; widely used and understood.</p></td>
+<td><p>May not provide detailed error analysis; AUC interpretation can be context-dependent.</p></td>
+<td><p>Binary classification, credit scoring.</p></td>
+<td><p>Global</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Gini Coefficient</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\text{Gini} = 2 \times \text{AUC} - 1\)</span></p></td>
+<td><p>A measure of inequality that indicates the effectiveness of a credit scoring model.</p></td>
+<td><p>Provides a single number summarizing model performance over all cut-off scores.</p></td>
+<td><p>Can be complex to interpret; sensitive to the distribution of scores.</p></td>
+<td><p>Credit scoring, model performance comparison.</p></td>
+<td><p>Global</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Accuracy (ACC)</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\text{Accuracy} = \frac{\text{TP} + \text{TN}}{\text{Total}}\)</span></p></td>
+<td><p>Measures the overall accuracy of the model by comparing the number of correct predictions to the total predictions.</p></td>
+<td><p>Simple to interpret; provides a clear indication of overall model accuracy.</p></td>
+<td><p>Does not provide insights into the types of errors made; may be misleading in imbalanced datasets.</p></td>
+<td><p>Classification problems.</p></td>
+<td><p>Global</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Estimated Misclassification Cost</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\text{Cost} = \sum_{i=1}^{n} \text{Cost}(y_i, \hat{y}_i)\)</span></p></td>
+<td><p>Estimates the cost associated with incorrect classifications, taking into account different types of errors.</p></td>
+<td><p>Provides a cost-based evaluation of model performance, useful in applications where error costs differ.</p></td>
+<td><p>Requires estimation of costs, which can be subjective and may vary by context.</p></td>
+<td><p>Applications where misclassification costs vary, such as fraud detection.</p></td>
+<td><p>Local</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Percentage Correctly Classified (PCC)</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\text{PCC} = \frac{\text{TP} + \text{TN}}{\text{Total}} \times 100\)</span></p></td>
+<td><p>Measures the percentage of correct predictions relative to the total predictions.</p></td>
+<td><p>Simple and easy to interpret; provides a basic measure of model performance.</p></td>
+<td><p>Doesn’t account for the balance between classes; may be misleading in imbalanced datasets.</p></td>
+<td><p>General classification problems.</p></td>
+<td><p>Global</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Partial Gini Index (PG)</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\text{PG} = \frac{\sum_{i=1}^{n} (y_i \text{Gini})}{\sum_{i=1}^{n} y_i}\)</span></p></td>
+<td><p>Measures the performance of the model relative to a partial area under the ROC curve.</p></td>
+<td><p>Focuses on the performance in a specific part of the ROC curve; useful for targeted performance analysis.</p></td>
+<td><p>Requires setting a specific threshold for evaluation; can be complex to calculate and interpret.</p></td>
+<td><p>Targeted model performance analysis.</p></td>
+<td><p>Local</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>H-measure</strong></p></td>
+<td><p>NA</p></td>
+<td><p>A metric designed to overcome some limitations of AUC by incorporating misclassification costs and prevalence.</p></td>
+<td><p>Incorporates misclassification costs; robust to variations in prevalence.</p></td>
+<td><p>Requires estimation of costs and prevalence; more complex than traditional metrics.</p></td>
+<td><p>Binary classification, situations with varied misclassification costs.</p></td>
+<td><p>Global</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Brier Score (BS)</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\text{BS} = \frac{1}{n} \sum_{i=1}^{n} (p_i - o_i)^2\)</span></p></td>
+<td><p>Measures the mean squared difference between predicted probabilities and actual outcomes.</p></td>
+<td><p>Provides a probabilistic assessment of model performance; accounts for prediction confidence.</p></td>
+<td><p>Sensitive to the calibration of predicted probabilities; can be less intuitive than other metrics.</p></td>
+<td><p>Evaluating probabilistic forecasts.</p></td>
+<td><p>Global</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Kolmogorov–Smirnov Statistic (KS)</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\text{KS} = \max_{t} |F_1(t) - F_2(t)|\)</span></p></td>
+<td><p>Measures the maximum difference between the cumulative distribution functions of the observed and predicted distributions.</p></td>
+<td><p>Provides insight into the separation of the distributions; useful for comparing model performance.</p></td>
+<td><p>Can be sensitive to sample size; may require large sample sizes for reliable estimates.</p></td>
+<td><p>Model performance comparison, goodness-of-fit tests.</p></td>
+<td><p>Global</p></td>
+</tr>
+</tbody>
+</table>
+<p><span id="id22">[<a class="reference internal" href="1-markdown.html#id4" title="Stefan Lessmann, Bart Baesens, Hsin-Vonn Seow, and Lyn C Thomas. Benchmarking state-of-the-art classification algorithms for credit scoring: an update of research. European Journal of Operational Research, 247(1):124–136, 2015.">LBST15</a>]</span></p>
+<p><strong>Individual Classification</strong>:</p>
+<p>Bayesian network
+CART (Classification and Regression Trees)
+Extreme Learning Machine
+Kernelized ELM (Extreme Learning Machine)
+K-Nearest Neighbor
+J4.8 (an implementation of C4.5 in WEKA)
+LDA (Linear Discriminant Analysis)
+Linear Support Vector Machine
+Logistic Regression
+Multilayer Perceptron Artificial Neural Network
+Naive Bayes
+Quadratic Discriminant Analysis
+Radial Basis Function Network
+SVM with Radial Basis Kernel Function
+Voted Perceptron</p>
+<p><strong>Homogeneous Ensembles</strong>:</p>
+<p>Alternating Decision Tree
+Bagged Decision Trees
+Bagged MLP (Multilayer Perceptron)
+Boosted Decision Trees
+Logistic Model Tree
+Random Forest
+Rotation Forest
+Stochastic Gradient Boosting</p>
+<p><strong>Heterogeneous Ensembles</strong>:</p>
+<p>Simple Average Ensemble
+Weighted Average Ensemble
+Stacking
+Complementary Measure
+Ensemble Pruning via Reinforcement Learning
+GASEN (Genetic Algorithm-based Selective Ensemble)
+Hill-Climbing Ensemble Selection
+HCES (Hill-Climbing Ensemble Selection) with Bootstrap Sampling
+Matching Pursuit Optimization Ensembles
+Top-T Ensemble
+Clustering Using Compound Error
+K-Means Clustering
+Kappa Pruning
+Margin Distance Minimization
+Uncertainty Weighted Accuracy
+Probabilistic Model for Classifier Competence
+K-Nearest Oracle</p>
+</section>
+<section id="approaches-to-handle-imbalanced-data">
+<h2>Approaches to Handle Imbalanced Data<a class="headerlink" href="#approaches-to-handle-imbalanced-data" title="Link to this heading">#</a></h2>
+<section id="data-level-approachs">
+<h3>1. Data-Level Approachs<a class="headerlink" href="#data-level-approachs" title="Link to this heading">#</a></h3>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id23">
+<h1><a class="headerlink" href="#id23" title="Link to this heading">#</a></h1>
+<section id="a-oversampling-techniques">
+<h2>a. Oversampling Techniques<a class="headerlink" href="#a-oversampling-techniques" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>SMOTE (Synthetic Minority Over-sampling Technique)</strong>: Generates synthetic examples of the minority class by interpolating between existing samples.</p></li>
+<li><p><strong>ADASYN (Adaptive Synthetic Sampling)</strong>: Similar to SMOTE but focuses more on generating synthetic samples for harder-to-classify instances.</p></li>
+<li><p><strong>Random Oversampling</strong>: Replicates minority class examples until the dataset is balan#ced.</p></li>
+</ul>
+</section>
+<section id="b-undersampling-techniques">
+<h2>b. Undersampling Techniques<a class="headerlink" href="#b-undersampling-techniques" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Random Undersampling</strong>: Randomly removes instances from the majority class to balance the dataset.</p></li>
+<li><p><strong>Cluster-Based Undersampling</strong>: Clusters the majority class and removes samples based on cluster proximity.</p></li>
+<li><p><strong>NearMiss</strong>: Selects majority samples closest to the minority samples or farthest from other majori#ty samples.</p></li>
+</ul>
+</section>
+<section id="c-hybrid-techniques">
+<h2>c. Hybrid Techniques<a class="headerlink" href="#c-hybrid-techniques" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>SMOTE-Tomek Links</strong>: Combines SMOTE with Tomek links to remove overlapping samples from the majority class.</p></li>
+<li><p><strong>SMOTE-ENN (Edited Nearest Neighbors)</strong>: Uses SMOTE for oversampling and ENN for cleaning the dataset by removing misclassi#fied instances.</p></li>
+</ul>
+</section>
+<section id="algorith-m-level-approaches">
+<h2>2. Algorith#m-Level Approaches<a class="headerlink" href="#algorith-m-level-approaches" title="Link to this heading">#</a></h2>
+<section id="a-cost-sensitive-learning">
+<h3>a. Cost-Sensitive Learning<a class="headerlink" href="#a-cost-sensitive-learning" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Cost-Sensitive Classifiers</strong>: Adjusts the learning process to minimize the cost of misclassifications, such as higher penalties for minority class errors.</p></li>
+<li><p><strong>Weighted Loss Functions</strong>: Assigns different weights to classes in the loss function to emphas#ize the minority class.</p></li>
+</ul>
+</section>
+<section id="b-ensemble-methods">
+<h3>b. Ensemble Methods<a class="headerlink" href="#b-ensemble-methods" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Balanced Random Forest</strong>: Modifies the random forest algorithm to balance each bootstrap sample.</p></li>
+<li><p><strong>EasyEnsemble</strong>: Combines multiple weak learners trained on different balanced subsets of the majority class.</p></li>
+<li><p><strong>RUSBoost (Random UnderSampling with Boosting)</strong>: Integrates undersampli#ng with boosting techniques.</p></li>
+</ul>
+</section>
+<section id="c-anomaly-detection">
+<h3>c. Anomaly Detection<a class="headerlink" href="#c-anomaly-detection" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>One-Class SVM</strong>: Treats the minority class as the target and identifies it against the majority background.</p></li>
+<li><p><strong>Isolation Forest</strong>: Detects outliers, assuming the minori#ty class can be seen as anomalies#.</p></li>
+</ul>
+</section>
+</section>
+<section id="deep-learning-approaches">
+<h2>3. Deep Learning Approaches<a class="headerlink" href="#deep-learning-approaches" title="Link to this heading">#</a></h2>
+<section id="a-data-augmentation">
+<h3>a. Data Augmentation<a class="headerlink" href="#a-data-augmentation" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>GANs (Generative Adversarial Networks)</strong>: Generate realistic minority class samples to augment the dataset.</p></li>
+<li><p><strong>Autoencoders</strong>: Learn latent features of the minority cl#ass and use them to generate new samples.</p></li>
+</ul>
+</section>
+<section id="b-transfer-learning">
+<h3>b. Transfer Learning<a class="headerlink" href="#b-transfer-learning" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Feature Transfer</strong>: Uses features learned from a balanced or related task to improve minority class recognition.</p></li>
+<li><p><strong>Fine-Tuning</strong>: Fine-tunes pre-trained models on the imb#alanced dataset to leverage general features.</p></li>
+</ul>
+</section>
+<section id="c-specialized-architectures">
+<h3>c. Specialized Architectures<a class="headerlink" href="#c-specialized-architectures" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Focal Loss</strong>: Modifies the cross-entropy loss to focus more on hard-to-classify examples, often used in object detection tasks.</p></li>
+<li><p><strong>Class-Balanced Loss</strong>: Scales the loss by the inverse of the class frequency to balance the influence of each class.</p></li>
+</ul>
+</section>
+</section>
+<section id="cross-validation">
+<h2>Cross-Validation<a class="headerlink" href="#cross-validation" title="Link to this heading">#</a></h2>
+<p>Cross-validation is a statistical method used to estimate the skill of machine learning models. It is primarily used in applied machine learning to estimate the predictive power of a model on new data. Cross-validation involves partitioning a dataset into a training set and a test set, training the model on the training set, and evaluating it on the test set. This process is repeated multiple times with different splits to reduce variability and obtain a more accurate measure of model performance.</p>
+<section id="nested-cross-validation">
+<h3>1. Nested Cross-Validation<a class="headerlink" href="#nested-cross-validation" title="Link to this heading">#</a></h3>
+<p>Nested cross-validation is used for model selection and hyperparameter tuning while avoiding overfitting.</p>
+<ul class="simple">
+<li><p><strong>Inner Loop</strong>: Performs cross-validation for hyperparameter tuning.</p></li>
+<li><p><strong>Outer Loop</strong>: Evaluates the model performance using the optimal hyperparameters found in the inner loop.</p></li>
+<li><p>Provides an unbiased estimate of the model’s performance.</p></li>
+</ul>
+</section>
+<section id="monte-carlo-cross-validation-repeated-random-subsampling-validation">
+<h3>2. Monte Carlo Cross-Validation (Repeated Random Subsampling Validation)<a class="headerlink" href="#monte-carlo-cross-validation-repeated-random-subsampling-validation" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Randomly splits the dataset into training and test sets multiple times (more than two).</p></li>
+<li><p>Averages the performance metrics across different splits.</p></li>
+<li><p>Offers a better approximation of model performance by considering varied data splits.</p></li>
+</ul>
+</section>
+<section id="stratified-k-fold-cross-validation">
+<h3>3. Stratified K-Fold Cross-Validation<a class="headerlink" href="#stratified-k-fold-cross-validation" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Ensures each fold has a representative proportion of each class.</p></li>
+<li><p>Important for imbalanced datasets.</p></li>
+<li><p>Reduces biased performance estimates due to uneven class distribution.</p></li>
+</ul>
+</section>
+<section id="leave-one-out-cross-validation-loocv">
+<h3>4. Leave-One-Out Cross-Validation (LOOCV)<a class="headerlink" href="#leave-one-out-cross-validation-loocv" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Uses each sample once as a test set, with the remaining samples as the training set.</p></li>
+<li><p>Provides a nearly unbiased performance estimate but is computationally intensive.</p></li>
+<li><p>Suitable for small datasets.</p></li>
+</ul>
+</section>
+<section id="group-k-fold-cross-validation">
+<h3>5. Group K-Fold Cross-Validation<a class="headerlink" href="#group-k-fold-cross-validation" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Ensures that samples from the same group (e.g., same subject or time period) are not split across different folds.</p></li>
+<li><p>Useful for datasets where samples are not independent and identically distributed (i.i.d.).</p></li>
+</ul>
+</section>
+<section id="time-series-cross-validation-rolling-forecasting-origin">
+<h3>6. Time Series Cross-Validation (Rolling Forecasting Origin)<a class="headerlink" href="#time-series-cross-validation-rolling-forecasting-origin" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Designed for time series data where the order of observations is crucial.</p></li>
+<li><p>Uses a rolling window approach to train on past data and test on future data.</p></li>
+<li><p>Preserves temporal order, making it suitable for time-dependent datasets.</p></li>
+</ul>
+<p>To partition data for model comparison in the credit scoring model:</p>
+<ol class="arabic simple">
+<li><p><strong>Stratified K-Fold Cross-Validation</strong>:</p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>Purpose</strong>: To create training and test sets for all models.</p></li>
+<li><p><strong>Process</strong>: Partition the data into K folds, ensuring each fold has a representative proportion of each class.</p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p><strong>Nested Cross-Validation</strong>:</p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>Applied to Each Training Set</strong>: Use the training sets obtained from stratified K-fold.</p></li>
+<li><p><strong>Inner Loop</strong>:</p>
+<ul>
+<li><p><strong>Purpose</strong>: Train the model.</p></li>
+<li><p><strong>Process</strong>: Further split the training set into inner training and validation sets to train the model.</p></li>
+</ul>
+</li>
+<li><p><strong>Outer Loop</strong>:</p>
+<ul>
+<li><p><strong>Purpose</strong>: Hyperparameter tuning.</p></li>
+<li><p><strong>Process</strong>: Use the performance on the inner validation sets to tune hyperparameters and evaluate model performance.</p></li>
+</ul>
+</li>
+</ul>
+<p>Since we have different objective functions based on various metrics, we need to repeat the process for each optimization metric.
+Moreover, it is important to assess the correspondence of classifier performance across these metrics. Specifically, we can use the agreement of classifier rankings across accuracy indicators by applying Kendall’s rank correlation coefficient. This helps us determine whether the metrics have high agreement and provide consistent recommendations (the best case), or if they disagree. If there is disagreement, we can decide which metric to focus on, whether it be a local or global assessment.</p>
+</section>
+</section>
+<section id="profitability-calculation">
+<h2>Profitability Calculation<a class="headerlink" href="#profitability-calculation" title="Link to this heading">#</a></h2>
+<p>The goal of this calculation is to estimate the profitability of a credit scoring model (or scorecard) by analyzing the costs associated with classification errors—specifically, false positives and false negatives. This involves determining how often good credit risks are wrongly classified as bad (False Positive Rate, FPR) and bad credit risks are wrongly classified as good (False Negative Rate, FNR), and then weighting these errors by their respective costs.</p>
+<section id="key-concepts">
+<h3>Key Concepts<a class="headerlink" href="#key-concepts" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>False Positive Rate (FPR)</strong>: The fraction of good credit risks that are incorrectly classified as bad.</p></li>
+<li><p><strong>False Negative Rate (FNR)</strong>: The fraction of bad credit risks that are incorrectly classified as good.</p></li>
+<li><p><strong>Misclassification Costs</strong>:</p>
+<ul class="simple">
+<li><p><strong>( C(+ | -) )</strong>: The opportunity cost of denying credit to a good risk. This is the cost incurred when a good applicant is mistakenly rejected.</p></li>
+<li><p><strong>( C(- | +) )</strong>: The cost of granting credit to a bad risk. This includes financial losses, often quantified as the net present value of exposure at default (EAD) times the loss given default (LGD).</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="calculation">
+<h3>Calculation<a class="headerlink" href="#calculation" title="Link to this heading">#</a></h3>
+<p>The misclassification cost of a scorecard, ( C(s) ), is calculated using the formula:</p>
+<div class="math notranslate nohighlight">
+\[
+C(s) = C(+|−) \cdot \text{FPR} + C(−|+) \cdot \text{FNR}
+\]</div>
+<p>Here’s a step-by-step breakdown:</p>
+<ol class="arabic simple">
+<li><p><strong>Determine the Costs</strong>:</p>
+<ul class="simple">
+<li><p>( C(+ | -) ) represents the cost of wrongly denying credit to a good risk.</p></li>
+<li><p>( C(- | +) ) represents the cost of wrongly granting credit to a bad risk.</p></li>
+</ul>
+</li>
+<li><p><strong>Calculate the FPR and FNR</strong>:</p>
+<ul class="simple">
+<li><p>FPR is the proportion of good applicants that are incorrectly classified as bad.</p></li>
+<li><p>FNR is the proportion of bad applicants that are incorrectly classified as good.</p></li>
+</ul>
+</li>
+<li><p><strong>Combine the Costs and Rates</strong>:</p>
+<ul class="simple">
+<li><p>Multiply the cost of each type of error by its rate to get the weighted costs.</p></li>
+</ul>
+</li>
+<li><p><strong>Sum the Weighted Costs</strong>:</p>
+<ul class="simple">
+<li><p>Add the weighted FPR and FNR to get the total misclassification cost for the scorecard.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="cost-ratios-and-scenarios">
+<h3>Cost Ratios and Scenarios<a class="headerlink" href="#cost-ratios-and-scenarios" title="Link to this heading">#</a></h3>
+<p>To cover different scenarios, the calculation considers various ratios of ( C(+ | -) ) to ( C(- | +) ), assuming that it is generally more costly to grant credit to a bad risk than to reject a good application. For example, the ratios range from 1:2 to 1:50. By fixing ( C(+ | -) ) at 1 and varying ( C(- | +) ), the analysis can explore how different misclassification costs impact the profitability estimation.</p>
+</section>
+<section id="normalization-and-comparison">
+<h3>Normalization and Comparison<a class="headerlink" href="#normalization-and-comparison" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Compute Misclassification Costs</strong>: For each cost setting and credit scoring dataset, the misclassification costs ( C(s) ) are calculated using the formula above.</p></li>
+<li><p><strong>Estimate Expected Error Costs</strong>: These costs are averaged over different datasets to get an overall estimate.</p></li>
+<li><p><strong>Normalize Costs</strong>: The costs are normalized to represent percentage improvements compared to a baseline model, such as a logistic regression (LR) model.</p></li>
+</ol>
+</section>
+<section id="example-for-clarification">
+<h3>Example for Clarification<a class="headerlink" href="#example-for-clarification" title="Link to this heading">#</a></h3>
+<p><strong>Assume</strong>:</p>
+<ul class="simple">
+<li><p>( C(+ | -) = 1 ) (Opportunity cost for rejecting a good applicant).</p></li>
+<li><p>( C(- | +) = 10 ) (Cost for approving a bad applicant).</p></li>
+<li><p>FPR = 0.05 (5% of good applicants are wrongly rejected).</p></li>
+<li><p>FNR = 0.10 (10% of bad applicants are wrongly approved).</p></li>
+</ul>
+<p><strong>Calculation</strong>:
+$<span class="math notranslate nohighlight">\(
+C(s) = 1 \cdot 0.05 + 10 \cdot 0.10 = 0.05 + 1 = 1.05
+\)</span>$</p>
+<p>This result suggests that the total misclassification cost for this scorecard, given the specified costs and error rates, is 1.05.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="3-approximate-nearest-neighbors.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Approximate Nearest Neighbors</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="satellite_image_welfare.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Satellite Image</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Credit Score Model</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-techniques-in-credit-scoring-model-development-and-validation">Common Techniques in Credit Scoring Model Development and Validation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#credit-score-model-types">Credit Score Model Types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-of-implementations">Examples of Implementations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#augmenting-hybrid-credit-score-models-with-alternative-datasets">Augmenting Hybrid Credit Score Models with Alternative Datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-workflow">Example Workflow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-selection">Feature Selection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#credit-score-for-business">Credit Score for Business</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-data-sources">Alternative Data Sources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#related-issues">Related Issues</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approaches-to-handle-imbalanced-data">Approaches to Handle Imbalanced Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-level-approachs">1. Data-Level Approachs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id23"></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-oversampling-techniques">a. Oversampling Techniques</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-undersampling-techniques">b. Undersampling Techniques</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-hybrid-techniques">c. Hybrid Techniques</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#algorith-m-level-approaches">2. Algorith#m-Level Approaches</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-cost-sensitive-learning">a. Cost-Sensitive Learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-ensemble-methods">b. Ensemble Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-anomaly-detection">c. Anomaly Detection</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-learning-approaches">3. Deep Learning Approaches</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-data-augmentation">a. Data Augmentation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-transfer-learning">b. Transfer Learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-specialized-architectures">c. Specialized Architectures</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation">Cross-Validation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nested-cross-validation">1. Nested Cross-Validation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#monte-carlo-cross-validation-repeated-random-subsampling-validation">2. Monte Carlo Cross-Validation (Repeated Random Subsampling Validation)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stratified-k-fold-cross-validation">3. Stratified K-Fold Cross-Validation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#leave-one-out-cross-validation-loocv">4. Leave-One-Out Cross-Validation (LOOCV)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#group-k-fold-cross-validation">5. Group K-Fold Cross-Validation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-series-cross-validation-rolling-forecasting-origin">6. Time Series Cross-Validation (Rolling Forecasting Origin)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#profitability-calculation">Profitability Calculation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-concepts">Key Concepts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculation">Calculation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cost-ratios-and-scenarios">Cost Ratios and Scenarios</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization-and-comparison">Normalization and Comparison</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-for-clarification">Example for Clarification</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Mike Nguyen
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
