@@ -1,0 +1,1077 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Approximate Nearest Neighbors &#8212; Machine Learning in Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=1a96265c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=c72506b3" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=1a96265c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/bootstrap.css?v=5340d9b1" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/theme.css?v=a243ae73" />
+    <link rel="stylesheet" type="text/css" href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?v=c786f70d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_sources/3-approximate-nearest-neighbors';</script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/copybutton_funcs.js?v=776a791e"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/language_data.js?v=e49ba422"></script>
+    <script src="../_static/searchtools.js?v=d19c4805"></script>
+    <script src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/scripts/bootstrap.js?v=3d67b3b1"></script>
+    <script src="../_static/scripts/pydata-sphinx-theme.js?v=b2908668"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?v=95180707"></script>
+    <link rel="canonical" href="https://mikenguyen13.github.io/mlpy/_sources/3-approximate-nearest-neighbors.html" />
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Machine Learning in Python - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Machine Learning in Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Machine Learning in Python
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Industry Applications</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3-approximate-nearest-neighbors.html">Approximate Nearest Neighbors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4-credit-score.html">Credit Score Model</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../satellite_image_welfare.html">Satellite Image</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/edit/main/_sources/3-approximate-nearest-neighbors.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/issues/new?title=Issue%20on%20page%20%2F_sources/3-approximate-nearest-neighbors.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/_sources/3-approximate-nearest-neighbors.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Approximate Nearest Neighbors</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#annoy">ANNOY</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-annoy">Understanding ANNOY</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-features">Key Features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-parameters">Configuration Parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-annoy-works">How ANNOY Works</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#faiss">FAISS</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Key Features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#software-innovation-and-applications">Software Innovation and Applications</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="approximate-nearest-neighbors">
+<h1>Approximate Nearest Neighbors<a class="headerlink" href="#approximate-nearest-neighbors" title="Link to this heading">#</a></h1>
+<p>In the realm of big data, traditional methods like k-NN (k-nearest neighbors) falter due to the sheer volume of information. The solution?</p>
+<p>Approximate Nearest Neighbors (ANN) algorithms, which aim for close-enough results most of the time, offering a balance between precision and performance.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#annoy"><span class="std std-ref">ANNOY</span></a> (Approximate Nearest Neighbors Oh Yeah), utilized by Spotify for music recommendations.</p></li>
+<li><p><a class="reference internal" href="#faiss"><span class="std std-ref">FAISS</span></a></p></li>
+</ul>
+<section id="annoy">
+<span id="id1"></span><h2>ANNOY<a class="headerlink" href="#annoy" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://github.com/spotify/annoy">GitHub Repository</a></p>
+<section id="understanding-annoy">
+<h3>Understanding ANNOY<a class="headerlink" href="#understanding-annoy" title="Link to this heading">#</a></h3>
+<p>ANNOY is designed to efficiently search through large datasets for items that are similar but not necessarily the closest match. It’s especially useful when processing time and storage are key considerations.</p>
+</section>
+<section id="key-features">
+<h3>Key Features<a class="headerlink" href="#key-features" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Distance Metrics Supported</strong>: Euclidean, Manhattan, Cosine, Hamming, and Dot Product.</p>
+<ul>
+<li><p><strong>Hamming Distance</strong>: Efficiently handles binary data by operating on 64-bit integers.</p></li>
+<li><p><strong>Dot Product Distance</strong>: Transforms vectors to a cosine space for better query performance, based on research by Microsoft Research.</p></li>
+</ul>
+</li>
+<li><p><strong>Optimized for Lower Dimensions</strong>: Best under 100 dimensions but effective up to 1,000.</p></li>
+<li><p><strong>Efficiency</strong>: Minimal memory usage, supports memory sharing across processes.</p></li>
+<li><p><strong>Flexibility</strong>: Separate index creation and lookup, with fixed indexing post-creation.</p></li>
+<li><p><strong>Scalability</strong>: Can build indexes on disk for datasets too large for memory.</p></li>
+</ul>
+</section>
+<section id="configuration-parameters">
+<h3>Configuration Parameters<a class="headerlink" href="#configuration-parameters" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">n_trees</span></code></strong>: Influences build time and index size. Higher values improve accuracy but increase the index size.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">search_k</span></code></strong>: Adjusts search performance. Higher values offer more accurate results but are slower. Defaults to <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">*</span> <span class="pre">n_trees</span></code> if unspecified.</p></li>
+</ul>
+<p>By adjusting parameters like <code class="docutils literal notranslate"><span class="pre">n_trees</span></code> and <code class="docutils literal notranslate"><span class="pre">search_k</span></code>, and choosing the appropriate distance metric, ANNOY can be finely tuned to balance between accuracy and efficiency, making it a powerful tool for handling large-scale datasets.</p>
+<p><strong>Trade-offs</strong>: You can opt for slower searches to reduce load times, memory usage, and disk IO. The index can be loaded in memory upfront or read from disk on-demand, depending on your system’s resources and needs.</p>
+</section>
+<section id="how-annoy-works">
+<h3>How ANNOY Works<a class="headerlink" href="#how-annoy-works" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>ANNOY uses random projections and tree structures to navigate the search space.</p></li>
+<li><p>It selects a random hyperplane at each node, dividing the space into two.</p></li>
+<li><p>This process repeats, creating a “forest” of trees, with the number of trees (<code class="docutils literal notranslate"><span class="pre">k</span></code>) tailored to your precision and performance requirements.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate a random dataset</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="mi">100</span> <span class="c1"># number of dimensions</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
+<span class="c1"># 10000 rows and 1000 columns </span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>...</th>
+      <th>90</th>
+      <th>91</th>
+      <th>92</th>
+      <th>93</th>
+      <th>94</th>
+      <th>95</th>
+      <th>96</th>
+      <th>97</th>
+      <th>98</th>
+      <th>99</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.471435</td>
+      <td>-1.190976</td>
+      <td>1.432707</td>
+      <td>-0.312652</td>
+      <td>-0.720589</td>
+      <td>0.887163</td>
+      <td>0.859588</td>
+      <td>-0.636524</td>
+      <td>0.015696</td>
+      <td>-2.242685</td>
+      <td>...</td>
+      <td>0.079842</td>
+      <td>-0.399965</td>
+      <td>-1.027851</td>
+      <td>-0.584718</td>
+      <td>0.816594</td>
+      <td>-0.081947</td>
+      <td>-0.344766</td>
+      <td>0.528288</td>
+      <td>-1.068989</td>
+      <td>-0.511881</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.291205</td>
+      <td>0.566534</td>
+      <td>0.503592</td>
+      <td>0.285296</td>
+      <td>0.484288</td>
+      <td>1.363482</td>
+      <td>-0.781105</td>
+      <td>-0.468018</td>
+      <td>1.224574</td>
+      <td>-1.281108</td>
+      <td>...</td>
+      <td>0.209395</td>
+      <td>-0.592886</td>
+      <td>-1.473116</td>
+      <td>-0.896581</td>
+      <td>1.104352</td>
+      <td>-0.431550</td>
+      <td>-0.161137</td>
+      <td>0.889157</td>
+      <td>0.288377</td>
+      <td>-1.051539</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.319561</td>
+      <td>-0.619993</td>
+      <td>0.156998</td>
+      <td>-0.571455</td>
+      <td>1.057633</td>
+      <td>-0.791489</td>
+      <td>-0.524627</td>
+      <td>0.071878</td>
+      <td>1.910759</td>
+      <td>0.787965</td>
+      <td>...</td>
+      <td>0.386254</td>
+      <td>0.822775</td>
+      <td>-0.683790</td>
+      <td>1.057203</td>
+      <td>0.031880</td>
+      <td>1.343182</td>
+      <td>-0.050540</td>
+      <td>-0.364010</td>
+      <td>-1.553342</td>
+      <td>-0.319298</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.527046</td>
+      <td>0.711112</td>
+      <td>-0.217545</td>
+      <td>2.637791</td>
+      <td>-1.742138</td>
+      <td>-0.094435</td>
+      <td>1.431184</td>
+      <td>0.592758</td>
+      <td>0.170297</td>
+      <td>-1.751706</td>
+      <td>...</td>
+      <td>0.393892</td>
+      <td>-0.950026</td>
+      <td>0.332507</td>
+      <td>0.528944</td>
+      <td>-1.120521</td>
+      <td>0.048264</td>
+      <td>0.061988</td>
+      <td>-1.027516</td>
+      <td>-0.238335</td>
+      <td>1.932178</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.226632</td>
+      <td>-0.923831</td>
+      <td>0.355839</td>
+      <td>-1.270063</td>
+      <td>-0.195472</td>
+      <td>-0.463419</td>
+      <td>0.989415</td>
+      <td>1.388647</td>
+      <td>1.087714</td>
+      <td>0.438801</td>
+      <td>...</td>
+      <td>0.725714</td>
+      <td>0.916976</td>
+      <td>-0.563890</td>
+      <td>-1.522180</td>
+      <td>-0.014279</td>
+      <td>-0.246721</td>
+      <td>-0.165329</td>
+      <td>0.119114</td>
+      <td>-2.074980</td>
+      <td>-1.002755</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 100 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">annoy</span> <span class="kn">import</span> <span class="n">AnnoyIndex</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>  <span class="c1"># Length of item vector that will be indexed</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create an Annoy index</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">AnnoyIndex</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s1">&#39;angular&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>An Annoy index t is created for 40-dimensional vectors, using the ‘angular’ distance metric. The angular distance is useful for measuring similarity based on the angle between vectors (often used in text and other types of normalized data).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add items to the index</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="c1"># 10 trees</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>The build method constructs the index using 10 trees. More trees can give more accurate results, but also take more memory and make querying slower.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;my_index.ann&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>The index is saved to disk with the filename ‘test.ann’. This allows the index to be reloaded later without needing to rebuild it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Loading the Index</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">AnnoyIndex</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s1">&#39;angular&#39;</span><span class="p">)</span>
+<span class="n">u</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;my_index.ann&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>A new Annoy index u is created and loaded from the saved file ‘my_index.ann’. Loading is typically very fast because it uses memory mapping (mmap), which maps the file directly into memory.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">get_nns_by_item</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span> <span class="c1"># will find the 10 nearest neighbors</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0, 9505, 1842, 9822, 8443, 4612, 9341, 7156, 8157, 8829]
+</pre></div>
+</div>
+</div>
+</div>
+<p>This retrieves the 10 nearest neighbors to the item with ID 0 in the index. This is useful for finding items similar to a given item in terms of their vector representation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">d</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">new_df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>         0         1         2         3         4         5         6   \
+0 -0.741819  1.646627  0.452115  0.882599 -0.661915  0.979095  0.051259   
+1  0.513265 -0.560029 -1.875828 -0.616818  0.472312 -0.518897  1.403291   
+2  1.994143 -1.962042  0.310775  1.101320  0.563290  2.175136  0.151669   
+3 -1.665064 -0.206307 -0.053277  0.881134 -1.761581  0.577637  1.185733   
+4  0.301827 -0.588839  0.346635  2.454211 -1.641289 -1.892444  0.587601   
+
+         7         8         9   ...        90        91        92        93  \
+0  0.661035 -0.204227  0.243189  ... -0.191396  0.611696  1.130720 -0.185962   
+1  0.349392 -0.265442 -0.108946  ...  1.107599  1.971189 -0.482424 -0.919173   
+2  0.640860  1.065391 -1.004647  ...  0.618361  0.430687 -0.473926 -0.296155   
+3 -1.375332 -0.368126 -0.862266  ...  0.372291  0.863036 -1.472766  0.198946   
+4 -0.401334 -0.925195  0.176657  ...  2.160231  0.265586 -0.030451 -0.063437   
+
+         94        95        96        97        98        99  
+0  1.013035 -0.848390 -1.324425  1.041549  0.030705 -0.270555  
+1 -1.839877  1.544191  0.437576  1.829458 -0.376125  1.337848  
+2  1.059534 -1.060604  0.562583 -0.769010  1.927553  0.785875  
+3  0.154797  0.732177  0.516928  1.394767 -0.031738  0.995752  
+4  0.187774 -0.178658  1.659626  0.317580  0.846268  0.046817  
+
+[5 rows x 100 columns]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Number of nearest neighbors to find</span>
+<span class="n">num_neighbors</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="c1"># Iterate over each new vector in new_df and find its nearest neighbors</span>
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">new_df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">vector</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="c1"># print(vector)</span>
+    <span class="n">neighbors</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">get_nns_by_vector</span><span class="p">(</span><span class="n">vector</span><span class="p">,</span> <span class="n">num_neighbors</span><span class="p">,</span> <span class="n">include_distances</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">neighbors</span><span class="p">)</span>
+    <span class="c1"># print(f&quot;Neighbors for new observation {index}: {neighbors}&quot;)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[5983, 5215, 956, 6273, 915]
+[968, 4406, 810, 8943, 8149]
+[8343, 5295, 3473, 9330, 2748]
+[396, 8740, 6628, 6450, 7079]
+[2489, 5919, 5699, 8600, 8774]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="faiss">
+<span id="id2"></span><h2>FAISS<a class="headerlink" href="#faiss" title="Link to this heading">#</a></h2>
+<section id="introduction">
+<h3>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h3>
+<p>Developed by Facebook AI, Faiss represents a groundbreaking approach to similarity search, particularly for multimedia documents.
+Traditional search engines and database systems struggle with the complexity and scale involved in finding similar high-dimensional vectors, which is crucial for processing and understanding multimedia content.
+Faiss introduces a solution that is not only faster but also more efficient than any existing technology, boasting an 8.5x speed improvement over the state-of-the-art and establishing new benchmarks in the process.</p>
+<p>Challengages:</p>
+<ul class="simple">
+<li><p>Similarity search involves identifying multimedia documents that resemble each other within huge datasets, which traditional databases, designed for structured, symbolic information, fail to handle effectively.</p></li>
+<li><p>AI-driven tools like word embeddings and CNN descriptors have made high-dimensional vectors a powerful means for representing multimedia content. However, efficiently querying these vectors for similarity remains a significant challenge, given the sheer volume of data and the computational complexity involved.</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>Key Features<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>Faiss addresses these challenges head-on by providing an efficient and scalable library tailored for similarity search across billion-scale datasets. It offers several advantages:</p>
+<ol class="arabic simple">
+<li><p><strong>Speed and Efficiency</strong>: Faiss is optimized to deliver unparalleled search speeds, making it possible to process queries against billions of vectors in a fraction of the time previously required.</p></li>
+<li><p><strong>Memory Optimization</strong>: The library is designed to be light on memory usage, facilitating faster access and processing of large datasets without compromising performance.</p></li>
+<li><p><strong>GPU Acceleration</strong>: With its state-of-the-art GPU implementation, Faiss leverages the power of modern hardware to further enhance search speeds and efficiency.</p></li>
+</ol>
+</section>
+<section id="software-innovation-and-applications">
+<h3>Software Innovation and Applications<a class="headerlink" href="#software-innovation-and-applications" title="Link to this heading">#</a></h3>
+<p>Beyond its core functionality, Faiss represents a significant advancement in software engineering for AI applications. It offers:</p>
+<ul class="simple">
+<li><p><strong>Flexibility</strong>: With various similarity search methods, Faiss caters to a wide range of use cases and datasets, providing users with the tools to tailor their search operations according to specific needs.</p></li>
+<li><p><strong>Scalability</strong>: Designed to handle databases of billions of vectors, Faiss breaks new ground in scalability, enabling applications that were previously unimaginable due to computational constraints.</p></li>
+</ul>
+<p>Specifically,</p>
+<p>CPU Optimizations:</p>
+<ul class="simple">
+<li><p>Multi-threading is utilized to leverage multiple cores for parallel searches across multiple GPUs.</p></li>
+<li><p>BLAS Libraries are essential for exact distance computations, enabling efficient brute-force implementations via matrix multiplication.</p></li>
+<li><p>SIMD Vectorization and Popcount techniques accelerate distance computations for individual vectors.</p></li>
+</ul>
+<p>GPU Enhancements:</p>
+<ul class="simple">
+<li><p>K-Selection Algorithm: A significant advancement in GPU implementations is the development of a highly efficient k-selection algorithm for finding the k-minimum or maximum elements, crucial for similarity searches. This algorithm operates close to peak GPU memory bandwidth efficiency and is designed to work in a single pass, keeping all intermediate states in registers, which allows for integration with other kernels for faster search operations.</p></li>
+<li><p>Efficient Tiling and Kernel Implementation: The library focuses on effective tiling strategies and kernel functions for approximate search, optimizing performance.</p></li>
+<li><p>Multi-GPU Support: Faiss allows for data sharding or replication across multiple GPUs, not limiting operations to the memory capacity of a single GPU.</p></li>
+<li><p>Half-Precision Floating-Point Support: It includes float16 support for both computation and storage, which enhances speed with minimal accuracy loss on supported GPU architectures.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">faiss</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert DataFrame to numpy array</span>
+<span class="n">xb</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>  <span class="c1"># FAISS needs float32 data</span>
+
+<span class="c1"># Normalize the vectors (optional)</span>
+<span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">xb</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">xb</span> <span class="o">=</span> <span class="n">xb</span> <span class="o">/</span> <span class="n">norm</span>  <span class="c1"># Avoid division by zero issues in case of zero vectors</span>
+
+<span class="c1"># Create a FAISS index - using L2 distance for simplicity</span>
+<span class="n">index</span> <span class="o">=</span> <span class="n">faiss</span><span class="o">.</span><span class="n">IndexFlatL2</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>  <span class="c1"># d is the dimensionality of the vectors</span>
+
+<span class="c1"># Add vectors to the index</span>
+<span class="n">index</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">xb</span><span class="p">)</span>
+
+<span class="c1"># Perform a search</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># Number of nearest neighbors to find</span>
+<span class="n">xq</span> <span class="o">=</span> <span class="n">xb</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>  <span class="c1"># Query the first 5 vectors from the dataset itself as an example</span>
+<span class="n">D</span><span class="p">,</span> <span class="n">I</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">xq</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>  <span class="c1"># D is the distance matrix, I is the index matrix</span>
+
+<span class="c1"># Display the results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Indices of Nearest Neighbors:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">I</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Distances to Nearest Neighbors:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Indices of Nearest Neighbors:
+[[   0 2240 2975 9327]
+ [   1 8826 4435 1533]
+ [   2 4493 6811 9874]
+ [   3 3371 4861 2566]
+ [   4 9884 4025 3933]]
+Distances to Nearest Neighbors:
+[[0.        1.1695111 1.2628028 1.2849629]
+ [0.        1.3047677 1.347751  1.3648174]
+ [0.        1.2633741 1.2682862 1.2734882]
+ [0.        1.2850516 1.3241501 1.3330061]
+ [0.        1.2195594 1.2292215 1.2797881]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can also perform the search process for a new dataset</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert new DataFrame to numpy array</span>
+<span class="n">xq</span> <span class="o">=</span> <span class="n">new_df</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+
+<span class="c1"># Normalize the vectors (only if the original data was normalized)</span>
+<span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">xq</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">xq</span> <span class="o">=</span> <span class="n">xq</span> <span class="o">/</span> <span class="n">norm</span>  <span class="c1"># Avoid division by zero issues in case of zero vectors</span>
+
+<span class="c1"># Perform a search</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># Number of nearest neighbors to find</span>
+<span class="n">D</span><span class="p">,</span> <span class="n">I</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">xq</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>  <span class="c1"># D is the distance matrix, I is the index matrix</span>
+
+<span class="c1"># Display the results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Indices of Nearest Neighbors:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">I</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Distances to Nearest Neighbors:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Indices of Nearest Neighbors:
+[[7913 3935 2320 2171]
+ [1101  968 4631 9352]
+ [5147 8802 2311  105]
+ [ 449 5731 8035 9890]
+ [8359  699 1995 5096]]
+Distances to Nearest Neighbors:
+[[1.1784326 1.1884484 1.3003789 1.3152766]
+ [1.219982  1.312232  1.312483  1.3187146]
+ [1.2540469 1.2751344 1.2969229 1.3039747]
+ [1.290485  1.320958  1.3216754 1.3329273]
+ [1.305373  1.3320141 1.3333966 1.3549589]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./_sources"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#annoy">ANNOY</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-annoy">Understanding ANNOY</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-features">Key Features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-parameters">Configuration Parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-annoy-works">How ANNOY Works</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#faiss">FAISS</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Key Features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#software-innovation-and-applications">Software Innovation and Applications</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Mike Nguyen
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

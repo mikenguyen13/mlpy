@@ -28,13 +28,24 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=1a96265c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=c72506b3" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=1a96265c" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/bootstrap.css?v=5340d9b1" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/theme.css?v=a243ae73" />
+    <link rel="stylesheet" type="text/css" href="_static/vendor/fontawesome/6.5.1/css/all.min.css?v=c786f70d" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
@@ -60,6 +71,21 @@
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '4-credit-score';</script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/copybutton_funcs.js?v=776a791e"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/language_data.js?v=e49ba422"></script>
+    <script src="_static/searchtools.js?v=d19c4805"></script>
+    <script src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/scripts/bootstrap.js?v=3d67b3b1"></script>
+    <script src="_static/scripts/pydata-sphinx-theme.js?v=b2908668"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?v=95180707"></script>
     <link rel="canonical" href="https://mikenguyen13.github.io/mlpy/4-credit-score.html" />
     <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
@@ -184,7 +210,6 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="3-approximate-nearest-neighbors.html">Approximate Nearest Neighbors</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Credit Score Model</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="satellite_image_welfare.html">Satellite Image</a></li>
 </ul>
 
@@ -398,7 +423,6 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Credit Score Model</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-techniques-in-credit-scoring-model-development-and-validation">Common Techniques in Credit Scoring Model Development and Validation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#credit-score-model-types">Credit Score Model Types</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-of-implementations">Examples of Implementations</a></li>
@@ -409,25 +433,24 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-data-sources">Alternative Data Sources</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#related-issues">Related Issues</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approaches-to-handle-imbalanced-data">Approaches to Handle Imbalanced Data</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-level-approachs">1. Data-Level Approachs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-level-approaches">1. Data-Level Approaches</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-oversampling-techniques">a. Oversampling Techniques</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-undersampling-techniques">b. Undersampling Techniques</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c-hybrid-techniques">c. Hybrid Techniques</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#algorithm-level-approaches">2. Algorithm-Level Approaches</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-cost-sensitive-learning">a. Cost-Sensitive Learning</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-ensemble-methods">b. Ensemble Methods</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c-anomaly-detection">c. Anomaly Detection</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id23"></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-oversampling-techniques">a. Oversampling Techniques</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-undersampling-techniques">b. Undersampling Techniques</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-hybrid-techniques">c. Hybrid Techniques</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#algorith-m-level-approaches">2. Algorith#m-Level Approaches</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-cost-sensitive-learning">a. Cost-Sensitive Learning</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-ensemble-methods">b. Ensemble Methods</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-anomaly-detection">c. Anomaly Detection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-learning-approaches">3. Deep Learning Approaches</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-data-augmentation">a. Data Augmentation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-transfer-learning">b. Transfer Learning</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c-specialized-architectures">c. Specialized Architectures</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-learning-approaches">3. Deep Learning Approaches</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-data-augmentation">a. Data Augmentation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-transfer-learning">b. Transfer Learning</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-specialized-architectures">c. Specialized Architectures</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation">Cross-Validation</a><ul class="nav section-nav flex-column">
@@ -448,9 +471,6 @@ document.write(`
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -638,7 +658,7 @@ s.</p></li>
 </ul>
 </li>
 </ol>
-<p>According to <span id="id1">West [<a class="reference internal" href="1-markdown.html#id25" title="David West. Neural network credit scoring models. Computers &amp; operations research, 27(11-12):1131–1152, 2000.">Wes00</a>]</span>:</p>
+<p>According to <span id="id1">West [<a class="reference internal" href="_sources/1-markdown.html#id25" title="David West. Neural network credit scoring models. Computers &amp; operations research, 27(11-12):1131–1152, 2000.">Wes00</a>]</span>:</p>
 <ul class="simple">
 <li><p><strong>Neural Network Models:</strong></p>
 <ul>
@@ -659,7 +679,7 @@ s.</p></li>
 </ul>
 </li>
 </ul>
-<p><span id="id2">Chuang and Lin [<a class="reference internal" href="1-markdown.html#id24" title="Chun-Ling Chuang and Rong-Ho Lin. Constructing a reassigning credit scoring model. Expert Systems with Applications, 36(2):1685–1694, 2009.">CL09</a>]</span> introduces a two-stage Reassigning Credit Scoring Model (RCSM) to improve accuracy and reduce Type I errors.</p>
+<p><span id="id2">Chuang and Lin [<a class="reference internal" href="_sources/1-markdown.html#id24" title="Chun-Ling Chuang and Rong-Ho Lin. Constructing a reassigning credit scoring model. Expert Systems with Applications, 36(2):1685–1694, 2009.">CL09</a>]</span> introduces a two-stage Reassigning Credit Scoring Model (RCSM) to improve accuracy and reduce Type I errors.</p>
 <ol class="arabic simple">
 <li><p>The first stage involves constructing an ANN-based model to classify credit applicants as either accepted (good) or rejected (bad).</p></li>
 <li><p>The second stage reduces Type I errors by reassigning mistakenly rejected good applicants to a “conditionally accepted” category using a CBR-based classification technique.</p></li>
@@ -676,10 +696,10 @@ s.</p></li>
 </ul>
 </li>
 </ul>
-<p><strong>Credit Score card model</strong> is easier to interpret and deploy <span id="id3">Yap <em>et al.</em> [<a class="reference internal" href="1-markdown.html#id23" title="Bee Wah Yap, Seng Huat Ong, and Nor Huselina Mohamed Husain. Using data mining to improve assessment of credit worthiness via credit scoring models. Expert Systems with Applications, 38(10):13274–13283, 2011.">YOH11</a>]</span>.</p>
-<p><span id="id4">Hlongwane <em>et al.</em> [<a class="reference internal" href="1-markdown.html#id7" title="Rivalani Hlongwane, Kutlwano KKM Ramaboa, and Wilson Mongwe. Enhancing credit scoring accuracy with a comprehensive evaluation of alternative data. Plos one, 19(5):e0303566, 2024.">HRM24</a>]</span> implement</p>
+<p><strong>Credit Score card model</strong> is easier to interpret and deploy <span id="id3">Yap <em>et al.</em> [<a class="reference internal" href="_sources/1-markdown.html#id23" title="Bee Wah Yap, Seng Huat Ong, and Nor Huselina Mohamed Husain. Using data mining to improve assessment of credit worthiness via credit scoring models. Expert Systems with Applications, 38(10):13274–13283, 2011.">YOH11</a>]</span>.</p>
+<p><span id="id4">Hlongwane <em>et al.</em> [<a class="reference internal" href="_sources/1-markdown.html#id7" title="Rivalani Hlongwane, Kutlwano KKM Ramaboa, and Wilson Mongwe. Enhancing credit scoring accuracy with a comprehensive evaluation of alternative data. Plos one, 19(5):e0303566, 2024.">HRM24</a>]</span> implement</p>
 <ul class="simple">
-<li><p>XGBoost ( <span id="id5">[<a class="reference internal" href="1-markdown.html#id5" title="Björn Rafn Gunnarsson, Seppe Vanden Broucke, Bart Baesens, María Óskarsdóttir, and Wilfried Lemahieu. Deep learning for credit scoring: do or don’t? European Journal of Operational Research, 295(1):292–305, 2021.">GVBB+21</a>]</span> prefers)</p></li>
+<li><p>XGBoost ( <span id="id5">[<a class="reference internal" href="_sources/1-markdown.html#id5" title="Björn Rafn Gunnarsson, Seppe Vanden Broucke, Bart Baesens, María Óskarsdóttir, and Wilfried Lemahieu. Deep learning for credit scoring: do or don’t? European Journal of Operational Research, 295(1):292–305, 2021.">GVBB+21</a>]</span> prefers)</p></li>
 <li><p>LightGBM</p></li>
 <li><p>CatBoost</p></li>
 <li><p>Model-X knockoffs</p></li>
@@ -688,32 +708,32 @@ s.</p></li>
 <section id="feature-selection">
 <h2>Feature Selection<a class="headerlink" href="#feature-selection" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><strong>Information gain, gain ratio, and chi-square</strong>: Trivedi et al. (2020) <span id="id6">[<a class="reference internal" href="1-markdown.html#id10" title="Shrawan Kumar Trivedi. A study on credit scoring modeling with different feature selection and machine learning approaches. Technology in Society, 63:101413, 2020.">Tri20</a>]</span></p></li>
-<li><p><strong>Neighbourhood rough set (NRS)</strong>: Tripathi and Aggarwal (2018) <span id="id7">[<a class="reference internal" href="1-markdown.html#id9" title="Diwakar Tripathi, Damodar Reddy Edla, and Ramalingaswamy Cheruku. Hybrid credit scoring model using neighborhood rough set and multi-layer ensemble classification. Journal of Intelligent &amp; Fuzzy Systems, 34(3):1543–1549, 2018.">TEC18</a>]</span></p></li>
-<li><p><strong>Other methods</strong>: Nalic et al. (2020) <span id="id8">[<a class="reference internal" href="1-markdown.html#id8" title="Jasmina Nalić, Goran Martinović, and Drago Žagar. New hybrid data mining model for credit scoring based on feature selection algorithm and ensemble classifiers. Advanced Engineering Informatics, 45:101130, 2020.">NalicMartinovicvZagar20</a>]</span></p></li>
+<li><p><strong>Information gain, gain ratio, and chi-square</strong>: Trivedi et al. (2020) <span id="id6">[<a class="reference internal" href="_sources/1-markdown.html#id10" title="Shrawan Kumar Trivedi. A study on credit scoring modeling with different feature selection and machine learning approaches. Technology in Society, 63:101413, 2020.">Tri20</a>]</span></p></li>
+<li><p><strong>Neighbourhood rough set (NRS)</strong>: Tripathi and Aggarwal (2018) <span id="id7">[<a class="reference internal" href="_sources/1-markdown.html#id9" title="Diwakar Tripathi, Damodar Reddy Edla, and Ramalingaswamy Cheruku. Hybrid credit scoring model using neighborhood rough set and multi-layer ensemble classification. Journal of Intelligent &amp; Fuzzy Systems, 34(3):1543–1549, 2018.">TEC18</a>]</span></p></li>
+<li><p><strong>Other methods</strong>: Nalic et al. (2020) <span id="id8">[<a class="reference internal" href="_sources/1-markdown.html#id8" title="Jasmina Nalić, Goran Martinović, and Drago Žagar. New hybrid data mining model for credit scoring based on feature selection algorithm and ensemble classifiers. Advanced Engineering Informatics, 45:101130, 2020.">NalicMartinovicvZagar20</a>]</span></p></li>
 </ul>
 </section>
 <section id="credit-score-for-business">
 <h2>Credit Score for Business<a class="headerlink" href="#credit-score-for-business" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><strong>SMEs</strong>: Roy et al. (2023) <span id="id9">[<a class="reference internal" href="1-markdown.html#id22" title="Pranith K Roy and Krishnendu Shaw. A credit scoring model for smes using ahp and topsis. International Journal of Finance &amp; Economics, 28(1):372–391, 2023.">RS23</a>]</span></p></li>
+<li><p><strong>SMEs</strong>: Roy et al. (2023) <span id="id9">[<a class="reference internal" href="_sources/1-markdown.html#id22" title="Pranith K Roy and Krishnendu Shaw. A credit scoring model for smes using ahp and topsis. International Journal of Finance &amp; Economics, 28(1):372–391, 2023.">RS23</a>]</span></p></li>
 </ul>
 </section>
 <section id="alternative-data-sources">
 <h2>Alternative Data Sources<a class="headerlink" href="#alternative-data-sources" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><strong>Email usage and psychometric variables</strong>: Djeundje et al. (2021) <span id="id10">[<a class="reference internal" href="1-markdown.html#id21" title="Viani B Djeundje, Jonathan Crook, Raffaella Calabrese, and Mona Hamid. Enhancing credit scoring with alternative data. Expert Systems with Applications, 163:113766, 2021.">DCCH21</a>]</span>, Arraiz et al. (2017) <span id="id11">[<a class="reference internal" href="1-markdown.html#id20" title="Irani Arráiz, Miriam Bruhn, and Rodolfo Stucchi. Psychometrics as a tool to improve credit information. The World Bank Economic Review, 30(Supplement_1):S67–S76, 2017.">ArraizBS17</a>]</span></p></li>
-<li><p><strong>Social Media data</strong>: Wei et al. (2016) <span id="id12">[<a class="reference internal" href="1-markdown.html#id19" title="Yanhao Wei, Pinar Yildirim, Christophe Van den Bulte, and Chrysanthos Dellarocas. Credit scoring with social network data. Marketing Science, 35(2):234–258, 2016.">WYVdBD16</a>]</span>, Ge et al. (2017) <span id="id13">[<a class="reference internal" href="1-markdown.html#id18" title="Ruyi Ge, Juan Feng, Bin Gu, and Pengzhu Zhang. Predicting and deterring default with social media information in peer-to-peer lending. Journal of Management Information Systems, 34(2):401–424, 2017.">GFGZ17</a>]</span>, de Souza et al. (2019) <span id="id14">[<a class="reference internal" href="1-markdown.html#id17" title="Sofie De Cnudde, Julie Moeyersoms, Marija Stankova, Ellen Tobback, Vinayak Javaly, and David Martens. What does your facebook profile reveal about your creditworthiness? using alternative data for microfinance. Journal of the Operational Research Society, 70(3):353–363, 2019.">DCMS+19</a>]</span></p></li>
-<li><p><strong>Telecommunication</strong>: Oskarsdottir et al. (2019) <span id="id15">[<a class="reference internal" href="1-markdown.html#id16" title="María Óskarsdóttir, Cristián Bravo, Carlos Sarraute, Jan Vanthienen, and Bart Baesens. The value of big data for credit scoring: enhancing financial inclusion using mobile phone data and social network analytics. Applied Soft Computing, 74:26–39, 2019.">OskarsdottirBS+19</a>]</span>, Ots and Li (2020) <span id="id16">[<a class="reference internal" href="1-markdown.html#id15" title="Henri Ots, Innar Liiv, and Diana Tur. Mobile phone usage data for credit scoring. In Databases and Information Systems: 14th International Baltic Conference, DB&amp;IS 2020, Tallinn, Estonia, June 16–19, 2020, Proceedings 14, 82–95. Springer, 2020.">OLT20</a>]</span>, de Montjoye et al. (2011) <span id="id17">[<a class="reference internal" href="1-markdown.html#id14" title="Rodrigo de Oliveira, Alexandros Karatzoglou, Pedro Concejero Cerezo, Ana Armenta Lopez de Vicuña, and Nuria Oliver. Towards a psychographic user model from mobile phone usage. In CHI'11 Extended Abstracts on Human Factors in Computing Systems, pages 2191–2196. 2011.">dOKCC+11</a>]</span>, Pedro et al. (2015) <span id="id18">[<a class="reference internal" href="1-markdown.html#id13" title="Jose San Pedro, Davide Proserpio, and Nuria Oliver. Mobiscore: towards universal credit scoring from mobile phone data. In International conference on user modeling, adaptation, and personalization, 195–207. Springer, 2015.">PPO15</a>]</span>, Agarwal et al. (2018) <span id="id19">[<a class="reference internal" href="1-markdown.html#id12" title="Rishav Raj Agarwal, Chia-Ching Lin, Kuan-Ta Chen, and Vivek Kumar Singh. Predicting financial trouble using call data—on social capital, phone logs, and financial trouble. PloS one, 13(2):e0191863, 2018.">ALCS18</a>]</span></p></li>
+<li><p><strong>Email usage and psychometric variables</strong>: Djeundje et al. (2021) <span id="id10">[<a class="reference internal" href="_sources/1-markdown.html#id21" title="Viani B Djeundje, Jonathan Crook, Raffaella Calabrese, and Mona Hamid. Enhancing credit scoring with alternative data. Expert Systems with Applications, 163:113766, 2021.">DCCH21</a>]</span>, Arraiz et al. (2017) <span id="id11">[<a class="reference internal" href="_sources/1-markdown.html#id20" title="Irani Arráiz, Miriam Bruhn, and Rodolfo Stucchi. Psychometrics as a tool to improve credit information. The World Bank Economic Review, 30(Supplement_1):S67–S76, 2017.">ArraizBS17</a>]</span></p></li>
+<li><p><strong>Social Media data</strong>: Wei et al. (2016) <span id="id12">[<a class="reference internal" href="_sources/1-markdown.html#id19" title="Yanhao Wei, Pinar Yildirim, Christophe Van den Bulte, and Chrysanthos Dellarocas. Credit scoring with social network data. Marketing Science, 35(2):234–258, 2016.">WYVdBD16</a>]</span>, Ge et al. (2017) <span id="id13">[<a class="reference internal" href="_sources/1-markdown.html#id18" title="Ruyi Ge, Juan Feng, Bin Gu, and Pengzhu Zhang. Predicting and deterring default with social media information in peer-to-peer lending. Journal of Management Information Systems, 34(2):401–424, 2017.">GFGZ17</a>]</span>, de Souza et al. (2019) <span id="id14">[<a class="reference internal" href="_sources/1-markdown.html#id17" title="Sofie De Cnudde, Julie Moeyersoms, Marija Stankova, Ellen Tobback, Vinayak Javaly, and David Martens. What does your facebook profile reveal about your creditworthiness? using alternative data for microfinance. Journal of the Operational Research Society, 70(3):353–363, 2019.">DCMS+19</a>]</span></p></li>
+<li><p><strong>Telecommunication</strong>: Oskarsdottir et al. (2019) <span id="id15">[<a class="reference internal" href="_sources/1-markdown.html#id16" title="María Óskarsdóttir, Cristián Bravo, Carlos Sarraute, Jan Vanthienen, and Bart Baesens. The value of big data for credit scoring: enhancing financial inclusion using mobile phone data and social network analytics. Applied Soft Computing, 74:26–39, 2019.">OskarsdottirBS+19</a>]</span>, Ots and Li (2020) <span id="id16">[<a class="reference internal" href="_sources/1-markdown.html#id15" title="Henri Ots, Innar Liiv, and Diana Tur. Mobile phone usage data for credit scoring. In Databases and Information Systems: 14th International Baltic Conference, DB&amp;IS 2020, Tallinn, Estonia, June 16–19, 2020, Proceedings 14, 82–95. Springer, 2020.">OLT20</a>]</span>, de Montjoye et al. (2011) <span id="id17">[<a class="reference internal" href="_sources/1-markdown.html#id14" title="Rodrigo de Oliveira, Alexandros Karatzoglou, Pedro Concejero Cerezo, Ana Armenta Lopez de Vicuña, and Nuria Oliver. Towards a psychographic user model from mobile phone usage. In CHI'11 Extended Abstracts on Human Factors in Computing Systems, pages 2191–2196. 2011.">dOKCC+11</a>]</span>, Pedro et al. (2015) <span id="id18">[<a class="reference internal" href="_sources/1-markdown.html#id13" title="Jose San Pedro, Davide Proserpio, and Nuria Oliver. Mobiscore: towards universal credit scoring from mobile phone data. In International conference on user modeling, adaptation, and personalization, 195–207. Springer, 2015.">PPO15</a>]</span>, Agarwal et al. (2018) <span id="id19">[<a class="reference internal" href="_sources/1-markdown.html#id12" title="Rishav Raj Agarwal, Chia-Ching Lin, Kuan-Ta Chen, and Vivek Kumar Singh. Predicting financial trouble using call data—on social capital, phone logs, and financial trouble. PloS one, 13(2):e0191863, 2018.">ALCS18</a>]</span></p></li>
 </ul>
 </section>
 <section id="related-issues">
 <h2>Related Issues<a class="headerlink" href="#related-issues" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><strong>Credit card fraud detection</strong>: Zhang et al. (2021) <span id="id20">[<a class="reference internal" href="1-markdown.html#id11" title="Xinwei Zhang, Yaoci Han, Wei Xu, and Qili Wang. Hoba: a novel feature engineering methodology for credit card fraud detection with a deep learning architecture. Information Sciences, 557:302–316, 2021.">ZHXW21</a>]</span>
+<li><p><strong>Credit card fraud detection</strong>: Zhang et al. (2021) <span id="id20">[<a class="reference internal" href="_sources/1-markdown.html#id11" title="Xinwei Zhang, Yaoci Han, Wei Xu, and Qili Wang. Hoba: a novel feature engineering methodology for credit card fraud detection with a deep learning architecture. Information Sciences, 557:302–316, 2021.">ZHXW21</a>]</span>
 ng2021hoba</p></li>
 </ul>
-<p>According to <span id="id21">[<a class="reference internal" href="1-markdown.html#id6" title="Hussein A Abdou and John Pointon. Credit scoring, statistical techniques and evaluation criteria: a review of the literature. Intelligent systems in accounting, finance and management, 18(2-3):59–88, 2011.">AP11</a>]</span>, common models include:</p>
+<p>According to <span id="id21">[<a class="reference internal" href="_sources/1-markdown.html#id6" title="Hussein A Abdou and John Pointon. Credit scoring, statistical techniques and evaluation criteria: a review of the literature. Intelligent systems in accounting, finance and management, 18(2-3):59–88, 2011.">AP11</a>]</span>, common models include:</p>
 <ul class="simple">
 <li><p>MOE: Mixture of Experts</p></li>
 <li><p>RBF: Radial Basis Function</p></li>
@@ -859,7 +879,7 @@ ng2021hoba</p></li>
 </tr>
 </tbody>
 </table>
-<p><span id="id22">[<a class="reference internal" href="1-markdown.html#id4" title="Stefan Lessmann, Bart Baesens, Hsin-Vonn Seow, and Lyn C Thomas. Benchmarking state-of-the-art classification algorithms for credit scoring: an update of research. European Journal of Operational Research, 247(1):124–136, 2015.">LBST15</a>]</span></p>
+<p><span id="id22">[<a class="reference internal" href="_sources/1-markdown.html#id4" title="Stefan Lessmann, Bart Baesens, Hsin-Vonn Seow, and Lyn C Thomas. Benchmarking state-of-the-art classification algorithms for credit scoring: an update of research. European Journal of Operational Research, 247(1):124–136, 2015.">LBST15</a>]</span></p>
 <p><strong>Individual Classification</strong>:</p>
 <p>Bayesian network
 CART (Classification and Regression Trees)
@@ -906,83 +926,81 @@ K-Nearest Oracle</p>
 </section>
 <section id="approaches-to-handle-imbalanced-data">
 <h2>Approaches to Handle Imbalanced Data<a class="headerlink" href="#approaches-to-handle-imbalanced-data" title="Link to this heading">#</a></h2>
-<section id="data-level-approachs">
-<h3>1. Data-Level Approachs<a class="headerlink" href="#data-level-approachs" title="Link to this heading">#</a></h3>
-</section>
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="id23">
-<h1><a class="headerlink" href="#id23" title="Link to this heading">#</a></h1>
+<section id="data-level-approaches">
+<h3>1. Data-Level Approaches<a class="headerlink" href="#data-level-approaches" title="Link to this heading">#</a></h3>
 <section id="a-oversampling-techniques">
-<h2>a. Oversampling Techniques<a class="headerlink" href="#a-oversampling-techniques" title="Link to this heading">#</a></h2>
+<h4>a. Oversampling Techniques<a class="headerlink" href="#a-oversampling-techniques" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>SMOTE (Synthetic Minority Over-sampling Technique)</strong>: Generates synthetic examples of the minority class by interpolating between existing samples.</p></li>
 <li><p><strong>ADASYN (Adaptive Synthetic Sampling)</strong>: Similar to SMOTE but focuses more on generating synthetic samples for harder-to-classify instances.</p></li>
-<li><p><strong>Random Oversampling</strong>: Replicates minority class examples until the dataset is balan#ced.</p></li>
+<li><p><strong>Random Oversampling</strong>: Replicates minority class examples until the dataset is balanced.</p></li>
 </ul>
 </section>
 <section id="b-undersampling-techniques">
-<h2>b. Undersampling Techniques<a class="headerlink" href="#b-undersampling-techniques" title="Link to this heading">#</a></h2>
+<h4>b. Undersampling Techniques<a class="headerlink" href="#b-undersampling-techniques" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>Random Undersampling</strong>: Randomly removes instances from the majority class to balance the dataset.</p></li>
 <li><p><strong>Cluster-Based Undersampling</strong>: Clusters the majority class and removes samples based on cluster proximity.</p></li>
-<li><p><strong>NearMiss</strong>: Selects majority samples closest to the minority samples or farthest from other majori#ty samples.</p></li>
+<li><p><strong>NearMiss</strong>: Selects majority samples closest to the minority samples or farthest from other majority samples.</p></li>
 </ul>
 </section>
 <section id="c-hybrid-techniques">
-<h2>c. Hybrid Techniques<a class="headerlink" href="#c-hybrid-techniques" title="Link to this heading">#</a></h2>
+<h4>c. Hybrid Techniques<a class="headerlink" href="#c-hybrid-techniques" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>SMOTE-Tomek Links</strong>: Combines SMOTE with Tomek links to remove overlapping samples from the majority class.</p></li>
-<li><p><strong>SMOTE-ENN (Edited Nearest Neighbors)</strong>: Uses SMOTE for oversampling and ENN for cleaning the dataset by removing misclassi#fied instances.</p></li>
+<li><p><strong>SMOTE-ENN (Edited Nearest Neighbors)</strong>: Uses SMOTE for oversampling and ENN for cleaning the dataset by removing misclassified instances.</p></li>
 </ul>
 </section>
-<section id="algorith-m-level-approaches">
-<h2>2. Algorith#m-Level Approaches<a class="headerlink" href="#algorith-m-level-approaches" title="Link to this heading">#</a></h2>
+</section>
+<section id="algorithm-level-approaches">
+<h3>2. Algorithm-Level Approaches<a class="headerlink" href="#algorithm-level-approaches" title="Link to this heading">#</a></h3>
 <section id="a-cost-sensitive-learning">
-<h3>a. Cost-Sensitive Learning<a class="headerlink" href="#a-cost-sensitive-learning" title="Link to this heading">#</a></h3>
+<h4>a. Cost-Sensitive Learning<a class="headerlink" href="#a-cost-sensitive-learning" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>Cost-Sensitive Classifiers</strong>: Adjusts the learning process to minimize the cost of misclassifications, such as higher penalties for minority class errors.</p></li>
-<li><p><strong>Weighted Loss Functions</strong>: Assigns different weights to classes in the loss function to emphas#ize the minority class.</p></li>
+<li><p><strong>Weighted Loss Functions</strong>: Assigns different weights to classes in the loss function to emphasize the minority class.</p></li>
 </ul>
 </section>
 <section id="b-ensemble-methods">
-<h3>b. Ensemble Methods<a class="headerlink" href="#b-ensemble-methods" title="Link to this heading">#</a></h3>
+<h4>b. Ensemble Methods<a class="headerlink" href="#b-ensemble-methods" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>Balanced Random Forest</strong>: Modifies the random forest algorithm to balance each bootstrap sample.</p></li>
 <li><p><strong>EasyEnsemble</strong>: Combines multiple weak learners trained on different balanced subsets of the majority class.</p></li>
-<li><p><strong>RUSBoost (Random UnderSampling with Boosting)</strong>: Integrates undersampli#ng with boosting techniques.</p></li>
+<li><p><strong>RUSBoost (Random UnderSampling with Boosting)</strong>: Integrates undersampling with boosting techniques.</p></li>
 </ul>
 </section>
 <section id="c-anomaly-detection">
-<h3>c. Anomaly Detection<a class="headerlink" href="#c-anomaly-detection" title="Link to this heading">#</a></h3>
+<h4>c. Anomaly Detection<a class="headerlink" href="#c-anomaly-detection" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>One-Class SVM</strong>: Treats the minority class as the target and identifies it against the majority background.</p></li>
-<li><p><strong>Isolation Forest</strong>: Detects outliers, assuming the minori#ty class can be seen as anomalies#.</p></li>
+<li><p><strong>Isolation Forest</strong>: Detects outliers, assuming the minority class can be seen as anomalies.</p></li>
 </ul>
 </section>
 </section>
 <section id="deep-learning-approaches">
-<h2>3. Deep Learning Approaches<a class="headerlink" href="#deep-learning-approaches" title="Link to this heading">#</a></h2>
+<h3>3. Deep Learning Approaches<a class="headerlink" href="#deep-learning-approaches" title="Link to this heading">#</a></h3>
 <section id="a-data-augmentation">
-<h3>a. Data Augmentation<a class="headerlink" href="#a-data-augmentation" title="Link to this heading">#</a></h3>
+<h4>a. Data Augmentation<a class="headerlink" href="#a-data-augmentation" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>GANs (Generative Adversarial Networks)</strong>: Generate realistic minority class samples to augment the dataset.</p></li>
-<li><p><strong>Autoencoders</strong>: Learn latent features of the minority cl#ass and use them to generate new samples.</p></li>
+<li><p><strong>Autoencoders</strong>: Learn latent features of the minority class and use them to generate new samples.</p></li>
 </ul>
 </section>
 <section id="b-transfer-learning">
-<h3>b. Transfer Learning<a class="headerlink" href="#b-transfer-learning" title="Link to this heading">#</a></h3>
+<h4>b. Transfer Learning<a class="headerlink" href="#b-transfer-learning" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>Feature Transfer</strong>: Uses features learned from a balanced or related task to improve minority class recognition.</p></li>
-<li><p><strong>Fine-Tuning</strong>: Fine-tunes pre-trained models on the imb#alanced dataset to leverage general features.</p></li>
+<li><p><strong>Fine-Tuning</strong>: Fine-tunes pre-trained models on the imbalanced dataset to leverage general features.</p></li>
 </ul>
 </section>
 <section id="c-specialized-architectures">
-<h3>c. Specialized Architectures<a class="headerlink" href="#c-specialized-architectures" title="Link to this heading">#</a></h3>
+<h4>c. Specialized Architectures<a class="headerlink" href="#c-specialized-architectures" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>Focal Loss</strong>: Modifies the cross-entropy loss to focus more on hard-to-classify examples, often used in object detection tasks.</p></li>
-<li><p><strong>Class-Balanced Loss</strong>: Scales the loss by the inverse of the class frequency to balance the influence of each class.</p></li>
+<li><p><strong>Class-Balanced Loss</strong>: Scales the loss by the inverse of the class frequency to balance the influence of each class.
+s frequency to balance the influence of each class.</p></li>
 </ul>
+</section>
 </section>
 </section>
 <section id="cross-validation">
@@ -1208,7 +1226,6 @@ C(s) = 1 \cdot 0.05 + 10 \cdot 0.10 = 0.05 + 1 = 1.05
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Credit Score Model</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-techniques-in-credit-scoring-model-development-and-validation">Common Techniques in Credit Scoring Model Development and Validation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#credit-score-model-types">Credit Score Model Types</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-of-implementations">Examples of Implementations</a></li>
@@ -1219,25 +1236,24 @@ C(s) = 1 \cdot 0.05 + 10 \cdot 0.10 = 0.05 + 1 = 1.05
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-data-sources">Alternative Data Sources</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#related-issues">Related Issues</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approaches-to-handle-imbalanced-data">Approaches to Handle Imbalanced Data</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-level-approachs">1. Data-Level Approachs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-level-approaches">1. Data-Level Approaches</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-oversampling-techniques">a. Oversampling Techniques</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-undersampling-techniques">b. Undersampling Techniques</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c-hybrid-techniques">c. Hybrid Techniques</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#algorithm-level-approaches">2. Algorithm-Level Approaches</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-cost-sensitive-learning">a. Cost-Sensitive Learning</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-ensemble-methods">b. Ensemble Methods</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c-anomaly-detection">c. Anomaly Detection</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id23"></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-oversampling-techniques">a. Oversampling Techniques</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-undersampling-techniques">b. Undersampling Techniques</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-hybrid-techniques">c. Hybrid Techniques</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#algorith-m-level-approaches">2. Algorith#m-Level Approaches</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-cost-sensitive-learning">a. Cost-Sensitive Learning</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-ensemble-methods">b. Ensemble Methods</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-anomaly-detection">c. Anomaly Detection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-learning-approaches">3. Deep Learning Approaches</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-data-augmentation">a. Data Augmentation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-transfer-learning">b. Transfer Learning</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c-specialized-architectures">c. Specialized Architectures</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-learning-approaches">3. Deep Learning Approaches</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-data-augmentation">a. Data Augmentation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-transfer-learning">b. Transfer Learning</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-specialized-architectures">c. Specialized Architectures</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation">Cross-Validation</a><ul class="nav section-nav flex-column">
@@ -1258,9 +1274,6 @@ C(s) = 1 \cdot 0.05 + 10 \cdot 0.10 = 0.05 + 1 = 1.05
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-
   </nav></div>
 
 </div></div>
