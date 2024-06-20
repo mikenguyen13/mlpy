@@ -1,0 +1,639 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Causal Inference &#8212; Machine Learning in Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'causal-inference';</script>
+    <link rel="canonical" href="https://mikenguyen13.github.io/mlpy/causal-inference.html" />
+    <link rel="icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Machine Learning in Python - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Machine Learning in Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Machine Learning in Python
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Industry Applications</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="3-approximate-nearest-neighbors.html">Approximate Nearest Neighbors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-credit-score.html">Credit Score Model</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="satellite_image_welfare.html">Satellite Image</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/edit/main/causal-inference.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/issues/new?title=Issue%20on%20page%20%2Fcausal-inference.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/causal-inference.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Causal Inference</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#counter-factual-analysis-for-explainble-ai-xai-https-www-youtube-com-watch-v-dgzykrlxiau-ab-channel-pydata">Counter Factual Analysis for Explainble AI (XAI) (https://www.youtube.com/watch?v=DgzyKrLxIaU&amp;ab_channel=PyData)</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="causal-inference">
+<h1>Causal Inference<a class="headerlink" href="#causal-inference" title="Link to this heading">#</a></h1>
+<p>Three rungs of causal inference</p>
+<ol class="arabic simple">
+<li><p>Seeing: Correlations (Basic Stat, Machine Learning)</p>
+<ul class="simple">
+<li><p>Correlation can be misinterpreted (i.e., spurious correlations), which might lead to Simpson’s paradox</p></li>
+</ul>
+</li>
+<li><p>Doing: Causal Inference by cohorts by intervention</p>
+<ul class="simple">
+<li><p>Controlling for confounding variables, scientists can infer causality</p></li>
+</ul>
+</li>
+<li><p>Imagining: Causal Inference for individuals by counterfactuals</p>
+<ul class="simple">
+<li><p>Can answer What-if questions.</p></li>
+</ul>
+</li>
+</ol>
+<ul class="simple">
+<li><p>Limitations of Correlations</p></li>
+<li><p>Simpson’s Paradox</p></li>
+<li><p>Graph Models</p></li>
+</ul>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=w4DFQmh5OGw&amp;amp;ab_channel=PyData">Causation Assumptions</a>:</p>
+<ul class="simple">
+<li><p>Stable Unit Treatment value Assumption (SUTVA) (i.e., individuals do not impact each other)</p></li>
+<li><p>Consistency - a <strong>potential</strong> outcome is the same as an <strong>actual</strong> outcome</p></li>
+<li><p>Positivity - every cohort has a non-zero probability</p></li>
+<li><p>Ignorability - “No unmeasured confounders” assumption (i.e., no alternative explanation).</p></li>
+</ul>
+<section id="counter-factual-analysis-for-explainble-ai-xai-https-www-youtube-com-watch-v-dgzykrlxiau-ab-channel-pydata">
+<h2>Counter Factual Analysis for Explainble AI (XAI) (<a class="reference external" href="https://www.youtube.com/watch?v=DgzyKrLxIaU&amp;amp;ab_channel=PyData">https://www.youtube.com/watch?v=DgzyKrLxIaU&amp;ab_channel=PyData</a>)<a class="headerlink" href="#counter-factual-analysis-for-explainble-ai-xai-https-www-youtube-com-watch-v-dgzykrlxiau-ab-channel-pydata" title="Link to this heading">#</a></h2>
+<p>A counterfactual explanation of a prediction describes the smallest change to the feature values that changes the prediction to a predefined output</p>
+<p>Actionable Counterfactuals: those values that can be changed
+Desirable Properties</p>
+<ol class="arabic simple">
+<li><p>Interpretable and human friendly explanations</p></li>
+<li><p>Small number of feature changes</p></li>
+<li><p>Avoid contradictions</p></li>
+<li><p>Produce the predefined prediction</p></li>
+<li><p>Similar to the instance regarding feature values</p></li>
+<li><p>Generate multiple counterfactual explanations</p></li>
+<li><p>Should have feature values that are likely</p></li>
+</ol>
+<p>Optimization Challenges</p>
+<ol class="arabic simple">
+<li><p>Prediction of counterfactual should be as close to desired prediction</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+o_1 (f(x_{cf}), y_{cf}) = 
+\begin{cases}
+0, &amp; \text{if} f(x_{cf}) \in y_{cf} \\
+\inf_{cf}| f(x_{cf} - y_{cf}| &amp; \text{else}
+\end{cases}
+\end{split}\]</div>
+<ol class="arabic simple" start="2">
+<li><p>Counterfactual should be as similar as possible to the instance</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+o_2 (x_0, x_{cf}) = \frac{1}{p} \sum_{j=1}^p \delta_G (x_0^j , x_{cf}^j)
+\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\delta_G(x_0^j, x_{cf}^j) = 
+\begin{cases}
+\frac{1}{R_j} |x_0^j - x_{cf}^j | &amp; \text{if } x_0^j \text{ is numerical} \\
+\Pi_{x_0^j \neq x_{cf}^j} &amp; \text{if } x_0^j \text{ is categorical}
+\end{cases}
+\end{split}\]</div>
+<ol class="arabic simple" start="3">
+<li><p>Sparse feature change
+$<span class="math notranslate nohighlight">\(
+o_3(x_0 , x_{cf}) = ||x_0 - x_{cf}||_0 = \sum_{j=1}^p \Pi_{x_0^j \neq x_{cf}^j}
+\)</span>$</p></li>
+<li><p>Counterfactuals should have likely feature values
+$<span class="math notranslate nohighlight">\(
+o_4 (x_{cf}, X^{obs}) = \frac{1}{p} \sum_{j=1}^p \delta_G(x_{cf}^j, x_{[1]}^j)
+\)</span>$</p></li>
+</ol>
+<p>Algorithms for Counterfactuals</p>
+<ol class="arabic simple">
+<li><p>Base method [&#64;wachter2017counterfactual]: Optimizes criterion 1 &amp; 2</p></li>
+<li><p>Multi-objective Counter Factual Explanations: Optimize all criteria</p></li>
+<li><p>Diverse Counterfactual Explanations (DiCE)</p>
+<ul class="simple">
+<li><p>Generates multiple CFs</p></li>
+<li><p>Optimizes criterion 1 &amp; 2 along with an extra diversity criterion</p></li>
+</ul>
+</li>
+<li><p>Interpretable CFs guided by prototypes</p>
+<ul class="simple">
+<li><p>generates interpretable CFs that lies closer to data distribution an actionable</p></li>
+<li><p>Optimizes criterion 1, 2, and 3</p></li>
+<li><p>can apply to image data</p></li>
+</ul>
+</li>
+</ol>
+<br>
+<p>Diverse CF Explanations (DiCE)
+The loss function optimized is
+$<span class="math notranslate nohighlight">\(
+L = \underset{x_{cf_1}, \dots, x_{cf_k}}{\operatorname{argmin}} \frac{1}{k} \sum_{i=1}^k y \text{loss} (x_{cf}, y_{cf}) + \frac{\lambda_1}{k} \sum_{i=1}^k \text{dist}(x_{cf}, x_0) - \lambda_2 \text{dpp_diverrsitty}(x_{cf_1}, \dots, x_{cf_k})
+\)</span>$</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x_{cf_1}\)</span> is a CF example</p></li>
+<li><p>k -total no. of CFs to be generated</p></li>
+<li><p><span class="math notranslate nohighlight">\(f(.)\)</span> model</p></li>
+<li><p><span class="math notranslate nohighlight">\(x_0\)</span> original input</p></li>
+<li><p><span class="math notranslate nohighlight">\(\lambda_1, \lambda_2\)</span> - hyper parameter</p></li>
+<li><p>yloss = <span class="math notranslate nohighlight">\(l_1\)</span> or <span class="math notranslate nohighlight">\(l_2\)</span> loss</p></li>
+<li><p>dist = a distance function</p>
+<ul>
+<li><p>continuous variables: <span class="math notranslate nohighlight">\(\text{dist_cont}(x_{cf}, x_0) = \frac{1}{d_{cont}}\sum_{j=1}^{d_{cont}} \frac{|x_{cf}^j - x_0^j|}{MAD_j}\)</span></p></li>
+<li><p>categorical variables: <span class="math notranslate nohighlight">\(\text{dist_cat}(x_{cf}, x_0) = \frac{1}{d_{cont}}\sum_{j=1}^{d_{cat}}\Pi(x_{cf}^j \neq x_0^j)\)</span></p></li>
+</ul>
+</li>
+<li><p>dpp_diversity: term based on determinantal point processes to ensure diversity among CFs <span class="math notranslate nohighlight">\(dpp_diversity = det(K), K_{i,j}= \frac{1}{1 + dist (x_{cf_i}, x_{cf_j})}\)</span></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#counter-factual-analysis-for-explainble-ai-xai-https-www-youtube-com-watch-v-dgzykrlxiau-ab-channel-pydata">Counter Factual Analysis for Explainble AI (XAI) (https://www.youtube.com/watch?v=DgzyKrLxIaU&amp;ab_channel=PyData)</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Mike Nguyen
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
