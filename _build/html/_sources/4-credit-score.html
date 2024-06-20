@@ -210,7 +210,6 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../3-approximate-nearest-neighbors.html">Approximate Nearest Neighbors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../4-credit-score.html">Credit Score Model</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="../satellite_image_welfare.html">Satellite Image</a></li>
 </ul>
 
@@ -424,7 +423,6 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Credit Score Model</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-techniques-in-credit-scoring-model-development-and-validation">Common Techniques in Credit Scoring Model Development and Validation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#credit-score-model-types">Credit Score Model Types</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-of-implementations">Examples of Implementations</a></li>
@@ -435,25 +433,24 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-data-sources">Alternative Data Sources</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#related-issues">Related Issues</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approaches-to-handle-imbalanced-data">Approaches to Handle Imbalanced Data</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-level-approachs">1. Data-Level Approachs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-level-approaches">1. Data-Level Approaches</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-oversampling-techniques">a. Oversampling Techniques</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-undersampling-techniques">b. Undersampling Techniques</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c-hybrid-techniques">c. Hybrid Techniques</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#algorithm-level-approaches">2. Algorithm-Level Approaches</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-cost-sensitive-learning">a. Cost-Sensitive Learning</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-ensemble-methods">b. Ensemble Methods</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c-anomaly-detection">c. Anomaly Detection</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id23"></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-oversampling-techniques">a. Oversampling Techniques</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-undersampling-techniques">b. Undersampling Techniques</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-hybrid-techniques">c. Hybrid Techniques</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#algorith-m-level-approaches">2. Algorith#m-Level Approaches</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-cost-sensitive-learning">a. Cost-Sensitive Learning</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-ensemble-methods">b. Ensemble Methods</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-anomaly-detection">c. Anomaly Detection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-learning-approaches">3. Deep Learning Approaches</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-data-augmentation">a. Data Augmentation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-transfer-learning">b. Transfer Learning</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c-specialized-architectures">c. Specialized Architectures</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-learning-approaches">3. Deep Learning Approaches</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-data-augmentation">a. Data Augmentation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-transfer-learning">b. Transfer Learning</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-specialized-architectures">c. Specialized Architectures</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation">Cross-Validation</a><ul class="nav section-nav flex-column">
@@ -474,9 +471,6 @@ document.write(`
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -932,83 +926,81 @@ K-Nearest Oracle</p>
 </section>
 <section id="approaches-to-handle-imbalanced-data">
 <h2>Approaches to Handle Imbalanced Data<a class="headerlink" href="#approaches-to-handle-imbalanced-data" title="Link to this heading">#</a></h2>
-<section id="data-level-approachs">
-<h3>1. Data-Level Approachs<a class="headerlink" href="#data-level-approachs" title="Link to this heading">#</a></h3>
-</section>
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="id23">
-<h1><a class="headerlink" href="#id23" title="Link to this heading">#</a></h1>
+<section id="data-level-approaches">
+<h3>1. Data-Level Approaches<a class="headerlink" href="#data-level-approaches" title="Link to this heading">#</a></h3>
 <section id="a-oversampling-techniques">
-<h2>a. Oversampling Techniques<a class="headerlink" href="#a-oversampling-techniques" title="Link to this heading">#</a></h2>
+<h4>a. Oversampling Techniques<a class="headerlink" href="#a-oversampling-techniques" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>SMOTE (Synthetic Minority Over-sampling Technique)</strong>: Generates synthetic examples of the minority class by interpolating between existing samples.</p></li>
 <li><p><strong>ADASYN (Adaptive Synthetic Sampling)</strong>: Similar to SMOTE but focuses more on generating synthetic samples for harder-to-classify instances.</p></li>
-<li><p><strong>Random Oversampling</strong>: Replicates minority class examples until the dataset is balan#ced.</p></li>
+<li><p><strong>Random Oversampling</strong>: Replicates minority class examples until the dataset is balanced.</p></li>
 </ul>
 </section>
 <section id="b-undersampling-techniques">
-<h2>b. Undersampling Techniques<a class="headerlink" href="#b-undersampling-techniques" title="Link to this heading">#</a></h2>
+<h4>b. Undersampling Techniques<a class="headerlink" href="#b-undersampling-techniques" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>Random Undersampling</strong>: Randomly removes instances from the majority class to balance the dataset.</p></li>
 <li><p><strong>Cluster-Based Undersampling</strong>: Clusters the majority class and removes samples based on cluster proximity.</p></li>
-<li><p><strong>NearMiss</strong>: Selects majority samples closest to the minority samples or farthest from other majori#ty samples.</p></li>
+<li><p><strong>NearMiss</strong>: Selects majority samples closest to the minority samples or farthest from other majority samples.</p></li>
 </ul>
 </section>
 <section id="c-hybrid-techniques">
-<h2>c. Hybrid Techniques<a class="headerlink" href="#c-hybrid-techniques" title="Link to this heading">#</a></h2>
+<h4>c. Hybrid Techniques<a class="headerlink" href="#c-hybrid-techniques" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>SMOTE-Tomek Links</strong>: Combines SMOTE with Tomek links to remove overlapping samples from the majority class.</p></li>
-<li><p><strong>SMOTE-ENN (Edited Nearest Neighbors)</strong>: Uses SMOTE for oversampling and ENN for cleaning the dataset by removing misclassi#fied instances.</p></li>
+<li><p><strong>SMOTE-ENN (Edited Nearest Neighbors)</strong>: Uses SMOTE for oversampling and ENN for cleaning the dataset by removing misclassified instances.</p></li>
 </ul>
 </section>
-<section id="algorith-m-level-approaches">
-<h2>2. Algorith#m-Level Approaches<a class="headerlink" href="#algorith-m-level-approaches" title="Link to this heading">#</a></h2>
+</section>
+<section id="algorithm-level-approaches">
+<h3>2. Algorithm-Level Approaches<a class="headerlink" href="#algorithm-level-approaches" title="Link to this heading">#</a></h3>
 <section id="a-cost-sensitive-learning">
-<h3>a. Cost-Sensitive Learning<a class="headerlink" href="#a-cost-sensitive-learning" title="Link to this heading">#</a></h3>
+<h4>a. Cost-Sensitive Learning<a class="headerlink" href="#a-cost-sensitive-learning" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>Cost-Sensitive Classifiers</strong>: Adjusts the learning process to minimize the cost of misclassifications, such as higher penalties for minority class errors.</p></li>
-<li><p><strong>Weighted Loss Functions</strong>: Assigns different weights to classes in the loss function to emphas#ize the minority class.</p></li>
+<li><p><strong>Weighted Loss Functions</strong>: Assigns different weights to classes in the loss function to emphasize the minority class.</p></li>
 </ul>
 </section>
 <section id="b-ensemble-methods">
-<h3>b. Ensemble Methods<a class="headerlink" href="#b-ensemble-methods" title="Link to this heading">#</a></h3>
+<h4>b. Ensemble Methods<a class="headerlink" href="#b-ensemble-methods" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>Balanced Random Forest</strong>: Modifies the random forest algorithm to balance each bootstrap sample.</p></li>
 <li><p><strong>EasyEnsemble</strong>: Combines multiple weak learners trained on different balanced subsets of the majority class.</p></li>
-<li><p><strong>RUSBoost (Random UnderSampling with Boosting)</strong>: Integrates undersampli#ng with boosting techniques.</p></li>
+<li><p><strong>RUSBoost (Random UnderSampling with Boosting)</strong>: Integrates undersampling with boosting techniques.</p></li>
 </ul>
 </section>
 <section id="c-anomaly-detection">
-<h3>c. Anomaly Detection<a class="headerlink" href="#c-anomaly-detection" title="Link to this heading">#</a></h3>
+<h4>c. Anomaly Detection<a class="headerlink" href="#c-anomaly-detection" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>One-Class SVM</strong>: Treats the minority class as the target and identifies it against the majority background.</p></li>
-<li><p><strong>Isolation Forest</strong>: Detects outliers, assuming the minori#ty class can be seen as anomalies#.</p></li>
+<li><p><strong>Isolation Forest</strong>: Detects outliers, assuming the minority class can be seen as anomalies.</p></li>
 </ul>
 </section>
 </section>
 <section id="deep-learning-approaches">
-<h2>3. Deep Learning Approaches<a class="headerlink" href="#deep-learning-approaches" title="Link to this heading">#</a></h2>
+<h3>3. Deep Learning Approaches<a class="headerlink" href="#deep-learning-approaches" title="Link to this heading">#</a></h3>
 <section id="a-data-augmentation">
-<h3>a. Data Augmentation<a class="headerlink" href="#a-data-augmentation" title="Link to this heading">#</a></h3>
+<h4>a. Data Augmentation<a class="headerlink" href="#a-data-augmentation" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>GANs (Generative Adversarial Networks)</strong>: Generate realistic minority class samples to augment the dataset.</p></li>
-<li><p><strong>Autoencoders</strong>: Learn latent features of the minority cl#ass and use them to generate new samples.</p></li>
+<li><p><strong>Autoencoders</strong>: Learn latent features of the minority class and use them to generate new samples.</p></li>
 </ul>
 </section>
 <section id="b-transfer-learning">
-<h3>b. Transfer Learning<a class="headerlink" href="#b-transfer-learning" title="Link to this heading">#</a></h3>
+<h4>b. Transfer Learning<a class="headerlink" href="#b-transfer-learning" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>Feature Transfer</strong>: Uses features learned from a balanced or related task to improve minority class recognition.</p></li>
-<li><p><strong>Fine-Tuning</strong>: Fine-tunes pre-trained models on the imb#alanced dataset to leverage general features.</p></li>
+<li><p><strong>Fine-Tuning</strong>: Fine-tunes pre-trained models on the imbalanced dataset to leverage general features.</p></li>
 </ul>
 </section>
 <section id="c-specialized-architectures">
-<h3>c. Specialized Architectures<a class="headerlink" href="#c-specialized-architectures" title="Link to this heading">#</a></h3>
+<h4>c. Specialized Architectures<a class="headerlink" href="#c-specialized-architectures" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>Focal Loss</strong>: Modifies the cross-entropy loss to focus more on hard-to-classify examples, often used in object detection tasks.</p></li>
-<li><p><strong>Class-Balanced Loss</strong>: Scales the loss by the inverse of the class frequency to balance the influence of each class.</p></li>
+<li><p><strong>Class-Balanced Loss</strong>: Scales the loss by the inverse of the class frequency to balance the influence of each class.
+s frequency to balance the influence of each class.</p></li>
 </ul>
+</section>
 </section>
 </section>
 <section id="cross-validation">
@@ -1216,7 +1208,6 @@ C(s) = 1 \cdot 0.05 + 10 \cdot 0.10 = 0.05 + 1 = 1.05
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Credit Score Model</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-techniques-in-credit-scoring-model-development-and-validation">Common Techniques in Credit Scoring Model Development and Validation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#credit-score-model-types">Credit Score Model Types</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-of-implementations">Examples of Implementations</a></li>
@@ -1227,25 +1218,24 @@ C(s) = 1 \cdot 0.05 + 10 \cdot 0.10 = 0.05 + 1 = 1.05
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-data-sources">Alternative Data Sources</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#related-issues">Related Issues</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approaches-to-handle-imbalanced-data">Approaches to Handle Imbalanced Data</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-level-approachs">1. Data-Level Approachs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-level-approaches">1. Data-Level Approaches</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-oversampling-techniques">a. Oversampling Techniques</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-undersampling-techniques">b. Undersampling Techniques</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c-hybrid-techniques">c. Hybrid Techniques</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#algorithm-level-approaches">2. Algorithm-Level Approaches</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-cost-sensitive-learning">a. Cost-Sensitive Learning</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-ensemble-methods">b. Ensemble Methods</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c-anomaly-detection">c. Anomaly Detection</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id23"></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-oversampling-techniques">a. Oversampling Techniques</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-undersampling-techniques">b. Undersampling Techniques</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-hybrid-techniques">c. Hybrid Techniques</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#algorith-m-level-approaches">2. Algorith#m-Level Approaches</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-cost-sensitive-learning">a. Cost-Sensitive Learning</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-ensemble-methods">b. Ensemble Methods</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-anomaly-detection">c. Anomaly Detection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-learning-approaches">3. Deep Learning Approaches</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-data-augmentation">a. Data Augmentation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-transfer-learning">b. Transfer Learning</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c-specialized-architectures">c. Specialized Architectures</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-learning-approaches">3. Deep Learning Approaches</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-data-augmentation">a. Data Augmentation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-transfer-learning">b. Transfer Learning</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-specialized-architectures">c. Specialized Architectures</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation">Cross-Validation</a><ul class="nav section-nav flex-column">
@@ -1266,9 +1256,6 @@ C(s) = 1 \cdot 0.05 + 10 \cdot 0.10 = 0.05 + 1 = 1.05
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-
   </nav></div>
 
 </div></div>
