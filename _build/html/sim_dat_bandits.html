@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>&lt;no title&gt; &#8212; Machine Learning in Python</title>
+    <title>Multi-Armed Bandits &#8212; Machine Learning in Python</title>
   
   
   
@@ -204,10 +204,11 @@
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Industry Applications</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="3-approximate-nearest-neighbors.html">Approximate Nearest Neighbors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4-credit-score.html">Credit Score Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="satellite_image_welfare.html">Satellite Image</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Multi-Armed Bandits</a></li>
 </ul>
 
     </div>
@@ -397,9 +398,7 @@ document.write(`
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
+
 </div></div>
       
     </div>
@@ -410,19 +409,11 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1><no title></h1>
+    <h1>Multi-Armed Bandits</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -432,7 +423,9 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <p><strong>Step 1</strong>: Simulate the Dataset</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="multi-armed-bandits">
+<h1>Multi-Armed Bandits<a class="headerlink" href="#multi-armed-bandits" title="Link to this heading">#</a></h1>
+<p><strong>Step 1</strong>: Simulate the Dataset</p>
 <p>We’ll create a dataset where each potential client has a set of features (context) and can receive one of several possible messages.</p>
 <p>The goal is to learn which message works best for different segments based on their context.</p>
 <p>Key Components:</p>
@@ -606,6 +599,7 @@ Assuming your team’s model is implemented as a function contextual_bandit_pred
 </div>
 </div>
 <p>The higher the average reward (at least above random = 0.5) the better</p>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -653,20 +647,7 @@ Assuming your team’s model is implemented as a function contextual_bandit_pred
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-  </nav></div>
-
-</div></div>
+                <div class="bd-sidebar-secondary bd-toc"></div>
               
             
           </div>

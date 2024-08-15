@@ -211,6 +211,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../3-approximate-nearest-neighbors.html">Approximate Nearest Neighbors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../4-credit-score.html">Credit Score Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../satellite_image_welfare.html">Satellite Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sim_dat_bandits.html">Multi-Armed Bandits</a></li>
 </ul>
 
     </div>
@@ -1093,8 +1094,8 @@ Moreover, it is important to assess the correspondence of classifier performance
 <li><p><strong>False Negative Rate (FNR)</strong>: The fraction of bad credit risks that are incorrectly classified as good.</p></li>
 <li><p><strong>Misclassification Costs</strong>:</p>
 <ul class="simple">
-<li><p><strong>( C(+ | -) )</strong>: The opportunity cost of denying credit to a good risk. This is the cost incurred when a good applicant is mistakenly rejected.</p></li>
-<li><p><strong>( C(- | +) )</strong>: The cost of granting credit to a bad risk. This includes financial losses, often quantified as the net present value of exposure at default (EAD) times the loss given default (LGD).</p></li>
+<li><p><span class="math notranslate nohighlight">\(C(+ | -)\)</span>: The opportunity cost of denying credit to a good risk. This is the cost incurred when a good applicant is mistakenly rejected.</p></li>
+<li><p><span class="math notranslate nohighlight">\(C(- | +)\)</span>: The cost of granting credit to a bad risk. This includes financial losses, often quantified as the net present value of exposure at default (EAD) times the loss given default (LGD).</p></li>
 </ul>
 </li>
 </ol>
@@ -1110,8 +1111,8 @@ C(s) = C(+|−) \cdot \text{FPR} + C(−|+) \cdot \text{FNR}
 <ol class="arabic simple">
 <li><p><strong>Determine the Costs</strong>:</p>
 <ul class="simple">
-<li><p>( C(+ | -) ) represents the cost of wrongly denying credit to a good risk.</p></li>
-<li><p>( C(- | +) ) represents the cost of wrongly granting credit to a bad risk.</p></li>
+<li><p><span class="math notranslate nohighlight">\(C(+ | -)\)</span> represents the cost of wrongly denying credit to a good risk.</p></li>
+<li><p><span class="math notranslate nohighlight">\(C(- | +)\)</span> represents the cost of wrongly granting credit to a bad risk.</p></li>
 </ul>
 </li>
 <li><p><strong>Calculate the FPR and FNR</strong>:</p>
@@ -1134,12 +1135,12 @@ C(s) = C(+|−) \cdot \text{FPR} + C(−|+) \cdot \text{FNR}
 </section>
 <section id="cost-ratios-and-scenarios">
 <h3>Cost Ratios and Scenarios<a class="headerlink" href="#cost-ratios-and-scenarios" title="Link to this heading">#</a></h3>
-<p>To cover different scenarios, the calculation considers various ratios of ( C(+ | -) ) to ( C(- | +) ), assuming that it is generally more costly to grant credit to a bad risk than to reject a good application. For example, the ratios range from 1:2 to 1:50. By fixing ( C(+ | -) ) at 1 and varying ( C(- | +) ), the analysis can explore how different misclassification costs impact the profitability estimation.</p>
+<p>To cover different scenarios, the calculation considers various ratios of <span class="math notranslate nohighlight">\(C(+ | -)\)</span> to <span class="math notranslate nohighlight">\(C(- | +)\)</span>, assuming that it is generally more costly to grant credit to a bad risk than to reject a good application. For example, the ratios range from 1:2 to 1:50. By fixing <span class="math notranslate nohighlight">\(C(+ | -)\)</span> at 1 and varying <span class="math notranslate nohighlight">\(C(- | +)\)</span>, the analysis can explore how different misclassification costs impact the profitability estimation.</p>
 </section>
 <section id="normalization-and-comparison">
 <h3>Normalization and Comparison<a class="headerlink" href="#normalization-and-comparison" title="Link to this heading">#</a></h3>
 <ol class="arabic simple">
-<li><p><strong>Compute Misclassification Costs</strong>: For each cost setting and credit scoring dataset, the misclassification costs ( C(s) ) are calculated using the formula above.</p></li>
+<li><p><strong>Compute Misclassification Costs</strong>: For each cost setting and credit scoring dataset, the misclassification costs <span class="math notranslate nohighlight">\(C(s)\)</span> are calculated using the formula above.</p></li>
 <li><p><strong>Estimate Expected Error Costs</strong>: These costs are averaged over different datasets to get an overall estimate.</p></li>
 <li><p><strong>Normalize Costs</strong>: The costs are normalized to represent percentage improvements compared to a baseline model, such as a logistic regression (LR) model.</p></li>
 </ol>
@@ -1148,8 +1149,8 @@ C(s) = C(+|−) \cdot \text{FPR} + C(−|+) \cdot \text{FNR}
 <h3>Example for Clarification<a class="headerlink" href="#example-for-clarification" title="Link to this heading">#</a></h3>
 <p><strong>Assume</strong>:</p>
 <ul class="simple">
-<li><p>( C(+ | -) = 1 ) (Opportunity cost for rejecting a good applicant).</p></li>
-<li><p>( C(- | +) = 10 ) (Cost for approving a bad applicant).</p></li>
+<li><p><span class="math notranslate nohighlight">\(C(+ | -) = 1\)</span> (Opportunity cost for rejecting a good applicant).</p></li>
+<li><p><span class="math notranslate nohighlight">\(C(- | +) = 10\)</span> (Cost for approving a bad applicant).</p></li>
 <li><p>FPR = 0.05 (5% of good applicants are wrongly rejected).</p></li>
 <li><p>FNR = 0.10 (10% of bad applicants are wrongly approved).</p></li>
 </ul>
