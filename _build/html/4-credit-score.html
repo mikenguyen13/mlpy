@@ -470,6 +470,13 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-for-clarification">Example for Clarification</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-learning-models">Machine Learning Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-selection-methods">Feature Selection Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filter-methods">1. Filter Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wrapper-methods">2. Wrapper Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#embedded-methods">3. Embedded Methods</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -813,15 +820,7 @@ ng2021hoba</p></li>
 <td><p>Binary classification, credit scoring.</p></td>
 <td><p>Global</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>Gini Coefficient</strong></p></td>
-<td><p><span class="math notranslate nohighlight">\(\text{Gini} = 2 \times \text{AUC} - 1\)</span></p></td>
-<td><p>A measure of inequality that indicates the effectiveness of a credit scoring model.</p></td>
-<td><p>Provides a single number summarizing model performance over all cut-off scores.</p></td>
-<td><p>Can be complex to interpret; sensitive to the distribution of scores.</p></td>
-<td><p>Credit scoring, model performance comparison.</p></td>
-<td><p>Global</p></td>
-</tr>
-<tr class="row-even"><td><p><strong>Accuracy (ACC)</strong></p></td>
+<tr class="row-odd"><td><p><strong>Accuracy (ACC)</strong></p></td>
 <td><p><span class="math notranslate nohighlight">\(\text{Accuracy} = \frac{\text{TP} + \text{TN}}{\text{Total}}\)</span></p></td>
 <td><p>Measures the overall accuracy of the model by comparing the number of correct predictions to the total predictions.</p></td>
 <td><p>Simple to interpret; provides a clear indication of overall model accuracy.</p></td>
@@ -829,7 +828,7 @@ ng2021hoba</p></li>
 <td><p>Classification problems.</p></td>
 <td><p>Global</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>Estimated Misclassification Cost</strong></p></td>
+<tr class="row-even"><td><p><strong>Estimated Misclassification Cost</strong></p></td>
 <td><p><span class="math notranslate nohighlight">\(\text{Cost} = \sum_{i=1}^{n} \text{Cost}(y_i, \hat{y}_i)\)</span></p></td>
 <td><p>Estimates the cost associated with incorrect classifications, taking into account different types of errors.</p></td>
 <td><p>Provides a cost-based evaluation of model performance, useful in applications where error costs differ.</p></td>
@@ -837,7 +836,7 @@ ng2021hoba</p></li>
 <td><p>Applications where misclassification costs vary, such as fraud detection.</p></td>
 <td><p>Local</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>Percentage Correctly Classified (PCC)</strong></p></td>
+<tr class="row-odd"><td><p><strong>Percentage Correctly Classified (PCC)</strong></p></td>
 <td><p><span class="math notranslate nohighlight">\(\text{PCC} = \frac{\text{TP} + \text{TN}}{\text{Total}} \times 100\)</span></p></td>
 <td><p>Measures the percentage of correct predictions relative to the total predictions.</p></td>
 <td><p>Simple and easy to interpret; provides a basic measure of model performance.</p></td>
@@ -845,7 +844,7 @@ ng2021hoba</p></li>
 <td><p>General classification problems.</p></td>
 <td><p>Global</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>Partial Gini Index (PG)</strong></p></td>
+<tr class="row-even"><td><p><strong>Partial Gini Index (PG)</strong></p></td>
 <td><p><span class="math notranslate nohighlight">\(\text{PG} = \frac{\sum_{i=1}^{n} (y_i \text{Gini})}{\sum_{i=1}^{n} y_i}\)</span></p></td>
 <td><p>Measures the performance of the model relative to a partial area under the ROC curve.</p></td>
 <td><p>Focuses on the performance in a specific part of the ROC curve; useful for targeted performance analysis.</p></td>
@@ -853,7 +852,7 @@ ng2021hoba</p></li>
 <td><p>Targeted model performance analysis.</p></td>
 <td><p>Local</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>H-measure</strong></p></td>
+<tr class="row-odd"><td><p><strong>H-measure</strong></p></td>
 <td><p>NA</p></td>
 <td><p>A metric designed to overcome some limitations of AUC by incorporating misclassification costs and prevalence.</p></td>
 <td><p>Incorporates misclassification costs; robust to variations in prevalence.</p></td>
@@ -861,7 +860,7 @@ ng2021hoba</p></li>
 <td><p>Binary classification, situations with varied misclassification costs.</p></td>
 <td><p>Global</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>Brier Score (BS)</strong></p></td>
+<tr class="row-even"><td><p><strong>Brier Score (BS)</strong></p></td>
 <td><p><span class="math notranslate nohighlight">\(\text{BS} = \frac{1}{n} \sum_{i=1}^{n} (p_i - o_i)^2\)</span></p></td>
 <td><p>Measures the mean squared difference between predicted probabilities and actual outcomes.</p></td>
 <td><p>Provides a probabilistic assessment of model performance; accounts for prediction confidence.</p></td>
@@ -869,7 +868,7 @@ ng2021hoba</p></li>
 <td><p>Evaluating probabilistic forecasts.</p></td>
 <td><p>Global</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>Kolmogorov–Smirnov Statistic (KS)</strong></p></td>
+<tr class="row-odd"><td><p><strong>Kolmogorov–Smirnov Statistic (KS)</strong></p></td>
 <td><p><span class="math notranslate nohighlight">\(\text{KS} = \max_{t} |F_1(t) - F_2(t)|\)</span></p></td>
 <td><p>Measures the maximum difference between the cumulative distribution functions of the observed and predicted distributions.</p></td>
 <td><p>Provides insight into the separation of the distributions; useful for comparing model performance.</p></td>
@@ -1160,6 +1159,97 @@ C(s) = 1 \cdot 0.05 + 10 \cdot 0.10 = 0.05 + 1 = 1.05
 <p>This result suggests that the total misclassification cost for this scorecard, given the specified costs and error rates, is 1.05.</p>
 </section>
 </section>
+<section id="machine-learning-models">
+<h2>Machine Learning Models<a class="headerlink" href="#machine-learning-models" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Linear Models:</strong></p>
+<ul>
+<li><p>Linear Discriminant Analysis (LDA)</p></li>
+<li><p>Logistic Regression (LR)</p></li>
+<li><p>Naïve Bayes (NB)</p></li>
+</ul>
+</li>
+<li><p><strong>Instance-Based Learning:</strong></p>
+<ul>
+<li><p>k-Nearest Neighbor (k-NN)</p></li>
+</ul>
+</li>
+<li><p><strong>Decision Trees:</strong></p>
+<ul>
+<li><p>Decision Trees (DTs)</p></li>
+<li><p>Random Forests (RFs)</p></li>
+</ul>
+</li>
+<li><p><strong>Support Vector Machines (SVMs)</strong></p></li>
+<li><p><strong>Neural Networks:</strong></p>
+<ul>
+<li><p>Artificial Neural Networks (ANNs)</p></li>
+<li><p>Convolutional Neural Networks (CNNs)</p></li>
+<li><p>Deep Multi-Layer Perceptron (DMLP)</p></li>
+<li><p>Restricted Boltzmann Machines (RBMs)</p></li>
+<li><p>Deep Belief Networks (DBNs)</p></li>
+</ul>
+</li>
+<li><p><strong>Ensemble Methods:</strong></p>
+<ul>
+<li><p>Boosting</p></li>
+<li><p>Extreme Gradient Boost (XGBoost)</p></li>
+<li><p>Bagging</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="feature-selection-methods">
+<h2>Feature Selection Methods<a class="headerlink" href="#feature-selection-methods" title="Link to this heading">#</a></h2>
+<section id="filter-methods">
+<h3>1. Filter Methods<a class="headerlink" href="#filter-methods" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>F-score:</strong></p>
+<ul>
+<li><p>Measures how well a feature discriminates between two sets of data.</p></li>
+<li><p><strong>Formula:</strong> Compares average values of a feature across the whole dataset, positive instances, and negative instances.</p></li>
+</ul>
+</li>
+<li><p><strong>Rough Set Theory:</strong></p>
+<ul>
+<li><p>Defines important features based on the indiscernibility relation.</p></li>
+<li><p>Uses subsets of features to find a reduced set of important features.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="wrapper-methods">
+<h3>2. Wrapper Methods<a class="headerlink" href="#wrapper-methods" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Stepwise Selection:</strong></p>
+<ul>
+<li><p><strong>Forward Selection:</strong> Adds features one by one based on significance.</p></li>
+<li><p><strong>Backward Elimination:</strong> Starts with all features and removes insignificant ones.</p></li>
+<li><p><strong>Stepwise Feature Selection:</strong> Combines forward and backward methods.</p></li>
+</ul>
+</li>
+<li><p><strong>Genetic Algorithm:</strong></p>
+<ul>
+<li><p>Evolves a population of solutions using selection, crossover, and mutation.</p></li>
+<li><p>Uses a fitness score to measure model performance (e.g., classification accuracy).</p></li>
+<li><p>Balances exploration (searching new regions) and exploitation (using known information) to find the best feature subsets.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="embedded-methods">
+<h3>3. Embedded Methods<a class="headerlink" href="#embedded-methods" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>LASSO (Least Absolute Shrinkage and Selection Operator):</strong></p>
+<ul>
+<li><p>Uses L1-penalized regression to select features.</p></li>
+<li><p><strong>Objective:</strong> Minimize prediction error with a penalty for the number of features.</p></li>
+<li><p>Simplifies the model by reducing coefficients of less important features.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1271,6 +1361,13 @@ C(s) = 1 \cdot 0.05 + 10 \cdot 0.10 = 0.05 + 1 = 1.05
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cost-ratios-and-scenarios">Cost Ratios and Scenarios</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization-and-comparison">Normalization and Comparison</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-for-clarification">Example for Clarification</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-learning-models">Machine Learning Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-selection-methods">Feature Selection Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filter-methods">1. Filter Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wrapper-methods">2. Wrapper Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#embedded-methods">3. Embedded Methods</a></li>
 </ul>
 </li>
 </ul>
