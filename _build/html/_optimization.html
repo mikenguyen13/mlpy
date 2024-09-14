@@ -90,6 +90,8 @@
     <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Approximate Nearest Neighbors" href="3-approximate-nearest-neighbors.html" />
+    <link rel="prev" title="Machine Learning in Python" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -151,8 +153,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -206,11 +206,14 @@
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Industry Applications</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Optimization</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Industry Applications</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="3-approximate-nearest-neighbors.html">Approximate Nearest Neighbors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4-credit-score.html">Credit Score Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="satellite_image_welfare.html">Satellite Image</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sim_dat_bandits.html">Multi-Armed Bandits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="credit-approval.html">Credit Card Approval</a></li>
 <li class="toctree-l1"><a class="reference internal" href="credit-adjustment.html">Credit Adjustment</a></li>
@@ -444,13 +447,14 @@ document.write(`
 <h1>Optimization<a class="headerlink" href="#optimization" title="Link to this heading">#</a></h1>
 <section id="modeling">
 <h2>Modeling<a class="headerlink" href="#modeling" title="Link to this heading">#</a></h2>
-<p>$p_x<span class="math notranslate nohighlight">\( dimensional input vector \)</span>\mathbf{x}_i<span class="math notranslate nohighlight">\(
-associated target vector \)</span>\mathbf{y}_i<span class="math notranslate nohighlight">\( for each of the \)</span>i = 1, \dots, n$ data points</p>
-<p>We create a model <span class="math notranslate nohighlight">\(f\)</span> with a set of <span class="math notranslate nohighlight">\(p_\theta\)</span> parameters <span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span> as
-$<span class="math notranslate nohighlight">\(
+<p><span class="math notranslate nohighlight">\(p_x\)</span> dimensional input vector <span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span><br />
+associated target vector <span class="math notranslate nohighlight">\(\mathbf{y}_i\)</span> for each of the <span class="math notranslate nohighlight">\(i = 1, \dots, n\)</span> data points.</p>
+<p>We create a model <span class="math notranslate nohighlight">\(f\)</span> with a set of <span class="math notranslate nohighlight">\(p_\theta\)</span> parameters <span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span> as:</p>
+<div class="math notranslate nohighlight">
+\[
 f(\mathbf{x}_i; \mathbf{\theta})
-\)</span><span class="math notranslate nohighlight">\(
-Our target vector \)</span>\mathbf{y}_i$ can be</p>
+\]</div>
+<p>Our target vector <span class="math notranslate nohighlight">\(\mathbf{y}_i\)</span> can be</p>
 <ol class="arabic simple">
 <li><p>A single continuous output value</p></li>
 <li><p>Membership in one k classes</p></li>
@@ -550,6 +554,24 @@ p(y_i = k |\mathbf{x}_i, \mathbf{\theta}) = \frac{\exp(\mathbf{\theta}_k' \mathb
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Machine Learning in Python</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="3-approximate-nearest-neighbors.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Approximate Nearest Neighbors</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               

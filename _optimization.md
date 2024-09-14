@@ -2,13 +2,15 @@
 
 ## Modeling
 
-\$p_x$ dimensional input vector $\mathbf{x}_i$
-associated target vector $\mathbf{y}_i$ for each of the $i = 1, \dots, n$ data points
+$p_x$ dimensional input vector $\mathbf{x}_i$  
+associated target vector $\mathbf{y}_i$ for each of the $i = 1, \dots, n$ data points.
 
-We create a model $f$ with a set of $p_\theta$ parameters $\mathbf{\theta}$ as
+We create a model $f$ with a set of $p_\theta$ parameters $\mathbf{\theta}$ as:
+
 $$
 f(\mathbf{x}_i; \mathbf{\theta})
 $$
+
 Our target vector $\mathbf{y}_i$ can be 
 
  1. A single continuous output value

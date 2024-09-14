@@ -4,11 +4,13 @@
 format: jb-book
 root: intro # landing page
 parts:
+  - caption: Theory
+    chapters:
+    - file: _optimization.md
   - caption: Industry Applications
     chapters:
     - file: 3-approximate-nearest-neighbors.ipynb
     - file: 4-credit-score.ipynb
-    - file: satellite_image_welfare.md
     - file: sim_dat_bandits.ipynb
     - file: credit-approval.ipynb
     - file: credit-adjustment.md
