@@ -1,6 +1,6 @@
-<a target="_blank" rel="noopener noreferrer" href="https://shawnrhoads.github.io/gu-psyc-347">![Jupyter Book Badge](https://jupyterbook.org/badge.svg)</a>
+<a target="_blank" rel="noopener noreferrer" href="https://mikenguyen13.github.io/mlpy">![Jupyter Book Badge](https://jupyterbook.org/badge.svg)</a>
 
-<a target="_blank" rel="noopener noreferrer" href="https://github.com/shawnrhoads/gu-psyc-347">![GitHub last update](https://img.shields.io/github/last-commit/mikenguyen13/mlpy?color=blue&label=last%20update)</a>
+<a target="_blank" rel="noopener noreferrer" href="https://mikenguyen13.github.io/mlpy">![GitHub last update](https://img.shields.io/github/last-commit/mikenguyen13/mlpy?color=blue&label=last%20update)</a>
 
 # Machine Learning in Python
 This is a repository for Machine Learning in Python book. 

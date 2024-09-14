@@ -754,18 +754,14 @@ Profit=Credit Limit×Interest Rate×Utilization Rate×Repayment Probability�
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/32 [..............................] - ETA: 4s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/32 [..............................] - ETA: 3s
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-26/32 [=======================&gt;......] - ETA: 0s
+32/32 [==============================] - 0s 1ms/step
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-32/32 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Can make VND 10,232,588.07 more
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Can make VND 10,231,358.18 more
 </pre></div>
 </div>
 </div>
@@ -824,17 +820,21 @@ Profit=Credit Limit×Interest Rate×Utilization Rate×Repayment Probability�
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Credit Approval Prediction - Evaluation Metrics:
-Accuracy: 0.4890
-Precision: 0.4890
-Recall: 1.0000
-F1-Score: 0.6568
-AUC-ROC: 0.5460
+Accuracy: 0.5110
+Precision: 0.0000
+Recall: 0.0000
+F1-Score: 0.0000
+AUC-ROC: 0.4702
 Confusion Matrix:
-[[  0 511]
- [  0 489]]
+[[511   0]
+ [489   0]]
 </pre></div>
 </div>
-<img alt="_images/6f11b52e7dc5d9d21761c098c44c51a7ff278385edf352f328ded5f0cd2d0c90.png" src="_images/6f11b52e7dc5d9d21761c098c44c51a7ff278385edf352f328ded5f0cd2d0c90.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\ProgramData\anaconda3\envs\mlpy\lib\site-packages\sklearn\metrics\_classification.py:1334: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 due to no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+</pre></div>
+</div>
+<img alt="_images/d9c188e738e50afd2a636d0346442ff0e6d50b66883553cc36fef6bcce6c63d8.png" src="_images/d9c188e738e50afd2a636d0346442ff0e6d50b66883553cc36fef6bcce6c63d8.png" />
 </div>
 </div>
 </section>
@@ -873,12 +873,12 @@ Confusion Matrix:
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Credit Limit Prediction - Evaluation Metrics:
-MAE: 55122.20
-MSE: 3715713041.92
-R-squared: -4.4864
+MAE: 55126.36
+MSE: 3716174896.90
+R-squared: -4.4871
 </pre></div>
 </div>
-<img alt="_images/7a220ddbb213cbb6ba939ddf73e9e1f4783c07bfaea18403553143ab7a0ac555.png" src="_images/7a220ddbb213cbb6ba939ddf73e9e1f4783c07bfaea18403553143ab7a0ac555.png" />
+<img alt="_images/6b6cf2aecab06ddf3d641b0c2fc56c39dada730337738b14cd6dee03d9262e86.png" src="_images/6b6cf2aecab06ddf3d641b0c2fc56c39dada730337738b14cd6dee03d9262e86.png" />
 </div>
 </div>
 </section>
@@ -914,12 +914,12 @@ R-squared: -4.4864
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interest Rate Prediction - Evaluation Metrics:
-MAE: 0.1957
-MSE: 0.0501
-R-squared: -3.2370
+MAE: 0.2266
+MSE: 0.0703
+R-squared: -4.9445
 </pre></div>
 </div>
-<img alt="_images/46448c0c9beaea6bad7303d2815bc43f146d4c69f59c6aba6a6022c5b86e9e0a.png" src="_images/46448c0c9beaea6bad7303d2815bc43f146d4c69f59c6aba6a6022c5b86e9e0a.png" />
+<img alt="_images/6452e8e22fc1f3cb618b9f570bba0a0bc4b54533f1f0fa735e5acddba7c94e53.png" src="_images/6452e8e22fc1f3cb618b9f570bba0a0bc4b54533f1f0fa735e5acddba7c94e53.png" />
 </div>
 </div>
 </section>
@@ -963,18 +963,14 @@ R-squared: -3.2370
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Default Risk Prediction - Evaluation Metrics:
-Accuracy: 0.4950
-Precision: 0.0000
-Recall: 0.0000
-F1-Score: 0.0000
-AUC-ROC: 0.5038
+Accuracy: 0.4970
+Precision: 0.5014
+Recall: 0.7347
+F1-Score: 0.5960
+AUC-ROC: 0.4940
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\ProgramData\anaconda3\envs\mlpy\lib\site-packages\sklearn\metrics\_classification.py:1334: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 due to no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-</pre></div>
-</div>
-<img alt="_images/7c57285f0848ae31952d74f686208e978118c15403d8cdf8695fcd8d19d614f1.png" src="_images/7c57285f0848ae31952d74f686208e978118c15403d8cdf8695fcd8d19d614f1.png" />
+<img alt="_images/5030c87d052362bcc0ec811f566cd23ef56e04553fab720d2272260030479391.png" src="_images/5030c87d052362bcc0ec811f566cd23ef56e04553fab720d2272260030479391.png" />
 </div>
 </div>
 </section>
@@ -1010,8 +1006,8 @@ AUC-ROC: 0.5038
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Profit Prediction - Evaluation Metrics:
-MAE: 15558.72
-MSE: 912432671.67
+MAE: 15558.13
+MSE: 912406517.33
 R-squared: -0.1296
 </pre></div>
 </div>
