@@ -1,0 +1,67 @@
+Traceback (most recent call last):
+  File "C:\ProgramData\anaconda3\envs\mlpy\lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\ProgramData\anaconda3\envs\mlpy\lib\site-packages\nbclient\client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "C:\ProgramData\anaconda3\envs\mlpy\lib\site-packages\jupyter_core\utils\__init__.py", line 173, in wrapped
+    return loop.run_until_complete(inner)
+  File "C:\ProgramData\anaconda3\envs\mlpy\lib\asyncio\base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "C:\ProgramData\anaconda3\envs\mlpy\lib\site-packages\nbclient\client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "C:\ProgramData\anaconda3\envs\mlpy\lib\site-packages\nbclient\client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\ProgramData\anaconda3\envs\mlpy\lib\site-packages\nbclient\client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import numpy as np
+import pandas as pd
+
+# Set the seed for reproducibility
+np.random.seed(42)
+
+# Generating synthetic data
+num_samples = 1000
+X = np.random.rand(num_samples, 2)  # Customer features (e.g., telecom data, demographics)
+y_approved = np.random.randint(0, 2, size=(num_samples, 1))  # Approval status
+y_credit_limit = np.random.rand(num_samples, 1) * (100000 - 10000) + 10000  # Credit limit between 10,000 to 100,000
+y_interest_rate = np.random.rand(num_samples, 1) * (0.60 - 0.22) + 0.22  # Interest rate from 22% to 60%
+y_defaulted = np.random.randint(0, 2, size=(num_samples, 1))  # Default status (0 or 1)
+y_repayment = 1 - y_defaulted  # Repayment probability (inverse of default)
+y_utilization_rate = np.random.rand(num_samples, 1)  # Credit utilization rate (0 to 1)
+
+# Profit calculation based on observed data (for approved customers)
+y_profit = y_approved * ((y_credit_limit * y_interest_rate * y_utilization_rate * y_repayment) - (y_credit_limit * y_defaulted))
+
+observed = pd.DataFrame({
+    'Approved': y_approved.flatten(),
+    'Credit_Limit': y_credit_limit.flatten(),
+    'Interest_Rate': y_interest_rate.flatten(),
+    'Defaulted': y_defaulted.flatten(),
+    'Repayment_Prob': y_repayment.flatten(),
+    'Utilization_Rate': y_utilization_rate.flatten(), 
+    'Profit': y_profit.flatten()
+})
+
+# Scale the input data for better convergence
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+------------------
+
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mNameError[0m                                 Traceback (most recent call last)
+Cell [1;32mIn[1], line 31[0m
+[0;32m     20[0m observed [38;5;241m=[39m pd[38;5;241m.[39mDataFrame({
+[0;32m     21[0m     [38;5;124m'[39m[38;5;124mApproved[39m[38;5;124m'[39m: y_approved[38;5;241m.[39mflatten(),
+[0;32m     22[0m     [38;5;124m'[39m[38;5;124mCredit_Limit[39m[38;5;124m'[39m: y_credit_limit[38;5;241m.[39mflatten(),
+[1;32m   (...)[0m
+[0;32m     27[0m     [38;5;124m'[39m[38;5;124mProfit[39m[38;5;124m'[39m: y_profit[38;5;241m.[39mflatten()
+[0;32m     28[0m })
+[0;32m     30[0m [38;5;66;03m# Scale the input data for better convergence[39;00m
+[1;32m---> 31[0m scaler [38;5;241m=[39m [43mStandardScaler[49m()
+[0;32m     32[0m X_scaled [38;5;241m=[39m scaler[38;5;241m.[39mfit_transform(X)
+
+[1;31mNameError[0m: name 'StandardScaler' is not defined
+

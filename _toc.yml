@@ -10,3 +10,5 @@ parts:
     - file: 4-credit-score.ipynb
     - file: satellite_image_welfare.md
     - file: sim_dat_bandits.ipynb
+    - file: credit-approval.ipynb
+    - file: credit-adjustment.md
