@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Credit Card Approval &#8212; Machine Learning in Python</title>
+    <title>Credit Approval &#8212; Machine Learning in Python</title>
   
   
   
@@ -64,9 +64,22 @@
     <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="_static/design-tabs.js?v=36754332"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-NK1GQ8CXSN"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-NK1GQ8CXSN');
+            </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-NK1GQ8CXSN');
+            </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'credit-approval';</script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -213,7 +226,7 @@
 <li class="toctree-l1"><a class="reference internal" href="3-approximate-nearest-neighbors.html">Approximate Nearest Neighbors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4-credit-score.html">Credit Score Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sim_dat_bandits.html">Multi-Armed Bandits</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Credit Card Approval</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Credit Approval</a></li>
 <li class="toctree-l1"><a class="reference internal" href="credit-adjustment.html">Credit Adjustment</a></li>
 </ul>
 
@@ -417,7 +430,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Credit Card Approval</h1>
+    <h1>Credit Approval</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -461,8 +474,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="credit-card-approval">
-<h1>Credit Card Approval<a class="headerlink" href="#credit-card-approval" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="credit-approval">
+<h1>Credit Approval<a class="headerlink" href="#credit-approval" title="Link to this heading">#</a></h1>
 <p>This chapter explains the development of a custom deep learning model aimed at optimizing credit decisions for a financial institution. The primary objective of this model is to predict credit-related outcomes like approval status, credit limit, interest rate, and default risk. Furthermore, we aim to maximize profits while managing risks. This requires careful design of a custom loss function that balances profitability and credit risk.</p>
 <p>Let’s break down the process.</p>
 <section id="understanding-the-problem">
@@ -787,20 +800,20 @@ The institution profits by charging interest on approved credit, but it incurs l
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/32 [..............................] - ETA: 6s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/32 [..............................] - ETA: 4s
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-32/32 [==============================] - ETA: 0s
+31/32 [============================&gt;.] - ETA: 0s
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 32/32 [==============================] - 0s 2ms/step
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>New Profit: VND 59.18
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>New Profit: VND 71.60
 Actual Profit: VND -10,231,358.18
-Can make VND 10,231,417.37 more
+Can make VND 10,231,429.78 more
 </pre></div>
 </div>
 </div>
@@ -859,17 +872,17 @@ Can make VND 10,231,417.37 more
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Credit Approval Prediction - Evaluation Metrics:
-Accuracy: 0.4890
-Precision: 0.4890
-Recall: 1.0000
-F1-Score: 0.6568
-AUC-ROC: 0.5424
+Accuracy: 0.4980
+Precision: 0.4924
+Recall: 0.8650
+F1-Score: 0.6276
+AUC-ROC: 0.5446
 Confusion Matrix:
-[[  0 511]
- [  0 489]]
+[[ 75 436]
+ [ 66 423]]
 </pre></div>
 </div>
-<img alt="_images/bdcd893381ef12b85bd4a17dc3aa1d724946476fdfd429b9b947e2d1f9388405.png" src="_images/bdcd893381ef12b85bd4a17dc3aa1d724946476fdfd429b9b947e2d1f9388405.png" />
+<img alt="_images/3213abf2cd827c4e6ecea3f79e9db5180ff96627d9394b9358caaea9a1737e82.png" src="_images/3213abf2cd827c4e6ecea3f79e9db5180ff96627d9394b9358caaea9a1737e82.png" />
 </div>
 </div>
 </section>
@@ -908,8 +921,8 @@ Confusion Matrix:
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Credit Limit Prediction - Evaluation Metrics:
-MAE: 55126.16
-MSE: 3716151230.21
+MAE: 55126.08
+MSE: 3716144000.30
 R-squared: -4.4870
 </pre></div>
 </div>
@@ -1002,14 +1015,14 @@ Accuracy: 0.4950
 Precision: 0.0000
 Recall: 0.0000
 F1-Score: 0.0000
-AUC-ROC: 0.4946
+AUC-ROC: 0.4979
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\ProgramData\anaconda3\envs\mlpy\lib\site-packages\sklearn\metrics\_classification.py:1334: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 due to no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
 </pre></div>
 </div>
-<img alt="_images/411ea51d0f06d0c0a5149d629c3306a87c0be784cefcd069195d813ce3ed08e1.png" src="_images/411ea51d0f06d0c0a5149d629c3306a87c0be784cefcd069195d813ce3ed08e1.png" />
+<img alt="_images/100cc81329aab75dbf5622b1ab83ddc38d93a9cb6f100abeba49a41eacba26bf.png" src="_images/100cc81329aab75dbf5622b1ab83ddc38d93a9cb6f100abeba49a41eacba26bf.png" />
 </div>
 </div>
 </section>
@@ -1045,8 +1058,8 @@ AUC-ROC: 0.4946
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Profit Prediction - Evaluation Metrics:
-MAE: 15558.16
-MSE: 912407503.21
+MAE: 15558.17
+MSE: 912407747.92
 R-squared: -0.1296
 </pre></div>
 </div>
