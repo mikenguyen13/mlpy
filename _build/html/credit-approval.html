@@ -650,30 +650,39 @@ The institution profits by charging interest on approved credit, but it incurs l
 <h3>Custom Loss Function for Profit Optimization<a class="headerlink" href="#custom-loss-function-for-profit-optimization" title="Link to this heading">#</a></h3>
 <p>The core of this algorithm lies in optimizing profit while managing risk. We define a custom loss function that helps us maximize profit. This function factors in both the revenue (from interest) and the cost (from defaults). The overall goal is to maximize the difference between revenue and cost, which equates to maximizing profit.</p>
 <ol class="arabic simple">
-<li><p><strong>Average Daily Balance (ADB):</strong>
-$<span class="math notranslate nohighlight">\(
-\text{avg\_daily\_balance} = \text{pred\_credit\_limit} \times \text{pred\_utilization\_rate}
-\)</span>$</p></li>
-<li><p><strong>Daily Interest Rate:</strong>
-$<span class="math notranslate nohighlight">\(
-\text{daily\_interest\_rate} = \frac{\text{pred\_interest\_rate}}{365}
-\)</span>$</p></li>
-<li><p><strong>Interest Calculation:</strong>
-$<span class="math notranslate nohighlight">\(
-\text{interest} = \text{avg\_daily\_balance} \times \text{daily\_interest\_rate} \times \text{days\_in\_lookahead}
-\)</span>$</p></li>
-<li><p><strong>Revenue:</strong>
-$<span class="math notranslate nohighlight">\(
-\text{revenue} = \text{interest} \times \text{repayment\_prob}
-\)</span>$</p></li>
-<li><p><strong>Cost:</strong>
-$<span class="math notranslate nohighlight">\(
-\text{cost} = \text{credit\_limit} \times \text{default\_risk}
-\)</span>$</p></li>
-<li><p><strong>Profit:</strong>
+<li><p><strong>Average Daily Balance (ADB):</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Avg</span> <span class="pre">Daily</span> <span class="pre">Balance</span> <span class="pre">=</span> <span class="pre">Pred</span> <span class="pre">Credit</span> <span class="pre">Limit</span> <span class="pre">x</span> <span class="pre">Pred</span> <span class="pre">Utilization</span> <span class="pre">Rate</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>Daily Interest Rate:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">daily_interest_rate</span> <span class="pre">=</span> <span class="pre">pred_interest_rate</span> <span class="pre">/</span> <span class="pre">365</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>Interest Calculation:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">interest</span> <span class="pre">=</span> <span class="pre">avg_daily_balance</span> <span class="pre">*</span> <span class="pre">daily_interest_rate</span> <span class="pre">*</span> <span class="pre">days_in_lookahead</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>Revenue:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">revenue</span> <span class="pre">=</span> <span class="pre">interest</span> <span class="pre">*</span> <span class="pre">repayment_prob</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>Cost:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cost</span> <span class="pre">=</span> <span class="pre">credit_limit</span> <span class="pre">*</span> <span class="pre">default_risk</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>Profit:</strong></p>
+<ul class="simple">
+<li><p>`profit = <em>Profit:</em>*
 $<span class="math notranslate nohighlight">\(
 \text{profit} = \text{revenue} - \text{cost}
 \)</span>$</p></li>
+</ul>
+</li>
 </ol>
 <section id="breakdown-of-the-loss-function">
 <h4>Breakdown of the Loss Function<a class="headerlink" href="#breakdown-of-the-loss-function" title="Link to this heading">#</a></h4>
@@ -829,16 +838,20 @@ $<span class="math notranslate nohighlight">\(
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/32 [..............................] - ETA: 4s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/32 [..............................] - ETA: 9s
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-32/32 [==============================] - 0s 1ms/step
+26/32 [=======================&gt;......] - ETA: 0s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>New Profit: 311.57
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+32/32 [==============================] - 0s 3ms/step
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>New Profit: 0.00
 Actual Profit: -10,231,358.18
-Can make 10,231,669.76 more
+Can make 10,231,358.18 more
 </pre></div>
 </div>
 </div>
@@ -897,17 +910,21 @@ Can make 10,231,669.76 more
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Credit Approval Prediction - Evaluation Metrics:
-Accuracy: 0.4950
-Precision: 0.4344
-Recall: 0.1084
-F1-Score: 0.1735
-AUC-ROC: 0.4538
+Accuracy: 0.5110
+Precision: 0.0000
+Recall: 0.0000
+F1-Score: 0.0000
+AUC-ROC: 0.5189
 Confusion Matrix:
-[[442  69]
- [436  53]]
+[[511   0]
+ [489   0]]
 </pre></div>
 </div>
-<img alt="_images/be5bc48fe359575e5c1f4048aa2df8a4f0d6dd9dbff9e9b2e62e654c8b2563f7.png" src="_images/be5bc48fe359575e5c1f4048aa2df8a4f0d6dd9dbff9e9b2e62e654c8b2563f7.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\ProgramData\anaconda3\envs\mlpy\lib\site-packages\sklearn\metrics\_classification.py:1334: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 due to no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+</pre></div>
+</div>
+<img alt="_images/5a12bb5d3b3909e6a36a7451a27388cd97cceaf117859140eaa70c04cf7e164e.png" src="_images/5a12bb5d3b3909e6a36a7451a27388cd97cceaf117859140eaa70c04cf7e164e.png" />
 </div>
 </div>
 </section>
@@ -946,12 +963,12 @@ Confusion Matrix:
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Credit Limit Prediction - Evaluation Metrics:
-MAE: 55120.77
-MSE: 3715569021.20
-R-squared: -4.4862
+MAE: 55126.27
+MSE: 3716164657.44
+R-squared: -4.4871
 </pre></div>
 </div>
-<img alt="_images/deab3a516f5de065dedaf2dcf1925401924cf0babb3a7173c3e34413f6c7d51a.png" src="_images/deab3a516f5de065dedaf2dcf1925401924cf0babb3a7173c3e34413f6c7d51a.png" />
+<img alt="_images/6b6cf2aecab06ddf3d641b0c2fc56c39dada730337738b14cd6dee03d9262e86.png" src="_images/6b6cf2aecab06ddf3d641b0c2fc56c39dada730337738b14cd6dee03d9262e86.png" />
 </div>
 </div>
 </section>
@@ -987,12 +1004,12 @@ R-squared: -4.4862
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interest Rate Prediction - Evaluation Metrics:
-MAE: 0.1957
-MSE: 0.0501
-R-squared: -3.2370
+MAE: 0.2271
+MSE: 0.0714
+R-squared: -5.0345
 </pre></div>
 </div>
-<img alt="_images/46448c0c9beaea6bad7303d2815bc43f146d4c69f59c6aba6a6022c5b86e9e0a.png" src="_images/46448c0c9beaea6bad7303d2815bc43f146d4c69f59c6aba6a6022c5b86e9e0a.png" />
+<img alt="_images/3050558ceb354cdf72efda7c31a3cc8527ac64be14858948b36c611ce2a11e87.png" src="_images/3050558ceb354cdf72efda7c31a3cc8527ac64be14858948b36c611ce2a11e87.png" />
 </div>
 </div>
 </section>
@@ -1036,18 +1053,14 @@ R-squared: -3.2370
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Default Risk Prediction - Evaluation Metrics:
-Accuracy: 0.4950
-Precision: 0.0000
-Recall: 0.0000
-F1-Score: 0.0000
-AUC-ROC: 0.4944
+Accuracy: 0.5050
+Precision: 0.5050
+Recall: 1.0000
+F1-Score: 0.6711
+AUC-ROC: 0.5138
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\ProgramData\anaconda3\envs\mlpy\lib\site-packages\sklearn\metrics\_classification.py:1334: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 due to no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-</pre></div>
-</div>
-<img alt="_images/1ba0739766cd7afc29c8e79faeeb7faaf3b6582b651ac3eb40a945f2cdda414a.png" src="_images/1ba0739766cd7afc29c8e79faeeb7faaf3b6582b651ac3eb40a945f2cdda414a.png" />
+<img alt="_images/7778f9d94f22d5b9b9a580c13974194e5417007afe76e015907e9e22541655ca.png" src="_images/7778f9d94f22d5b9b9a580c13974194e5417007afe76e015907e9e22541655ca.png" />
 </div>
 </div>
 </section>
@@ -1083,8 +1096,8 @@ AUC-ROC: 0.4944
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Profit Prediction - Evaluation Metrics:
-MAE: 15558.33
-MSE: 912411793.00
+MAE: 15558.13
+MSE: 912406517.33
 R-squared: -0.1296
 </pre></div>
 </div>
