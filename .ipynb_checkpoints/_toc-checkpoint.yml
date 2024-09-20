@@ -13,4 +13,5 @@ parts:
     - file: 4-credit-score.ipynb
     - file: sim_dat_bandits.ipynb
     - file: credit-approval.ipynb
-    - file: credit-adjustment.md
+    - file: credit-adjustment.ipynb
+    - file: firm-valuation.ipynb

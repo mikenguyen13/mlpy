@@ -101,6 +101,7 @@
     <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Firm Valuation" href="firm-valuation.html" />
     <link rel="prev" title="Credit Approval" href="credit-approval.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -227,6 +228,7 @@
 <li class="toctree-l1"><a class="reference internal" href="sim_dat_bandits.html">Multi-Armed Bandits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="credit-approval.html">Credit Approval</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Credit Adjustment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firm-valuation.html">Firm Valuation</a></li>
 </ul>
 
     </div>
@@ -298,7 +300,7 @@
       
       
       
-      <li><a href="https://github.com/mikenguyen13/mlpy/edit/main/credit-adjustment.md" target="_blank"
+      <li><a href="https://github.com/mikenguyen13/mlpy/edit/main/credit-adjustment.ipynb" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -345,7 +347,7 @@
       
       
       
-      <li><a href="_sources/credit-adjustment.md" target="_blank"
+      <li><a href="_sources/credit-adjustment.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -355,7 +357,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -416,7 +418,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -432,6 +436,28 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-breakdown">Problem Breakdown</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-structure">Model Structure</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predicting-interest-rates-and-credit-limits">Predicting Interest Rates and Credit Limits</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#temporal-aspects-handling-time-dependency">Temporal Aspects (Handling Time Dependency)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-component">Optimization Component</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering">Feature Engineering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-the-model">Training the Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-data">Training Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-architecture">Model Architecture</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-function">Loss Function</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-implementation">Model Implementation</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -443,115 +469,541 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="credit-adjustment">
 <h1>Credit Adjustment<a class="headerlink" href="#credit-adjustment" title="Link to this heading">#</a></h1>
-<p>Now, we’ll use reinforcement learning (RL) to dynamically adjust credit limits and interest rates over time based on repayment behavior.</p>
-<p>2.1. Data Structure for RL
-You will need:</p>
+<section id="problem-breakdown">
+<h2>Problem Breakdown<a class="headerlink" href="#problem-breakdown" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>State: Customer features and repayment history.</p></li>
-<li><p>Actions: Adjusting credit limit and interest rate.</p></li>
-<li><p>Reward: Profit (as described earlier).</p></li>
+<li><p><strong>Inputs</strong>: Customer covariates, past financial behavior, payment history (last 6 months, customizable), payment amount, utilization rate, default history, and other relevant features.</p></li>
+<li><p><strong>Outputs</strong>: New credit limits and interest rates over the prediction period (3 months or longer, as specified by the user).</p></li>
+<li><p><strong>Constraints</strong>:</p>
+<ul>
+<li><p>Interest rate range: 22%-60%.</p></li>
+<li><p>Credit limit range: 10,000 – 500,000.</p></li>
+<li><p>Customers must be notified of an interest rate change a month in advance.</p></li>
+<li><p>Rarely decrease interest rates, only for top-performing customers.</p></li>
 </ul>
-<p>2.2. Deep Q-Learning (DQN) Agent</p>
-<p>You can now use Deep Q-Learning (DQN) to train the RL agent to adjust credit limits and interest rates. A neural network is used as the Q-function approximator to estimate the reward for each state-action pair.</p>
-<ol class="arabic simple">
-<li><p>Setting up DQN with Stable Baselines3
-To train a DQN agent to dynamically adjust credit limits and interest rates based on customer repayment behavior, we need to wrap our custom environment (CreditCardEnv) and set up the DQN algorithm. Here’s the continuation:</p></li>
-</ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Install necessary package for RL (Stable Baselines3)
-!pip install stable-baselines3
+</li>
+<li><p><strong>Objective</strong>: Maximize profit, which is a combination of interest received from customers and minimizing losses from defaults.</p></li>
+</ul>
+</section>
+<section id="model-structure">
+<h2>Model Structure<a class="headerlink" href="#model-structure" title="Link to this heading">#</a></h2>
+<section id="predicting-interest-rates-and-credit-limits">
+<h3>Predicting Interest Rates and Credit Limits<a class="headerlink" href="#predicting-interest-rates-and-credit-limits" title="Link to this heading">#</a></h3>
+<p>To predict both interest rates and credit limits, we’ll need a model that can handle both time-series forecasting and optimization. Here’s a suitable approach:</p>
+<ul class="simple">
+<li><p><strong>Reinforcement Learning (RL)</strong>, specifically a <strong>Deep Q-Learning</strong> or <strong>Proximal Policy Optimization (PPO)</strong> method, which is suitable for scenarios involving continuous decision-making over time):</p>
+<ul>
+<li><p><strong>State</strong>: The state includes all customer data such as covariates, payment history, utilization rates, and credit behavior over time.</p></li>
+<li><p><strong>Action</strong>: Adjust the interest rate or credit limit. These actions must consider the constraints (e.g., notifying a month in advance for interest rate increases or decreases).</p></li>
+<li><p><strong>Reward</strong>: The reward function is the profit earned by the bank, calculated as the interest received minus default costs. This encourages the model to maximize profit while managing the risk of defaults.</p></li>
+<li><p><strong>Policy</strong>: The policy learns when and how much to adjust the interest rate or credit limit based on the customer’s financial behavior and covariates.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="temporal-aspects-handling-time-dependency">
+<h3>Temporal Aspects (Handling Time Dependency)<a class="headerlink" href="#temporal-aspects-handling-time-dependency" title="Link to this heading">#</a></h3>
+<p>Because credit updates and notifications occur monthly, the model must handle time dependencies:</p>
+<ul class="simple">
+<li><p>Recurrent Neural Networks (RNNs) or LSTMs (Long Short-Term Memory) can be used to model the sequential nature of the data (e.g., monthly updates of financial behavior and credit decisions). LSTMs are particularly useful to capture long-term dependencies (e.g., the effect of payment behavior over several months).</p></li>
+<li><p>Time-series forecasting models like ARIMA can be used for predicting financial variables such as utilization rates and repayment amounts.</p></li>
+</ul>
+</section>
+<section id="optimization-component">
+<h3>Optimization Component<a class="headerlink" href="#optimization-component" title="Link to this heading">#</a></h3>
+<p>The model also needs an optimization layer to find the ideal balance between profit and risk. This can be handled through:</p>
+<ul class="simple">
+<li><p><strong>Profit Function</strong>:</p>
+<ul>
+<li><p>The profit function is based on the following factors:</p>
+<ul>
+<li><p>Interest Income: <code class="docutils literal notranslate"><span class="pre">(credit</span> <span class="pre">limit</span> <span class="pre">*</span> <span class="pre">interest</span> <span class="pre">rate</span> <span class="pre">*</span> <span class="pre">utilization</span> <span class="pre">rate</span> <span class="pre">*</span> <span class="pre">repayment</span> <span class="pre">schedule)</span></code></p></li>
+<li><p>Cost of Default: <code class="docutils literal notranslate"><span class="pre">(default</span> <span class="pre">rate</span> <span class="pre">*</span> <span class="pre">credit</span> <span class="pre">limit)</span></code></p></li>
+</ul>
+</li>
+<li><p>The goal is to maximize the interest income while minimizing the cost of defaulting customers.</p></li>
+<li><p>A penalty term can be added for high-risk customers to ensure that credit limits are not too high, leading to defaults.</p></li>
+</ul>
+</li>
+<li><p>Penalty for Interest Rate Increases:</p>
+<ul>
+<li><p>To factor in the cost of increasing interest rates (which could negatively affect customer retention), you can include a penalty term in the objective function when the interest rate is increased.</p></li>
+<li><p>Interest rate decreases should be applied only in rare cases (for top-performing customers). This can be modeled as a constrained optimization problem where interest rate decreases are limited based on a threshold of past performance (e.g., high repayment rates, low utilization rates).</p></li>
+</ul>
+</li>
+</ul>
+<p>Profit Maximization Function
+Your profit function is based on:</p>
+<ul class="simple">
+<li><p><strong>Interest Income</strong>: Interest Income = Credit Limit x Interest rate x Utilization Rate x Repayment Schedule</p></li>
+<li><p><strong>Cost of Default</strong>: Default cost = Credit Limit x Default Risk</p></li>
+<li><p><strong>Profit</strong>: Itnerest Income - Default Cost</p></li>
+</ul>
+</section>
+</section>
+<section id="feature-engineering">
+<h2>Feature Engineering<a class="headerlink" href="#feature-engineering" title="Link to this heading">#</a></h2>
+<p>Key features should be engineered to capture a customer’s financial behavior and repayment risk. These might include:</p>
+<ul class="simple">
+<li><p><strong>Utilization Rate</strong>: Ratio of credit used to the total credit limit.</p></li>
+<li><p><strong>Repayment Behavior</strong>: Average repayment amount over the past 6 months, delinquency counts, etc.</p></li>
+<li><p><strong>Default Risk</strong>: A predicted probability of default based on past behavior, financial stability, and other risk factors.</p></li>
+<li><p><strong>Income and Employment</strong>: These may provide insights into the customer’s repayment capacity.</p></li>
+<li><p><strong>Historical Interest Rates</strong>: To assess how past interest rates have influenced repayment behavior and defaults.</p></li>
+<li><p><strong>Macro-economic Factors</strong>: Inflation, employment rates, and other factors that might affect repayment behavior and credit demand.</p></li>
+<li><p><strong>Behavioral Variables</strong>: These could include the frequency of transactions, types of transactions (e.g., large vs. small purchases), and social network data (as a proxy for financial stability).</p></li>
+</ul>
+</section>
+<section id="training-the-model">
+<h2>Training the Model<a class="headerlink" href="#training-the-model" title="Link to this heading">#</a></h2>
+<section id="training-data">
+<h3>Training Data<a class="headerlink" href="#training-data" title="Link to this heading">#</a></h3>
+<p>You will need a dataset with the following characteristics:</p>
+<ul class="simple">
+<li><p>Historical payment data (e.g., credit limits, repayment amounts, interest rates).</p></li>
+<li><p>Customer-level information (e.g., income, employment status, default history).</p></li>
+<li><p>Macro-economic variables (e.g., inflation, GDP growth).</p></li>
+</ul>
+</section>
+<section id="model-architecture">
+<h3>Model Architecture<a class="headerlink" href="#model-architecture" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Input Layer</strong>: Customer covariates, past financial behavior, macroeconomic variables.</p></li>
+<li><p><strong>Hidden Layers</strong>:</p>
+<ul>
+<li><p>LSTMs for capturing sequential patterns in customer behavior.</p></li>
+<li><p>Dense layers to learn non-linear interactions between customer features.</p></li>
+</ul>
+</li>
+<li><p><strong>Output Layer</strong>: Predict the interest rate and credit limit for each customer.</p></li>
+<li><p><strong>Reinforcement Learning Layer</strong>: Use RL to optimize the interest rate and credit limit updates based on the bank’s profit objectives.</p></li>
+</ul>
+</section>
+<section id="loss-function">
+<h3>Loss Function<a class="headerlink" href="#loss-function" title="Link to this heading">#</a></h3>
+<p>The loss function should include:</p>
+<ul class="simple">
+<li><p>A profit-maximization component that encourages higher interest income and lower default rates.</p></li>
+<li><p>A regularization term to penalize high-risk actions (e.g., giving too much credit to a risky customer).</p></li>
+</ul>
+</section>
+</section>
+<section id="model-implementation">
+<h2>Model Implementation<a class="headerlink" href="#model-implementation" title="Link to this heading">#</a></h2>
+<p>You can implement this model using a framework like TensorFlow or PyTorch for deep learning and reinforcement learning. For time-series forecasting, you can integrate models like Prophet or ARIMA.</p>
+<ul class="simple">
+<li><p>RL libraries such as OpenAI’s Gym or Stable-Baselines can help in building the reinforcement learning component.</p></li>
+<li><p>The optimization function can be implemented using SciPy’s optimization package or any modern gradient-based optimizers (e.g., Adam).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">gymnasium</span> <span class="k">as</span> <span class="nn">gym</span>
+<span class="kn">from</span> <span class="nn">gymnasium</span> <span class="kn">import</span> <span class="n">spaces</span>
+<span class="kn">from</span> <span class="nn">stable_baselines3</span> <span class="kn">import</span> <span class="n">PPO</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">KFold</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-# Import necessary packages
-from stable_baselines3 import DQN
-from stable_baselines3.common.envs import DummyVecEnv
+<span class="c1"># Define the environment for Reinforcement Learning</span>
+<span class="k">class</span> <span class="nc">CreditEnv</span><span class="p">(</span><span class="n">gym</span><span class="o">.</span><span class="n">Env</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Custom Environment for predicting credit limit and interest rate, based on customer data.</span>
+<span class="sd">    This environment is built to maximize profit for the bank.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">n_months</span><span class="o">=</span><span class="mi">6</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CreditEnv</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
-# Define the environment (Credit Card Environment)
-class CreditCardEnv:
-    def __init__(self, customer_features, repayment_history, max_credit_limit=20000):
-        self.customer_features = customer_features
-        self.repayment_history = repayment_history
-        self.max_credit_limit = max_credit_limit
-        self.credit_limit = 0
-        self.interest_rate = 0.0
-        self.time_step = 0
-        self.max_time_step = 24  # Simulate 24 months
+        <span class="c1"># Customer data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_months</span> <span class="o">=</span> <span class="n">n_months</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_step</span> <span class="o">=</span> <span class="mi">0</span>
         
-    def reset(self):
-        self.time_step = 0
-        self.credit_limit = random.randint(1000, self.max_credit_limit)
-        self.interest_rate = random.uniform(0.05, 0.25)
-        return self._get_state()
+        <span class="c1"># Observation space: customer features (normalized between 0 and 1)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">observation_space</span> <span class="o">=</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;customer_id&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        
+        <span class="c1"># Action space: credit limit and interest rate (continuous values)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action_space</span> <span class="o">=</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">22</span><span class="p">]),</span> <span class="n">high</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">500000</span><span class="p">,</span> <span class="mi">60</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reset the environment at the beginning of each episode.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_step</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+        
+        <span class="c1"># Return observation and an empty info dictionary</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;customer_id&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">current_step</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="p">{}</span>
     
-    def _get_state(self):
-        return np.array([self.customer_features, self.repayment_history, self.credit_limit, self.interest_rate])
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Take a step in the environment based on the action (credit limit and interest rate).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Extract customer data for current step</span>
+        <span class="n">customer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">current_step</span><span class="p">]</span>
+        
+        <span class="c1"># Unpack action (credit_limit, interest_rate)</span>
+        <span class="n">credit_limit</span><span class="p">,</span> <span class="n">interest_rate</span> <span class="o">=</span> <span class="n">action</span>
+        
+        <span class="c1"># --- Custom profit function ---</span>
+        <span class="n">utilization_rate</span> <span class="o">=</span> <span class="n">customer</span><span class="p">[</span><span class="s1">&#39;utilization_rate&#39;</span><span class="p">]</span>
+        <span class="n">repayment_schedule</span> <span class="o">=</span> <span class="n">customer</span><span class="p">[</span><span class="s1">&#39;repayment_schedule&#39;</span><span class="p">]</span>  <span class="c1"># Binary: 1 for payment, 0 for no payment</span>
+        <span class="n">default_risk</span> <span class="o">=</span> <span class="n">customer</span><span class="p">[</span><span class="s1">&#39;default_risk&#39;</span><span class="p">]</span>
+        
+        <span class="c1"># Interest income and default cost calculation</span>
+        <span class="n">interest_income</span> <span class="o">=</span> <span class="n">credit_limit</span> <span class="o">*</span> <span class="n">interest_rate</span> <span class="o">*</span> <span class="n">utilization_rate</span> <span class="o">*</span> <span class="n">repayment_schedule</span>
+        <span class="n">default_cost</span> <span class="o">=</span> <span class="n">credit_limit</span> <span class="o">*</span> <span class="n">default_risk</span>
+        
+        <span class="c1"># Calculate profit as the reward</span>
+        <span class="n">profit</span> <span class="o">=</span> <span class="n">interest_income</span> <span class="o">-</span> <span class="n">default_cost</span>
+        
+        <span class="c1"># --- Reward is the calculated profit ---</span>
+        <span class="n">reward</span> <span class="o">=</span> <span class="n">profit</span>
+        
+        <span class="c1"># Move to the next customer in the dataset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_step</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">done</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_step</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        
+        <span class="c1"># Get the next observation (next customer) or reset</span>
+        <span class="k">if</span> <span class="n">done</span><span class="p">:</span>
+            <span class="n">obs</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;customer_id&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">current_step</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        
+        <span class="c1"># Return five values: observation, reward, done, truncated (False), and info</span>
+        <span class="k">return</span> <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="p">{}</span>
     
-    def step(self, action):
-        &quot;&quot;&quot;
-        Action could be adjusting the credit limit or interest rate.
-        Simulate repayment behavior based on action.
-        &quot;&quot;&quot;
-        self.time_step += 1
-        
-        # Simulate repayment outcome (use random behavior for now)
-        repayment_made = np.random.choice([0, 1], p=[0.2, 0.8])  # 80% chance of repayment
-        
-        # Calculate reward (profit)
-        revenue = self.credit_limit * self.interest_rate * repayment_made
-        cost = self.credit_limit * (1 - repayment_made)
-        profit = revenue - cost
-        
-        # Adjust the credit limit or interest rate based on the action
-        # (Simplify action space for now, e.g., action=0 means no change, action=1 means increase interest rate)
-        if action == 1:
-            self.interest_rate = min(self.interest_rate + 0.01, 0.25)
-        elif action == 2:
-            self.credit_limit = min(self.credit_limit + 1000, self.max_credit_limit)
-        
-        # Done if we&#39;ve reached the final month
-        done = self.time_step &gt;= self.max_time_step
-        
-        return self._get_state(), profit, done
+    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;human&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Render the environment (optional for debugging).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+<span class="c1"># Generate the toy data with time-varying variables</span>
+<span class="k">def</span> <span class="nf">generate_toy_data_with_time_varying</span><span class="p">(</span><span class="n">n_obs</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">n_months</span><span class="o">=</span><span class="mi">6</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate toy data with time-varying variables for n_obs customers over n_months.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">time_varying_data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;customer_id&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_obs</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">n_months</span><span class="p">),</span>
+        <span class="s1">&#39;month&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_months</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">n_obs</span><span class="p">),</span>
+        <span class="s1">&#39;monthly_income&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">20000</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_obs</span> <span class="o">*</span> <span class="n">n_months</span><span class="p">),</span>
+        <span class="s1">&#39;credit_limit&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">500000</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_obs</span> <span class="o">*</span> <span class="n">n_months</span><span class="p">),</span>
+        <span class="s1">&#39;interest_rate&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_obs</span> <span class="o">*</span> <span class="n">n_months</span><span class="p">),</span>
+        <span class="s1">&#39;payment_history&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_obs</span> <span class="o">*</span> <span class="n">n_months</span><span class="p">),</span>
+        <span class="s1">&#39;utilization_rate&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_obs</span> <span class="o">*</span> <span class="n">n_months</span><span class="p">),</span>
+        <span class="s1">&#39;default_risk&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_obs</span> <span class="o">*</span> <span class="n">n_months</span><span class="p">),</span>
+        <span class="s1">&#39;repayment_amount&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">200000</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_obs</span> <span class="o">*</span> <span class="n">n_months</span><span class="p">),</span>
+        <span class="s1">&#39;repayment_schedule&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">n_obs</span> <span class="o">*</span> <span class="n">n_months</span><span class="p">),</span>  <span class="c1"># Binary repayment schedule</span>
+        <span class="s1">&#39;financial_behavior_score&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">850</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_obs</span> <span class="o">*</span> <span class="n">n_months</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="n">toy_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">time_varying_data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">toy_data</span>
+
+<span class="c1"># Split the dataset into training, testing, and holdout samples based on customer_id</span>
+<span class="k">def</span> <span class="nf">split_full_data_by_customer_id</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">train_size</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
+    <span class="c1"># Split customer ids to ensure all observations of each customer are in one split</span>
+    <span class="n">unique_customers</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;customer_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
     
-# Initialize environment with some sample data
-env = CreditCardEnv(customer_features=np.random.rand(5), repayment_history=[1, 1, 0])
+    <span class="c1"># Split into training and remaining (test + holdout)</span>
+    <span class="n">train_customers</span><span class="p">,</span> <span class="n">remaining_customers</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">unique_customers</span><span class="p">,</span> <span class="n">train_size</span><span class="o">=</span><span class="n">train_size</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    
+    <span class="c1"># Split remaining into test and holdout</span>
+    <span class="n">test_customers</span><span class="p">,</span> <span class="n">holdout_customers</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">remaining_customers</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="n">test_size</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">train_size</span><span class="p">),</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    
+    <span class="c1"># Create datasets based on the customer splits</span>
+    <span class="n">train_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;customer_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">train_customers</span><span class="p">)]</span>
+    <span class="n">test_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;customer_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">test_customers</span><span class="p">)]</span>
+    <span class="n">holdout_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;customer_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">holdout_customers</span><span class="p">)]</span>
+    
+    <span class="k">return</span> <span class="n">train_data</span><span class="p">,</span> <span class="n">test_data</span><span class="p">,</span> <span class="n">holdout_data</span>
 
-# Wrap the environment in a vectorized environment to support parallel simulation
-env = DummyVecEnv([lambda: env])
+<span class="c1"># Function to normalize data, excluding the &#39;customer_id&#39; column</span>
+<span class="k">def</span> <span class="nf">normalize_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">features_to_normalize</span><span class="p">):</span>
+    <span class="n">data_normalized</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">data_normalized</span><span class="p">[</span><span class="n">features_to_normalize</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">features_to_normalize</span><span class="p">]</span> <span class="o">-</span> <span class="n">data</span><span class="p">[</span><span class="n">features_to_normalize</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">features_to_normalize</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">data</span><span class="p">[</span><span class="n">features_to_normalize</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">data_normalized</span>
 
-# Initialize the DQN agent
-model = DQN(&#39;MlpPolicy&#39;, env, verbose=1)
+<span class="c1"># Function to predict for each customer over multiple months</span>
+<span class="k">def</span> <span class="nf">predict_for_all_customers</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">future_months</span><span class="o">=</span><span class="mi">6</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Predict credit limit and interest rate for all customers for the next &#39;future_months&#39;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># Loop over each customer</span>
+    <span class="k">for</span> <span class="n">customer_id</span> <span class="ow">in</span> <span class="n">env</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;customer_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+        <span class="n">obs</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>  <span class="c1"># Reset for each customer</span>
+        <span class="k">for</span> <span class="n">month</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">future_months</span><span class="p">):</span>
+            <span class="n">action</span><span class="p">,</span> <span class="n">_states</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+            <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+            <span class="n">predictions</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s1">&#39;Customer ID&#39;</span><span class="p">:</span> <span class="n">customer_id</span><span class="p">,</span>
+                <span class="s1">&#39;Month&#39;</span><span class="p">:</span> <span class="n">month</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s1">&#39;Predicted Credit Limit&#39;</span><span class="p">:</span> <span class="n">action</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="s1">&#39;Predicted Interest Rate&#39;</span><span class="p">:</span> <span class="n">action</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="s1">&#39;Profit (Reward)&#39;</span><span class="p">:</span> <span class="n">reward</span>
+            <span class="p">})</span>
+            <span class="k">if</span> <span class="n">done</span><span class="p">:</span>
+                <span class="k">break</span>
+            
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
 
-# Train the model
-model.learn(total_timesteps=10000)
+<span class="c1"># Function for counterfactual analysis</span>
+<span class="k">def</span> <span class="nf">counterfactual_analysis</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">holdout_data</span><span class="p">,</span> <span class="n">future_months</span><span class="o">=</span><span class="mi">6</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform counterfactual analysis by comparing predicted values with actual values from the holdout data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">predicted_df</span> <span class="o">=</span> <span class="n">predict_for_all_customers</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">future_months</span><span class="o">=</span><span class="n">future_months</span><span class="p">)</span>
+    
+    <span class="c1"># Get the true values from the holdout dataset</span>
+    <span class="n">true_values</span> <span class="o">=</span> <span class="n">holdout_data</span><span class="p">[[</span><span class="s1">&#39;customer_id&#39;</span><span class="p">,</span> <span class="s1">&#39;credit_limit&#39;</span><span class="p">,</span> <span class="s1">&#39;interest_rate&#39;</span><span class="p">]]</span>
+    
+    <span class="c1"># Merge predicted and actual values</span>
+    <span class="n">comparison_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">predicted_df</span><span class="p">,</span> <span class="n">true_values</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;Customer ID&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;customer_id&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># Calculate profit difference and drop NaN values (handle missing values)</span>
+    <span class="n">comparison_df</span><span class="p">[</span><span class="s1">&#39;Profit Difference&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">comparison_df</span><span class="p">[</span><span class="s1">&#39;Profit (Reward)&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="n">comparison_df</span><span class="p">[</span><span class="s1">&#39;credit_limit&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">comparison_df</span><span class="p">[</span><span class="s1">&#39;interest_rate&#39;</span><span class="p">]</span> <span class="o">*</span> 
+        <span class="n">holdout_data</span><span class="p">[</span><span class="s1">&#39;utilization_rate&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">holdout_data</span><span class="p">[</span><span class="s1">&#39;repayment_schedule&#39;</span><span class="p">]</span> <span class="o">-</span> 
+        <span class="n">comparison_df</span><span class="p">[</span><span class="s1">&#39;credit_limit&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">holdout_data</span><span class="p">[</span><span class="s1">&#39;default_risk&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># Drop rows with NaN values in &#39;Profit Difference&#39;</span>
+    <span class="n">comparison_df</span> <span class="o">=</span> <span class="n">comparison_df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Profit Difference&#39;</span><span class="p">])</span>
+    
+    <span class="c1"># Plot the profit differences</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">comparison_df</span><span class="p">[</span><span class="s1">&#39;Profit Difference&#39;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Profit Difference&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Profit Difference Between Predicted and Actual&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Profit Difference&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    <span class="k">return</span> <span class="n">comparison_df</span>
 
-# Save the model
-model.save(&quot;credit_card_dqn_model&quot;)
+<span class="c1"># Generate toy data</span>
+<span class="n">n_obs</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">n_months</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">generate_toy_data_with_time_varying</span><span class="p">(</span><span class="n">n_obs</span><span class="o">=</span><span class="n">n_obs</span><span class="p">,</span> <span class="n">n_months</span><span class="o">=</span><span class="n">n_months</span><span class="p">)</span>
 
-# Load the model to use later
-model = DQN.load(&quot;credit_card_dqn_model&quot;)
+<span class="c1"># Split into training, testing, and holdout sets based on customer_id</span>
+<span class="n">train_data</span><span class="p">,</span> <span class="n">test_data</span><span class="p">,</span> <span class="n">holdout_data</span> <span class="o">=</span> <span class="n">split_full_data_by_customer_id</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-# Test the trained agent
-state = env.reset()
-done = False
+<span class="c1"># Select relevant features for RL environment, including &#39;customer_id&#39;</span>
+<span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;customer_id&#39;</span><span class="p">,</span> <span class="s1">&#39;monthly_income&#39;</span><span class="p">,</span> <span class="s1">&#39;payment_history&#39;</span><span class="p">,</span> <span class="s1">&#39;utilization_rate&#39;</span><span class="p">,</span> <span class="s1">&#39;default_risk&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;repayment_amount&#39;</span><span class="p">,</span> <span class="s1">&#39;repayment_schedule&#39;</span><span class="p">,</span> <span class="s1">&#39;financial_behavior_score&#39;</span><span class="p">]</span>
+<span class="n">train_for_rl</span> <span class="o">=</span> <span class="n">train_data</span><span class="p">[</span><span class="n">features</span><span class="p">]</span>
 
-while not done:
-    action, _ = model.predict(state)
-    state, reward, done, _ = env.step(action)
-    print(f&quot;Action: {action}, Reward: {reward}&quot;)
+<span class="c1"># Normalize the data for RL environment, except for &#39;customer_id&#39;</span>
+<span class="n">features_to_normalize</span> <span class="o">=</span> <span class="n">train_for_rl</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;customer_id&#39;</span><span class="p">)</span>
+<span class="n">train_for_rl</span> <span class="o">=</span> <span class="n">normalize_data</span><span class="p">(</span><span class="n">train_for_rl</span><span class="p">,</span> <span class="n">features_to_normalize</span><span class="p">)</span>
+
+<span class="c1"># Create the environment for training</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">CreditEnv</span><span class="p">(</span><span class="n">train_for_rl</span><span class="p">)</span>
+
+<span class="c1"># Initialize the PPO model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">PPO</span><span class="p">(</span><span class="s1">&#39;MlpPolicy&#39;</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Cross-validation setup</span>
+<span class="n">kf</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span> <span class="ow">in</span> <span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">train_for_rl</span><span class="p">[</span><span class="s1">&#39;customer_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()):</span>
+    <span class="n">train_customers</span> <span class="o">=</span> <span class="n">train_for_rl</span><span class="p">[</span><span class="s1">&#39;customer_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()[</span><span class="n">train_index</span><span class="p">]</span>
+    <span class="n">test_customers</span> <span class="o">=</span> <span class="n">train_for_rl</span><span class="p">[</span><span class="s1">&#39;customer_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()[</span><span class="n">test_index</span><span class="p">]</span>
+    
+    <span class="c1"># Create training and test folds based on customer_id</span>
+    <span class="n">train_fold</span> <span class="o">=</span> <span class="n">train_for_rl</span><span class="p">[</span><span class="n">train_for_rl</span><span class="p">[</span><span class="s1">&#39;customer_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">train_customers</span><span class="p">)]</span>
+    <span class="n">test_fold</span> <span class="o">=</span> <span class="n">train_for_rl</span><span class="p">[</span><span class="n">train_for_rl</span><span class="p">[</span><span class="s1">&#39;customer_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">test_customers</span><span class="p">)]</span>
+    
+    <span class="c1"># Create environment for this training fold</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">CreditEnv</span><span class="p">(</span><span class="n">train_fold</span><span class="p">)</span>
+    
+    <span class="c1"># Train the model on the current fold</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">learn</span><span class="p">(</span><span class="n">total_timesteps</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+
+<span class="c1"># After training on all folds, perform counterfactual analysis with the holdout data and predict for 6 months</span>
+<span class="n">comparison_df</span> <span class="o">=</span> <span class="n">counterfactual_analysis</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">holdout_data</span><span class="p">,</span> <span class="n">future_months</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+
+<span class="c1"># Display the comparison DataFrame with predicted and actual values</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">comparison_df</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Explanation of the Code:</p>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\ProgramData\anaconda3\envs\mlpy\lib\site-packages\gymnasium\spaces\box.py:130: UserWarning: <span class=" -Color -Color-Yellow">WARN: Box bound precision lowered by casting to float32</span>
+  gym.logger.warn(f&quot;Box bound precision lowered by casting to {self.dtype}&quot;)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using cpu device
+Wrapping the env with a `Monitor` wrapper
+Wrapping the env in a DummyVecEnv.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\ProgramData\anaconda3\envs\mlpy\lib\site-packages\gymnasium\spaces\box.py:130: UserWarning: <span class=" -Color -Color-Yellow">WARN: Box bound precision lowered by casting to float32</span>
+  gym.logger.warn(f&quot;Box bound precision lowered by casting to {self.dtype}&quot;)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-----------------------------
+| time/              |      |
+|    fps             | 767  |
+|    iterations      | 1    |
+|    time_elapsed    | 2    |
+|    total_timesteps | 2048 |
+-----------------------------
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-------------------------------------------
+| rollout/                |               |
+|    ep_len_mean          | 3.6e+03       |
+|    ep_rew_mean          | 1.78e+08      |
+| time/                   |               |
+|    fps                  | 524           |
+|    iterations           | 2             |
+|    time_elapsed         | 7             |
+|    total_timesteps      | 4096          |
+| train/                  |               |
+|    approx_kl            | 1.8044375e-09 |
+|    clip_fraction        | 0             |
+|    clip_range           | 0.2           |
+|    entropy_loss         | -2.84         |
+|    explained_variance   | -3.58e-07     |
+|    learning_rate        | 0.0003        |
+|    loss                 | 3.36e+11      |
+|    n_updates            | 10            |
+|    policy_gradient_loss | -1.97e-06     |
+|    std                  | 1             |
+|    value_loss           | 6.66e+11      |
+-------------------------------------------
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-------------------------------------------
+| rollout/                |               |
+|    ep_len_mean          | 3.6e+03       |
+|    ep_rew_mean          | 1.78e+08      |
+| time/                   |               |
+|    fps                  | 452           |
+|    iterations           | 3             |
+|    time_elapsed         | 13            |
+|    total_timesteps      | 6144          |
+| train/                  |               |
+|    approx_kl            | 1.8626451e-09 |
+|    clip_fraction        | 0             |
+|    clip_range           | 0.2           |
+|    entropy_loss         | -2.84         |
+|    explained_variance   | 6.56e-07      |
+|    learning_rate        | 0.0003        |
+|    loss                 | 3.6e+11       |
+|    n_updates            | 20            |
+|    policy_gradient_loss | -2.46e-06     |
+|    std                  | 1             |
+|    value_loss           | 7.55e+11      |
+-------------------------------------------
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-------------------------------------------
+| rollout/                |               |
+|    ep_len_mean          | 3.6e+03       |
+|    ep_rew_mean          | 1.78e+08      |
+| time/                   |               |
+|    fps                  | 459           |
+|    iterations           | 4             |
+|    time_elapsed         | 17            |
+|    total_timesteps      | 8192          |
+| train/                  |               |
+|    approx_kl            | 8.1490725e-10 |
+|    clip_fraction        | 0             |
+|    clip_range           | 0.2           |
+|    entropy_loss         | -2.84         |
+|    explained_variance   | 5.96e-08      |
+|    learning_rate        | 0.0003        |
+|    loss                 | 3.44e+11      |
+|    n_updates            | 30            |
+|    policy_gradient_loss | -1.64e-06     |
+|    std                  | 1             |
+|    value_loss           | 7.02e+11      |
+-------------------------------------------
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">225</span>
+<span class="g g-Whitespace">    </span><span class="mi">222</span>     <span class="n">env</span> <span class="o">=</span> <span class="n">CreditEnv</span><span class="p">(</span><span class="n">train_fold</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">224</span>     <span class="c1"># Train the model on the current fold</span>
+<span class="ne">--&gt; </span><span class="mi">225</span>     <span class="n">model</span><span class="o">.</span><span class="n">learn</span><span class="p">(</span><span class="n">total_timesteps</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">227</span> <span class="c1"># After training on all folds, perform counterfactual analysis with the holdout data and predict for 6 months</span>
+<span class="g g-Whitespace">    </span><span class="mi">228</span> <span class="n">comparison_df</span> <span class="o">=</span> <span class="n">counterfactual_analysis</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">holdout_data</span><span class="p">,</span> <span class="n">future_months</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+
+<span class="nn">File C:\ProgramData\anaconda3\envs\mlpy\lib\site-packages\stable_baselines3\ppo\ppo.py:315,</span> in <span class="ni">PPO.learn</span><span class="nt">(self, total_timesteps, callback, log_interval, tb_log_name, reset_num_timesteps, progress_bar)</span>
+<span class="g g-Whitespace">    </span><span class="mi">306</span> <span class="k">def</span> <span class="nf">learn</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">307</span>     <span class="bp">self</span><span class="p">:</span> <span class="n">SelfPPO</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">308</span>     <span class="n">total_timesteps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">313</span>     <span class="n">progress_bar</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">314</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SelfPPO</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">315</span>     <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">learn</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">316</span>         <span class="n">total_timesteps</span><span class="o">=</span><span class="n">total_timesteps</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">317</span>         <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">318</span>         <span class="n">log_interval</span><span class="o">=</span><span class="n">log_interval</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">319</span>         <span class="n">tb_log_name</span><span class="o">=</span><span class="n">tb_log_name</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">320</span>         <span class="n">reset_num_timesteps</span><span class="o">=</span><span class="n">reset_num_timesteps</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">321</span>         <span class="n">progress_bar</span><span class="o">=</span><span class="n">progress_bar</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">322</span>     <span class="p">)</span>
+
+<span class="nn">File C:\ProgramData\anaconda3\envs\mlpy\lib\site-packages\stable_baselines3\common\on_policy_algorithm.py:300,</span> in <span class="ni">OnPolicyAlgorithm.learn</span><span class="nt">(self, total_timesteps, callback, log_interval, tb_log_name, reset_num_timesteps, progress_bar)</span>
+<span class="g g-Whitespace">    </span><span class="mi">297</span> <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">299</span> <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_timesteps</span> <span class="o">&lt;</span> <span class="n">total_timesteps</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">300</span>     <span class="n">continue_training</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">collect_rollouts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rollout_buffer</span><span class="p">,</span> <span class="n">n_rollout_steps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">302</span>     <span class="k">if</span> <span class="ow">not</span> <span class="n">continue_training</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">303</span>         <span class="k">break</span>
+
+<span class="nn">File C:\ProgramData\anaconda3\envs\mlpy\lib\site-packages\stable_baselines3\common\on_policy_algorithm.py:224,</span> in <span class="ni">OnPolicyAlgorithm.collect_rollouts</span><span class="nt">(self, env, callback, rollout_buffer, n_rollout_steps)</span>
+<span class="g g-Whitespace">    </span><span class="mi">221</span>             <span class="n">terminal_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">policy</span><span class="o">.</span><span class="n">predict_values</span><span class="p">(</span><span class="n">terminal_obs</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># type: ignore[arg-type]</span>
+<span class="g g-Whitespace">    </span><span class="mi">222</span>         <span class="n">rewards</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">terminal_value</span>
+<span class="ne">--&gt; </span><span class="mi">224</span> <span class="n">rollout_buffer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">225</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_last_obs</span><span class="p">,</span>  <span class="c1"># type: ignore[arg-type]</span>
+<span class="g g-Whitespace">    </span><span class="mi">226</span>     <span class="n">actions</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">227</span>     <span class="n">rewards</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">228</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_last_episode_starts</span><span class="p">,</span>  <span class="c1"># type: ignore[arg-type]</span>
+<span class="g g-Whitespace">    </span><span class="mi">229</span>     <span class="n">values</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">230</span>     <span class="n">log_probs</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">231</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">232</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_obs</span> <span class="o">=</span> <span class="n">new_obs</span>  <span class="c1"># type: ignore[assignment]</span>
+<span class="g g-Whitespace">    </span><span class="mi">233</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_episode_starts</span> <span class="o">=</span> <span class="n">dones</span>
+
+<span class="nn">File C:\ProgramData\anaconda3\envs\mlpy\lib\site-packages\stable_baselines3\common\buffers.py:474,</span> in <span class="ni">RolloutBuffer.add</span><span class="nt">(self, obs, action, reward, episode_start, value, log_prob)</span>
+<span class="g g-Whitespace">    </span><span class="mi">472</span> <span class="bp">self</span><span class="o">.</span><span class="n">rewards</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">reward</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">473</span> <span class="bp">self</span><span class="o">.</span><span class="n">episode_starts</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">episode_start</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">474</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">475</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_probs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">log_prob</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">476</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
+</div>
 <ol class="arabic simple">
-<li><p>Environment: We use the <code class="docutils literal notranslate"><span class="pre">CreditCardEnv</span></code> to simulate a real-world scenario of dynamically adjusting credit limits and interest rates based on customer repayment behavior.</p></li>
-<li><p>Actions: Actions can include increasing interest rates or adjusting the credit limit, and the agent will learn to take these actions to maximize long-term profit.</p></li>
-<li><p>Reward: The reward is calculated as the <strong>profit</strong>, which is the difference between the revenue from repayments and the cost of defaults.</p></li>
-<li><p>DQN Agent: We use the <code class="docutils literal notranslate"><span class="pre">DQN</span></code> algorithm from <code class="docutils literal notranslate"><span class="pre">Stable</span> <span class="pre">Baselines3</span></code>, which is a Deep Q-Learning agent, to learn an optimal policy for maximizing the reward (profit) over multiple time steps (e.g., 24 months).</p></li>
+<li><p>Soft Actor-Critic (SAC)
+Why: SAC is a robust and efficient model for continuous action spaces, and your problem involves continuous variables like credit limits and interest rates. SAC can handle the continuous nature of your objectives while optimizing for a balance between exploration and exploitation using entropy maximization.
+How: You can define the credit limit and interest rate as continuous actions and use the reward function to optimize for profit, factoring in credit risk, default rates, and customer retention. You can also incorporate penalty mechanisms for defaults or higher risk.</p></li>
+<li><p>Proximal Policy Optimization (PPO)
+Why: PPO is a popular choice for stability and ease of use in multi-objective tasks. It can handle continuous prediction tasks like yours while ensuring policy updates remain stable.
+How: You could model credit limit and interest rate predictions as two separate outputs within the same policy. The reward function would encourage balancing risk, maximizing profit, and managing default probabilities.</p></li>
+<li><p>Multi-Objective Reinforcement Learning (MORL) with SAC or PPO
+Why: Since you have multiple objectives (profit maximization and minimizing risk of default), a multi-objective approach with SAC or PPO can be adapted to handle both objectives simultaneously. This approach allows you to balance the competing trade-offs, for example, between higher credit limits (higher potential profit but also higher risk) and lower interest rates (to retain customers but maintain profitability).
+How: The reward function could use a weighted sum of objectives or a Pareto front approach to optimize both the credit limit and interest rate simultaneously. This would allow you to manage trade-offs effectively.</p></li>
+<li><p>Hierarchical Reinforcement Learning (HRL)
+Why: In your case, predicting credit limits and interest rates involves multiple decisions over time (both short-term and long-term). HRL can model this by breaking down tasks into sub-tasks: determining an optimal credit limit first, then optimizing the interest rate based on that decision.
+How: HRL can handle your task by learning higher-level decisions (credit limit) and lower-level decisions (interest rate) hierarchically. This approach would allow you to optimize for each decision level while considering long-term profit and default risk.</p></li>
+<li><p>Multi-Agent Reinforcement Learning (MARL)
+Why: If you want to model each customer as an agent with individual characteristics and optimize for each agent’s credit limit and interest rate, MARL might be a good approach. It allows for modeling interactions between agents (e.g., customers with different risk profiles).
+How: Each customer (or agent) could have their own policy determining credit limits and interest rates, while the global system optimizes overall profit and risk at the portfolio level.</p></li>
 </ol>
-<p>Next Steps for RL</p>
-<ol class="arabic simple">
-<li><p>Tune Hyperparameters: You can experiment with different learning rates, exploration/exploitation rates, and batch sizes to improve the performance of the RL agent.</p></li>
-<li><p>Action Space: Expand the action space to allow more granular adjustments to credit limits and interest rates. For example, you can allow both increments and decrements for interest rates and credit limits.</p></li>
-<li><p>Advanced RL Algorithms: If you want to explore more advanced RL techniques, you can try algorithms like DDPG (Deep Deterministic Policy Gradient) for continuous action spaces or PPO (Proximal Policy Optimization).</p></li>
-</ol>
+<p>Recommendation</p>
+<p>Soft Actor-Critic (SAC) or PPO with a multi-objective reward function is likely the best fit for your use case. These models are well-suited for continuous control problems and can handle both the credit limit and interest rate predictions simultaneously.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -593,6 +1045,15 @@ while not done:
         <p class="prev-next-title">Credit Approval</p>
       </div>
     </a>
+    <a class="right-next"
+       href="firm-valuation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Firm Valuation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -600,7 +1061,34 @@ while not done:
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"></div>
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-breakdown">Problem Breakdown</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-structure">Model Structure</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predicting-interest-rates-and-credit-limits">Predicting Interest Rates and Credit Limits</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#temporal-aspects-handling-time-dependency">Temporal Aspects (Handling Time Dependency)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-component">Optimization Component</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering">Feature Engineering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-the-model">Training the Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-data">Training Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-architecture">Model Architecture</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-function">Loss Function</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-implementation">Model Implementation</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

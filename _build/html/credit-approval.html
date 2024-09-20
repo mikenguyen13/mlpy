@@ -81,6 +81,8 @@
                 gtag('config', 'G-NK1GQ8CXSN');
             </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'credit-approval';</script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
@@ -228,6 +230,7 @@
 <li class="toctree-l1"><a class="reference internal" href="sim_dat_bandits.html">Multi-Armed Bandits</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Credit Approval</a></li>
 <li class="toctree-l1"><a class="reference internal" href="credit-adjustment.html">Credit Adjustment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firm-valuation.html">Firm Valuation</a></li>
 </ul>
 
     </div>
@@ -646,6 +649,32 @@ The institution profits by charging interest on approved credit, but it incurs l
 <section id="custom-loss-function-for-profit-optimization">
 <h3>Custom Loss Function for Profit Optimization<a class="headerlink" href="#custom-loss-function-for-profit-optimization" title="Link to this heading">#</a></h3>
 <p>The core of this algorithm lies in optimizing profit while managing risk. We define a custom loss function that helps us maximize profit. This function factors in both the revenue (from interest) and the cost (from defaults). The overall goal is to maximize the difference between revenue and cost, which equates to maximizing profit.</p>
+<ol class="arabic simple">
+<li><p><strong>Average Daily Balance (ADB):</strong>
+$<span class="math notranslate nohighlight">\(
+\text{avg\_daily\_balance} = \text{pred\_credit\_limit} \times \text{pred\_utilization\_rate}
+\)</span>$</p></li>
+<li><p><strong>Daily Interest Rate:</strong>
+$<span class="math notranslate nohighlight">\(
+\text{daily\_interest\_rate} = \frac{\text{pred\_interest\_rate}}{365}
+\)</span>$</p></li>
+<li><p><strong>Interest Calculation:</strong>
+$<span class="math notranslate nohighlight">\(
+\text{interest} = \text{avg\_daily\_balance} \times \text{daily\_interest\_rate} \times \text{days\_in\_lookahead}
+\)</span>$</p></li>
+<li><p><strong>Revenue:</strong>
+$<span class="math notranslate nohighlight">\(
+\text{revenue} = \text{interest} \times \text{repayment\_prob}
+\)</span>$</p></li>
+<li><p><strong>Cost:</strong>
+$<span class="math notranslate nohighlight">\(
+\text{cost} = \text{credit\_limit} \times \text{default\_risk}
+\)</span>$</p></li>
+<li><p><strong>Profit:</strong>
+$<span class="math notranslate nohighlight">\(
+\text{profit} = \text{revenue} - \text{cost}
+\)</span>$</p></li>
+</ol>
 <section id="breakdown-of-the-loss-function">
 <h4>Breakdown of the Loss Function<a class="headerlink" href="#breakdown-of-the-loss-function" title="Link to this heading">#</a></h4>
 <div class="cell docutils container">
@@ -793,9 +822,9 @@ The institution profits by charging interest on approved credit, but it incurs l
     <span class="s2">&quot;profit difference&quot;</span><span class="p">:</span> <span class="n">profit_diff</span>
 <span class="p">})</span>
 <span class="c1"># print(pred_task1_df.head(4))</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;New Profit: VND </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">pred_task1_df</span><span class="p">[</span><span class="s1">&#39;predicted profit&#39;</span><span class="p">])</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Actual Profit: VND </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">pred_task1_df</span><span class="p">[</span><span class="s1">&#39;actual profit&#39;</span><span class="p">])</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Can make VND </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">pred_task1_df</span><span class="p">[</span><span class="s1">&#39;profit difference&#39;</span><span class="p">])</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2"> more&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;New Profit: </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">pred_task1_df</span><span class="p">[</span><span class="s1">&#39;predicted profit&#39;</span><span class="p">])</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Actual Profit: </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">pred_task1_df</span><span class="p">[</span><span class="s1">&#39;actual profit&#39;</span><span class="p">])</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Can make </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">pred_task1_df</span><span class="p">[</span><span class="s1">&#39;profit difference&#39;</span><span class="p">])</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2"> more&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -804,16 +833,12 @@ The institution profits by charging interest on approved credit, but it incurs l
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-31/32 [============================&gt;.] - ETA: 0s
+32/32 [==============================] - 0s 1ms/step
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-32/32 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>New Profit: VND 71.60
-Actual Profit: VND -10,231,358.18
-Can make VND 10,231,429.78 more
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>New Profit: 311.57
+Actual Profit: -10,231,358.18
+Can make 10,231,669.76 more
 </pre></div>
 </div>
 </div>
@@ -872,17 +897,17 @@ Can make VND 10,231,429.78 more
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Credit Approval Prediction - Evaluation Metrics:
-Accuracy: 0.4980
-Precision: 0.4924
-Recall: 0.8650
-F1-Score: 0.6276
-AUC-ROC: 0.5446
+Accuracy: 0.4950
+Precision: 0.4344
+Recall: 0.1084
+F1-Score: 0.1735
+AUC-ROC: 0.4538
 Confusion Matrix:
-[[ 75 436]
- [ 66 423]]
+[[442  69]
+ [436  53]]
 </pre></div>
 </div>
-<img alt="_images/3213abf2cd827c4e6ecea3f79e9db5180ff96627d9394b9358caaea9a1737e82.png" src="_images/3213abf2cd827c4e6ecea3f79e9db5180ff96627d9394b9358caaea9a1737e82.png" />
+<img alt="_images/be5bc48fe359575e5c1f4048aa2df8a4f0d6dd9dbff9e9b2e62e654c8b2563f7.png" src="_images/be5bc48fe359575e5c1f4048aa2df8a4f0d6dd9dbff9e9b2e62e654c8b2563f7.png" />
 </div>
 </div>
 </section>
@@ -921,12 +946,12 @@ Confusion Matrix:
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Credit Limit Prediction - Evaluation Metrics:
-MAE: 55126.08
-MSE: 3716144000.30
-R-squared: -4.4870
+MAE: 55120.77
+MSE: 3715569021.20
+R-squared: -4.4862
 </pre></div>
 </div>
-<img alt="_images/6b6cf2aecab06ddf3d641b0c2fc56c39dada730337738b14cd6dee03d9262e86.png" src="_images/6b6cf2aecab06ddf3d641b0c2fc56c39dada730337738b14cd6dee03d9262e86.png" />
+<img alt="_images/deab3a516f5de065dedaf2dcf1925401924cf0babb3a7173c3e34413f6c7d51a.png" src="_images/deab3a516f5de065dedaf2dcf1925401924cf0babb3a7173c3e34413f6c7d51a.png" />
 </div>
 </div>
 </section>
@@ -1015,14 +1040,14 @@ Accuracy: 0.4950
 Precision: 0.0000
 Recall: 0.0000
 F1-Score: 0.0000
-AUC-ROC: 0.4979
+AUC-ROC: 0.4944
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\ProgramData\anaconda3\envs\mlpy\lib\site-packages\sklearn\metrics\_classification.py:1334: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 due to no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
 </pre></div>
 </div>
-<img alt="_images/100cc81329aab75dbf5622b1ab83ddc38d93a9cb6f100abeba49a41eacba26bf.png" src="_images/100cc81329aab75dbf5622b1ab83ddc38d93a9cb6f100abeba49a41eacba26bf.png" />
+<img alt="_images/1ba0739766cd7afc29c8e79faeeb7faaf3b6582b651ac3eb40a945f2cdda414a.png" src="_images/1ba0739766cd7afc29c8e79faeeb7faaf3b6582b651ac3eb40a945f2cdda414a.png" />
 </div>
 </div>
 </section>
@@ -1058,8 +1083,8 @@ AUC-ROC: 0.4979
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Profit Prediction - Evaluation Metrics:
-MAE: 15558.17
-MSE: 912407747.92
+MAE: 15558.33
+MSE: 912411793.00
 R-squared: -0.1296
 </pre></div>
 </div>
@@ -1087,6 +1112,7 @@ R-squared: -0.1296
 <li><p>Explainability: Provides transparency, which is especially important in regulatory environments.</p></li>
 <li><p>Counterfactual Analysis</p></li>
 <li><p>Profit strategies: Ensures that business objectives (like profit maximization) are being met by the model.</p></li>
+<li><p>Consider modifying the profit function: could include the onboarding fees (e.g., marketing and promotional expenses) in cost</p></li>
 </ul>
 </section>
 </section>
