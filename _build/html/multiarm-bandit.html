@@ -1,0 +1,908 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Multi-Armed Bandit Problem &#8212; Machine Learning in Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=1a96265c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=c72506b3" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=1a96265c" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/bootstrap.css?v=5340d9b1" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/theme.css?v=a243ae73" />
+    <link rel="stylesheet" type="text/css" href="_static/vendor/fontawesome/6.5.1/css/all.min.css?v=c786f70d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-NK1GQ8CXSN"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-NK1GQ8CXSN');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-NK1GQ8CXSN');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'multiarm-bandit';</script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/copybutton_funcs.js?v=776a791e"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/language_data.js?v=e49ba422"></script>
+    <script src="_static/searchtools.js?v=d19c4805"></script>
+    <script src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/scripts/bootstrap.js?v=3d67b3b1"></script>
+    <script src="_static/scripts/pydata-sphinx-theme.js?v=b2908668"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?v=95180707"></script>
+    <link rel="canonical" href="https://mikenguyen13.github.io/mlpy/multiarm-bandit.html" />
+    <link rel="icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Machine Learning in Python - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Machine Learning in Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Chapter 1: Introduction to Machine Learning and Artificial Intelligence
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="_optimization.html">Optimization</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Industry Applications</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="3-approximate-nearest-neighbors.html">Approximate Nearest Neighbors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-credit-score.html">Credit Score Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sim_dat_bandits.html">Multi-Armed Bandits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="min_risk.html">More advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credit-approval.html">Credit Approval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credit-adjustment.html">Credit Adjustment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firm-valuation.html">Firm Valuation</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/edit/main/multiarm-bandit.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/issues/new?title=Issue%20on%20page%20%2Fmultiarm-bandit.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/multiarm-bandit.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Multi-Armed Bandit Problem</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formal-definition">Formal Definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-concepts">Key Concepts</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploration-vs-exploitation">Exploration vs. Exploitation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regret">Regret</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strategies-for-multi-armed-bandit-problems">Strategies for Multi-Armed Bandit Problems</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#epsilon-greedy">1. Epsilon-Greedy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uppder-confidence-bound-ucb">Uppder Confidence Bound (UCB)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#thompson-sampling">Thompson Sampling</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variants-of-the-multi-armed-bandit-problem">Variants of the Multi-Armed Bandit Problem</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contextual-bandits">Contextual Bandits</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-stationary-bandits">Non-Stationary Bandits</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#combinatorial-bandits">Combinatorial Bandits</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applications">Applications</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <p>Multi-armed bandits is a rich, multi-disciplinary research area which receives attention from computer science, operations research, economics and statistics. It has been studied since (Thompson, 1933), with a big
+surge of activity in the past 15-20 years</p>
+<p>Other sources:
+* <a class="reference external" href="https://tor-lattimore.com/downloads/book/book.pdf">https://tor-lattimore.com/downloads/book/book.pdf</a> by lattimore2020bandit by
+* Intro to Multi-Armed Bandits slivkins2019introduction
+&#64;book{lattimore2020bandit,
+title={Bandit algorithms},
+author={Lattimore, Tor and Szepesv{‘a}ri, Csaba},
+year={2020},
+publisher={Cambridge University Press}
+}</p>
+<p>&#64;article{slivkins2019introduction,
+title={Introduction to multi-armed bandits},
+author={Slivkins, Aleksandrs and others},
+journal={Foundations and Trends{\textregistered} in Machine Learning},
+volume={12},
+number={1-2},
+pages={1–286},
+year={2019},
+publisher={Now Publishers, Inc.}
+}</p>
+<p>&#64;article{thompson1933likelihood,
+title={On the likelihood that one unknown probability exceeds another in view of the evidence of two samples},
+author={Thompson, William R},
+journal={Biometrika},
+volume={25},
+number={3-4},
+pages={285–294},
+year={1933},
+publisher={Oxford University Press}
+}</p>
+<section class="tex2jax_ignore mathjax_ignore" id="multi-armed-bandit-problem">
+<h1>Multi-Armed Bandit Problem<a class="headerlink" href="#multi-armed-bandit-problem" title="Link to this heading">#</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>The Multi-Armed Bandit (MAB) problem is a classical reinforcement learning problem that exemplifies the exploration-exploitation trade-off. The goal is to maximize the cumulative reward by choosing the best arm to pull at each time step.</p>
+</section>
+<section id="formal-definition">
+<h2>Formal Definition<a class="headerlink" href="#formal-definition" title="Link to this heading">#</a></h2>
+<p>A multi-armed bandit problem can be formally defined as follows:</p>
+<ul class="simple">
+<li><p><strong>Arms</strong>: A set of <span class="math notranslate nohighlight">\(K\)</span> arms, where each arm <span class="math notranslate nohighlight">\(i\)</span> provides a reward from an unknown probability distribution <span class="math notranslate nohighlight">\(P_i\)</span>.</p></li>
+<li><p><strong>Time Steps</strong>: The agent interacts with the bandit over a sequence of <span class="math notranslate nohighlight">\(T\)</span> time steps.</p></li>
+<li><p><strong>Rewards</strong>: At each time step <span class="math notranslate nohighlight">\(t\)</span>, the agent selects an arm <span class="math notranslate nohighlight">\(a_t\)</span> and receives a reward <span class="math notranslate nohighlight">\(r_t\)</span> drawn from the distribution <span class="math notranslate nohighlight">\(P_{a_t}\)</span>.</p></li>
+</ul>
+<p>The objective is to maximize the expected cumulative reward over <span class="math notranslate nohighlight">\(T\)</span> time steps.</p>
+<p>POssible applications;
+a crowdsourcing platform can improve the assignment of tasks, workers and prices</p>
+</section>
+<section id="key-concepts">
+<h2>Key Concepts<a class="headerlink" href="#key-concepts" title="Link to this heading">#</a></h2>
+<section id="exploration-vs-exploitation">
+<h3>Exploration vs. Exploitation<a class="headerlink" href="#exploration-vs-exploitation" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Exploration</strong>: Trying different arms to gather information about their reward distributions.</p></li>
+<li><p><strong>Exploitation</strong>: Selecting the arm with the highest known reward based on the information gathered so far.</p></li>
+</ul>
+<p>Balancing these two aspects is crucial for achieving optimal performance in the MAB problem.</p>
+</section>
+<section id="regret">
+<h3>Regret<a class="headerlink" href="#regret" title="Link to this heading">#</a></h3>
+<p>Regret measures the difference between the cumulative reward obtained by the optimal strategy and the reward obtained by the algorithm. It is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+R(T) = T \mu^* - \sum_{t=1}^T \mu_{a_t}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mu^*\)</span> is the mean reward of the best arm, and <span class="math notranslate nohighlight">\(\mu_{a_t}\)</span> is the mean reward of the arm chosen at time <span class="math notranslate nohighlight">\(t\)</span>.</p>
+</section>
+</section>
+<section id="strategies-for-multi-armed-bandit-problems">
+<h2>Strategies for Multi-Armed Bandit Problems<a class="headerlink" href="#strategies-for-multi-armed-bandit-problems" title="Link to this heading">#</a></h2>
+<section id="epsilon-greedy">
+<h3>1. Epsilon-Greedy<a class="headerlink" href="#epsilon-greedy" title="Link to this heading">#</a></h3>
+<p>The epsilon-greedy strategy is one of the simplest approaches:</p>
+<ul class="simple">
+<li><p>With probability <span class="math notranslate nohighlight">\(\epsilon\)</span>, select a random arm (exploration).</p></li>
+<li><p>With probability <span class="math notranslate nohighlight">\(1 - \epsilon\)</span>, select the arm with the highest average reward observed so far (exploitation).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">class</span> <span class="nc">EpsilonGreedy</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_arms</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_arms</span> <span class="o">=</span> <span class="n">n_arms</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="n">epsilon</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_arms</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_arms</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">select_arm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_arms</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chosen_arm</span><span class="p">,</span> <span class="n">reward</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">]</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">value</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">reward</span>
+
+<span class="c1"># Example usage</span>
+<span class="n">n_arms</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">n_rounds</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="n">bandit</span> <span class="o">=</span> <span class="n">EpsilonGreedy</span><span class="p">(</span><span class="n">n_arms</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">)</span>
+<span class="n">rewards</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n_arms</span><span class="p">)</span>  <span class="c1"># Simulated rewards for each arm</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_rounds</span><span class="p">):</span>
+    <span class="n">chosen_arm</span> <span class="o">=</span> <span class="n">bandit</span><span class="o">.</span><span class="n">select_arm</span><span class="p">()</span>
+    <span class="n">reward</span> <span class="o">=</span> <span class="n">rewards</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">]</span>
+    <span class="n">bandit</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">chosen_arm</span><span class="p">,</span> <span class="n">reward</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated values:&quot;</span><span class="p">,</span> <span class="n">bandit</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated values: [0.14915631 0.52210932 0.48625763 0.99539302 0.760989   0.1701503
+ 0.1915776  0.34115175 0.85734105 0.05478585]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="uppder-confidence-bound-ucb">
+<h3>Uppder Confidence Bound (UCB)<a class="headerlink" href="#uppder-confidence-bound-ucb" title="Link to this heading">#</a></h3>
+<p>The UCB algorithm selects the arm that maximizes the upper confidence bound of the reward estimate. For each arm <span class="math notranslate nohighlight">\(i\)</span>, the upper confidence bound is calculated as:
+$<span class="math notranslate nohighlight">\(
+UCB_i (t) = \hat{\mu}_i + \sqrt{\frac{2 \ln t}{n_i}}
+\)</span>$</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UCB1</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_arms</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_arms</span> <span class="o">=</span> <span class="n">n_arms</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_arms</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_arms</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">select_arm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">total_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="p">)</span>
+        <span class="k">if</span> <span class="mi">0</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ucb_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">total_counts</span><span class="p">))</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">ucb_values</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chosen_arm</span><span class="p">,</span> <span class="n">reward</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">]</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">value</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">reward</span>
+
+<span class="c1"># Example usage</span>
+<span class="n">bandit</span> <span class="o">=</span> <span class="n">UCB1</span><span class="p">(</span><span class="n">n_arms</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_rounds</span><span class="p">):</span>
+    <span class="n">chosen_arm</span> <span class="o">=</span> <span class="n">bandit</span><span class="o">.</span><span class="n">select_arm</span><span class="p">()</span>
+    <span class="n">reward</span> <span class="o">=</span> <span class="n">rewards</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">]</span>
+    <span class="n">bandit</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">chosen_arm</span><span class="p">,</span> <span class="n">reward</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated values:&quot;</span><span class="p">,</span> <span class="n">bandit</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated values: [0.14915631 0.52210932 0.48625763 0.99539302 0.760989   0.1701503
+ 0.1915776  0.34115175 0.85734105 0.05478585]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="thompson-sampling">
+<h3>Thompson Sampling<a class="headerlink" href="#thompson-sampling" title="Link to this heading">#</a></h3>
+<p>Thompson Sampling is a Bayesian approach to the MAB problem:</p>
+<ul class="simple">
+<li><p>Maintain a probability distribution (prior) over the possible reward distributions of each arm.</p></li>
+<li><p>At each time step, sample from these distributions (posterior) and select the arm with the highest sampled value.</p></li>
+<li><p>Update the posterior distributions based on the observed rewards.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ThompsonSampling</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_arms</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_arms</span> <span class="o">=</span> <span class="n">n_arms</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">successes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_arms</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">failures</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_arms</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">select_arm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">beta</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">successes</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">failures</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chosen_arm</span><span class="p">,</span> <span class="n">reward</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">reward</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">successes</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">failures</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="c1"># Example usage</span>
+<span class="n">bandit</span> <span class="o">=</span> <span class="n">ThompsonSampling</span><span class="p">(</span><span class="n">n_arms</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_rounds</span><span class="p">):</span>
+    <span class="n">chosen_arm</span> <span class="o">=</span> <span class="n">bandit</span><span class="o">.</span><span class="n">select_arm</span><span class="p">()</span>
+    <span class="n">reward</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rewards</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">])</span>  <span class="c1"># Simulated binary reward</span>
+    <span class="n">bandit</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">chosen_arm</span><span class="p">,</span> <span class="n">reward</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Successes:&quot;</span><span class="p">,</span> <span class="n">bandit</span><span class="o">.</span><span class="n">successes</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Failures:&quot;</span><span class="p">,</span> <span class="n">bandit</span><span class="o">.</span><span class="n">failures</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Successes: [  1.   1.   0. 965.   0.   0.   0.   1.  13.   0.]
+Failures: [1. 2. 2. 4. 2. 2. 1. 1. 3. 1.]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="variants-of-the-multi-armed-bandit-problem">
+<h2>Variants of the Multi-Armed Bandit Problem<a class="headerlink" href="#variants-of-the-multi-armed-bandit-problem" title="Link to this heading">#</a></h2>
+<section id="contextual-bandits">
+<h3>Contextual Bandits<a class="headerlink" href="#contextual-bandits" title="Link to this heading">#</a></h3>
+<p>In contextual bandits, the decision-making process is conditioned on the context <span class="math notranslate nohighlight">\(x_t\)</span> available at each time step <span class="math notranslate nohighlight">\(t\)</span>. The objective is to learn a policy that maps contexts to arms, maximizing the cumulative reward.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ContextualBandit</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_arms</span><span class="p">,</span> <span class="n">n_features</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_arms</span> <span class="o">=</span> <span class="n">n_arms</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_features</span> <span class="o">=</span> <span class="n">n_features</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_arms</span><span class="p">,</span> <span class="n">n_features</span><span class="p">))</span>
+    
+    <span class="k">def</span> <span class="nf">select_arm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">means</span> <span class="o">=</span> <span class="n">context</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="o">.</span><span class="n">T</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">means</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chosen_arm</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">reward</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">context</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">reward</span> <span class="o">-</span> <span class="n">x</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">])</span> <span class="o">*</span> <span class="n">x</span>
+
+<span class="c1"># Example usage</span>
+<span class="n">n_features</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">contextual_bandit</span> <span class="o">=</span> <span class="n">ContextualBandit</span><span class="p">(</span><span class="n">n_arms</span><span class="p">,</span> <span class="n">n_features</span><span class="p">)</span>
+<span class="n">contexts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n_rounds</span><span class="p">,</span> <span class="n">n_features</span><span class="p">)</span>  <span class="c1"># Simulated contexts</span>
+
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_rounds</span><span class="p">):</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="n">contexts</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+    <span class="n">chosen_arm</span> <span class="o">=</span> <span class="n">contextual_bandit</span><span class="o">.</span><span class="n">select_arm</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+    <span class="n">reward</span> <span class="o">=</span> <span class="n">rewards</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">]</span>  <span class="c1"># Simulated reward based on context</span>
+    <span class="n">contextual_bandit</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">chosen_arm</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">reward</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated beta values:&quot;</span><span class="p">,</span> <span class="n">contextual_bandit</span><span class="o">.</span><span class="n">beta</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated beta values: [[-4.18811054e-02 -5.76686108e-02 -9.55660940e-02 -6.14116128e-02
+  -2.09012132e-01]
+ [-2.69611909e-01 -2.78705183e-01 -1.79543465e-01 -9.26437616e-02
+  -9.71837634e-02]
+ [-3.33083324e-01 -2.52651385e-01 -3.19156163e-01 -6.83125569e-01
+  -3.35290587e-01]
+ [-3.00467737e-01 -1.54410670e-01 -3.40915593e-01  1.07832829e-02
+  -1.07722033e-01]
+ [-2.42237296e-01  1.37255424e-01 -8.63753225e-01 -8.76779119e-03
+  -2.70387902e-01]
+ [-2.81536735e-01 -1.38880891e-01 -8.68862001e-02 -8.15497878e-02
+  -3.39912484e-01]
+ [-2.11081451e-01 -1.25938685e-01 -6.50009732e-02 -7.97526458e-02
+  -1.22911190e-01]
+ [-2.30866679e-01 -2.33171158e-01  6.74073763e-02 -2.08244699e-01
+  -1.70848785e-01]
+ [-7.31335998e-01 -1.29179557e+00  5.37027553e-01  1.46193163e+00
+   1.20663803e+00]
+ [ 1.82195012e-01 -6.63277737e-03 -1.35120108e-03 -1.15987907e-02
+   8.09158509e-02]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="non-stationary-bandits">
+<h3>Non-Stationary Bandits<a class="headerlink" href="#non-stationary-bandits" title="Link to this heading">#</a></h3>
+<p>Non-stationary bandits consider scenarios where the reward distributions of the arms change over time. Algorithms for this variant need to adapt to these changes, often incorporating mechanisms for discounting past observations or detecting change points.</p>
+</section>
+<section id="combinatorial-bandits">
+<h3>Combinatorial Bandits<a class="headerlink" href="#combinatorial-bandits" title="Link to this heading">#</a></h3>
+<p>Combinatorial bandits involve selecting subsets of arms rather than a single arm at each time step. This variant is relevant in scenarios where the decision-maker must allocate resources across multiple options simultaneously.</p>
+</section>
+</section>
+<section id="applications">
+<h2>Applications<a class="headerlink" href="#applications" title="Link to this heading">#</a></h2>
+<p>The multi-armed bandit problem has numerous real-world applications, including:</p>
+<ul class="simple">
+<li><p>Online Advertising: Selecting which ads to display to maximize click-through rates.</p></li>
+<li><p>Clinical Trials: Allocating treatments to patients to identify the most effective treatment.</p></li>
+<li><p>Recommendation Systems: Presenting items (e.g., movies, products) to users to maximize engagement.</p></li>
+</ul>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
+<p>The Multi-Armed Bandit problem is a fundamental challenge in reinforcement learning and decision-making under uncertainty. By effectively balancing exploration and exploitation, various algorithms can achieve near-optimal performance in diverse settings. Understanding and applying these strategies can lead to significant improvements in fields ranging from online advertising to clinical trials and beyond.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formal-definition">Formal Definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-concepts">Key Concepts</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploration-vs-exploitation">Exploration vs. Exploitation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regret">Regret</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strategies-for-multi-armed-bandit-problems">Strategies for Multi-Armed Bandit Problems</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#epsilon-greedy">1. Epsilon-Greedy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uppder-confidence-bound-ucb">Uppder Confidence Bound (UCB)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#thompson-sampling">Thompson Sampling</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variants-of-the-multi-armed-bandit-problem">Variants of the Multi-Armed Bandit Problem</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contextual-bandits">Contextual Bandits</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-stationary-bandits">Non-Stationary Bandits</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#combinatorial-bandits">Combinatorial Bandits</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applications">Applications</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Mike Nguyen
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

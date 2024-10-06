@@ -12,6 +12,9 @@ parts:
     - file: 3-approximate-nearest-neighbors.ipynb
     - file: 4-credit-score.ipynb
     - file: sim_dat_bandits.ipynb
+    - file: min_risk.ipynb
     - file: credit-approval.ipynb
     - file: credit-adjustment.ipynb
     - file: firm-valuation.ipynb
+    - file: text_sim.ipynb
+    - file: text_sim_viet.ipynb

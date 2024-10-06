@@ -81,8 +81,6 @@
                 gtag('config', 'G-NK1GQ8CXSN');
             </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'credit-approval';</script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
@@ -104,7 +102,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Credit Adjustment" href="credit-adjustment.html" />
-    <link rel="prev" title="Multi-Armed Bandits" href="sim_dat_bandits.html" />
+    <link rel="prev" title="More advanced" href="min_risk.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -215,7 +213,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="intro.html">
-                    Machine Learning in Python
+                    Chapter 1: Introduction to Machine Learning and Artificial Intelligence
                 </a>
             </li>
         </ul>
@@ -228,6 +226,7 @@
 <li class="toctree-l1"><a class="reference internal" href="3-approximate-nearest-neighbors.html">Approximate Nearest Neighbors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4-credit-score.html">Credit Score Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sim_dat_bandits.html">Multi-Armed Bandits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="min_risk.html">More advanced</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Credit Approval</a></li>
 <li class="toctree-l1"><a class="reference internal" href="credit-adjustment.html">Credit Adjustment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="firm-valuation.html">Firm Valuation</a></li>
@@ -675,14 +674,9 @@ The institution profits by charging interest on approved credit, but it incurs l
 <li><p><code class="docutils literal notranslate"><span class="pre">cost</span> <span class="pre">=</span> <span class="pre">credit_limit</span> <span class="pre">*</span> <span class="pre">default_risk</span></code></p></li>
 </ul>
 </li>
-<li><p><strong>Profit:</strong></p>
-<ul class="simple">
-<li><p>`profit = <em>Profit:</em>*
-$<span class="math notranslate nohighlight">\(
-\text{profit} = \text{revenue} - \text{cost}
-\)</span>$</p></li>
-</ul>
-</li>
+<li><p><strong>Profit:</strong>
+revenue - cost`text{cost}
+$$</p></li>
 </ol>
 <section id="breakdown-of-the-loss-function">
 <h4>Breakdown of the Loss Function<a class="headerlink" href="#breakdown-of-the-loss-function" title="Link to this heading">#</a></h4>
@@ -838,15 +832,11 @@ $<span class="math notranslate nohighlight">\(
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/32 [..............................] - ETA: 9s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/32 [..............................] - ETA: 4s
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-26/32 [=======================&gt;......] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-32/32 [==============================] - 0s 3ms/step
+32/32 [==============================] - 0s 1ms/step
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>New Profit: 0.00
@@ -914,7 +904,7 @@ Accuracy: 0.5110
 Precision: 0.0000
 Recall: 0.0000
 F1-Score: 0.0000
-AUC-ROC: 0.5189
+AUC-ROC: 0.4961
 Confusion Matrix:
 [[511   0]
  [489   0]]
@@ -924,7 +914,7 @@ Confusion Matrix:
   _warn_prf(average, modifier, msg_start, len(result))
 </pre></div>
 </div>
-<img alt="_images/5a12bb5d3b3909e6a36a7451a27388cd97cceaf117859140eaa70c04cf7e164e.png" src="_images/5a12bb5d3b3909e6a36a7451a27388cd97cceaf117859140eaa70c04cf7e164e.png" />
+<img alt="_images/73fd813a4a1c3ec66c28b3b10254db5c0e6410e9324e592f1defd98f84b563cd.png" src="_images/73fd813a4a1c3ec66c28b3b10254db5c0e6410e9324e592f1defd98f84b563cd.png" />
 </div>
 </div>
 </section>
@@ -963,9 +953,9 @@ Confusion Matrix:
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Credit Limit Prediction - Evaluation Metrics:
-MAE: 55126.27
-MSE: 3716164657.44
-R-squared: -4.4871
+MAE: 55126.16
+MSE: 3716153439.15
+R-squared: -4.4870
 </pre></div>
 </div>
 <img alt="_images/6b6cf2aecab06ddf3d641b0c2fc56c39dada730337738b14cd6dee03d9262e86.png" src="_images/6b6cf2aecab06ddf3d641b0c2fc56c39dada730337738b14cd6dee03d9262e86.png" />
@@ -1004,12 +994,12 @@ R-squared: -4.4871
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interest Rate Prediction - Evaluation Metrics:
-MAE: 0.2271
-MSE: 0.0714
-R-squared: -5.0345
+MAE: 0.3664
+MSE: 0.1532
+R-squared: -11.9525
 </pre></div>
 </div>
-<img alt="_images/3050558ceb354cdf72efda7c31a3cc8527ac64be14858948b36c611ce2a11e87.png" src="_images/3050558ceb354cdf72efda7c31a3cc8527ac64be14858948b36c611ce2a11e87.png" />
+<img alt="_images/e358bc7b8ca0df9de434f9661dceb1959161d6bbe2de87a96f169ed7df35f6b1.png" src="_images/e358bc7b8ca0df9de434f9661dceb1959161d6bbe2de87a96f169ed7df35f6b1.png" />
 </div>
 </div>
 </section>
@@ -1053,14 +1043,14 @@ R-squared: -5.0345
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Default Risk Prediction - Evaluation Metrics:
-Accuracy: 0.5050
-Precision: 0.5050
-Recall: 1.0000
-F1-Score: 0.6711
-AUC-ROC: 0.5138
+Accuracy: 0.4940
+Precision: 0.4990
+Recall: 0.5109
+F1-Score: 0.5049
+AUC-ROC: 0.4955
 </pre></div>
 </div>
-<img alt="_images/7778f9d94f22d5b9b9a580c13974194e5417007afe76e015907e9e22541655ca.png" src="_images/7778f9d94f22d5b9b9a580c13974194e5417007afe76e015907e9e22541655ca.png" />
+<img alt="_images/f2e9e5237df17abb439f94324dc6750eef9b7f862359794943a60d73055e0b80.png" src="_images/f2e9e5237df17abb439f94324dc6750eef9b7f862359794943a60d73055e0b80.png" />
 </div>
 </div>
 </section>
@@ -1162,12 +1152,12 @@ R-squared: -0.1296
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="sim_dat_bandits.html"
+       href="min_risk.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Multi-Armed Bandits</p>
+        <p class="prev-next-title">More advanced</p>
       </div>
     </a>
     <a class="right-next"
