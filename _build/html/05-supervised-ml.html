@@ -474,26 +474,26 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-trees">1.3 Decision Trees</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#core-concepts">Core Concepts</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variations-of-decision-trees">Variations of Decision Trees</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Practical Examples</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Practical Examples</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neural-networks">1.4 Neural Networks</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#architectural-components">Architectural Components</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-neural-networks">Types of Neural Networks</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">Mathematical Formulation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">Practical Examples</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">Mathematical Formulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">Practical Examples</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instance-based-learning">1.5 Instance-Based Learning</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">Core Concepts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">Core Concepts</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variations-of-instance-based-learning">Variations of Instance-Based Learning</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">Practical Examples</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">Practical Examples</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-discriminant-analysis-lda">1.6 Linear Discriminant Analysis (LDA)</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-foundations">Mathematical Foundations</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variations-of-lda">Variations of LDA</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">Practical Examples</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id30">Practical Examples</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generative-models">2. Generative Models</a><ul class="nav section-nav flex-column">
@@ -653,7 +653,7 @@ y = X\beta + \epsilon
 <h3>Variations of SVMs<a class="headerlink" href="#variations-of-svms" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong>Linear SVM</strong>: Utilizes a linear kernel to separate data linearly.</p></li>
-<li><p><strong>Non-Linear SVM</strong>: Employs kernel functions (e.g., polynomial, radial basis function (RBF)) to map input data into higher-dimensional spaces, enabling the separation of non-linearly separable data [&#64;cortes1995svm].</p></li>
+<li><p><strong>Non-Linear SVM</strong>: Employs kernel functions (e.g., polynomial, radial basis function (RBF)) to map input data into higher-dimensional spaces, enabling the separation of non-linearly separable data <span id="id12">[<a class="reference internal" href="_sources/1-markdown.html#id35" title="C. Cortes and V. Vapnik. Support-vector networks. Machine Learning, 1995.">CV95</a>]</span>.</p></li>
 <li><p><strong>Soft Margin SVM</strong>: Introduces flexibility by allowing some misclassifications, thereby handling noisy data effectively.</p></li>
 </ul>
 </section>
@@ -678,12 +678,12 @@ y = X\beta + \epsilon
 <li><p><strong>Classification Trees</strong>: Tailored for classification tasks, these trees predict discrete class labels.</p></li>
 <li><p><strong>Regression Trees</strong>: Designed to predict continuous values, regression trees estimate numerical targets.</p></li>
 <li><p><strong>Pruned Trees</strong>: Trees that have been trimmed to reduce overfitting by removing branches that have little predictive power.</p></li>
-<li><p><strong>Random Forests</strong>: An ensemble method that builds multiple decision trees using bagging (Bootstrap Aggregating) to enhance performance and reduce overfitting. Each tree is trained on a random subset of the data, and their predictions are aggregated through majority voting (classification) or averaging (regression) <span id="id12">[<a class="reference internal" href="_sources/1-markdown.html#id36" title="L. Breiman. Random forests. Machine Learning, 2001.">Bre01</a>]</span>.</p></li>
-<li><p><strong>Gradient Boosting</strong>: Constructs trees sequentially, where each new tree aims to correct the errors of its predecessors. This method minimizes a differentiable loss function using gradient descent, leading to highly accurate models <span id="id13">[<a class="reference internal" href="_sources/1-markdown.html#id37" title="J. H. Friedman. Greedy function approximation: a gradient boosting machine. The Annals of Statistics, 2001.">Fri01</a>]</span>.</p></li>
+<li><p><strong>Random Forests</strong>: An ensemble method that builds multiple decision trees using bagging (Bootstrap Aggregating) to enhance performance and reduce overfitting. Each tree is trained on a random subset of the data, and their predictions are aggregated through majority voting (classification) or averaging (regression) <span id="id13">[<a class="reference internal" href="_sources/1-markdown.html#id36" title="L. Breiman. Random forests. Machine Learning, 2001.">Bre01</a>]</span>.</p></li>
+<li><p><strong>Gradient Boosting</strong>: Constructs trees sequentially, where each new tree aims to correct the errors of its predecessors. This method minimizes a differentiable loss function using gradient descent, leading to highly accurate models <span id="id14">[<a class="reference internal" href="_sources/1-markdown.html#id37" title="J. H. Friedman. Greedy function approximation: a gradient boosting machine. The Annals of Statistics, 2001.">Fri01</a>]</span>.</p></li>
 </ul>
 </section>
-<section id="id14">
-<h3>Practical Examples<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
+<section id="id15">
+<h3>Practical Examples<a class="headerlink" href="#id15" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong>Random Forests</strong>: By aggregating the predictions of numerous decision trees, Random Forests achieve high accuracy and robustness, making them suitable for tasks like fraud detection and feature importance analysis.</p></li>
 <li><p><strong>Gradient Boosting Machines (GBMs)</strong>: GBMs are instrumental in scenarios requiring high predictive performance, such as ranking systems and predictive maintenance.</p></li>
@@ -704,14 +704,14 @@ y = X\beta + \epsilon
 <section id="types-of-neural-networks">
 <h3>Types of Neural Networks<a class="headerlink" href="#types-of-neural-networks" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p><strong>Feedforward Neural Networks (FNN)</strong>: The most basic architecture where information flows in one direction—from input to output—without cycles <span id="id15">[]</span>.</p></li>
-<li><p><strong>Convolutional Neural Networks (CNNs)</strong>: Specialized for processing image and spatial data, CNNs utilize convolutional layers to extract spatial hierarchies of features, making them indispensable in computer vision tasks <span id="id16">[<a class="reference internal" href="_sources/1-markdown.html#id39" title="Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner. Gradient-based learning applied to document recognition. Proceedings of the IEEE, 1998.">LBBH98</a>]</span>.</p></li>
-<li><p><strong>Recurrent Neural Networks (RNNs)</strong>: Designed to handle sequential data, RNNs incorporate loops that allow information to persist, making them ideal for tasks like language modeling and time series prediction <span id="id17">[<a class="reference internal" href="_sources/1-markdown.html#id40" title="D. E. Rumelhart, G. E. Hinton, and R. J. Williams. Learning representations by back-propagating errors. Nature, 1986.">RHW86</a>]</span>.</p></li>
-<li><p><strong>Long Short-Term Memory (LSTM) Networks</strong>: A sophisticated variant of RNNs that mitigates the vanishing gradient problem, enabling the capture of long-range dependencies in sequential data <span id="id18">[<a class="reference internal" href="_sources/1-markdown.html#id40" title="D. E. Rumelhart, G. E. Hinton, and R. J. Williams. Learning representations by back-propagating errors. Nature, 1986.">RHW86</a>]</span>.</p></li>
+<li><p><strong>Feedforward Neural Networks (FNN)</strong>: The most basic architecture where information flows in one direction—from input to output—without cycles <span id="id16">[]</span>.</p></li>
+<li><p><strong>Convolutional Neural Networks (CNNs)</strong>: Specialized for processing image and spatial data, CNNs utilize convolutional layers to extract spatial hierarchies of features, making them indispensable in computer vision tasks <span id="id17">[<a class="reference internal" href="_sources/1-markdown.html#id39" title="Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner. Gradient-based learning applied to document recognition. Proceedings of the IEEE, 1998.">LBBH98</a>]</span>.</p></li>
+<li><p><strong>Recurrent Neural Networks (RNNs)</strong>: Designed to handle sequential data, RNNs incorporate loops that allow information to persist, making them ideal for tasks like language modeling and time series prediction <span id="id18">[<a class="reference internal" href="_sources/1-markdown.html#id40" title="D. E. Rumelhart, G. E. Hinton, and R. J. Williams. Learning representations by back-propagating errors. Nature, 1986.">RHW86</a>]</span>.</p></li>
+<li><p><strong>Long Short-Term Memory (LSTM) Networks</strong>: A sophisticated variant of RNNs that mitigates the vanishing gradient problem, enabling the capture of long-range dependencies in sequential data <span id="id19">[<a class="reference internal" href="_sources/1-markdown.html#id40" title="D. E. Rumelhart, G. E. Hinton, and R. J. Williams. Learning representations by back-propagating errors. Nature, 1986.">RHW86</a>]</span>.</p></li>
 </ul>
 </section>
-<section id="id19">
-<h3>Mathematical Formulation<a class="headerlink" href="#id19" title="Link to this heading">#</a></h3>
+<section id="id20">
+<h3>Mathematical Formulation<a class="headerlink" href="#id20" title="Link to this heading">#</a></h3>
 <p>A typical feedforward neural network computes its output as:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -724,8 +724,8 @@ y = f(Wx + b)
 <li><p><span class="math notranslate nohighlight">\( f \)</span> is an activation function such as ReLU or sigmoid.</p></li>
 </ul>
 </section>
-<section id="id20">
-<h3>Practical Examples<a class="headerlink" href="#id20" title="Link to this heading">#</a></h3>
+<section id="id21">
+<h3>Practical Examples<a class="headerlink" href="#id21" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong>Image Recognition</strong>: CNNs excel in identifying objects within images, powering applications from facial recognition to autonomous driving.</p></li>
 <li><p><strong>Natural Language Processing</strong>: RNNs and LSTMs are pivotal in tasks like machine translation, sentiment analysis, and speech recognition.</p></li>
@@ -736,32 +736,32 @@ y = f(Wx + b)
 <section id="instance-based-learning">
 <h2>1.5 Instance-Based Learning<a class="headerlink" href="#instance-based-learning" title="Link to this heading">#</a></h2>
 <p>Instance-based learning methods, such as K-Nearest Neighbors (KNN), adopt a pragmatic approach by storing training data and making predictions based on the similarity between instances. Rather than constructing an explicit model, these methods rely on the proximity of new data points to existing instances to inform their predictions.</p>
-<section id="id21">
-<h3>Core Concepts<a class="headerlink" href="#id21" title="Link to this heading">#</a></h3>
+<section id="id22">
+<h3>Core Concepts<a class="headerlink" href="#id22" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong>Memory-Based Learning</strong>: Stores all or a subset of the training data for use during prediction.</p></li>
-<li><p><strong>Similarity Metrics</strong>: Determines the closeness between instances using distance measures like Euclidean, Manhattan, or Minkowski distances [&#64;cover1967knn].</p></li>
+<li><p><strong>Similarity Metrics</strong>: Determines the closeness between instances using distance measures like Euclidean, Manhattan, or Minkowski distances <span id="id23">[<a class="reference internal" href="_sources/1-markdown.html#id41" title="T. M. Cover and P. E. Hart. Nearest neighbor pattern classification. IEEE Transactions on Information Theory, 1967.">CH67</a>]</span>.</p></li>
 </ul>
 </section>
 <section id="variations-of-instance-based-learning">
 <h3>Variations of Instance-Based Learning<a class="headerlink" href="#variations-of-instance-based-learning" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p><strong>Basic KNN</strong>: Utilizes the Euclidean distance to identify the k-nearest neighbors and makes predictions based on their majority class or average value <span id="id22">[<a class="reference internal" href="_sources/1-markdown.html#id41" title="T. M. Cover and P. E. Hart. Nearest neighbor pattern classification. IEEE Transactions on Information Theory, 1967.">CH67</a>]</span>.</p></li>
+<li><p><strong>Basic KNN</strong>: Utilizes the Euclidean distance to identify the k-nearest neighbors and makes predictions based on their majority class or average value <span id="id24">[<a class="reference internal" href="_sources/1-markdown.html#id41" title="T. M. Cover and P. E. Hart. Nearest neighbor pattern classification. IEEE Transactions on Information Theory, 1967.">CH67</a>]</span>.</p></li>
 <li><p><strong>Weighted KNN</strong>: Assigns weights to neighbors based on their distance, giving closer neighbors more influence in the prediction process.</p></li>
 <li><p><strong>Adaptive KNN</strong>: Dynamically adjusts the value of k based on the density of data points in different regions of the feature space.</p></li>
 </ul>
 </section>
-<section id="id23">
-<h3>Practical Examples<a class="headerlink" href="#id23" title="Link to this heading">#</a></h3>
+<section id="id25">
+<h3>Practical Examples<a class="headerlink" href="#id25" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p><strong>Recommendation Systems</strong>: KNN can suggest products or content by identifying similar user preferences <span id="id24">[<a class="reference internal" href="_sources/1-markdown.html#id41" title="T. M. Cover and P. E. Hart. Nearest neighbor pattern classification. IEEE Transactions on Information Theory, 1967.">CH67</a>]</span>.</p></li>
-<li><p><strong>Medical Diagnostics</strong>: Instance-based methods assist in diagnosing diseases by comparing patient data to historical cases <span id="id25">[<a class="reference internal" href="_sources/1-markdown.html#id41" title="T. M. Cover and P. E. Hart. Nearest neighbor pattern classification. IEEE Transactions on Information Theory, 1967.">CH67</a>]</span>.</p></li>
+<li><p><strong>Recommendation Systems</strong>: KNN can suggest products or content by identifying similar user preferences <span id="id26">[<a class="reference internal" href="_sources/1-markdown.html#id41" title="T. M. Cover and P. E. Hart. Nearest neighbor pattern classification. IEEE Transactions on Information Theory, 1967.">CH67</a>]</span>.</p></li>
+<li><p><strong>Medical Diagnostics</strong>: Instance-based methods assist in diagnosing diseases by comparing patient data to historical cases <span id="id27">[<a class="reference internal" href="_sources/1-markdown.html#id41" title="T. M. Cover and P. E. Hart. Nearest neighbor pattern classification. IEEE Transactions on Information Theory, 1967.">CH67</a>]</span>.</p></li>
 </ul>
 </section>
 </section>
 <section id="linear-discriminant-analysis-lda">
 <h2>1.6 Linear Discriminant Analysis (LDA)<a class="headerlink" href="#linear-discriminant-analysis-lda" title="Link to this heading">#</a></h2>
-<p>Linear Discriminant Analysis is the maestro of dimensionality reduction, projecting features onto a lower-dimensional space while maximizing class separation. By finding a linear combination of features that best discriminates between classes, LDA enhances the separability and effectiveness of subsequent classification tasks <span id="id26">[<a class="reference internal" href="_sources/1-markdown.html#id42" title="R. A. Fisher. The use of multiple measurements in taxonomic problems. Annals of Eugenics, 1936.">Fis36</a>]</span>.</p>
+<p>Linear Discriminant Analysis is the maestro of dimensionality reduction, projecting features onto a lower-dimensional space while maximizing class separation. By finding a linear combination of features that best discriminates between classes, LDA enhances the separability and effectiveness of subsequent classification tasks <span id="id28">[<a class="reference internal" href="_sources/1-markdown.html#id42" title="R. A. Fisher. The use of multiple measurements in taxonomic problems. Annals of Eugenics, 1936.">Fis36</a>]</span>.</p>
 <section id="mathematical-foundations">
 <h3>Mathematical Foundations<a class="headerlink" href="#mathematical-foundations" title="Link to this heading">#</a></h3>
 <p>LDA seeks to maximize the ratio of between-class variance to within-class variance, ensuring that classes are as distinct as possible in the transformed space. The optimization problem can be formalized as:</p>
@@ -780,11 +780,11 @@ y = f(Wx + b)
 <h3>Variations of LDA<a class="headerlink" href="#variations-of-lda" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong>Classical LDA</strong>: Assumes that each class shares the same covariance matrix, leading to linear decision boundaries.</p></li>
-<li><p><strong>Quadratic Discriminant Analysis (QDA)</strong>: A variant where each class has its own covariance matrix, allowing for non-linear decision boundaries and greater flexibility <span id="id27">[<a class="reference internal" href="_sources/1-markdown.html#id42" title="R. A. Fisher. The use of multiple measurements in taxonomic problems. Annals of Eugenics, 1936.">Fis36</a>]</span>.</p></li>
+<li><p><strong>Quadratic Discriminant Analysis (QDA)</strong>: A variant where each class has its own covariance matrix, allowing for non-linear decision boundaries and greater flexibility <span id="id29">[<a class="reference internal" href="_sources/1-markdown.html#id42" title="R. A. Fisher. The use of multiple measurements in taxonomic problems. Annals of Eugenics, 1936.">Fis36</a>]</span>.</p></li>
 </ul>
 </section>
-<section id="id28">
-<h3>Practical Examples<a class="headerlink" href="#id28" title="Link to this heading">#</a></h3>
+<section id="id30">
+<h3>Practical Examples<a class="headerlink" href="#id30" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong>Face Recognition</strong>: LDA is employed to reduce the dimensionality of facial images while preserving discriminative features.</p></li>
 <li><p><strong>Speech Recognition</strong>: Enhances feature spaces to improve the accuracy of recognizing spoken words.</p></li>
@@ -803,37 +803,31 @@ y = f(Wx + b)
 \[
   P(Y|X) = \frac{P(X|Y)P(Y)}{P(X)}
   \]</div>
-<p>Despite the simplifying independence assumption, Naive Bayes often excels in text classification tasks like spam detection due to its simplicity and computational efficiency [&#64;duda1973pattern].</p>
-<p><em>Foundational Paper</em>: Duda, R. O., &amp; Hart, P. E. (1973). Pattern Classification and Scene Analysis. <em>Wiley</em> [&#64;duda1973pattern].</p>
+<p>Despite the simplifying independence assumption, Naive Bayes often excels in text classification tasks like spam detection due to its simplicity and computational efficiency <span id="id31">[<a class="reference internal" href="_sources/1-markdown.html#id44" title="R. O. Duda and P. E. Hart. Pattern classification and scene analysis. Wiley, 1973.">DH73</a>]</span>.</p>
 </li>
 <li><p><strong>Gaussian Mixture Models (GMMs)</strong>: These models assume that data is generated from a mixture of Gaussian distributions, facilitating clustering and density estimation. The likelihood of the data under a GMM is:</p>
 <div class="math notranslate nohighlight">
 \[
   p(X) = \sum_{k=1}^K \pi_k \mathcal{N}(X|\mu_k, \Sigma_k)
   \]</div>
-<p>where <span class="math notranslate nohighlight">\( \pi_k \)</span> is the mixture weight, and <span class="math notranslate nohighlight">\( \mu_k, \Sigma_k \)</span> are the mean and covariance of the k-th Gaussian component [&#64;mclachlan2000finite].</p>
-<p><em>Foundational Paper</em>: McLachlan, G., &amp; Peel, D. (2000). Finite Mixture Models. <em>Wiley</em> [&#64;mclachlan2000finite].</p>
+<p>where <span class="math notranslate nohighlight">\( \pi_k \)</span> is the mixture weight, and <span class="math notranslate nohighlight">\( \mu_k, \Sigma_k \)</span> are the mean and covariance of the k-th Gaussian component <span id="id32">[<a class="reference internal" href="_sources/1-markdown.html#id45" title="G. McLachlan and D. Peel. Finite mixture models. Wiley, 2000.">MP00</a>]</span>.</p>
 </li>
-<li><p><strong>Hidden Markov Models (HMMs)</strong>: Suited for sequential data, HMMs assume that the system transitions between hidden states according to certain probabilities, making them invaluable in areas like speech recognition and bioinformatics [&#64;rabiner1989tutorial].</p>
-<p><em>Foundational Paper</em>: Rabiner, L. R. (1989). A Tutorial on Hidden Markov Models and Selected Applications in Speech Recognition. <em>Proceedings of the IEEE</em> [&#64;rabiner1989tutorial].</p>
-</li>
+<li><p><strong>Hidden Markov Models (HMMs)</strong>: Suited for sequential data, HMMs assume that the system transitions between hidden states according to certain probabilities, making them invaluable in areas like speech recognition and bioinformatics <span id="id33">[<a class="reference internal" href="_sources/1-markdown.html#id46" title="L. R. Rabiner. A tutorial on hidden markov models and selected applications in speech recognition. Proceedings of the IEEE, 1989.">Rab89</a>]</span>.</p></li>
 </ul>
 </section>
 <section id="implicit-generative-models">
 <h3>2.2 Implicit Generative Models<a class="headerlink" href="#implicit-generative-models" title="Link to this heading">#</a></h3>
 <p>Implicit generative models eschew explicit probability distributions, instead learning to generate data through adversarial or reconstruction-based frameworks.</p>
-<ul>
-<li><p><strong>Generative Adversarial Networks (GANs)</strong>: GANs consist of two competing networks—a generator and a discriminator—trained simultaneously. The generator endeavors to produce realistic data, while the discriminator strives to distinguish between real and generated data. This adversarial process fosters the creation of highly realistic synthetic data [&#64;goodfellow2014gan].</p>
-<p><em>Foundational Paper</em>: Goodfellow, I., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D., Ozair, S., Courville, A., &amp; Bengio, Y. (2014). Generative Adversarial Networks. <em>arXiv preprint</em> [&#64;goodfellow2014gan].</p>
-</li>
+<ul class="simple">
+<li><p><strong>Generative Adversarial Networks (GANs)</strong>: GANs consist of two competing networks—a generator and a discriminator—trained simultaneously. The generator endeavors to produce realistic data, while the discriminator strives to distinguish between real and generated data. This adversarial process fosters the creation of highly realistic synthetic data <span id="id34">[<a class="reference internal" href="_sources/1-markdown.html#id43" title="I. Goodfellow, J. Pouget-Abadie, M. Mirza, B. Xu, D. Warde-Farley, S. Ozair, A. Courville, and Y. Bengio. Generative adversarial networks. arXiv preprint, 2014.">GPAM+14</a>]</span>.</p></li>
 </ul>
 </section>
 <section id="deterministic-generative-models">
 <h3>2.3 Deterministic Generative Models<a class="headerlink" href="#deterministic-generative-models" title="Link to this heading">#</a></h3>
 <p>Deterministic generative models focus on learning efficient representations of data, enabling reconstruction and generation without relying on stochastic processes.</p>
 <ul class="simple">
-<li><p><strong>Autoencoders</strong>: Comprising an encoder and a decoder, autoencoders learn to map input data to a latent representation and then reconstruct it. They are instrumental in tasks like dimensionality reduction, anomaly detection, and unsupervised feature learning [&#64;goodfellow2014gan].</p></li>
-<li><p><strong>Variational Autoencoders (VAEs)</strong>: VAEs extend autoencoders by incorporating probabilistic elements, enabling the generation of new data points by sampling from the learned latent distribution [&#64;goodfellow2014gan].</p></li>
+<li><p><strong>Autoencoders</strong>: Comprising an encoder and a decoder, autoencoders learn to map input data to a latent representation and then reconstruct it. They are instrumental in tasks like dimensionality reduction, anomaly detection, and unsupervised feature learning <span id="id35">[<a class="reference internal" href="_sources/1-markdown.html#id43" title="I. Goodfellow, J. Pouget-Abadie, M. Mirza, B. Xu, D. Warde-Farley, S. Ozair, A. Courville, and Y. Bengio. Generative adversarial networks. arXiv preprint, 2014.">GPAM+14</a>]</span>.</p></li>
+<li><p><strong>Variational Autoencoders (VAEs)</strong>: VAEs extend autoencoders by incorporating probabilistic elements, enabling the generation of new data points by sampling from the learned latent distribution <span id="id36">[<a class="reference internal" href="_sources/1-markdown.html#id43" title="I. Goodfellow, J. Pouget-Abadie, M. Mirza, B. Xu, D. Warde-Farley, S. Ozair, A. Courville, and Y. Bengio. Generative adversarial networks. arXiv preprint, 2014.">GPAM+14</a>]</span>.</p></li>
 </ul>
 </section>
 </section>
@@ -842,18 +836,15 @@ y = f(Wx + b)
 <p>Ensemble methods are the maestros of collaboration in supervised learning, orchestrating multiple models to enhance predictive performance and produce robust classifiers. By aggregating the predictions of individual models, ensembles mitigate variance, bolster accuracy, and improve generalizability.</p>
 <section id="bagging">
 <h3>3.1 Bagging<a class="headerlink" href="#bagging" title="Link to this heading">#</a></h3>
-<p>Bagging, short for Bootstrap Aggregating, diminishes variance by training multiple versions of a model on different subsets of the training data and averaging their predictions. Random Forests epitomize bagging by combining numerous decision trees to achieve superior performance and reduce the risk of overfitting [&#64;breiman1996bagging].</p>
-<p><em>Foundational Paper</em>: Breiman, L. (1996). Bagging Predictors. <em>Machine Learning</em> [&#64;breiman1996bagging].</p>
+<p>Bagging, short for Bootstrap Aggregating, diminishes variance by training multiple versions of a model on different subsets of the training data and averaging their predictions. Random Forests epitomize bagging by combining numerous decision trees to achieve superior performance and reduce the risk of overfitting <span id="id37">[<a class="reference internal" href="_sources/1-markdown.html#id47" title="L. Breiman. Bagging predictors. Machine Learning, 1996.">Bre96</a>]</span>.</p>
 </section>
 <section id="boosting">
 <h3>3.2 Boosting<a class="headerlink" href="#boosting" title="Link to this heading">#</a></h3>
 <p>Boosting is an ensemble technique that builds models sequentially, with each new model focusing on correcting the errors of its predecessors. This iterative process enhances the overall model’s performance by minimizing the residual errors.</p>
-<ul>
-<li><p><strong>AdaBoost</strong>: Assigns higher weights to misclassified examples, ensuring that subsequent models pay more attention to these challenging instances. The final model aggregates individual learners through a weighted sum, enhancing predictive accuracy [&#64;freund1997decision].</p>
-<p><em>Foundational Paper</em>: Freund, Y., &amp; Schapire, R. E. (1997). A Decision-Theoretic Generalization of On-Line Learning and an Application to Boosting. <em>Journal of Computer and System Sciences</em> [&#64;freund1997decision].</p>
-</li>
-<li><p><strong>Gradient Boosting Machines (GBMs)</strong>: Utilize gradient descent to minimize a loss function, adding weak learners sequentially to refine the model. GBMs are renowned for their high predictive performance and flexibility [&#64;friedman2001gradient].</p></li>
-<li><p><strong>XGBoost</strong>: An optimized and scalable implementation of gradient boosting, XGBoost incorporates regularization techniques to prevent overfitting, making it a favorite in machine learning competitions and real-world applications [&#64;friedman2001gradient].</p></li>
+<ul class="simple">
+<li><p><strong>AdaBoost</strong>: Assigns higher weights to misclassified examples, ensuring that subsequent models pay more attention to these challenging instances. The final model aggregates individual learners through a weighted sum, enhancing predictive accuracy <span id="id38">[<a class="reference internal" href="_sources/1-markdown.html#id48" title="Y. Freund and R. E. Schapire. A decision-theoretic generalization of on-line learning and an application to boosting. Journal of Computer and System Sciences, 1997.">FS97</a>]</span>.</p></li>
+<li><p><strong>Gradient Boosting Machines (GBMs)</strong>: Utilize gradient descent to minimize a loss function, adding weak learners sequentially to refine the model. GBMs are renowned for their high predictive performance and flexibility <span id="id39">[<a class="reference internal" href="_sources/1-markdown.html#id37" title="J. H. Friedman. Greedy function approximation: a gradient boosting machine. The Annals of Statistics, 2001.">Fri01</a>]</span>.</p></li>
+<li><p><strong>XGBoost</strong>: An optimized and scalable implementation of gradient boosting, XGBoost incorporates regularization techniques to prevent overfitting, making it a favorite in machine learning competitions and real-world applications <span id="id40">[<a class="reference internal" href="_sources/1-markdown.html#id37" title="J. H. Friedman. Greedy function approximation: a gradient boosting machine. The Annals of Statistics, 2001.">Fri01</a>]</span>.</p></li>
 </ul>
 </section>
 <section id="stacking">
@@ -959,26 +950,26 @@ y = f(Wx + b)
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-trees">1.3 Decision Trees</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#core-concepts">Core Concepts</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variations-of-decision-trees">Variations of Decision Trees</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Practical Examples</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Practical Examples</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neural-networks">1.4 Neural Networks</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#architectural-components">Architectural Components</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-neural-networks">Types of Neural Networks</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">Mathematical Formulation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">Practical Examples</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">Mathematical Formulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">Practical Examples</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instance-based-learning">1.5 Instance-Based Learning</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">Core Concepts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">Core Concepts</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variations-of-instance-based-learning">Variations of Instance-Based Learning</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">Practical Examples</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">Practical Examples</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-discriminant-analysis-lda">1.6 Linear Discriminant Analysis (LDA)</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-foundations">Mathematical Foundations</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variations-of-lda">Variations of LDA</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">Practical Examples</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id30">Practical Examples</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generative-models">2. Generative Models</a><ul class="nav section-nav flex-column">

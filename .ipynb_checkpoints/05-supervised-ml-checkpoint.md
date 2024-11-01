@@ -104,7 +104,7 @@ where:
 
 - **Linear SVM**: Utilizes a linear kernel to separate data linearly.
   
-- **Non-Linear SVM**: Employs kernel functions (e.g., polynomial, radial basis function (RBF)) to map input data into higher-dimensional spaces, enabling the separation of non-linearly separable data [@cortes1995svm].
+- **Non-Linear SVM**: Employs kernel functions (e.g., polynomial, radial basis function (RBF)) to map input data into higher-dimensional spaces, enabling the separation of non-linearly separable data {cite}`cortes1995svm`.
   
 - **Soft Margin SVM**: Introduces flexibility by allowing some misclassifications, thereby handling noisy data effectively.
 
@@ -191,7 +191,7 @@ Instance-based learning methods, such as K-Nearest Neighbors (KNN), adopt a prag
 
 - **Memory-Based Learning**: Stores all or a subset of the training data for use during prediction.
   
-- **Similarity Metrics**: Determines the closeness between instances using distance measures like Euclidean, Manhattan, or Minkowski distances [@cover1967knn].
+- **Similarity Metrics**: Determines the closeness between instances using distance measures like Euclidean, Manhattan, or Minkowski distances {cite}`cover1967knn`.
 
 ### Variations of Instance-Based Learning
 
@@ -251,9 +251,7 @@ Probabilistic generative models harness the power of probability theory to model
   P(Y|X) = \frac{P(X|Y)P(Y)}{P(X)}
   $$
 
-  Despite the simplifying independence assumption, Naive Bayes often excels in text classification tasks like spam detection due to its simplicity and computational efficiency [@duda1973pattern].
-
-  *Foundational Paper*: Duda, R. O., & Hart, P. E. (1973). Pattern Classification and Scene Analysis. *Wiley* [@duda1973pattern].
+  Despite the simplifying independence assumption, Naive Bayes often excels in text classification tasks like spam detection due to its simplicity and computational efficiency {cite}`duda1973pattern`.
 
 - **Gaussian Mixture Models (GMMs)**: These models assume that data is generated from a mixture of Gaussian distributions, facilitating clustering and density estimation. The likelihood of the data under a GMM is:
 
@@ -261,29 +259,23 @@ Probabilistic generative models harness the power of probability theory to model
   p(X) = \sum_{k=1}^K \pi_k \mathcal{N}(X|\mu_k, \Sigma_k)
   $$
 
-  where $ \pi_k $ is the mixture weight, and $ \mu_k, \Sigma_k $ are the mean and covariance of the k-th Gaussian component [@mclachlan2000finite].
+  where $ \pi_k $ is the mixture weight, and $ \mu_k, \Sigma_k $ are the mean and covariance of the k-th Gaussian component {cite}`mclachlan2000finite`.
 
-  *Foundational Paper*: McLachlan, G., & Peel, D. (2000). Finite Mixture Models. *Wiley* [@mclachlan2000finite].
-
-- **Hidden Markov Models (HMMs)**: Suited for sequential data, HMMs assume that the system transitions between hidden states according to certain probabilities, making them invaluable in areas like speech recognition and bioinformatics [@rabiner1989tutorial].
-
-  *Foundational Paper*: Rabiner, L. R. (1989). A Tutorial on Hidden Markov Models and Selected Applications in Speech Recognition. *Proceedings of the IEEE* [@rabiner1989tutorial].
+- **Hidden Markov Models (HMMs)**: Suited for sequential data, HMMs assume that the system transitions between hidden states according to certain probabilities, making them invaluable in areas like speech recognition and bioinformatics {cite}`rabiner1989tutorial`.
 
 ### 2.2 Implicit Generative Models
 
 Implicit generative models eschew explicit probability distributions, instead learning to generate data through adversarial or reconstruction-based frameworks.
 
-- **Generative Adversarial Networks (GANs)**: GANs consist of two competing networks—a generator and a discriminator—trained simultaneously. The generator endeavors to produce realistic data, while the discriminator strives to distinguish between real and generated data. This adversarial process fosters the creation of highly realistic synthetic data [@goodfellow2014gan].
-
-  *Foundational Paper*: Goodfellow, I., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D., Ozair, S., Courville, A., & Bengio, Y. (2014). Generative Adversarial Networks. *arXiv preprint* [@goodfellow2014gan].
+- **Generative Adversarial Networks (GANs)**: GANs consist of two competing networks—a generator and a discriminator—trained simultaneously. The generator endeavors to produce realistic data, while the discriminator strives to distinguish between real and generated data. This adversarial process fosters the creation of highly realistic synthetic data {cite}`goodfellow2014gan`.
 
 ### 2.3 Deterministic Generative Models
 
 Deterministic generative models focus on learning efficient representations of data, enabling reconstruction and generation without relying on stochastic processes.
 
-- **Autoencoders**: Comprising an encoder and a decoder, autoencoders learn to map input data to a latent representation and then reconstruct it. They are instrumental in tasks like dimensionality reduction, anomaly detection, and unsupervised feature learning [@goodfellow2014gan].
+- **Autoencoders**: Comprising an encoder and a decoder, autoencoders learn to map input data to a latent representation and then reconstruct it. They are instrumental in tasks like dimensionality reduction, anomaly detection, and unsupervised feature learning {cite}`goodfellow2014gan`.
 
-- **Variational Autoencoders (VAEs)**: VAEs extend autoencoders by incorporating probabilistic elements, enabling the generation of new data points by sampling from the learned latent distribution [@goodfellow2014gan].
+- **Variational Autoencoders (VAEs)**: VAEs extend autoencoders by incorporating probabilistic elements, enabling the generation of new data points by sampling from the learned latent distribution {cite}`goodfellow2014gan`.
 
 ## 3. Ensemble Methods
 
@@ -291,21 +283,18 @@ Ensemble methods are the maestros of collaboration in supervised learning, orche
 
 ### 3.1 Bagging
 
-Bagging, short for Bootstrap Aggregating, diminishes variance by training multiple versions of a model on different subsets of the training data and averaging their predictions. Random Forests epitomize bagging by combining numerous decision trees to achieve superior performance and reduce the risk of overfitting [@breiman1996bagging].
+Bagging, short for Bootstrap Aggregating, diminishes variance by training multiple versions of a model on different subsets of the training data and averaging their predictions. Random Forests epitomize bagging by combining numerous decision trees to achieve superior performance and reduce the risk of overfitting {cite}`breiman1996bagging`.
 
-*Foundational Paper*: Breiman, L. (1996). Bagging Predictors. *Machine Learning* [@breiman1996bagging].
 
 ### 3.2 Boosting
 
 Boosting is an ensemble technique that builds models sequentially, with each new model focusing on correcting the errors of its predecessors. This iterative process enhances the overall model's performance by minimizing the residual errors.
 
-- **AdaBoost**: Assigns higher weights to misclassified examples, ensuring that subsequent models pay more attention to these challenging instances. The final model aggregates individual learners through a weighted sum, enhancing predictive accuracy [@freund1997decision].
-  
-  *Foundational Paper*: Freund, Y., & Schapire, R. E. (1997). A Decision-Theoretic Generalization of On-Line Learning and an Application to Boosting. *Journal of Computer and System Sciences* [@freund1997decision].
+- **AdaBoost**: Assigns higher weights to misclassified examples, ensuring that subsequent models pay more attention to these challenging instances. The final model aggregates individual learners through a weighted sum, enhancing predictive accuracy {cite}`freund1997decision`.
 
-- **Gradient Boosting Machines (GBMs)**: Utilize gradient descent to minimize a loss function, adding weak learners sequentially to refine the model. GBMs are renowned for their high predictive performance and flexibility [@friedman2001gradient].
+- **Gradient Boosting Machines (GBMs)**: Utilize gradient descent to minimize a loss function, adding weak learners sequentially to refine the model. GBMs are renowned for their high predictive performance and flexibility {cite}`friedman2001gradient`.
   
-- **XGBoost**: An optimized and scalable implementation of gradient boosting, XGBoost incorporates regularization techniques to prevent overfitting, making it a favorite in machine learning competitions and real-world applications [@friedman2001gradient].
+- **XGBoost**: An optimized and scalable implementation of gradient boosting, XGBoost incorporates regularization techniques to prevent overfitting, making it a favorite in machine learning competitions and real-world applications {cite}`friedman2001gradient`.
 
 ### 3.3 Stacking
 
@@ -320,8 +309,6 @@ Stacking is an ensemble method that combines the predictions of multiple base mo
 - **Bias-Variance Tradeoff**: Ensemble methods adeptly balance bias and variance, often reducing variance without significantly increasing bias, thereby enhancing model generalization.
 
 Ensemble methods are indispensable in supervised learning, enabling the construction of highly accurate and reliable models by harnessing the collective wisdom of multiple algorithms.
-
-### Transition to the Next Chapter
 
 Having navigated through the foundational concepts and diverse methodologies of supervised machine learning, we are now poised to delve deeper into each model type. The forthcoming chapters will explore their mathematical foundations, training procedures, and practical implementations in greater detail. Additionally, we will discuss strategies for selecting the appropriate model for specific problems and showcase real-world applications that demonstrate their utility and impact.
 
