@@ -24,6 +24,7 @@ execute:
   #                                   # otherwise the notebook's parent directory will be the cwd.
   # allow_errors: false # If `False`, when a code cell raises an error the execution is stopped, otherwise all cells are always run.
   # stderr_output: show  # One of 'show', 'remove', 'remove-warn', 'warn', 'error', 'severe'
+  timeout: 300  # Increase the timeout to 300 seconds (5 minutes)
 
 # Define the name of the latex output file for PDF builds
 latex:

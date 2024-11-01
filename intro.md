@@ -1,6 +1,6 @@
 # Introduction to Machine Learning and Artificial Intelligence
 
-![AI and ML](ai-ml-banner.jpg)
+![AI and ML](pictures/ai-ml-banner.jpg)
 
 In the **rapidly evolving landscape of technology**, **Artificial Intelligence (AI)** and **Machine Learning (ML)** have emerged as **transformative forces**, reshaping industries, enhancing daily life, and pushing the boundaries of what machines can achieve. This book embarks on a comprehensive exploration of these fields, delving into their foundational methods, diverse applications, and the intricate interplay between them. This opening chapter serves as a roadmap, introducing the core concepts, key methodologies, and distinguishing features of AI and ML, setting the stage for deeper discussions in subsequent chapters.
 
@@ -192,7 +192,7 @@ Whether you're a **student**, **practitioner**, or **enthusiast**, this journey 
 >
 > As we delve deeper into each method in the upcoming chapters, we will examine their **theoretical foundations**, **practical implementations**, and **real-world applications**. This structured approach ensures a comprehensive grasp of both the **breadth** and **depth** of Machine Learning and Artificial Intelligence, empowering you to contribute to and innovate within these dynamic fields.
 
-![Journey Ahead](journey-ahead.jpg)
+![Journey Ahead](pictures/journey-ahead.jpg)
 
 ---
 ## Setting Up Your Jupyter Book Environment

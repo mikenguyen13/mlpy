@@ -1,0 +1,780 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Big Data &#8212; Machine Learning in Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=1a96265c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=c72506b3" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=1a96265c" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/bootstrap.css?v=5340d9b1" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/theme.css?v=a243ae73" />
+    <link rel="stylesheet" type="text/css" href="_static/vendor/fontawesome/6.5.1/css/all.min.css?v=c786f70d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-NK1GQ8CXSN"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-NK1GQ8CXSN');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-NK1GQ8CXSN');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '31-bigdatacloud';</script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/copybutton_funcs.js?v=776a791e"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/language_data.js?v=e49ba422"></script>
+    <script src="_static/searchtools.js?v=d19c4805"></script>
+    <script src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/scripts/bootstrap.js?v=3d67b3b1"></script>
+    <script src="_static/scripts/pydata-sphinx-theme.js?v=b2908668"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?v=95180707"></script>
+    <link rel="canonical" href="https://mikenguyen13.github.io/mlpy/31-bigdatacloud.html" />
+    <link rel="icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Machine Learning in Python - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Machine Learning in Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Introduction to Machine Learning and Artificial Intelligence
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05-supervised-ml.html">Supervised Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-advanced_linear_regression.html">Advanced Linear Regression Techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-optimization.html">Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-matrix_factorization.html">Matrix Factorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="40-data-masking.html">Data Masking</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Industry Applications</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="50-credit-score.html">Credit Score Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="51-min_risk.html">Risk Minimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="51-min_risk_amount.html">Risk Minimization with Overdue Balance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="52-credit-approval.html">Credit Approval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="53-credit-adjustment.html">Credit Adjustment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="54-firm-valuation.html">Firm Valuation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="55-financial_fraud.html">Financial Fraud Detection</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="70-approximate-nearest-neighbors.html">Approximate Nearest Neighbors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="71-sim_dat_bandits.html">Multi-Armed Bandits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="72-data-anoy-geo.html">Data Anonymization Techniques for Geospatial Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="73-sample-splitting-time-series.html">Split Samples in Time Series</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/edit/main/31-bigdatacloud.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/issues/new?title=Issue%20on%20page%20%2F31-bigdatacloud.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/31-bigdatacloud.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Big Data</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Big Data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#high-performance-python">High Performance Python</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#amazon-web-services">Amazon Web Services</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-aws-account">Create a AWS account</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-cluster-emr">Create Cluster EMR</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-storage-amazon-s3">Data Storage Amazon S3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specify-putty">Specify PuTTY</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#web-interface-winscp">Web Interface WinSCP</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#big-data-storage">Big Data Storage</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hadoop">Hadoop</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#apache-spark">Apache Spark</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pig">Pig</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="big-data">
+<h1>Big Data<a class="headerlink" href="#big-data" title="Link to this heading">#</a></h1>
+<p>To store and access big data on cloud, we can use <code class="docutils literal notranslate"><span class="pre">ReferenceFileSystem</span></code> (a virtual implementation for ffspec)
+We then can use only zarr to access the data in the form of HDF5, TIFF or grib2.
+For documentation: <a class="reference external" href="https://github.com/fsspec/kerchunk">check</a>
+For example, <a class="reference external" href="https://nbviewer.org/gist/rsignell-usgs/02da7d9257b4b26d84d053be1af2ceeb">check</a></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="high-performance-python">
+<h1>High Performance Python<a class="headerlink" href="#high-performance-python" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>numba instead of numpy (just in time)  using C++ and Fortran</p></li>
+<li><p>rapid instead of pandas</p>
+<ul>
+<li><p>pandas -&gt; cudf</p></li>
+<li><p>numpy -&gt; cupy</p></li>
+<li><p>scikit-learn -&gt; cuml</p></li>
+</ul>
+</li>
+<li><p>Memory error: Read book High performance Python: practical performance programming for humans</p>
+<ul>
+<li><p>Use DASK (recommended), also Pysparak is similar. will be compatible with <code class="docutils literal notranslate"><span class="pre">afar</span></code> (Dask cluster)</p></li>
+</ul>
+</li>
+</ul>
+<p>Deploy Rapids Client</p>
+<ul class="simple">
+<li><p>Local machine (with GPU)</p></li>
+<li><p>AWS Sagemaker</p></li>
+<li><p>Google Cloud vertex AI</p></li>
+<li><p>Azure Machine Learning</p></li>
+</ul>
+<p>Deploy Dask Cluster</p>
+<ul class="simple">
+<li><p>Manual Installation</p></li>
+<li><p>Dask-cloudprovider</p></li>
+<li><p>Dask Kubernetes</p></li>
+<li><p>Coiled</p></li>
+<li><p>Saturn Cloud</p></li>
+<li><p>Google Cloud Dataproc</p></li>
+</ul>
+<section id="amazon-web-services">
+<h2>Amazon Web Services<a class="headerlink" href="#amazon-web-services" title="Link to this heading">#</a></h2>
+<p>When working with big data that are stored online, we can utilize AWS to <strong>store</strong>, and <strong>process</strong> data.</p>
+<p>To work with AWS, we have to follow these steps:</p>
+<ol class="arabic simple">
+<li><p>[Create a AWS account]</p></li>
+<li><p>[Create Cluster EMR]</p></li>
+<li><p>[Data Storage Amazon S3]</p></li>
+<li><p>[Specify PUTTY]</p></li>
+<li><p>[Web Interface WinSCP]</p></li>
+</ol>
+<section id="create-a-aws-account">
+<h3>Create a AWS account<a class="headerlink" href="#create-a-aws-account" title="Link to this heading">#</a></h3>
+<p>Create a AWS account with your credit card (Amazon use the pay-as-you-go service charge)</p>
+</section>
+<section id="create-cluster-emr">
+<h3>Create Cluster EMR<a class="headerlink" href="#create-cluster-emr" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Under <code class="docutils literal notranslate"><span class="pre">Services</span></code> tab on the top left, select <code class="docutils literal notranslate"><span class="pre">Analytics</span></code>, then <code class="docutils literal notranslate"><span class="pre">EMR</span></code></p></li>
+<li><p>Choose <code class="docutils literal notranslate"><span class="pre">Cluster</span> <span class="pre">on</span> <span class="pre">EC2</span></code></p></li>
+<li><p>Create a new cluster (the default setting you get you going)</p></li>
+<li><p>If you’ve already a cluster before, and want all of the previous setting, mark the clusters you want to clone, then hit “Clone”</p></li>
+</ol>
+<p>Recommendation: Setup <code class="docutils literal notranslate"><span class="pre">auto-terminate</span></code>  so that you won’t be overcharged.</p>
+</section>
+<section id="data-storage-amazon-s3">
+<h3>Data Storage Amazon S3<a class="headerlink" href="#data-storage-amazon-s3" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Under <code class="docutils literal notranslate"><span class="pre">Services</span></code> tab, scroll all the way down to <code class="docutils literal notranslate"><span class="pre">Storage</span></code>, pick <code class="docutils literal notranslate"><span class="pre">S3</span></code> Scalable storage in the Cloud).</p></li>
+<li><p>In the <code class="docutils literal notranslate"><span class="pre">Buckets</span></code> tab, hit <code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">bucket</span></code> (A bucket on the cloud is equivalent to a drive on your local machine).</p></li>
+<li><p>Inside a bucket, you can start creating folders just like you do on your local machine.</p></li>
+<li><p>In side the folder, under <code class="docutils literal notranslate"><span class="pre">Properties</span></code>, the “S3 URI” is your folder directory.</p></li>
+</ol>
+</section>
+<section id="specify-putty">
+<h3>Specify PuTTY<a class="headerlink" href="#specify-putty" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://www.putty.org/">Download PuTTY</a></p></li>
+<li><p><a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html">Set up key with AWS</a></p></li>
+<li><p>After having your private key file for authentication in the <code class="docutils literal notranslate"><span class="pre">.ppk</span></code> format, you can go back to your clusters on <code class="docutils literal notranslate"><span class="pre">EMR</span> <span class="pre">on</span> <span class="pre">EC2</span></code>.</p></li>
+<li><p>Under “Summary” tab, click <code class="docutils literal notranslate"><span class="pre">Connect</span> <span class="pre">to</span> <span class="pre">the</span> <span class="pre">Master</span> <span class="pre">Node</span> <span class="pre">Using</span> <span class="pre">SSH</span></code>, there you will see instructions for Windows or Mac/Linux.</p></li>
+<li><p>For Windows, copy the Host Name field in the form of username&#64;… (e.g., hadoop&#64;ec2-…)</p></li>
+<li><p>Go back to PuTTY, paste the Host Name field to the “Host Name (or IP address)” box under Session</p></li>
+<li><p>Expand <code class="docutils literal notranslate"><span class="pre">SSH</span></code>, then expand <code class="docutils literal notranslate"><span class="pre">Auth</span></code>, browse your private key file for authentication. If you see EMR, then you are there.</p></li>
+</ol>
+</section>
+<section id="web-interface-winscp">
+<h3>Web Interface WinSCP<a class="headerlink" href="#web-interface-winscp" title="Link to this heading">#</a></h3>
+<p>To move your files (data, script) to AWS, you can use WinSCP</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://winscp.net/eng/download.php">Download WinSCP </a></p></li>
+<li><p>Click <code class="docutils literal notranslate"><span class="pre">New</span> <span class="pre">Session</span></code> close to top left</p></li>
+<li><p>Host name is the long character after the &#64; sign on your EMR Clusters</p></li>
+<li><p>User name is the character before the &#64; sign on your EMR Clusters</p></li>
+<li><p>Password is the private key you have. Click <code class="docutils literal notranslate"><span class="pre">Advanced</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">SSH</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Authentication</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">...</span></code> to browse you key. Click OK.</p></li>
+<li><p>Click <code class="docutils literal notranslate"><span class="pre">Login</span></code>. Voila! You’re there.</p></li>
+</ol>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="big-data-storage">
+<h1>Big Data Storage<a class="headerlink" href="#big-data-storage" title="Link to this heading">#</a></h1>
+<section id="hadoop">
+<h2>Hadoop<a class="headerlink" href="#hadoop" title="Link to this heading">#</a></h2>
+<p>Core Components of Hadoop:</p>
+<ul class="simple">
+<li><p>HDFS (Hadoop Distributed File System): The primary storage system of Hadoop, designed for storing large datasets on commodity hardware, providing high throughput access to data.</p></li>
+<li><p>Hadoop MapReduce: A data processing layer that manages the processing of data stored in HDFS. It involves two main stages:</p>
+<ul>
+<li><p>Map Stage: Data blocks are read and processed.</p></li>
+<li><p>Reduce Stage: Processed data is aggregated or summarized.</p></li>
+</ul>
+</li>
+<li><p>YARN (Yet Another Resource Negotiator): Manages resources in the Hadoop ecosystem and supports multiple data processing engines for tasks like real-time streaming and batch processing.</p></li>
+</ul>
+<p>Features of Hadoop:</p>
+<ul class="simple">
+<li><p>Distributed Processing: Facilitates quick processing by distributing data and tasks across multiple nodes.</p></li>
+<li><p>Open Source: Free to use and modify, allowing customization as per user requirements.</p></li>
+<li><p>Fault Tolerance: Automatically creates multiple data replicas (default is three) to handle node failures without data loss.</p></li>
+<li><p>Scalability: Easily integrates with various hardware configurations, supporting easy expansion.</p></li>
+<li><p>Reliability: Data is safely stored across a cluster, independent of individual machine failures.</p></li>
+</ul>
+<p>Differences Between HDFS and Traditional NFS:</p>
+<ul class="simple">
+<li><p>Fault Tolerance and Replication: HDFS is designed to handle failures with built-in replication, unlike NFS which lacks fault tolerance.</p></li>
+<li><p>Performance and Scalability: HDFS supports better performance and scalability by distributing data and replicas across multiple machines, reducing bottlenecks compared to NFS which struggles with multiple clients accessing a single file.</p></li>
+</ul>
+<p>Modes Hadoop Can Operate In:</p>
+<ul class="simple">
+<li><p>Local Mode or Standalone Mode:</p>
+<ul>
+<li><p>Runs as a single Java process using the local file system instead of HDFS.</p></li>
+<li><p>Useful for debugging with no need for complex configuration of Hadoop system files.</p></li>
+<li><p>Generally the fastest mode due to its simplicity and lack of distribution.</p></li>
+</ul>
+</li>
+<li><p>Pseudo-distributed Mode:</p>
+<ul>
+<li><p>Each Hadoop daemon runs in a separate Java process.</p></li>
+<li><p>Utilizes HDFS for input and output; requires configuration of Hadoop system files.</p></li>
+<li><p>Beneficial for testing and debugging in a distributed manner but on a single machine.</p></li>
+</ul>
+</li>
+<li><p>Fully Distributed Mode:</p>
+<ul>
+<li><p>Production mode where Hadoop runs across a cluster with designated master and slave roles.</p></li>
+<li><p>Masters handle coordination (NameNode, Resource Manager) and slaves handle data storage and processing (Data Nodes, Node Managers).</p></li>
+<li><p>Offers full benefits of distributed computing, including scalability, security, and fault tolerance.</p></li>
+</ul>
+</li>
+</ul>
+<p>Common Input Formats in Hadoop:</p>
+<ul class="simple">
+<li><p>Text Input Format: Default format for reading data; treats each line of input as a separate value.</p></li>
+<li><p>Key-Value Input Format: Used for reading plain text files where files are split into lines.</p></li>
+<li><p>Sequence File Input Format: Used for reading files in a sequence; useful for binary data formats.</p></li>
+</ul>
+<p>Common Output Formats in Hadoop:</p>
+<ul class="simple">
+<li><p>TextOutputFormat: Default output format, writing data as plain text.</p></li>
+<li><p>MapFileOutputFormat: Writes output as map files, useful for indexed storage of key-value pairs.</p></li>
+<li><p>DBOutputFormat: Facilitates writing output directly to relational databases or HBase.</p></li>
+<li><p>SequenceFileOutputFormat: Writes outputs as sequence files, ideal for binary format storage.</p></li>
+<li><p>SequenceFileAsBinaryOutputFormat: Specialized for writing keys and values in a binary format in sequence files.</p></li>
+</ul>
+</section>
+<section id="apache-spark">
+<h2>Apache Spark<a class="headerlink" href="#apache-spark" title="Link to this heading">#</a></h2>
+</section>
+<section id="pig">
+<h2>Pig<a class="headerlink" href="#pig" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Big Data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#high-performance-python">High Performance Python</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#amazon-web-services">Amazon Web Services</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-aws-account">Create a AWS account</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-cluster-emr">Create Cluster EMR</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-storage-amazon-s3">Data Storage Amazon S3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specify-putty">Specify PuTTY</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#web-interface-winscp">Web Interface WinSCP</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#big-data-storage">Big Data Storage</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hadoop">Hadoop</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#apache-spark">Apache Spark</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pig">Pig</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Mike Nguyen
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

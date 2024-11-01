@@ -1,0 +1,765 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Credit Adjustment &#8212; Machine Learning in Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=1a96265c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=c72506b3" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=1a96265c" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/bootstrap.css?v=5340d9b1" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/theme.css?v=a243ae73" />
+    <link rel="stylesheet" type="text/css" href="_static/vendor/fontawesome/6.5.1/css/all.min.css?v=c786f70d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-NK1GQ8CXSN"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-NK1GQ8CXSN');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-NK1GQ8CXSN');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '53-credit-adjustment';</script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/copybutton_funcs.js?v=776a791e"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/language_data.js?v=e49ba422"></script>
+    <script src="_static/searchtools.js?v=d19c4805"></script>
+    <script src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/scripts/bootstrap.js?v=3d67b3b1"></script>
+    <script src="_static/scripts/pydata-sphinx-theme.js?v=b2908668"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?v=95180707"></script>
+    <link rel="canonical" href="https://mikenguyen13.github.io/mlpy/53-credit-adjustment.html" />
+    <link rel="icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Firm Valuation" href="54-firm-valuation.html" />
+    <link rel="prev" title="Credit Approval" href="52-credit-approval.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Machine Learning in Python - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Machine Learning in Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Introduction to Machine Learning and Artificial Intelligence
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05-supervised-ml.html">Supervised Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-advanced_linear_regression.html">Advanced Linear Regression Techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-optimization.html">Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-matrix_factorization.html">Matrix Factorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="40-data-masking.html">Data Masking</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Industry Applications</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="50-credit-score.html">Credit Score Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="51-min_risk.html">Risk Minimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="51-min_risk_amount.html">Risk Minimization with Overdue Balance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="52-credit-approval.html">Credit Approval</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Credit Adjustment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="54-firm-valuation.html">Firm Valuation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="55-financial_fraud.html">Financial Fraud Detection</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="70-approximate-nearest-neighbors.html">Approximate Nearest Neighbors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="71-sim_dat_bandits.html">Multi-Armed Bandits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="72-data-anoy-geo.html">Data Anonymization Techniques for Geospatial Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="73-sample-splitting-time-series.html">Split Samples in Time Series</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/edit/main/53-credit-adjustment.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/issues/new?title=Issue%20on%20page%20%2F53-credit-adjustment.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/53-credit-adjustment.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Credit Adjustment</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-breakdown">Problem Breakdown</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-structure">Model Structure</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predicting-interest-rates-and-credit-limits">Predicting Interest Rates and Credit Limits</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#temporal-aspects-handling-time-dependency">Temporal Aspects (Handling Time Dependency)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-component">Optimization Component</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering">Feature Engineering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-the-model">Training the Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-data">Training Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-architecture">Model Architecture</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-function">Loss Function</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-implementation">Model Implementation</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="credit-adjustment">
+<h1>Credit Adjustment<a class="headerlink" href="#credit-adjustment" title="Link to this heading">#</a></h1>
+<section id="problem-breakdown">
+<h2>Problem Breakdown<a class="headerlink" href="#problem-breakdown" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Inputs</strong>: Customer covariates, past financial behavior, payment history (last 6 months, customizable), payment amount, utilization rate, default history, and other relevant features.</p></li>
+<li><p><strong>Outputs</strong>: New credit limits and interest rates over the prediction period (3 months or longer, as specified by the user).</p></li>
+<li><p><strong>Constraints</strong>:</p>
+<ul>
+<li><p>Interest rate range: 22%-60%.</p></li>
+<li><p>Credit limit range: 10,000 – 500,000.</p></li>
+<li><p>Customers must be notified of an interest rate change a month in advance.</p></li>
+<li><p>Rarely decrease interest rates, only for top-performing customers.</p></li>
+</ul>
+</li>
+<li><p><strong>Objective</strong>: Maximize profit, which is a combination of interest received from customers and minimizing losses from defaults.</p></li>
+</ul>
+</section>
+<section id="model-structure">
+<h2>Model Structure<a class="headerlink" href="#model-structure" title="Link to this heading">#</a></h2>
+<section id="predicting-interest-rates-and-credit-limits">
+<h3>Predicting Interest Rates and Credit Limits<a class="headerlink" href="#predicting-interest-rates-and-credit-limits" title="Link to this heading">#</a></h3>
+<p>To predict both interest rates and credit limits, we’ll need a model that can handle both time-series forecasting and optimization. Here’s a suitable approach:</p>
+<ul class="simple">
+<li><p><strong>Reinforcement Learning (RL)</strong>, specifically a <strong>Deep Q-Learning</strong> or <strong>Proximal Policy Optimization (PPO)</strong> method, which is suitable for scenarios involving continuous decision-making over time):</p>
+<ul>
+<li><p><strong>State</strong>: The state includes all customer data such as covariates, payment history, utilization rates, and credit behavior over time.</p></li>
+<li><p><strong>Action</strong>: Adjust the interest rate or credit limit. These actions must consider the constraints (e.g., notifying a month in advance for interest rate increases or decreases).</p></li>
+<li><p><strong>Reward</strong>: The reward function is the profit earned by the bank, calculated as the interest received minus default costs. This encourages the model to maximize profit while managing the risk of defaults.</p></li>
+<li><p><strong>Policy</strong>: The policy learns when and how much to adjust the interest rate or credit limit based on the customer’s financial behavior and covariates.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="temporal-aspects-handling-time-dependency">
+<h3>Temporal Aspects (Handling Time Dependency)<a class="headerlink" href="#temporal-aspects-handling-time-dependency" title="Link to this heading">#</a></h3>
+<p>Because credit updates and notifications occur monthly, the model must handle time dependencies:</p>
+<ul class="simple">
+<li><p>Recurrent Neural Networks (RNNs) or LSTMs (Long Short-Term Memory) can be used to model the sequential nature of the data (e.g., monthly updates of financial behavior and credit decisions). LSTMs are particularly useful to capture long-term dependencies (e.g., the effect of payment behavior over several months).</p></li>
+<li><p>Time-series forecasting models like ARIMA can be used for predicting financial variables such as utilization rates and repayment amounts.</p></li>
+</ul>
+</section>
+<section id="optimization-component">
+<h3>Optimization Component<a class="headerlink" href="#optimization-component" title="Link to this heading">#</a></h3>
+<p>The model also needs an optimization layer to find the ideal balance between profit and risk. This can be handled through:</p>
+<ul class="simple">
+<li><p><strong>Profit Function</strong>:</p>
+<ul>
+<li><p>The profit function is based on the following factors:</p>
+<ul>
+<li><p>Interest Income: <code class="docutils literal notranslate"><span class="pre">(credit</span> <span class="pre">limit</span> <span class="pre">*</span> <span class="pre">interest</span> <span class="pre">rate</span> <span class="pre">*</span> <span class="pre">utilization</span> <span class="pre">rate</span> <span class="pre">*</span> <span class="pre">repayment</span> <span class="pre">schedule)</span></code></p></li>
+<li><p>Cost of Default: <code class="docutils literal notranslate"><span class="pre">(default</span> <span class="pre">rate</span> <span class="pre">*</span> <span class="pre">credit</span> <span class="pre">limit)</span></code></p></li>
+</ul>
+</li>
+<li><p>The goal is to maximize the interest income while minimizing the cost of defaulting customers.</p></li>
+<li><p>A penalty term can be added for high-risk customers to ensure that credit limits are not too high, leading to defaults.</p></li>
+</ul>
+</li>
+<li><p>Penalty for Interest Rate Increases:</p>
+<ul>
+<li><p>To factor in the cost of increasing interest rates (which could negatively affect customer retention), you can include a penalty term in the objective function when the interest rate is increased.</p></li>
+<li><p>Interest rate decreases should be applied only in rare cases (for top-performing customers). This can be modeled as a constrained optimization problem where interest rate decreases are limited based on a threshold of past performance (e.g., high repayment rates, low utilization rates).</p></li>
+</ul>
+</li>
+</ul>
+<p>Profit Maximization Function
+Your profit function is based on:</p>
+<ul class="simple">
+<li><p><strong>Interest Income</strong>: Interest Income = Credit Limit x Interest rate x Utilization Rate x Repayment Schedule</p></li>
+<li><p><strong>Cost of Default</strong>: Default cost = Credit Limit x Default Risk</p></li>
+<li><p><strong>Profit</strong>: Itnerest Income - Default Cost</p></li>
+</ul>
+</section>
+</section>
+<section id="feature-engineering">
+<h2>Feature Engineering<a class="headerlink" href="#feature-engineering" title="Link to this heading">#</a></h2>
+<p>Key features should be engineered to capture a customer’s financial behavior and repayment risk. These might include:</p>
+<ul class="simple">
+<li><p><strong>Utilization Rate</strong>: Ratio of credit used to the total credit limit.</p></li>
+<li><p><strong>Repayment Behavior</strong>: Average repayment amount over the past 6 months, delinquency counts, etc.</p></li>
+<li><p><strong>Default Risk</strong>: A predicted probability of default based on past behavior, financial stability, and other risk factors.</p></li>
+<li><p><strong>Income and Employment</strong>: These may provide insights into the customer’s repayment capacity.</p></li>
+<li><p><strong>Historical Interest Rates</strong>: To assess how past interest rates have influenced repayment behavior and defaults.</p></li>
+<li><p><strong>Macro-economic Factors</strong>: Inflation, employment rates, and other factors that might affect repayment behavior and credit demand.</p></li>
+<li><p><strong>Behavioral Variables</strong>: These could include the frequency of transactions, types of transactions (e.g., large vs. small purchases), and social network data (as a proxy for financial stability).</p></li>
+</ul>
+</section>
+<section id="training-the-model">
+<h2>Training the Model<a class="headerlink" href="#training-the-model" title="Link to this heading">#</a></h2>
+<section id="training-data">
+<h3>Training Data<a class="headerlink" href="#training-data" title="Link to this heading">#</a></h3>
+<p>You will need a dataset with the following characteristics:</p>
+<ul class="simple">
+<li><p>Historical payment data (e.g., credit limits, repayment amounts, interest rates).</p></li>
+<li><p>Customer-level information (e.g., income, employment status, default history).</p></li>
+<li><p>Macro-economic variables (e.g., inflation, GDP growth).</p></li>
+</ul>
+</section>
+<section id="model-architecture">
+<h3>Model Architecture<a class="headerlink" href="#model-architecture" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Input Layer</strong>: Customer covariates, past financial behavior, macroeconomic variables.</p></li>
+<li><p><strong>Hidden Layers</strong>:</p>
+<ul>
+<li><p>LSTMs for capturing sequential patterns in customer behavior.</p></li>
+<li><p>Dense layers to learn non-linear interactions between customer features.</p></li>
+</ul>
+</li>
+<li><p><strong>Output Layer</strong>: Predict the interest rate and credit limit for each customer.</p></li>
+<li><p><strong>Reinforcement Learning Layer</strong>: Use RL to optimize the interest rate and credit limit updates based on the bank’s profit objectives.</p></li>
+</ul>
+</section>
+<section id="loss-function">
+<h3>Loss Function<a class="headerlink" href="#loss-function" title="Link to this heading">#</a></h3>
+<p>The loss function should include:</p>
+<ul class="simple">
+<li><p>A profit-maximization component that encourages higher interest income and lower default rates.</p></li>
+<li><p>A regularization term to penalize high-risk actions (e.g., giving too much credit to a risky customer).</p></li>
+</ul>
+</section>
+</section>
+<section id="model-implementation">
+<h2>Model Implementation<a class="headerlink" href="#model-implementation" title="Link to this heading">#</a></h2>
+<p>You can implement this model using a framework like TensorFlow or PyTorch for deep learning and reinforcement learning. For time-series forecasting, you can integrate models like Prophet or ARIMA.</p>
+<ul class="simple">
+<li><p>RL libraries such as OpenAI’s Gym or Stable-Baselines can help in building the reinforcement learning component.</p></li>
+<li><p>The optimization function can be implemented using SciPy’s optimization package or any modern gradient-based optimizers (e.g., Adam).</p></li>
+</ul>
+<ol class="arabic simple">
+<li><p>Soft Actor-Critic (SAC)
+Why: SAC is a robust and efficient model for continuous action spaces, and your problem involves continuous variables like credit limits and interest rates. SAC can handle the continuous nature of your objectives while optimizing for a balance between exploration and exploitation using entropy maximization.
+How: You can define the credit limit and interest rate as continuous actions and use the reward function to optimize for profit, factoring in credit risk, default rates, and customer retention. You can also incorporate penalty mechanisms for defaults or higher risk.</p></li>
+<li><p>Proximal Policy Optimization (PPO)
+Why: PPO is a popular choice for stability and ease of use in multi-objective tasks. It can handle continuous prediction tasks like yours while ensuring policy updates remain stable.
+How: You could model credit limit and interest rate predictions as two separate outputs within the same policy. The reward function would encourage balancing risk, maximizing profit, and managing default probabilities.</p></li>
+<li><p>Multi-Objective Reinforcement Learning (MORL) with SAC or PPO
+Why: Since you have multiple objectives (profit maximization and minimizing risk of default), a multi-objective approach with SAC or PPO can be adapted to handle both objectives simultaneously. This approach allows you to balance the competing trade-offs, for example, between higher credit limits (higher potential profit but also higher risk) and lower interest rates (to retain customers but maintain profitability).
+How: The reward function could use a weighted sum of objectives or a Pareto front approach to optimize both the credit limit and interest rate simultaneously. This would allow you to manage trade-offs effectively.</p></li>
+<li><p>Hierarchical Reinforcement Learning (HRL)
+Why: In your case, predicting credit limits and interest rates involves multiple decisions over time (both short-term and long-term). HRL can model this by breaking down tasks into sub-tasks: determining an optimal credit limit first, then optimizing the interest rate based on that decision.
+How: HRL can handle your task by learning higher-level decisions (credit limit) and lower-level decisions (interest rate) hierarchically. This approach would allow you to optimize for each decision level while considering long-term profit and default risk.</p></li>
+<li><p>Multi-Agent Reinforcement Learning (MARL)
+Why: If you want to model each customer as an agent with individual characteristics and optimize for each agent’s credit limit and interest rate, MARL might be a good approach. It allows for modeling interactions between agents (e.g., customers with different risk profiles).
+How: Each customer (or agent) could have their own policy determining credit limits and interest rates, while the global system optimizes overall profit and risk at the portfolio level.</p></li>
+</ol>
+<p>Recommendation</p>
+<p>Soft Actor-Critic (SAC) or PPO with a multi-objective reward function is likely the best fit for your use case. These models are well-suited for continuous control problems and can handle both the credit limit and interest rate predictions simultaneously.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="52-credit-approval.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Credit Approval</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="54-firm-valuation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Firm Valuation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-breakdown">Problem Breakdown</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-structure">Model Structure</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predicting-interest-rates-and-credit-limits">Predicting Interest Rates and Credit Limits</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#temporal-aspects-handling-time-dependency">Temporal Aspects (Handling Time Dependency)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-component">Optimization Component</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering">Feature Engineering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-the-model">Training the Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-data">Training Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-architecture">Model Architecture</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-function">Loss Function</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-implementation">Model Implementation</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Mike Nguyen
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

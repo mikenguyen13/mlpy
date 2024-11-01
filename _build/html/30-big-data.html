@@ -1,0 +1,1091 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Dealing with Big Data &#8212; Machine Learning in Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=1a96265c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=c72506b3" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=1a96265c" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/bootstrap.css?v=5340d9b1" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/theme.css?v=a243ae73" />
+    <link rel="stylesheet" type="text/css" href="_static/vendor/fontawesome/6.5.1/css/all.min.css?v=c786f70d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-NK1GQ8CXSN"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-NK1GQ8CXSN');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-NK1GQ8CXSN');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '30-big-data';</script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/copybutton_funcs.js?v=776a791e"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/language_data.js?v=e49ba422"></script>
+    <script src="_static/searchtools.js?v=d19c4805"></script>
+    <script src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/scripts/bootstrap.js?v=3d67b3b1"></script>
+    <script src="_static/scripts/pydata-sphinx-theme.js?v=b2908668"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?v=95180707"></script>
+    <link rel="canonical" href="https://mikenguyen13.github.io/mlpy/30-big-data.html" />
+    <link rel="icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Machine Learning in Python - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Machine Learning in Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Introduction to Machine Learning and Artificial Intelligence
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05-supervised-ml.html">Supervised Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-advanced_linear_regression.html">Advanced Linear Regression Techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-optimization.html">Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-matrix_factorization.html">Matrix Factorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="40-data-masking.html">Data Masking</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Industry Applications</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="50-credit-score.html">Credit Score Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="51-min_risk.html">Risk Minimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="51-min_risk_amount.html">Risk Minimization with Overdue Balance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="52-credit-approval.html">Credit Approval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="53-credit-adjustment.html">Credit Adjustment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="54-firm-valuation.html">Firm Valuation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="55-financial_fraud.html">Financial Fraud Detection</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="70-approximate-nearest-neighbors.html">Approximate Nearest Neighbors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="71-sim_dat_bandits.html">Multi-Armed Bandits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="72-data-anoy-geo.html">Data Anonymization Techniques for Geospatial Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="73-sample-splitting-time-series.html">Split Samples in Time Series</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/edit/main/30-big-data.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/issues/new?title=Issue%20on%20page%20%2F30-big-data.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/30-big-data.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Dealing with Big Data</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-big-data">What is Big Data?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strategies-to-deal-with-big-data">Strategies to Deal with Big Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distributed-computing">1. Distributed Computing</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hadoop-and-mapreduce">Hadoop and MapReduce</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spark-and-resilient-distributed-datasets-rdds">Spark and Resilient Distributed Datasets (RDDs)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-partitioning-and-storage-solutions">2. Data Partitioning and Storage Solutions</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#parquet-and-orc-file-formats">Parquet and ORC File Formats</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-vs-real-time-processing">3. Batch vs Real-Time Processing</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#real-time-analytics-with-kafka-and-spark-streaming">Real-Time Analytics with Kafka and Spark Streaming</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-reduction-techniques">4. Data Reduction Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-data">Sampling Data</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensionality-reduction-with-pca">Dimensionality Reduction with PCA</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-learning-with-big-data">5. Machine Learning with Big Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#stochastic-gradient-descent-sgd-for-large-datasets">Stochastic Gradient Descent (SGD) for Large Datasets</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-parallelism-and-distributed-training">6. Model Parallelism and Distributed Training</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cloud-computing-for-big-data">7. Cloud Computing for Big Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aws-example-amazon-redshift">AWS Example - Amazon Redshift</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-based-data-models-for-complex-relationships">8. Graph-Based Data Models for Complex Relationships</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-unstructured-data">9. Handling Unstructured Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ethical-considerations-and-data-governance">10. Ethical Considerations and Data Governance</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="dealing-with-big-data">
+<h1>Dealing with Big Data<a class="headerlink" href="#dealing-with-big-data" title="Link to this heading">#</a></h1>
+<p>Big data is more than just large datasets; it’s a revolution that challenges the way we think about data processing, storage, and analysis. Big data allows us to capture patterns, trends, and insights that were previously invisible, thereby enabling data-driven decision-making in industries ranging from healthcare to finance to entertainment. However, handling big data isn’t easy; it presents a myriad of challenges involving storage, scalability, data processing, and even ethical concerns. In this section, we will explore strategies and technologies for handling big data efficiently.</p>
+<section id="what-is-big-data">
+<h2>What is Big Data?<a class="headerlink" href="#what-is-big-data" title="Link to this heading">#</a></h2>
+<p>Big data refers to datasets that are so large and complex that traditional data processing tools become insufficient to handle them. The concept is often defined using the <strong>3Vs</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>Volume</strong>: The sheer size of the data being generated and stored.</p></li>
+<li><p><strong>Velocity</strong>: The speed at which the data is generated and processed.</p></li>
+<li><p><strong>Variety</strong>: The different forms and sources of data, including structured, unstructured, and semi-structured data.</p></li>
+</ol>
+<p>Other important characteristics of big data also include <strong>Veracity</strong> (quality of the data) and <strong>Value</strong> (insights derived from data).</p>
+<p>To handle big data effectively, we need tools and strategies that scale with its growth, can process and analyze it efficiently, and can provide real-time insights. Let’s dive into a variety of these strategies with real-life examples, use cases, and interactive elements.</p>
+<p><img alt="Big Data Concept Illustration" src="_images/big-data-cloud.webp" /></p>
+<p><strong>Figure 1: Big Data Concept Illustration</strong> - This illustration visualizes the interconnectedness of big data’s 5Vs: Volume, Velocity, Variety, Veracity, and Value, demonstrating the complexity and the flow of vast information in a connected network.</p>
+</section>
+<section id="strategies-to-deal-with-big-data">
+<h2>Strategies to Deal with Big Data<a class="headerlink" href="#strategies-to-deal-with-big-data" title="Link to this heading">#</a></h2>
+<section id="distributed-computing">
+<h3>1. Distributed Computing<a class="headerlink" href="#distributed-computing" title="Link to this heading">#</a></h3>
+<p>When dealing with big data, it’s important to spread the load across multiple machines, also known as distributed computing. Instead of processing a large dataset on a single machine, tools like <strong>Apache Hadoop</strong> and <strong>Apache Spark</strong> split the data into manageable chunks that can be processed concurrently on multiple nodes. This reduces processing time significantly.</p>
+<section id="hadoop-and-mapreduce">
+<h4>Hadoop and MapReduce<a class="headerlink" href="#hadoop-and-mapreduce" title="Link to this heading">#</a></h4>
+<p><strong>Hadoop</strong> is a distributed computing framework that uses the <strong>MapReduce</strong> paradigm to break down complex operations into smaller sub-tasks that can be distributed across multiple nodes. Here, the <strong>Map</strong> phase processes key-value pairs to generate intermediate results, and the <strong>Reduce</strong> phase aggregates these results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mrjob.job</span> <span class="kn">import</span> <span class="n">MRJob</span>
+
+<span class="k">class</span> <span class="nc">MRWordCount</span><span class="p">(</span><span class="n">MRJob</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">mapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="c1"># Split each line into words and emit (word, 1) for each word</span>
+        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">reducer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="c1"># Sum the values for each word</span>
+        <span class="k">yield</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">MRWordCount</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">mrjob.job</span> <span class="kn">import</span> <span class="n">MRJob</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="k">class</span> <span class="nc">MRWordCount</span><span class="p">(</span><span class="n">MRJob</span><span class="p">):</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="k">def</span> <span class="nf">mapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>         <span class="c1"># Split each line into words and emit (word, 1) for each word</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;mrjob&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Step</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Map</strong></p></td>
+<td><p>Splits data into key-value pairs</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Shuffle</strong></p></td>
+<td><p>Redistributes data based on key values</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Reduce</strong></p></td>
+<td><p>Aggregates the data for final output</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="spark-and-resilient-distributed-datasets-rdds">
+<h3>Spark and Resilient Distributed Datasets (RDDs)<a class="headerlink" href="#spark-and-resilient-distributed-datasets-rdds" title="Link to this heading">#</a></h3>
+<p><strong>Apache Spark</strong> is another distributed computing framework that has gained immense popularity. Unlike Hadoop, which relies on disk I/O for every operation, Spark keeps the data in memory (in the form of <strong>Resilient Distributed Datasets</strong>, or RDDs), making it far faster than Hadoop.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using PySpark for distributed data processing</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+
+<span class="c1"># Initialize a Spark session</span>
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;BigDataExample&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+
+<span class="c1"># Load a CSV dataset into a DataFrame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s2">&quot;hdfs://path_to_large_dataset.csv&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inferSchema</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Perform some distributed computations</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="n">result</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Feature</p></th>
+<th class="head"><p>Hadoop MapReduce</p></th>
+<th class="head"><p>Apache Spark</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Processing Speed</strong></p></td>
+<td><p>Slow (Disk-Based I/O)</p></td>
+<td><p>Fast (In-Memory)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Ease of Use</strong></p></td>
+<td><p>Complex</p></td>
+<td><p>User-Friendly</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Data Storage</strong></p></td>
+<td><p>HDFS</p></td>
+<td><p>In-Memory RDD</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="data-partitioning-and-storage-solutions">
+<h3>2. Data Partitioning and Storage Solutions<a class="headerlink" href="#data-partitioning-and-storage-solutions" title="Link to this heading">#</a></h3>
+<p>Handling big data also requires efficient storage strategies. Cloud storage platforms like <strong>Amazon S3</strong>, <strong>Google Cloud Storage</strong>, and <strong>Azure Blob Storage</strong> allow for scalable storage. Data partitioning is also a common technique, where large datasets are split into smaller, more manageable parts.</p>
+<section id="parquet-and-orc-file-formats">
+<h4>Parquet and ORC File Formats<a class="headerlink" href="#parquet-and-orc-file-formats" title="Link to this heading">#</a></h4>
+<p>For better storage efficiency, <strong>Parquet</strong> and <strong>ORC</strong> file formats are used to store data in a columnar fashion. These formats help in minimizing I/O operations and reducing storage footprint, making queries more efficient.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Saving DataFrame in Parquet format</span>
+<span class="n">output_path</span> <span class="o">=</span> <span class="s2">&quot;hdfs://path_to_output_directory&quot;</span>
+<span class="n">df</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Format</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Use Case</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Parquet</strong></p></td>
+<td><p>Columnar storage, optimized for analytical queries</p></td>
+<td><p>Data analytics and machine learning</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>ORC</strong></p></td>
+<td><p>Highly efficient compression and storage</p></td>
+<td><p>Hadoop ecosystem and data warehousing</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="batch-vs-real-time-processing">
+<h3>3. Batch vs Real-Time Processing<a class="headerlink" href="#batch-vs-real-time-processing" title="Link to this heading">#</a></h3>
+<p>Big data often needs different approaches based on processing requirements:</p>
+<ul class="simple">
+<li><p><strong>Batch Processing</strong>: Used for large-scale analytics that doesn’t require real-time processing. Hadoop is commonly used for this purpose.</p></li>
+<li><p><strong>Real-Time Processing</strong>: Used when immediate action is needed, e.g., in fraud detection. Tools like <strong>Apache Kafka</strong> and <strong>Apache Flink</strong> provide real-time data pipelines that enable streaming data analysis.</p></li>
+</ul>
+<section id="real-time-analytics-with-kafka-and-spark-streaming">
+<h4>Real-Time Analytics with Kafka and Spark Streaming<a class="headerlink" href="#real-time-analytics-with-kafka-and-spark-streaming" title="Link to this heading">#</a></h4>
+<p>Real-time processing enables real-time data ingestion, transformation, and analysis. One popular approach is using <strong>Apache Kafka</strong> for ingesting streams of data and <strong>Apache Spark Streaming</strong> for real-time analysis.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<span class="kn">from</span> <span class="nn">pyspark.streaming</span> <span class="kn">import</span> <span class="n">StreamingContext</span>
+
+<span class="c1"># Spark session for real-time processing</span>
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;RealTimeAnalytics&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+<span class="n">ssc</span> <span class="o">=</span> <span class="n">StreamingContext</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># 10-second batch intervals</span>
+
+<span class="c1"># Stream data from Kafka</span>
+<span class="n">data_stream</span> <span class="o">=</span> <span class="n">ssc</span><span class="o">.</span><span class="n">socketTextStream</span><span class="p">(</span><span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">9092</span><span class="p">)</span>
+
+<span class="c1"># Process the data in real time</span>
+<span class="k">def</span> <span class="nf">process_data</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">rdd</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Processing batch at </span><span class="si">{</span><span class="n">time</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">rdd</span><span class="o">.</span><span class="n">collect</span><span class="p">())</span>
+
+<span class="n">data_stream</span><span class="o">.</span><span class="n">foreachRDD</span><span class="p">(</span><span class="n">process_data</span><span class="p">)</span>
+
+<span class="n">ssc</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">ssc</span><span class="o">.</span><span class="n">awaitTermination</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Component</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Kafka</strong></p></td>
+<td><p>Message broker for real-time data ingestion</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Spark Streaming</strong></p></td>
+<td><p>Real-time computation framework</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="data-reduction-techniques">
+<h3>4. Data Reduction Techniques<a class="headerlink" href="#data-reduction-techniques" title="Link to this heading">#</a></h3>
+<p>Big data can be overwhelming, especially if your infrastructure is unable to keep up with the scale of processing required. Here, data reduction techniques like <strong>sampling</strong> and <strong>dimensionality reduction</strong> become crucial.</p>
+<section id="sampling-data">
+<h4>Sampling Data<a class="headerlink" href="#sampling-data" title="Link to this heading">#</a></h4>
+<p><strong>Sampling</strong> is a data reduction technique used when the dataset is simply too large to process in its entirety. By extracting representative samples, you can gain insights without processing the entire dataset.</p>
+</section>
+<section id="dimensionality-reduction-with-pca">
+<h4>Dimensionality Reduction with PCA<a class="headerlink" href="#dimensionality-reduction-with-pca" title="Link to this heading">#</a></h4>
+<p><strong>Principal Component Analysis (PCA)</strong> is often used for dimensionality reduction to reduce the number of features in a dataset while maintaining its variability.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_classification</span>
+
+<span class="c1"># Create a large synthetic dataset</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># Apply PCA to reduce the number of features to 10</span>
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">X_reduced</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Technique</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Use Case</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Sampling</strong></p></td>
+<td><p>Extract representative data samples</p></td>
+<td><p>Exploratory data analysis</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>PCA</strong></p></td>
+<td><p>Reduce dimensionality of data</p></td>
+<td><p>Machine learning, clustering</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="machine-learning-with-big-data">
+<h3>5. Machine Learning with Big Data<a class="headerlink" href="#machine-learning-with-big-data" title="Link to this heading">#</a></h3>
+<p>Big data also opens doors for more complex <strong>machine learning</strong> models that can derive insights and predict future trends. However, training models on huge datasets can be extremely challenging. Here are some strategies to make machine learning feasible:</p>
+<section id="stochastic-gradient-descent-sgd-for-large-datasets">
+<h4>Stochastic Gradient Descent (SGD) for Large Datasets<a class="headerlink" href="#stochastic-gradient-descent-sgd-for-large-datasets" title="Link to this heading">#</a></h4>
+<p>Traditional gradient descent requires the entire dataset in memory, which is impractical for big data. Instead, <strong>Stochastic Gradient Descent (SGD)</strong> and <strong>Mini-batch Gradient Descent</strong> can be used.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Simulated dataset</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1000000</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1000000</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">mini_batch_size</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.01</span>
+
+<span class="c1"># Training loop using mini-batch gradient descent</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>  <span class="c1"># Number of epochs</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mini_batch_size</span><span class="p">):</span>
+        <span class="n">X_mini</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">mini_batch_size</span><span class="p">]</span>
+        <span class="n">y_mini</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">mini_batch_size</span><span class="p">]</span>
+        <span class="c1"># Calculate gradient and update weights</span>
+        <span class="c1"># weight_update = -learning_rate * gradient(X_mini, y_mini)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="model-parallelism-and-distributed-training">
+<h3>6. Model Parallelism and Distributed Training<a class="headerlink" href="#model-parallelism-and-distributed-training" title="Link to this heading">#</a></h3>
+<p>When working with very large models, such as <strong>Deep Learning</strong> models, distributing model training across multiple GPUs is often required to speed up the training process.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+
+<span class="c1"># Example: Defining a model and splitting it across multiple GPUs</span>
+<span class="k">class</span> <span class="nc">LargeModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LargeModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cuda:0&#39;</span><span class="p">)</span>  <span class="c1"># Place on GPU 0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cuda:1&#39;</span><span class="p">)</span>   <span class="c1"># Place on GPU 1</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer1</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cuda:0&#39;</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer2</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cuda:1&#39;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">x</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">LargeModel</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="cloud-computing-for-big-data">
+<h3>7. Cloud Computing for Big Data<a class="headerlink" href="#cloud-computing-for-big-data" title="Link to this heading">#</a></h3>
+<p>Cloud computing platforms such as <strong>AWS</strong>, <strong>Google Cloud</strong>, and <strong>Microsoft Azure</strong> offer scalable and cost-efficient solutions for managing and analyzing big data. They provide a wide range of services including distributed databases, data storage, analytics, and machine learning tools.</p>
+<section id="aws-example-amazon-redshift">
+<h4>AWS Example - Amazon Redshift<a class="headerlink" href="#aws-example-amazon-redshift" title="Link to this heading">#</a></h4>
+<p><strong>Amazon Redshift</strong> is a cloud-based data warehouse that allows users to run complex SQL queries on large datasets efficiently.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">-- SQL Query to analyze sales data in Redshift</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">product_id</span><span class="p">,</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">sales</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">total_sales</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">sales_data</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">product_id</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">total_sales</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
+</pre></div>
+</div>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Service</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Use Case</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>AWS Redshift</strong></p></td>
+<td><p>Scalable data warehousing and SQL analytics</p></td>
+<td><p>Business intelligence, reporting</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Google BigQuery</strong></p></td>
+<td><p>Serverless data warehouse for big data</p></td>
+<td><p>Ad-hoc querying, data exploration</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="graph-based-data-models-for-complex-relationships">
+<h3>8. Graph-Based Data Models for Complex Relationships<a class="headerlink" href="#graph-based-data-models-for-complex-relationships" title="Link to this heading">#</a></h3>
+<p>Sometimes the relationships in big data are so intricate that a traditional table-based structure doesn’t suffice. <strong>Graph databases</strong> like <strong>Neo4j</strong> allow us to store data in graph structures, making it easier to traverse relationships and perform complex queries.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">py2neo</span> <span class="kn">import</span> <span class="n">Graph</span>
+
+<span class="c1"># Connect to Neo4j graph database</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s2">&quot;bolt://localhost:7687&quot;</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;neo4j&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">))</span>
+
+<span class="c1"># Create a new node in the graph</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;CREATE (p:Person {name: &#39;John Doe&#39;, age: 29})&quot;</span><span class="p">)</span>
+
+<span class="c1"># Query to find all people older than 25</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;MATCH (p:Person) WHERE p.age &gt; 25 RETURN p.name, p.age&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Component</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Use Case</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Node</strong></p></td>
+<td><p>Represents an entity (e.g., Person, Product)</p></td>
+<td><p>Social networks, recommendations</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Relationship</strong></p></td>
+<td><p>Describes the connection between nodes</p></td>
+<td><p>Fraud detection, link analysis</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="handling-unstructured-data">
+<h3>9. Handling Unstructured Data<a class="headerlink" href="#handling-unstructured-data" title="Link to this heading">#</a></h3>
+<p>Big data isn’t always neat. Often, it includes <strong>unstructured data</strong> from sources like social media, images, and sensor readings. Tools like <strong>Elasticsearch</strong> and <strong>Apache Solr</strong> can be used to index and search unstructured data effectively.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">elasticsearch</span> <span class="kn">import</span> <span class="n">Elasticsearch</span>
+
+<span class="c1"># Connect to Elasticsearch</span>
+<span class="n">es</span> <span class="o">=</span> <span class="n">Elasticsearch</span><span class="p">([</span><span class="s2">&quot;http://localhost:9200&quot;</span><span class="p">])</span>
+
+<span class="c1"># Index a document</span>
+<span class="n">doc</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;author&quot;</span><span class="p">:</span> <span class="s2">&quot;Mike&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;This is a sample document&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;2024-01-01&quot;</span>
+<span class="p">}</span>
+<span class="n">es</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s2">&quot;sample_index&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">document</span><span class="o">=</span><span class="n">doc</span><span class="p">)</span>
+
+<span class="c1"># Search for documents</span>
+<span class="n">docs</span> <span class="o">=</span> <span class="n">es</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s2">&quot;sample_index&quot;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;match&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;author&quot;</span><span class="p">:</span> <span class="s2">&quot;Mike&quot;</span><span class="p">}})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">docs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Tool</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Use Case</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Elasticsearch</strong></p></td>
+<td><p>Full-text search and analytics engine</p></td>
+<td><p>Log analysis, e-commerce search</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Apache Solr</strong></p></td>
+<td><p>Open-source search platform</p></td>
+<td><p>Website search, data indexing</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ethical-considerations-and-data-governance">
+<h3>10. Ethical Considerations and Data Governance<a class="headerlink" href="#ethical-considerations-and-data-governance" title="Link to this heading">#</a></h3>
+<p>Big data also brings with it ethical concerns regarding <strong>privacy</strong>, <strong>security</strong>, and <strong>data ownership</strong>. Ensuring data privacy is crucial, especially when dealing with personally identifiable information (PII). Regulatory frameworks like <strong>GDPR</strong> and <strong>CCPA</strong> have been established to ensure ethical handling of data.</p>
+<p><strong>Table: Ethical Considerations in Big Data</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Concern</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Regulation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Privacy</strong></p></td>
+<td><p>Protection of personal information</p></td>
+<td><p>GDPR, CCPA</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Security</strong></p></td>
+<td><p>Measures to safeguard data</p></td>
+<td><p>Encryption, access controls</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Data Ownership</strong></p></td>
+<td><p>Rights over data collection and usage</p></td>
+<td><p>Consent-based data collection</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-big-data">What is Big Data?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strategies-to-deal-with-big-data">Strategies to Deal with Big Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distributed-computing">1. Distributed Computing</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hadoop-and-mapreduce">Hadoop and MapReduce</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spark-and-resilient-distributed-datasets-rdds">Spark and Resilient Distributed Datasets (RDDs)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-partitioning-and-storage-solutions">2. Data Partitioning and Storage Solutions</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#parquet-and-orc-file-formats">Parquet and ORC File Formats</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-vs-real-time-processing">3. Batch vs Real-Time Processing</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#real-time-analytics-with-kafka-and-spark-streaming">Real-Time Analytics with Kafka and Spark Streaming</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-reduction-techniques">4. Data Reduction Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-data">Sampling Data</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensionality-reduction-with-pca">Dimensionality Reduction with PCA</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-learning-with-big-data">5. Machine Learning with Big Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#stochastic-gradient-descent-sgd-for-large-datasets">Stochastic Gradient Descent (SGD) for Large Datasets</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-parallelism-and-distributed-training">6. Model Parallelism and Distributed Training</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cloud-computing-for-big-data">7. Cloud Computing for Big Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aws-example-amazon-redshift">AWS Example - Amazon Redshift</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-based-data-models-for-complex-relationships">8. Graph-Based Data Models for Complex Relationships</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-unstructured-data">9. Handling Unstructured Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ethical-considerations-and-data-governance">10. Ethical Considerations and Data Governance</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Mike Nguyen
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

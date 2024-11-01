@@ -1,0 +1,929 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Data Masking &#8212; Machine Learning in Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=1a96265c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=c72506b3" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=1a96265c" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/bootstrap.css?v=5340d9b1" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/theme.css?v=a243ae73" />
+    <link rel="stylesheet" type="text/css" href="_static/vendor/fontawesome/6.5.1/css/all.min.css?v=c786f70d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-NK1GQ8CXSN"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-NK1GQ8CXSN');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-NK1GQ8CXSN');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '40-data-masking';</script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/copybutton_funcs.js?v=776a791e"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/language_data.js?v=e49ba422"></script>
+    <script src="_static/searchtools.js?v=d19c4805"></script>
+    <script src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/scripts/bootstrap.js?v=3d67b3b1"></script>
+    <script src="_static/scripts/pydata-sphinx-theme.js?v=b2908668"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?v=95180707"></script>
+    <link rel="canonical" href="https://mikenguyen13.github.io/mlpy/40-data-masking.html" />
+    <link rel="icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Credit Score Model" href="50-credit-score.html" />
+    <link rel="prev" title="Matrix Factorization" href="15-matrix_factorization.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Machine Learning in Python - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Machine Learning in Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Introduction to Machine Learning and Artificial Intelligence
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05-supervised-ml.html">Supervised Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-advanced_linear_regression.html">Advanced Linear Regression Techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-optimization.html">Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-matrix_factorization.html">Matrix Factorization</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Masking</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Industry Applications</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="50-credit-score.html">Credit Score Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="51-min_risk.html">Risk Minimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="51-min_risk_amount.html">Risk Minimization with Overdue Balance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="52-credit-approval.html">Credit Approval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="53-credit-adjustment.html">Credit Adjustment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="54-firm-valuation.html">Firm Valuation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="55-financial_fraud.html">Financial Fraud Detection</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="70-approximate-nearest-neighbors.html">Approximate Nearest Neighbors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="71-sim_dat_bandits.html">Multi-Armed Bandits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="72-data-anoy-geo.html">Data Anonymization Techniques for Geospatial Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="73-sample-splitting-time-series.html">Split Samples in Time Series</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/edit/main/40-data-masking.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/issues/new?title=Issue%20on%20page%20%2F40-data-masking.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/40-data-masking.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Data Masking</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-ancient-secrets-to-modern-data-privacy">From Ancient Secrets to Modern Data Privacy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-data-masking-is-important">Why Data Masking is Important</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-evolution-of-data-masking">The Evolution of Data Masking</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ancient-times-secret-codes-and-ciphers">Ancient Times: Secret Codes and Ciphers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#world-war-ii-enigma-machine">World War II: Enigma Machine</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modern-era-rise-of-digital-data-and-encryption">Modern Era: Rise of Digital Data and Encryption</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#today-data-masking-for-compliance-and-security">Today: Data Masking for Compliance and Security</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#typologies-and-categories-of-data-masking">Typologies and Categories of Data Masking</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#based-on-data-modification">1. Based on Data Modification</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#based-on-reversibility">2. Based on Reversibility</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#based-on-data-transformation-method">3. Based on Data Transformation Method</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-data-masking-techniques">Comparing Data Masking Techniques</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#detailed-implementation-of-data-masking-techniques">Detailed Implementation of Data Masking Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenization-example">1. Tokenization Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#differential-privacy-example">4. Differential Privacy Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#format-preserving-encryption-example">5. Format-Preserving Encryption Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-applications-of-data-masking">Real-World Applications of Data Masking</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#challenges-and-best-practices-in-data-masking">Challenges and Best Practices in Data Masking</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices">Best Practices:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="data-masking">
+<h1>Data Masking<a class="headerlink" href="#data-masking" title="Link to this heading">#</a></h1>
+<section id="from-ancient-secrets-to-modern-data-privacy">
+<h2>From Ancient Secrets to Modern Data Privacy<a class="headerlink" href="#from-ancient-secrets-to-modern-data-privacy" title="Link to this heading">#</a></h2>
+<p>The practice of protecting information is not a new concept; it has existed since ancient times. From secret messages passed among spies to coded communications used by military forces, the need to safeguard sensitive information has always been vital. As society transitioned into the digital age, data privacy and security evolved from simple encryption techniques to sophisticated data masking strategies. Today, data masking is a key approach used to protect personally identifiable information (PII) and comply with data privacy regulations like GDPR and HIPAA.</p>
+<p>In this notebook, we will cover the history, purpose, various methods, typologies, categories, comparison of techniques, and practical implementations of data masking, offering a complete guide to this critical data security measure.</p>
+</section>
+<section id="why-data-masking-is-important">
+<h2>Why Data Masking is Important<a class="headerlink" href="#why-data-masking-is-important" title="Link to this heading">#</a></h2>
+<p>Data masking serves multiple purposes in today’s data-driven world:</p>
+<ul class="simple">
+<li><p><strong>Privacy Protection:</strong> Ensures that sensitive information such as credit card numbers, SSNs, and health records are not disclosed to unauthorized individuals.</p></li>
+<li><p><strong>Compliance with Regulations:</strong> Many data privacy laws like GDPR, HIPAA, and CCPA require companies to anonymize or mask data before sharing it externally.</p></li>
+<li><p><strong>Risk Reduction in Testing Environments:</strong> Enables developers and testers to work with realistic data without exposing the original sensitive data.</p></li>
+<li><p><strong>Maintaining Data Utility:</strong> Allows masked data to be used for analysis, training, and development while ensuring the protection of sensitive details.</p></li>
+</ul>
+</section>
+<section id="the-evolution-of-data-masking">
+<h2>The Evolution of Data Masking<a class="headerlink" href="#the-evolution-of-data-masking" title="Link to this heading">#</a></h2>
+<p>The concept of data masking has evolved significantly over time:</p>
+<section id="ancient-times-secret-codes-and-ciphers">
+<h3>Ancient Times: Secret Codes and Ciphers<a class="headerlink" href="#ancient-times-secret-codes-and-ciphers" title="Link to this heading">#</a></h3>
+<p>In ancient civilizations, methods like the Caesar cipher were used to obscure messages. Julius Caesar himself is credited with developing one of the first documented encryption methods by shifting letters in the alphabet.</p>
+</section>
+<section id="world-war-ii-enigma-machine">
+<h3>World War II: Enigma Machine<a class="headerlink" href="#world-war-ii-enigma-machine" title="Link to this heading">#</a></h3>
+<p>During World War II, the Enigma machine was used to encode military communications. It represented a significant advancement in cryptography, showcasing the importance of data protection.</p>
+</section>
+<section id="modern-era-rise-of-digital-data-and-encryption">
+<h3>Modern Era: Rise of Digital Data and Encryption<a class="headerlink" href="#modern-era-rise-of-digital-data-and-encryption" title="Link to this heading">#</a></h3>
+<p>As computers became commonplace, encryption methods advanced. Techniques like DES, RSA, and AES became standard. However, encryption alone was not enough to protect data used in testing or development environments, leading to the rise of data masking.</p>
+</section>
+<section id="today-data-masking-for-compliance-and-security">
+<h3>Today: Data Masking for Compliance and Security<a class="headerlink" href="#today-data-masking-for-compliance-and-security" title="Link to this heading">#</a></h3>
+<p>With the introduction of data privacy regulations, data masking evolved to include techniques such as tokenization, pseudonymization, and differential privacy. Organizations use data masking to ensure compliance while keeping data usable for analytics.</p>
+</section>
+</section>
+<section id="typologies-and-categories-of-data-masking">
+<h2>Typologies and Categories of Data Masking<a class="headerlink" href="#typologies-and-categories-of-data-masking" title="Link to this heading">#</a></h2>
+<p>Data masking can be classified based on the nature of the technique and the intended use case:</p>
+<section id="based-on-data-modification">
+<h3>1. Based on Data Modification<a class="headerlink" href="#based-on-data-modification" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Static Data Masking (SDM):</strong> The original data is replaced with masked data in a non-production environment. Ideal for creating masked copies of databases.</p></li>
+<li><p><strong>Dynamic Data Masking (DDM):</strong> Data is masked in real-time as it is accessed, providing security while allowing data usage in production environments.</p></li>
+<li><p><strong>On-the-fly Data Masking:</strong> Data is masked during extraction from the original source, often used in real-time data integration.</p></li>
+</ul>
+</section>
+<section id="based-on-reversibility">
+<h3>2. Based on Reversibility<a class="headerlink" href="#based-on-reversibility" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Reversible Masking (e.g., Tokenization):</strong> The original data can be restored using a key or mapping table.</p></li>
+<li><p><strong>Irreversible Masking (e.g., Data Shuffling, Differential Privacy):</strong> Once masked, the original data cannot be recovered.</p></li>
+</ul>
+</section>
+<section id="based-on-data-transformation-method">
+<h3>3. Based on Data Transformation Method<a class="headerlink" href="#based-on-data-transformation-method" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Tokenization:</strong> Replaces data elements with tokens while retaining the original format.</p></li>
+<li><p><strong>Pseudonymization:</strong> Replaces identifiers with pseudonyms to de-identify data.</p></li>
+<li><p><strong>Data Shuffling:</strong> Rearranges data values within the same column to obscure information.</p></li>
+<li><p><strong>Differential Privacy:</strong> Adds noise to data to protect individual entries.</p></li>
+<li><p><strong>Format-preserving Encryption:</strong> Encrypts data without changing its original format.</p></li>
+</ul>
+</section>
+</section>
+<section id="comparing-data-masking-techniques">
+<h2>Comparing Data Masking Techniques<a class="headerlink" href="#comparing-data-masking-techniques" title="Link to this heading">#</a></h2>
+<p>Here’s a comparison of different data masking techniques, highlighting their advantages, disadvantages, and use cases:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Technique</strong></p></th>
+<th class="head"><p><strong>Advantages</strong></p></th>
+<th class="head"><p><strong>Disadvantages</strong></p></th>
+<th class="head"><p><strong>Use Cases</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Tokenization</p></td>
+<td><p>Easy to implement, reversible, format-preserving.</p></td>
+<td><p>Requires secure mapping storage, limited for analysis.</p></td>
+<td><p>Payment card industry, compliance (PCI DSS).</p></td>
+</tr>
+<tr class="row-odd"><td><p>Data Shuffling</p></td>
+<td><p>Maintains statistical distribution.</p></td>
+<td><p>Original patterns may still be discernible.</p></td>
+<td><p>Testing environments, statistical data analysis.</p></td>
+</tr>
+<tr class="row-even"><td><p>Pseudonymization</p></td>
+<td><p>Reversible for controlled access, de-identifies data.</p></td>
+<td><p>Can be reversible under certain conditions.</p></td>
+<td><p>Healthcare data, finance (GDPR, HIPAA compliance).</p></td>
+</tr>
+<tr class="row-odd"><td><p>Differential Privacy</p></td>
+<td><p>Strong privacy guarantees, protects individual data.</p></td>
+<td><p>Can introduce significant noise, affecting accuracy.</p></td>
+<td><p>Big data analytics, aggregate data analysis.</p></td>
+</tr>
+<tr class="row-even"><td><p>Format-preserving Encryption</p></td>
+<td><p>Retains original data format, suitable for structured data.</p></td>
+<td><p>More computationally intensive, encryption management.</p></td>
+<td><p>Financial data, credit card information.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="detailed-implementation-of-data-masking-techniques">
+<h2>Detailed Implementation of Data Masking Techniques<a class="headerlink" href="#detailed-implementation-of-data-masking-techniques" title="Link to this heading">#</a></h2>
+<p>In this section, we will demonstrate how each data masking technique works with Python code examples.</p>
+<section id="tokenization-example">
+<h3>1. Tokenization Example<a class="headerlink" href="#tokenization-example" title="Link to this heading">#</a></h3>
+<p>Tokenization replaces sensitive data elements with tokens while maintaining the original format, making it useful for payment card processing.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Sample data creation</span>
+<span class="n">sample_ssns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;123-45-6789&#39;</span><span class="p">,</span> <span class="s1">&#39;987-65-4321&#39;</span><span class="p">,</span> <span class="s1">&#39;555-44-3333&#39;</span><span class="p">,</span> <span class="s1">&#39;111-22-3333&#39;</span><span class="p">,</span> <span class="s1">&#39;222-33-4444&#39;</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;SSN&#39;</span><span class="p">:</span> <span class="n">sample_ssns</span><span class="p">})</span>
+
+<span class="k">def</span> <span class="nf">tokenize</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">token_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">digits</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">8</span><span class="p">))</span>
+        <span class="n">token_dict</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">token_dict</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+
+<span class="c1"># Tokenizing the SSN data</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;SSN_Tokenized&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tokenize</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;SSN&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;SSN&#39;</span><span class="p">,</span> <span class="s1">&#39;SSN_Tokenized&#39;</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>           SSN SSN_Tokenized
+0  123-45-6789      JGGWCJE6
+1  987-65-4321      MPX9EOIY
+2  555-44-3333      CDFPKVGE
+3  111-22-3333      JAPINJLS
+4  222-33-4444      PV4GKV3G
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="differential-privacy-example">
+<h3>4. Differential Privacy Example<a class="headerlink" href="#differential-privacy-example" title="Link to this heading">#</a></h3>
+<p>Differential privacy introduces statistical noise to the dataset, ensuring individual data points remain unidentifiable.</p>
+<p>The technique allows for meaningful aggregate analysis without exposing individual entries, making it ideal for large-scale data analysis.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">add_noise</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+    <span class="n">noise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">laplace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">epsilon</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+    <span class="n">noisy_data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">+</span> <span class="n">noise</span>
+    <span class="k">return</span> <span class="n">noisy_data</span>
+
+<span class="c1"># Adding noise to the SSN data for differential privacy</span>
+<span class="n">original_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;SSN&#39;</span><span class="p">]])</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;SSN_Noise&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">add_noise</span><span class="p">(</span><span class="n">original_data</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[[</span><span class="s1">&#39;SSN&#39;</span><span class="p">,</span> <span class="s1">&#39;SSN_Noise&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>SSN</th>
+      <th>SSN_Noise</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>123-45-6789</td>
+      <td>1.234568e+08</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>987-65-4321</td>
+      <td>9.876543e+08</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>555-44-3333</td>
+      <td>5.554433e+08</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>111-22-3333</td>
+      <td>1.112233e+08</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>222-33-4444</td>
+      <td>2.223344e+08</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="format-preserving-encryption-example">
+<h3>5. Format-Preserving Encryption Example<a class="headerlink" href="#format-preserving-encryption-example" title="Link to this heading">#</a></h3>
+<p>Format-preserving encryption encrypts data while retaining its original format, allowing the data to be used in environments where a specific format is required.</p>
+<p>This technique is commonly used for sensitive structured data, such as credit card numbers.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Sample data creation</span>
+<span class="n">sample_credit_cards</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;1234-5678-9876-5432&#39;</span><span class="p">,</span> <span class="s1">&#39;4321-8765-6789-1234&#39;</span><span class="p">,</span> <span class="s1">&#39;5678-1234-9876-5432&#39;</span><span class="p">,</span> <span class="s1">&#39;8765-4321-1234-5678&#39;</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;CreditCard&#39;</span><span class="p">:</span> <span class="n">sample_credit_cards</span><span class="p">})</span>
+
+<span class="k">def</span> <span class="nf">format_preserving_encryption</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">encrypted_data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)))</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">encrypted_data</span>
+
+<span class="c1"># Encrypting the credit card data</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;CreditCard_Encrypted&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">format_preserving_encryption</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;CreditCard&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;CreditCard&#39;</span><span class="p">,</span> <span class="s1">&#39;CreditCard_Encrypted&#39;</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>            CreditCard CreditCard_Encrypted
+0  1234-5678-9876-5432  2345-6789-8765-4321
+1  4321-8765-6789-1234  4321-9876-5678-1234
+2  5678-1234-9876-5432  2345-6789-4321-8765
+3  8765-4321-1234-5678  8765-4321-1234-5678
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="real-world-applications-of-data-masking">
+<h2>Real-World Applications of Data Masking<a class="headerlink" href="#real-world-applications-of-data-masking" title="Link to this heading">#</a></h2>
+<p>Data masking is used across various industries to secure sensitive information. Here are some common applications:</p>
+<ul class="simple">
+<li><p><strong>Healthcare:</strong> Protecting patient data for clinical trials and research while complying with HIPAA.</p></li>
+<li><p><strong>Finance:</strong> Securing credit card information for compliance with PCI DSS and ensuring safe usage in testing environments.</p></li>
+<li><p><strong>Retail:</strong> Masking customer data used in analytics to protect privacy and meet GDPR requirements.</p></li>
+<li><p><strong>Telecommunications:</strong> Anonymizing user data for network performance analysis.</p></li>
+</ul>
+</section>
+<section id="challenges-and-best-practices-in-data-masking">
+<h2>Challenges and Best Practices in Data Masking<a class="headerlink" href="#challenges-and-best-practices-in-data-masking" title="Link to this heading">#</a></h2>
+<p>While data masking provides a layer of security, there are challenges to consider:</p>
+<ul class="simple">
+<li><p><strong>Balancing Privacy and Utility:</strong> Adding too much noise can reduce the data’s analytical value.</p></li>
+<li><p><strong>Compliance Requirements:</strong> Ensuring that data masking techniques meet regulatory standards.</p></li>
+<li><p><strong>Performance Impact:</strong> Masking large datasets can be computationally intensive.</p></li>
+</ul>
+<section id="best-practices">
+<h3>Best Practices:<a class="headerlink" href="#best-practices" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Use a combination of techniques for stronger protection.</p></li>
+<li><p>Regularly review and update masking strategies to adapt to new regulations.</p></li>
+<li><p>Store mapping tables for reversible techniques securely.</p></li>
+</ul>
+</section>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>Data masking is a crucial technique in modern data security, allowing organizations to protect sensitive information while still using the data for analysis, testing, and compliance. Through various methods such as tokenization, pseudonymization, data shuffling, differential privacy, and format-preserving encryption, data can be masked to ensure privacy and security.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="15-matrix_factorization.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Matrix Factorization</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="50-credit-score.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Credit Score Model</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-ancient-secrets-to-modern-data-privacy">From Ancient Secrets to Modern Data Privacy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-data-masking-is-important">Why Data Masking is Important</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-evolution-of-data-masking">The Evolution of Data Masking</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ancient-times-secret-codes-and-ciphers">Ancient Times: Secret Codes and Ciphers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#world-war-ii-enigma-machine">World War II: Enigma Machine</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modern-era-rise-of-digital-data-and-encryption">Modern Era: Rise of Digital Data and Encryption</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#today-data-masking-for-compliance-and-security">Today: Data Masking for Compliance and Security</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#typologies-and-categories-of-data-masking">Typologies and Categories of Data Masking</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#based-on-data-modification">1. Based on Data Modification</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#based-on-reversibility">2. Based on Reversibility</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#based-on-data-transformation-method">3. Based on Data Transformation Method</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-data-masking-techniques">Comparing Data Masking Techniques</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#detailed-implementation-of-data-masking-techniques">Detailed Implementation of Data Masking Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenization-example">1. Tokenization Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#differential-privacy-example">4. Differential Privacy Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#format-preserving-encryption-example">5. Format-Preserving Encryption Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-applications-of-data-masking">Real-World Applications of Data Masking</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#challenges-and-best-practices-in-data-masking">Challenges and Best Practices in Data Masking</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices">Best Practices:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Mike Nguyen
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

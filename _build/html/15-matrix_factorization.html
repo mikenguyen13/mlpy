@@ -1,0 +1,1739 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Matrix Factorization &#8212; Machine Learning in Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=1a96265c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=c72506b3" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=1a96265c" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/bootstrap.css?v=5340d9b1" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/theme.css?v=a243ae73" />
+    <link rel="stylesheet" type="text/css" href="_static/vendor/fontawesome/6.5.1/css/all.min.css?v=c786f70d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-NK1GQ8CXSN"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-NK1GQ8CXSN');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-NK1GQ8CXSN');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '15-matrix_factorization';</script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/copybutton_funcs.js?v=776a791e"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/language_data.js?v=e49ba422"></script>
+    <script src="_static/searchtools.js?v=d19c4805"></script>
+    <script src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/scripts/bootstrap.js?v=3d67b3b1"></script>
+    <script src="_static/scripts/pydata-sphinx-theme.js?v=b2908668"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?v=95180707"></script>
+    <link rel="canonical" href="https://mikenguyen13.github.io/mlpy/15-matrix_factorization.html" />
+    <link rel="icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Data Masking" href="40-data-masking.html" />
+    <link rel="prev" title="Optimization" href="10-optimization.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Machine Learning in Python - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Machine Learning in Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Introduction to Machine Learning and Artificial Intelligence
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05-supervised-ml.html">Supervised Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-advanced_linear_regression.html">Advanced Linear Regression Techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-optimization.html">Optimization</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Matrix Factorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="40-data-masking.html">Data Masking</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Industry Applications</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="50-credit-score.html">Credit Score Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="51-min_risk.html">Risk Minimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="51-min_risk_amount.html">Risk Minimization with Overdue Balance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="52-credit-approval.html">Credit Approval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="53-credit-adjustment.html">Credit Adjustment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="54-firm-valuation.html">Firm Valuation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="55-financial_fraud.html">Financial Fraud Detection</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="70-approximate-nearest-neighbors.html">Approximate Nearest Neighbors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="71-sim_dat_bandits.html">Multi-Armed Bandits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="72-data-anoy-geo.html">Data Anonymization Techniques for Geospatial Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="73-sample-splitting-time-series.html">Split Samples in Time Series</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/edit/main/15-matrix_factorization.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/issues/new?title=Issue%20on%20page%20%2F15-matrix_factorization.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/15-matrix_factorization.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Matrix Factorization</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-matrix-factorization">What Is Matrix Factorization?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-matrix-factorization-works">Why Matrix Factorization Works</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-the-differences-between-matrix-factorization-and-matrix-decomposition">Understanding the Differences Between Matrix Factorization and Matrix Decomposition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-the-math-behind-matrix-factorization-and-matrix-decomposition">Understanding the Math Behind Matrix Factorization and Matrix Decomposition</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-mathematical-framework">1. General Mathematical Framework</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-factorization-optimization-and-approximation">2. Matrix Factorization: Optimization and Approximation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-non-negative-matrix-factorization-nmf">Example: Non-negative Matrix Factorization (NMF)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-decomposition-exact-algebraic-methods">3. Matrix Decomposition: Exact Algebraic Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-eigenvalue-decomposition">Example: Eigenvalue Decomposition</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-mathematical-differences">4. Key Mathematical Differences</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#similarities">5. Similarities</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-can-svd-be-used-in-both-matrix-decomposition-and-matrix-factorization">Why Can SVD Be Used in Both Matrix Decomposition and Matrix Factorization?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svd-as-matrix-decomposition">1. SVD as Matrix Decomposition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svd-as-matrix-factorization">2. SVD as Matrix Factorization</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-svd-for-recommender-systems">Example: SVD for Recommender Systems</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-difference-exact-vs-approximation">Key Difference: Exact vs. Approximation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-can-svd-be-used-in-both">Why Can SVD Be Used in Both?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Conclusion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#algorithms-for-matrix-factorization">Algorithms for Matrix Factorization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alternating-least-squares-als">Alternating Least Squares (ALS)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#als-algorithm">ALS Algorithm:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-als-works">Why ALS Works:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stochastic-gradient-descent-sgd">Stochastic Gradient Descent (SGD)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sgd-algorithm">SGD Algorithm:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-sgd-works">Why SGD Works:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#weighted-alternating-least-squares-wals">Weighted Alternating Least Squares (WALS)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#wals-objective">WALS Objective:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-negative-matrix-factorization-nmf">Non-Negative Matrix Factorization (NMF)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nmf-objective">NMF Objective:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#probabilistic-matrix-factorization-pmf">Probabilistic Matrix Factorization (PMF)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmf-model">PMF Model:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#factorization-machines-fm">Factorization Machines (FM)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-of-matrix-factorization-methods">Comparison of Matrix Factorization Methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-applications-of-matrix-factorization">Real-World Applications of Matrix Factorization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendation-systems">Recommendation Systems</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#case-study-netflix-prize">Case Study: Netflix Prize</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#natural-language-processing-nlp">Natural Language Processing (NLP)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computer-vision">Computer Vision</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#state-of-the-art-in-matrix-factorization">State-of-the-Art in Matrix Factorization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-issues">Other Issues</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#temporal-dynamics-in-matrix-factorization">Temporal Dynamics in Matrix Factorization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#addressing-exposure-bias-in-matrix-factorization">Addressing Exposure Bias in Matrix Factorization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#active-learning-and-exploration-in-matrix-factorization">Active Learning and Exploration in Matrix Factorization</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regularization-with-side-information">Regularization with Side Information</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retraining-and-continuous-learning">Retraining and Continuous Learning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-the-approaches">Combining the Approaches</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#application">Application</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="matrix-factorization">
+<h1>Matrix Factorization<a class="headerlink" href="#matrix-factorization" title="Link to this heading">#</a></h1>
+<p>Matrix factorization is one of the bedrocks of modern data analysis, appearing in fields as diverse as recommendation systems, computer vision, and natural language processing. Its beauty lies in its simplicity: we take a complex matrix (e.g., a user-item interaction matrix in a recommendation system) and decompose it into smaller, interpretable matrices that reveal hidden patterns in the data.</p>
+<p>The goal of this chapter is to explore <strong>what matrix factorization is</strong>, <strong>why it works</strong>, and <strong>how it is applied</strong> in a range of settings. We will also discuss <strong>advanced variations</strong> of the basic technique and <strong>state-of-the-art methods</strong> in matrix factorization.</p>
+<section id="what-is-matrix-factorization">
+<h2>What Is Matrix Factorization?<a class="headerlink" href="#what-is-matrix-factorization" title="Link to this heading">#</a></h2>
+<p>Matrix factorization (MF) is the process of decomposing a large matrix into the product of two or more smaller matrices. Formally, for a matrix <span class="math notranslate nohighlight">\( M \)</span> of size <span class="math notranslate nohighlight">\( m \times n \)</span>, we seek to express it as:</p>
+<div class="math notranslate nohighlight">
+\[
+M \approx U \times V^T
+\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( U \)</span> is an <span class="math notranslate nohighlight">\( m \times k \)</span> matrix (e.g., representing latent user factors in a recommendation system).</p></li>
+<li><p><span class="math notranslate nohighlight">\( V \)</span> is an <span class="math notranslate nohighlight">\( n \times k \)</span> matrix (e.g., representing latent item factors).</p></li>
+<li><p><span class="math notranslate nohighlight">\( k \)</span> is the number of <strong>latent features</strong>—hidden dimensions that describe the interactions between the rows and columns of <span class="math notranslate nohighlight">\( M \)</span>.</p></li>
+</ul>
+<p>The goal is to find the matrices <span class="math notranslate nohighlight">\( U \)</span> and <span class="math notranslate nohighlight">\( V \)</span> that minimize the error in this approximation. The problem can be written as an optimization objective, such as minimizing the sum of squared differences between the observed entries in <span class="math notranslate nohighlight">\( M \)</span> and the predicted entries from <span class="math notranslate nohighlight">\( U \times V^T \)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\min_{U, V} \sum_{(i,j) \in \text{Observed}} \left( M_{ij} - U_i V_j^T \right)^2 + \lambda (\| U \|^2 + \| V \|^2)
+\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( (i,j) \in \text{Observed} \)</span> means we only sum over the observed entries in <span class="math notranslate nohighlight">\( M \)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\( \lambda \)</span> is the regularization parameter, preventing overfitting by discouraging extreme values in <span class="math notranslate nohighlight">\( U \)</span> and <span class="math notranslate nohighlight">\( V \)</span>.</p></li>
+</ul>
+<p>This formulation leads us to the <strong>Alternating Least Squares (ALS)</strong> and <strong>Stochastic Gradient Descent (SGD)</strong> algorithms, which we’ll explore in the next sections.</p>
+</section>
+<hr class="docutils" />
+<section id="why-matrix-factorization-works">
+<h2>Why Matrix Factorization Works<a class="headerlink" href="#why-matrix-factorization-works" title="Link to this heading">#</a></h2>
+<p>To understand why matrix factorization is effective, let’s look at a recommendation system. Imagine we have a matrix of user-item interactions where the rows represent users and the columns represent items (e.g., movies, products), and the entries of the matrix represent ratings or purchases. However, most entries are missing—most users haven’t rated most movies or bought most products.</p>
+<p>This matrix is sparse, but <strong>matrix factorization</strong> helps uncover <strong>latent patterns</strong> in the data. These latent patterns could represent users’ preferences (e.g., a user’s inclination towards action or romance movies) and items’ characteristics (e.g., a movie’s genre or popularity).</p>
+<p>By factorizing this matrix, we can:</p>
+<ol class="arabic simple">
+<li><p><strong>Fill in the missing entries</strong>: By predicting the unknown interactions (ratings, purchases), we can recommend new items to users.</p></li>
+<li><p><strong>Identify hidden relationships</strong>: The learned latent factors offer interpretable insights into the underlying structure of the data. For example, in movie recommendation, the factors might represent genre preferences or the intensity of emotional content in films.</p></li>
+</ol>
+</section>
+<section id="understanding-the-differences-between-matrix-factorization-and-matrix-decomposition">
+<h2>Understanding the Differences Between Matrix Factorization and Matrix Decomposition<a class="headerlink" href="#understanding-the-differences-between-matrix-factorization-and-matrix-decomposition" title="Link to this heading">#</a></h2>
+<p>Matrix factorization and matrix decomposition are fundamental concepts in linear algebra, machine learning, and AI, and although they share similarities, they serve different purposes in practice. While both techniques involve breaking down a matrix into simpler components, the nuances between these methods are important depending on their application.</p>
+<p>Below is a detailed comparison highlighting the specific differences between matrix factorization and matrix decomposition:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Feature</strong></p></th>
+<th class="head"><p><strong>Matrix Factorization</strong></p></th>
+<th class="head"><p><strong>Matrix Decomposition</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Conceptual Overview</strong></p></td>
+<td><p>Factorizes a matrix into a product of smaller matrices, often low-rank approximations. Typically involves optimization algorithms to find the best factorization based on data (e.g., user-item matrices in recommendation systems).</p></td>
+<td><p>Decomposes a matrix into specific component matrices that represent properties like orthogonality, diagonal form, or triangular form. These are exact transformations revealing intrinsic matrix properties.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Primary Goal</strong></p></td>
+<td><p>Approximates the original matrix for data-driven tasks, often for prediction or recommendation purposes.</p></td>
+<td><p>Breaks a matrix into components to reveal theoretical properties or to simplify complex operations (e.g., solving linear systems).</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Common Use Cases</strong></p></td>
+<td><p>- Recommender systems (collaborative filtering) <br> - Dimensionality reduction in large datasets <br> - Topic modeling (e.g., NMF for text data) <br> - Feature extraction in latent factor models.</p></td>
+<td><p>- Solving systems of linear equations <br> - Principal component analysis (PCA) <br> - Eigenvalue problems <br> - Signal processing (SVD) <br> - Numerical analysis for computational efficiency.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Key Techniques</strong></p></td>
+<td><p>- <strong>Non-negative Matrix Factorization (NMF)</strong>: Factorizes a matrix into two non-negative matrices. <br> - <strong>Latent Factor Models</strong>: Used in collaborative filtering to find latent user/item features. <br> - <strong>Alternating Least Squares (ALS)</strong>: Optimizes matrix factorization for large datasets.</p></td>
+<td><p>- <strong>Singular Value Decomposition (SVD)</strong>: Decomposes a matrix into three matrices (U, Σ, V). <br> - <strong>LU Decomposition</strong>: Splits a matrix into lower and upper triangular matrices. <br> - <strong>QR Decomposition</strong>: Factorizes a matrix into an orthogonal and an upper triangular matrix. <br> - <strong>Eigenvalue Decomposition</strong>: Decomposes a matrix into eigenvectors and eigenvalues.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Output</strong></p></td>
+<td><p>Produces an <strong>approximation</strong> of the original matrix, typically with lower rank, enabling data compression or predictions (e.g., approximating missing ratings in a user-item matrix).</p></td>
+<td><p>Produces <strong>exact</strong> decompositions, often used to expose structural properties like eigenvalues, orthogonality, or diagonal form. Useful in solving linear algebra problems.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Mathematical Nature</strong></p></td>
+<td><p>Relies on <strong>optimization algorithms</strong> (e.g., stochastic gradient descent, alternating least squares) to approximate the factorization. Often geared toward approximating large datasets for practical applications.</p></td>
+<td><p>Involves <strong>exact algebraic transformations</strong>, focusing on mathematical properties of the matrix. The decomposition results are exact and deterministic.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Common Applications</strong></p></td>
+<td><p>- Recommender systems <br> - Feature extraction <br> - Collaborative filtering <br> - Dimensionality reduction for large-scale data</p></td>
+<td><p>- Principal component analysis (PCA) <br> - Linear regression (QR decomposition for solving least squares) <br> - Eigenvalue problems in physics and engineering <br> - Signal and image processing (e.g., SVD for image compression)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Optimization or Exact</strong></p></td>
+<td><p>Typically involves <strong>optimization</strong>, meaning factorization is an approximation (especially in practical applications like AI). <br> For example, collaborative filtering often aims for low-rank factorization based on user and item interactions.</p></td>
+<td><p>Decomposition is <strong>exact</strong> (e.g., SVD, LU), and the breakdown is deterministic, reflecting precise mathematical properties.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Example Algorithms</strong></p></td>
+<td><p>- <strong>Matrix Factorization in Recommender Systems</strong>: Factorizes user-item matrices to predict ratings or interactions. <br> - <strong>Non-negative Matrix Factorization (NMF)</strong>: Used in text mining, where matrices are decomposed into non-negative factors, often for topic discovery. <br> - <strong>Latent Factor Models</strong>: Used for uncovering hidden patterns in data.</p></td>
+<td><p>- <strong>Singular Value Decomposition (SVD)</strong>: Decomposes a matrix into three matrices to reveal its rank and underlying structure. <br> - <strong>Eigenvalue Decomposition</strong>: Used to understand the spectral properties of a matrix (e.g., finding the directions of maximum variance). <br> - <strong>LU Decomposition</strong>: Decomposes a matrix for solving systems of equations by breaking it into triangular components.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Real-world Example</strong></p></td>
+<td><p>A recommender system factors a user-item rating matrix into a user-feature matrix and an item-feature matrix to predict missing ratings (e.g., Netflix movie recommendations).</p></td>
+<td><p>Eigenvalue decomposition is used to determine the stability of dynamic systems, or SVD is used in PCA for dimensionality reduction and signal compression.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Focus on Dimensionality</strong></p></td>
+<td><p>Typically focused on reducing dimensionality by approximating the original matrix with smaller matrices. Low-rank matrix approximations allow for feature compression in large datasets.</p></td>
+<td><p>While matrix decomposition can be used for dimensionality reduction (e.g., PCA using SVD), its primary focus is not on approximation but on deriving exact mathematical properties.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="understanding-the-math-behind-matrix-factorization-and-matrix-decomposition">
+<h2>Understanding the Math Behind Matrix Factorization and Matrix Decomposition<a class="headerlink" href="#understanding-the-math-behind-matrix-factorization-and-matrix-decomposition" title="Link to this heading">#</a></h2>
+<p>Matrix factorization and matrix decomposition share some mathematical foundations but differ in their goals and the specific mathematical techniques used. Both involve breaking down a matrix into simpler components, but the way they approach this process varies significantly.</p>
+<p>Matrix factorization often involves <strong>approximation</strong> and uses <strong>optimization techniques</strong> to minimize reconstruction error. On the other hand, matrix decomposition is generally an <strong>exact transformation</strong> where the matrix is broken down into specific components that represent properties like orthogonality, diagonal structure, or eigenvalues.</p>
+<section id="general-mathematical-framework">
+<h3>1. General Mathematical Framework<a class="headerlink" href="#general-mathematical-framework" title="Link to this heading">#</a></h3>
+<p>Both methods aim to represent a matrix <span class="math notranslate nohighlight">\( A \)</span> in terms of simpler matrices:</p>
+<div class="math notranslate nohighlight">
+\[
+A = B \times C
+\]</div>
+<p>However, matrix factorization focuses on <strong>approximation</strong>, while matrix decomposition aims for <strong>exact</strong> algebraic transformations.</p>
+</section>
+<section id="matrix-factorization-optimization-and-approximation">
+<h3>2. Matrix Factorization: Optimization and Approximation<a class="headerlink" href="#matrix-factorization-optimization-and-approximation" title="Link to this heading">#</a></h3>
+<p>The math behind matrix factorization involves <strong>optimization</strong> to approximate the original matrix. Typically, the objective is to minimize the difference between the original matrix <span class="math notranslate nohighlight">\( A \)</span> and the product of matrices <span class="math notranslate nohighlight">\( B \)</span> and <span class="math notranslate nohighlight">\( C \)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+A \approx B \times C
+\]</div>
+<p>The goal is to solve:</p>
+<div class="math notranslate nohighlight">
+\[
+\min_{B, C} \| A - B \times C \|^2
+\]</div>
+<p>This involves iterative algorithms like <strong>stochastic gradient descent (SGD)</strong> or <strong>alternating least squares (ALS)</strong>. Factorization methods often include additional constraints, such as non-negativity in <strong>Non-negative Matrix Factorization (NMF)</strong>.</p>
+<section id="example-non-negative-matrix-factorization-nmf">
+<h4>Example: Non-negative Matrix Factorization (NMF)<a class="headerlink" href="#example-non-negative-matrix-factorization-nmf" title="Link to this heading">#</a></h4>
+<p>In NMF, the goal is to factorize a matrix into non-negative matrices by minimizing reconstruction error:</p>
+<div class="math notranslate nohighlight">
+\[
+\min_{B, C \geq 0} \| A - B \times C \|^2
+\]</div>
+<p>This involves solving a constrained optimization problem.</p>
+</section>
+</section>
+<section id="matrix-decomposition-exact-algebraic-methods">
+<h3>3. Matrix Decomposition: Exact Algebraic Methods<a class="headerlink" href="#matrix-decomposition-exact-algebraic-methods" title="Link to this heading">#</a></h3>
+<p>Matrix decomposition uses <strong>exact algebraic transformations</strong> without the need for optimization. The idea is to decompose a matrix into components that reveal its structural properties. A key example is <strong>Singular Value Decomposition (SVD)</strong>, which decomposes a matrix <span class="math notranslate nohighlight">\( A \)</span> as:</p>
+<div class="math notranslate nohighlight">
+\[
+A = U \Sigma V^T
+\]</div>
+<p>where <span class="math notranslate nohighlight">\( U \)</span> and <span class="math notranslate nohighlight">\( V \)</span> are orthogonal matrices, and <span class="math notranslate nohighlight">\( \Sigma \)</span> is a diagonal matrix containing singular values. Decomposition methods like <strong>Eigenvalue Decomposition</strong> also involve solving characteristic equations.</p>
+<section id="example-eigenvalue-decomposition">
+<h4>Example: Eigenvalue Decomposition<a class="headerlink" href="#example-eigenvalue-decomposition" title="Link to this heading">#</a></h4>
+<p>Eigenvalue decomposition breaks down a square matrix <span class="math notranslate nohighlight">\( A \)</span> into:</p>
+<div class="math notranslate nohighlight">
+\[
+A = V \Lambda V^{-1}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\( \Lambda \)</span> is a diagonal matrix of eigenvalues, and <span class="math notranslate nohighlight">\( V \)</span> is the matrix of eigenvectors. This decomposition is <strong>exact</strong> and based on solving the equation:</p>
+<div class="math notranslate nohighlight">
+\[
+A v = \lambda v
+\]</div>
+</section>
+</section>
+<section id="key-mathematical-differences">
+<h3>4. Key Mathematical Differences<a class="headerlink" href="#key-mathematical-differences" title="Link to this heading">#</a></h3>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Aspect</strong></p></th>
+<th class="head"><p><strong>Matrix Factorization</strong></p></th>
+<th class="head"><p><strong>Matrix Decomposition</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Mathematical Goal</strong></p></td>
+<td><p>Approximate a matrix as a product of smaller matrices.</p></td>
+<td><p>Exactly decompose a matrix into specific components.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Process</strong></p></td>
+<td><p>Iterative optimization (minimizing a loss function).</p></td>
+<td><p>Algebraic transformations (solving characteristic equations, performing matrix operations).</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Typical Equation</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\( A \approx B \times C \)</span> (approximation)</p></td>
+<td><p><span class="math notranslate nohighlight">\( A = U \Sigma V^T \)</span>, <span class="math notranslate nohighlight">\( A = V \Lambda V^{-1} \)</span> (exact)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Solving Method</strong></p></td>
+<td><p>Involves optimization techniques like gradient descent, alternating least squares, or other iterative methods.</p></td>
+<td><p>Solved via exact algebraic methods like solving for eigenvalues, or applying orthogonal transformations.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Error Handling</strong></p></td>
+<td><p>Focus on minimizing the reconstruction error <span class="math notranslate nohighlight">\( | A - B \times C |^2 \)</span>. The output matrices are not exact but aim to minimize the difference.</p></td>
+<td><p>No approximation error. The decomposed matrices are exact representations of the original matrix.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Example Techniques</strong></p></td>
+<td><p>Stochastic Gradient Descent (SGD), Alternating Least Squares (ALS), Non-negative Matrix Factorization (NMF).</p></td>
+<td><p>Singular Value Decomposition (SVD), Eigenvalue Decomposition, QR Decomposition, LU Decomposition.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="similarities">
+<h3>5. Similarities<a class="headerlink" href="#similarities" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Both methods involve breaking down a matrix into simpler components.</p></li>
+<li><p>Both can reduce dimensionality, but matrix factorization typically does so through approximation, while matrix decomposition exposes exact structural properties.</p></li>
+<li><p>Some decomposition methods, like <strong>SVD</strong>, are also used in matrix factorization to approximate low-rank matrices.</p></li>
+</ul>
+</section>
+<section id="conclusion">
+<h3>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Matrix Factorization</strong> focuses on approximation using optimization algorithms (e.g., minimizing reconstruction error) to achieve a product of simpler matrices.</p></li>
+<li><p><strong>Matrix Decomposition</strong> focuses on exact transformations that reveal the intrinsic properties of a matrix (e.g., eigenvalues, singular values, or triangular forms).</p></li>
+</ul>
+<p>While both methods are related, the underlying mathematical approaches differ, with factorization relying on optimization and decomposition relying on exact algebraic transformations.</p>
+</section>
+</section>
+<section id="why-can-svd-be-used-in-both-matrix-decomposition-and-matrix-factorization">
+<h2>Why Can SVD Be Used in Both Matrix Decomposition and Matrix Factorization?<a class="headerlink" href="#why-can-svd-be-used-in-both-matrix-decomposition-and-matrix-factorization" title="Link to this heading">#</a></h2>
+<p>The <strong>Singular Value Decomposition (SVD)</strong> method can be used in both <strong>matrix decomposition</strong> and <strong>matrix factorization</strong> because it provides a precise mathematical breakdown of a matrix that is both useful for <strong>exact transformations</strong> (decomposition) and for <strong>approximation tasks</strong> (factorization). However, the way SVD is applied in each context differs in purpose and emphasis.</p>
+<section id="svd-as-matrix-decomposition">
+<h3>1. SVD as Matrix Decomposition<a class="headerlink" href="#svd-as-matrix-decomposition" title="Link to this heading">#</a></h3>
+<p>In matrix decomposition, SVD is used as an <strong>exact algebraic tool</strong> to decompose any matrix <span class="math notranslate nohighlight">\( A \)</span> (rectangular or square) into three component matrices:</p>
+<div class="math notranslate nohighlight">
+\[
+A = U \Sigma V^T
+\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( U \)</span> is an orthogonal matrix containing the <strong>left singular vectors</strong>.</p></li>
+<li><p><span class="math notranslate nohighlight">\( \Sigma \)</span> is a diagonal matrix containing the <strong>singular values</strong> of <span class="math notranslate nohighlight">\( A \)</span>, which represent the “strength” of each dimension.</p></li>
+<li><p><span class="math notranslate nohighlight">\( V^T \)</span> is the transpose of an orthogonal matrix containing the <strong>right singular vectors</strong>.</p></li>
+</ul>
+<p>This decomposition is exact and exposes several key properties of the matrix:</p>
+<ul class="simple">
+<li><p><strong>Rank</strong>: The number of non-zero singular values.</p></li>
+<li><p><strong>Energy</strong>: The importance of each singular value, which helps identify how much of the original matrix is captured by each dimension.</p></li>
+<li><p><strong>Orthogonality</strong>: The vectors in <span class="math notranslate nohighlight">\( U \)</span> and <span class="math notranslate nohighlight">\( V \)</span> form orthonormal bases, simplifying calculations like projections and transformations.</p></li>
+</ul>
+<p>SVD, in this case, is used to understand the <strong>structural properties</strong> of the matrix, without approximations or optimization.</p>
+</section>
+<section id="svd-as-matrix-factorization">
+<h3>2. SVD as Matrix Factorization<a class="headerlink" href="#svd-as-matrix-factorization" title="Link to this heading">#</a></h3>
+<p>In matrix factorization, SVD is used to <strong>approximate</strong> a matrix, often with a focus on <strong>low-rank approximations</strong>. This is particularly useful in applications like <strong>dimensionality reduction</strong> and <strong>recommender systems</strong>, where the goal is to approximate a large matrix with fewer dimensions.</p>
+<p>Here’s how SVD works in matrix factorization:</p>
+<ul class="simple">
+<li><p>Instead of keeping all the singular values from <span class="math notranslate nohighlight">\( \Sigma \)</span>, you can approximate the original matrix <span class="math notranslate nohighlight">\( A \)</span> by <strong>truncating</strong> the singular value matrix <span class="math notranslate nohighlight">\( \Sigma \)</span> and reducing the rank.</p></li>
+<li><p>You select the top <span class="math notranslate nohighlight">\( k \)</span> largest singular values, reducing the matrix dimensions:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+A \approx U_k \Sigma_k V_k^T
+\]</div>
+<p>Where <span class="math notranslate nohighlight">\( U_k \)</span>, <span class="math notranslate nohighlight">\( \Sigma_k \)</span>, and <span class="math notranslate nohighlight">\( V_k^T \)</span> retain only the first <span class="math notranslate nohighlight">\( k \)</span> singular values and corresponding vectors. The matrix <span class="math notranslate nohighlight">\( A \)</span> is now approximated by matrices of much smaller dimensions (rank <span class="math notranslate nohighlight">\( k \)</span>), significantly reducing storage and computation requirements, while still retaining most of the important information from the original matrix.</p>
+<section id="example-svd-for-recommender-systems">
+<h4>Example: SVD for Recommender Systems<a class="headerlink" href="#example-svd-for-recommender-systems" title="Link to this heading">#</a></h4>
+<p>In recommender systems, the user-item interaction matrix (which may have missing values) can be factorized using SVD. The truncated version of SVD helps discover <strong>latent factors</strong> (e.g., preferences or patterns) that approximate user-item interactions.</p>
+<ul class="simple">
+<li><p><strong>Low-rank Approximation</strong>: Instead of using all the singular values, you use only the most significant ones to represent user preferences and item features.</p></li>
+<li><p><strong>Prediction</strong>: With the factorized matrices, you can predict missing entries in the matrix, such as a user’s potential rating for a movie.</p></li>
+</ul>
+</section>
+</section>
+<section id="key-difference-exact-vs-approximation">
+<h3>Key Difference: Exact vs. Approximation<a class="headerlink" href="#key-difference-exact-vs-approximation" title="Link to this heading">#</a></h3>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Aspect</strong></p></th>
+<th class="head"><p><strong>SVD in Matrix Decomposition</strong></p></th>
+<th class="head"><p><strong>SVD in Matrix Factorization</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Purpose</strong></p></td>
+<td><p>To exactly decompose a matrix into its singular vectors and singular values, revealing its full structure.</p></td>
+<td><p>To approximate a matrix by reducing its rank, keeping only the most significant singular values, for tasks like dimensionality reduction or collaborative filtering.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Output</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\( A = U \Sigma V^T \)</span>, with no loss of information.</p></td>
+<td><p><span class="math notranslate nohighlight">\( A \approx U_k \Sigma_k V_k^T \)</span>, with some loss of information, but focusing on the most important dimensions.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Application</strong></p></td>
+<td><p>Used in exact computations like PCA, signal processing, and solving systems of linear equations.</p></td>
+<td><p>Used in data-driven applications like recommender systems, where the goal is to approximate a large matrix with fewer dimensions (low-rank factorization).</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Dimensionality</strong></p></td>
+<td><p>Retains all dimensions (no truncation).</p></td>
+<td><p>Truncates dimensions, keeping only the top <span class="math notranslate nohighlight">\( k \)</span> singular values.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Use of Singular Values</strong></p></td>
+<td><p>All singular values are kept, revealing the matrix’s full rank and structure.</p></td>
+<td><p>Only the top singular values are kept, simplifying the matrix while preserving the most important features.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="why-can-svd-be-used-in-both">
+<h3>Why Can SVD Be Used in Both?<a class="headerlink" href="#why-can-svd-be-used-in-both" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Theoretical Flexibility</strong>: SVD is fundamentally a decomposition method, but it can also serve as an efficient tool for factorization. By truncating the singular value matrix, you switch from an exact decomposition to an approximate factorization.</p></li>
+<li><p><strong>Low-rank Property</strong>: In many practical applications (like machine learning), matrices can be well-approximated by low-rank versions. SVD provides an optimal way to reduce the rank while preserving as much of the important structure of the original matrix as possible.</p></li>
+<li><p><strong>Applications in Data Science</strong>: In data science, exactness is often less important than finding patterns, reducing dimensionality, or making predictions. SVD, as a factorization tool, can approximate a matrix and uncover latent structures (e.g., user preferences in recommender systems) without needing the full exact decomposition.</p></li>
+</ul>
+</section>
+<section id="id1">
+<h3>Conclusion<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>SVD is versatile because it serves both purposes:</p>
+<ul class="simple">
+<li><p>In <strong>matrix decomposition</strong>, it provides an exact breakdown of the matrix into orthogonal components.</p></li>
+<li><p>In <strong>matrix factorization</strong>, it allows for low-rank approximations by truncating the singular value matrix, which is key in data-driven applications like recommender systems and dimensionality reduction.</p></li>
+</ul>
+<p>Thus, the mathematical properties of SVD make it powerful for both exact matrix analysis and approximate data-driven tasks.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="algorithms-for-matrix-factorization">
+<h2>Algorithms for Matrix Factorization<a class="headerlink" href="#algorithms-for-matrix-factorization" title="Link to this heading">#</a></h2>
+<section id="alternating-least-squares-als">
+<h3>Alternating Least Squares (ALS)<a class="headerlink" href="#alternating-least-squares-als" title="Link to this heading">#</a></h3>
+<p><strong>Alternating Least Squares (ALS)</strong> is one of the most popular algorithms for matrix factorization, especially in large-scale recommendation systems. It alternates between optimizing for the user matrix <span class="math notranslate nohighlight">\( U \)</span> and the item matrix <span class="math notranslate nohighlight">\( V \)</span>, holding one constant while solving for the other.</p>
+<section id="als-algorithm">
+<h4>ALS Algorithm:<a class="headerlink" href="#als-algorithm" title="Link to this heading">#</a></h4>
+<ol class="arabic simple">
+<li><p>Initialize matrices <span class="math notranslate nohighlight">\( U \)</span> and <span class="math notranslate nohighlight">\( V \)</span> randomly.</p></li>
+<li><p><strong>Fix <span class="math notranslate nohighlight">\( V \)</span></strong> and solve for <span class="math notranslate nohighlight">\( U \)</span> by minimizing the objective function:
+$<span class="math notranslate nohighlight">\(
+U = \arg \min_U \sum_{i,j} \left( M_{ij} - U_i V_j^T \right)^2 + \lambda \| U \|^2
+\)</span>$
+This is a standard least-squares problem.</p></li>
+<li><p><strong>Fix <span class="math notranslate nohighlight">\( U \)</span></strong> and solve for <span class="math notranslate nohighlight">\( V \)</span> by minimizing the objective function:
+$<span class="math notranslate nohighlight">\(
+V = \arg \min_V \sum_{i,j} \left( M_{ij} - U_i V_j^T \right)^2 + \lambda \| V \|^2
+\)</span>$</p></li>
+<li><p>Repeat steps 2 and 3 until convergence.</p></li>
+</ol>
+</section>
+<section id="why-als-works">
+<h4>Why ALS Works:<a class="headerlink" href="#why-als-works" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>ALS leverages the fact that, when one of the matrices (either <span class="math notranslate nohighlight">\( U \)</span> or <span class="math notranslate nohighlight">\( V \)</span>) is fixed, the optimization problem becomes a <strong>linear least-squares problem</strong>, which has an efficient solution.</p></li>
+<li><p>Alternating between optimizing <span class="math notranslate nohighlight">\( U \)</span> and <span class="math notranslate nohighlight">\( V \)</span> guarantees that the objective function will decrease at every step, though it may only converge to a <strong>local minimum</strong>.</p></li>
+</ul>
+<p>ALS is particularly efficient when implemented in distributed computing environments (e.g., Spark’s ALS implementation), allowing it to scale to massive datasets with billions of entries.</p>
+</section>
+</section>
+<section id="stochastic-gradient-descent-sgd">
+<h3>Stochastic Gradient Descent (SGD)<a class="headerlink" href="#stochastic-gradient-descent-sgd" title="Link to this heading">#</a></h3>
+<p>While ALS is effective for large-scale matrix factorization, <strong>Stochastic Gradient Descent (SGD)</strong> offers a more flexible and often faster approach for optimizing the factorized matrices.</p>
+<section id="sgd-algorithm">
+<h4>SGD Algorithm:<a class="headerlink" href="#sgd-algorithm" title="Link to this heading">#</a></h4>
+<ol class="arabic simple">
+<li><p>Initialize matrices <span class="math notranslate nohighlight">\( U \)</span> and <span class="math notranslate nohighlight">\( V \)</span> randomly.</p></li>
+<li><p>For each observed entry <span class="math notranslate nohighlight">\( M_{ij} \)</span>, compute the error:
+$<span class="math notranslate nohighlight">\(
+e_{ij} = M_{ij} - U_i V_j^T
+\)</span>$</p></li>
+<li><p>Update the latent factors for user <span class="math notranslate nohighlight">\( i \)</span> and item <span class="math notranslate nohighlight">\( j \)</span> based on the error:
+$<span class="math notranslate nohighlight">\(
+U_i \leftarrow U_i + \eta (e_{ij} V_j - \lambda U_i)
+\)</span><span class="math notranslate nohighlight">\(
+\)</span><span class="math notranslate nohighlight">\(
+V_j \leftarrow V_j + \eta (e_{ij} U_i - \lambda V_j)
+\)</span><span class="math notranslate nohighlight">\(
+Where \)</span> \eta <span class="math notranslate nohighlight">\( is the learning rate, and \)</span> \lambda $ is the regularization parameter.</p></li>
+<li><p>Repeat steps 2-3 for a fixed number of iterations or until convergence.</p></li>
+</ol>
+</section>
+<section id="why-sgd-works">
+<h4>Why SGD Works:<a class="headerlink" href="#why-sgd-works" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Stochastic Gradient Descent</strong> updates parameters incrementally based on each data point, which makes it well-suited for very large and sparse datasets.</p></li>
+<li><p>It can converge faster than ALS when the data is sparse, but it requires careful tuning of hyperparameters like the learning rate and regularization.</p></li>
+</ul>
+</section>
+</section>
+<section id="weighted-alternating-least-squares-wals">
+<h3>Weighted Alternating Least Squares (WALS)<a class="headerlink" href="#weighted-alternating-least-squares-wals" title="Link to this heading">#</a></h3>
+<p>In standard ALS, all observed entries are treated equally. However, in many cases, some observations are more reliable than others (e.g., user ratings may vary in confidence). <strong>WALS</strong> introduces <strong>weights</strong> that give different importance to different observations.</p>
+<section id="wals-objective">
+<h4>WALS Objective:<a class="headerlink" href="#wals-objective" title="Link to this heading">#</a></h4>
+<div class="math notranslate nohighlight">
+\[
+\min_{U, V} \sum_{(i,j)} w_{ij} \left( M_{ij} - U_i V_j^T \right)^2 + \lambda (\| U \|^2 + \| V \|^2)
+\]</div>
+<p>Where <span class="math notranslate nohighlight">\( w_{ij} \)</span> is the weight for entry <span class="math notranslate nohighlight">\( M_{ij} \)</span>, representing its importance.</p>
+<p>This method is particularly useful in recommendation systems with <strong>implicit feedback</strong>, such as clicks, purchases, or views, where the presence of an interaction implies user interest, but the absence does not necessarily imply disinterest.</p>
+</section>
+</section>
+<section id="non-negative-matrix-factorization-nmf">
+<h3>Non-Negative Matrix Factorization (NMF)<a class="headerlink" href="#non-negative-matrix-factorization-nmf" title="Link to this heading">#</a></h3>
+<p>In some cases, it doesn’t make sense for the latent factors to have negative values. For example, if we’re factorizing a matrix of item sales or user clicks, it’s unrealistic for the factors to be negative. <strong>Non-Negative Matrix Factorization (NMF)</strong> solves this by constraining the factors to be non-negative.</p>
+<section id="nmf-objective">
+<h4>NMF Objective:<a class="headerlink" href="#nmf-objective" title="Link to this heading">#</a></h4>
+<div class="math notranslate nohighlight">
+\[
+\min_{U, V \geq 0} \sum_{(i,j)} \left( M_{ij} - U_i V_j^T \right)^2
+\]</div>
+<p>This constraint can make the latent factors more interpretable, as they represent additive combinations of underlying features.</p>
+</section>
+</section>
+<section id="probabilistic-matrix-factorization-pmf">
+<h3>Probabilistic Matrix Factorization (PMF)<a class="headerlink" href="#probabilistic-matrix-factorization-pmf" title="Link to this heading">#</a></h3>
+<p>Standard matrix factorization techniques like ALS and SGD treat the matrix factorization problem as a <strong>deterministic</strong> optimization task. However, in some cases, it’s beneficial to model the uncertainty in the data. <strong>Probabilistic Matrix Factorization (PMF)</strong> introduces a probabilistic framework, assuming that the observed matrix <span class="math notranslate nohighlight">\( M \)</span> is generated from a probabilistic process.</p>
+<section id="pmf-model">
+<h4>PMF Model:<a class="headerlink" href="#pmf-model" title="Link to this heading">#</a></h4>
+<p>Assume that each entry <span class="math notranslate nohighlight">\( M_{ij} \)</span> is generated from a Gaussian distribution with mean <span class="math notranslate nohighlight">\( U_i V_j^T \)</span> and variance <span class="math notranslate nohighlight">\( \sigma^2 \)</span>:
+$<span class="math notranslate nohighlight">\(
+P(M_{ij} | U_i, V_j) = \mathcal{N}(M_{ij} | U_i V_j^T, \sigma^2)
+\)</span>$</p>
+<p>The goal is to maximize the likelihood of the observed data:
+$<span class="math notranslate nohighlight">\(
+\max_{U, V} P(M | U, V) = \prod_{(i,j)} P(M_{ij} | U_i, V_j)
+\)</span>$</p>
+<p>PMF allows for modeling <strong>uncertainty</strong> in predictions and is more flexible in handling noisy or uncertain data.</p>
+</section>
+</section>
+<section id="factorization-machines-fm">
+<h3>Factorization Machines (FM)<a class="headerlink" href="#factorization-machines-fm" title="Link to this heading">#</a></h3>
+<p><strong>Factorization Machines (FMs)</strong> generalize matrix factorization to model interactions between all pairs of variables in the dataset, not just between users and items. This is useful when we have <strong>contextual information</strong> (e.g., the time of day or user demographics) that could influence the interactions.</p>
+<p>The FM model is given by:
+$<span class="math notranslate nohighlight">\(
+\hat{y} = w_0 + \sum_i w_i x_i + \sum_{i=1}^n \sum_{j=i+1}^n \langle v_i, v_j \rangle x_i x_j
+\)</span>$</p>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( x_i \)</span> are the input features (e.g., user and item IDs).</p></li>
+<li><p><span class="math notranslate nohighlight">\( v_i \)</span> are the latent factors for feature <span class="math notranslate nohighlight">\( i \)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\( \langle v_i, v_j \rangle \)</span> is the dot product between latent factors.</p></li>
+</ul>
+<p>Factorization machines can model <strong>complex interactions</strong> between variables and are widely used in recommendation systems, click-through rate prediction, and advertising.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="comparison-of-matrix-factorization-methods">
+<h2>Comparison of Matrix Factorization Methods<a class="headerlink" href="#comparison-of-matrix-factorization-methods" title="Link to this heading">#</a></h2>
+<p>Here’s a comparison table of the different matrix factorization techniques, along with their strengths and weaknesses:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Method</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+<th class="head"><p><strong>Pros</strong></p></th>
+<th class="head"><p><strong>Cons</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>ALS (Alternating Least Squares)</strong></p></td>
+<td><p>Alternates between optimizing user and item matrices.</p></td>
+<td><p>Efficient for large datasets; easy to parallelize.</p></td>
+<td><p>May converge to local minima.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>SGD (Stochastic Gradient Descent)</strong></p></td>
+<td><p>Optimizes matrix factorization using gradient descent on each observation.</p></td>
+<td><p>Flexible and can handle very large datasets.</p></td>
+<td><p>Requires careful tuning of learning rate.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>WALS (Weighted ALS)</strong></p></td>
+<td><p>Extends ALS by assigning weights to observations based on their importance.</p></td>
+<td><p>Effective for handling implicit feedback.</p></td>
+<td><p>More complex to implement and tune.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>NMF (Non-Negative MF)</strong></p></td>
+<td><p>Adds a non-negativity constraint to factorized matrices.</p></td>
+<td><p>Produces interpretable results in certain contexts (e.g., counts).</p></td>
+<td><p>More computationally intensive.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>PMF (Probabilistic MF)</strong></p></td>
+<td><p>Introduces a probabilistic framework for matrix factorization.</p></td>
+<td><p>Captures uncertainty in predictions; more flexible.</p></td>
+<td><p>Computationally more expensive; harder to implement.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>FMs (Factorization Machines)</strong></p></td>
+<td><p>Generalizes MF to model interactions between all pairs of variables in the data.</p></td>
+<td><p>Can handle contextual features and complex interactions.</p></td>
+<td><p>More complex to train; harder to interpret.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="real-world-applications-of-matrix-factorization">
+<h2>Real-World Applications of Matrix Factorization<a class="headerlink" href="#real-world-applications-of-matrix-factorization" title="Link to this heading">#</a></h2>
+<section id="recommendation-systems">
+<h3>Recommendation Systems<a class="headerlink" href="#recommendation-systems" title="Link to this heading">#</a></h3>
+<p>Matrix factorization is the backbone of modern <strong>recommendation systems</strong>, where it helps predict user preferences for items (e.g., movies, products) they haven’t yet interacted with. Companies like Netflix, Amazon, and Spotify rely on matrix factorization to power their personalized recommendation engines.</p>
+<section id="case-study-netflix-prize">
+<h4>Case Study: Netflix Prize<a class="headerlink" href="#case-study-netflix-prize" title="Link to this heading">#</a></h4>
+<p>In the <strong>Netflix Prize</strong> competition, the goal was to predict how users would rate movies they hadn’t yet seen, based on a sparse matrix of user-movie ratings. Matrix factorization, specifically ALS, was one of the leading techniques used by participants to win the competition.</p>
+</section>
+</section>
+<section id="natural-language-processing-nlp">
+<h3>Natural Language Processing (NLP)<a class="headerlink" href="#natural-language-processing-nlp" title="Link to this heading">#</a></h3>
+<p>Matrix factorization is also used in <strong>NLP</strong>, particularly in <strong>latent semantic analysis (LSA)</strong>, which is a technique for discovering relationships between words and documents. LSA uses <strong>Singular Value Decomposition (SVD)</strong> to factorize the term-document matrix, revealing clusters of words and documents that are related in meaning.</p>
+</section>
+<section id="computer-vision">
+<h3>Computer Vision<a class="headerlink" href="#computer-vision" title="Link to this heading">#</a></h3>
+<p>In <strong>computer vision</strong>, matrix factorization is used for <strong>image compression</strong> and <strong>noise reduction</strong>. By factorizing the pixel matrix of an image into low-rank components, we can compress the image while retaining its essential features, or remove noise by filtering out the smaller singular values in the factorized matrix.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="state-of-the-art-in-matrix-factorization">
+<h2>State-of-the-Art in Matrix Factorization<a class="headerlink" href="#state-of-the-art-in-matrix-factorization" title="Link to this heading">#</a></h2>
+<p>As of 2024, <strong>Alternating Least Squares (ALS)</strong> remains one of the most widely used matrix factorization techniques in industry, due to its scalability and ease of parallelization. However, <strong>Probabilistic Matrix Factorization (PMF)</strong> and <strong>Factorization Machines (FMs)</strong> are increasingly popular in more complex settings where uncertainty and contextual features are important.</p>
+</section>
+<section id="other-issues">
+<h2>Other Issues<a class="headerlink" href="#other-issues" title="Link to this heading">#</a></h2>
+<section id="temporal-dynamics-in-matrix-factorization">
+<h3>Temporal Dynamics in Matrix Factorization<a class="headerlink" href="#temporal-dynamics-in-matrix-factorization" title="Link to this heading">#</a></h3>
+<p>Matrix factorization models can become biased because they don’t account for changes in user preferences or item popularity over time. By incorporating <strong>temporal dynamics</strong>, we can capture these shifts, allowing the model to evolve its understanding of users and items as new interactions occur.</p>
+<p>Traditional matrix factorization assumes that latent factors remain static over time. However, in real-world scenarios, users’ preferences change. For instance, a user who used to prefer action movies may start watching more documentaries, or an item that was once unpopular might gain traction. Ignoring these shifts leads to inaccurate predictions.</p>
+<p>One effective method for capturing temporal dynamics is the <strong>TimeSVD++</strong> model. It extends the basic matrix factorization model by introducing time-aware biases that evolve over time. The model predicts a rating <span class="math notranslate nohighlight">\( \hat{r}_{ui}(t) \)</span> as:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{r}_{ui}(t) = \mu + b_u(t) + b_i(t) + p_u^T q_i
+\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( \mu \)</span> is the global bias (mean rating across all users and items).</p></li>
+<li><p><span class="math notranslate nohighlight">\( b_u(t) \)</span> and <span class="math notranslate nohighlight">\( b_i(t) \)</span> are the time-dependent biases for user <span class="math notranslate nohighlight">\( u \)</span> and item <span class="math notranslate nohighlight">\( i \)</span> at time <span class="math notranslate nohighlight">\( t \)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\( p_u \)</span> and <span class="math notranslate nohighlight">\( q_i \)</span> are the latent factor vectors for user <span class="math notranslate nohighlight">\( u \)</span> and item <span class="math notranslate nohighlight">\( i \)</span>, capturing their underlying characteristics.</p></li>
+</ul>
+<p>In <strong>TimeSVD++</strong>, both user and item biases can be made time-dependent by introducing time-based functions, such as linear functions or time bins. For example, the user bias <span class="math notranslate nohighlight">\( b_u(t) \)</span> can be expressed as:</p>
+<div class="math notranslate nohighlight">
+\[
+b_u(t) = b_u + \alpha_u \cdot (t - t_0)
+\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( b_u \)</span> is the base bias for user <span class="math notranslate nohighlight">\( u \)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\( \alpha_u \)</span> is a user-specific parameter capturing how much the user’s preferences drift over time.</p></li>
+<li><p><span class="math notranslate nohighlight">\( t_0 \)</span> is a reference time (e.g., the first interaction).</p></li>
+</ul>
+<p>By allowing these parameters to change over time, the model can adjust to evolving user preferences and item popularity.</p>
+</section>
+<hr class="docutils" />
+<section id="addressing-exposure-bias-in-matrix-factorization">
+<h3>Addressing Exposure Bias in Matrix Factorization<a class="headerlink" href="#addressing-exposure-bias-in-matrix-factorization" title="Link to this heading">#</a></h3>
+<p>Exposure bias arises in recommendation systems when certain items are shown more frequently to users, causing the model to overestimate their true relevance. This happens when popular items are overrepresented in the data, skewing the model’s predictions.</p>
+<p>When some items (e.g., top-selling products or trending movies) dominate the dataset, matrix factorization tends to overfit these frequently interacted items, causing them to appear in recommendations even if they’re not the user’s true preference.</p>
+<p>To counteract exposure bias, we can apply <strong>propensity scoring</strong> to adjust the importance of interactions. The <strong>propensity score</strong> <span class="math notranslate nohighlight">\( P(u, i) \)</span> represents the probability that user <span class="math notranslate nohighlight">\( u \)</span> would interact with item <span class="math notranslate nohighlight">\( i \)</span> based on its characteristics (e.g., popularity, exposure).</p>
+<p>The weighted objective function becomes:</p>
+<div class="math notranslate nohighlight">
+\[
+\min_{U, V} \sum_{(i,j)} w_{ij} \cdot \left( M_{ij} - U_i V_j^T \right)^2 + \lambda (\| U \|^2 + \| V \|^2)
+\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( w_{ij} = \frac{1}{P(u,i)} \)</span> is the inverse propensity score, giving less weight to frequently exposed items and more weight to underrepresented ones.</p></li>
+<li><p><span class="math notranslate nohighlight">\( \lambda \)</span> is the regularization term to prevent overfitting.</p></li>
+</ul>
+<p>This ensures that popular items don’t dominate the model’s learning process, leading to more balanced recommendations.</p>
+<p>In a movie recommendation system, propensity scoring helps ensure that less popular films are still considered during training. For example, a widely popular blockbuster will have a higher propensity score (since many users have seen it), so its interactions will be down-weighted relative to a niche indie film.</p>
+</section>
+<hr class="docutils" />
+<section id="active-learning-and-exploration-in-matrix-factorization">
+<h3>Active Learning and Exploration in Matrix Factorization<a class="headerlink" href="#active-learning-and-exploration-in-matrix-factorization" title="Link to this heading">#</a></h3>
+<p>A common issue in matrix factorization is <strong>missing data</strong>: users interact with only a small portion of the items, leaving much of the matrix unobserved. This incomplete data can bias the model.</p>
+<p>When only popular items are frequently interacted with, the model can overfit to this subset and fail to learn about less popular items, creating a feedback loop where niche items are never recommended.</p>
+<p>To explore the matrix more effectively, we can use <strong>active learning</strong>. The goal is to recommend items that haven’t been frequently interacted with, helping the model learn more about them. This can be framed as a <strong>multi-armed bandit</strong> problem, where the model must balance exploration (recommending less-known items) and exploitation (recommending known popular items).</p>
+<p>The exploration-exploitation trade-off is captured by the <strong>Upper Confidence Bound (UCB)</strong> strategy:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{r}_{ui} = \mu + b_u + b_i + p_u^T q_i + \beta \cdot \sqrt{\frac{\log N}{N_i}}
+\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( \beta \)</span> controls the level of exploration.</p></li>
+<li><p><span class="math notranslate nohighlight">\( N \)</span> is the total number of recommendations made so far.</p></li>
+<li><p><span class="math notranslate nohighlight">\( N_i \)</span> is the number of times item <span class="math notranslate nohighlight">\( i \)</span> has been recommended.</p></li>
+</ul>
+<p>This formula ensures that items with fewer interactions are explored more frequently, while items with more interactions are exploited based on the current knowledge.</p>
+<p>In a shopping platform, active learning might recommend products that are less frequently viewed by the user. Over time, this exploration helps the system learn about the user’s potential interest in niche or less popular items.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="regularization-with-side-information">
+<h2>Regularization with Side Information<a class="headerlink" href="#regularization-with-side-information" title="Link to this heading">#</a></h2>
+<p>Incorporating side information, such as user demographics or item metadata, helps reduce bias caused by limited interaction data. Regularization with these additional features prevents overfitting and improves generalization.</p>
+<p>Incorporating <strong>user attributes</strong> (e.g., age, location) and <strong>item metadata</strong> (e.g., genre, price) helps regularize the matrix factorization model. We modify the prediction function to account for these additional features:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{r}_{ui} = \mu + b_u + b_i + p_u^T q_i + f(a_u, m_i)
+\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( a_u \)</span> represents user attributes.</p></li>
+<li><p><span class="math notranslate nohighlight">\( m_i \)</span> represents item metadata.</p></li>
+<li><p><span class="math notranslate nohighlight">\( f(a_u, m_i) \)</span> is a function capturing the influence of these additional features on the predicted rating.</p></li>
+</ul>
+<p>The regularization term becomes:</p>
+<div class="math notranslate nohighlight">
+\[
+\lambda \left( \| U \|^2 + \| V \|^2 + \| W_a \|^2 + \| W_m \|^2 \right)
+\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( W_a \)</span> and <span class="math notranslate nohighlight">\( W_m \)</span> are the weights for the user attributes and item metadata, respectively.</p></li>
+</ul>
+<p>This helps guide the model to avoid overfitting and make more robust predictions.</p>
+<p>In a book recommendation system, user demographics (e.g., age or reading level) and item metadata (e.g., genre or author) help refine the recommendations. For example, knowing a reader’s age might lead to better suggestions based on common preferences among that demographic.</p>
+</section>
+<hr class="docutils" />
+<section id="retraining-and-continuous-learning">
+<h2>Retraining and Continuous Learning<a class="headerlink" href="#retraining-and-continuous-learning" title="Link to this heading">#</a></h2>
+<p>Matrix factorization models trained on static datasets become outdated as user preferences and item characteristics evolve. Retraining the model as new interactions occur allows it to remain up-to-date.</p>
+<p>By incorporating <strong>continuous learning</strong>, the matrix factorization model can adjust its latent factors in real-time as new interactions are collected. The objective function is updated as:</p>
+<div class="math notranslate nohighlight">
+\[
+\min_{U, V} \sum_{(i,j)} \left( M_{ij}(t) - U_i(t) V_j(t)^T \right)^2 + \lambda (\| U(t) \|^2 + \| V(t) \|^2)
+\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( M_{ij}(t) \)</span> is the updated interaction matrix at time <span class="math notranslate nohighlight">\( t \)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\( U(t) \)</span> and <span class="math notranslate nohighlight">\( V(t) \)</span> are the latent factors at time <span class="math notranslate nohighlight">\( t \)</span>, evolving with the new data.</p></li>
+</ul>
+<p>The <strong>online learning</strong> approach updates the model incrementally as new data arrives, rather than retraining the entire model from scratch. This is particularly useful in dynamic environments where user behavior changes frequently.</p>
+<p>In an e-commerce platform, continuously retraining the recommendation model ensures that new products and evolving user preferences are incorporated in real-time. For example, if a user’s purchase history shifts toward eco-friendly products, the model adjusts its predictions accordingly.</p>
+<hr class="docutils" />
+<section id="combining-the-approaches">
+<h3>Combining the Approaches<a class="headerlink" href="#combining-the-approaches" title="Link to this heading">#</a></h3>
+<p>By combining these approaches, we can create a highly adaptive, debiased recommendation system. Each of the techniques we’ve discussed—temporal dynamics, propensity scoring, active learning, side information regularization, and continuous learning—addresses different forms of bias and ensures that the recommendation model remains accurate and fair over time.</p>
+<p>Here’s how we can integrate these techniques into a unified matrix factorization framework.</p>
+<p>The prediction for user <span class="math notranslate nohighlight">\( u \)</span> interacting with item <span class="math notranslate nohighlight">\( i \)</span> at time <span class="math notranslate nohighlight">\( t \)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{r}_{ui}(t) = \mu + b_u(t) + b_i(t) + p_u^T q_i + f(a_u, m_i) + \beta \cdot \sqrt{\frac{\log N}{N_i}} \cdot w_{ij}
+\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( \mu \)</span> is the global bias representing the overall average interaction.</p></li>
+<li><p><span class="math notranslate nohighlight">\( b_u(t) \)</span> and <span class="math notranslate nohighlight">\( b_i(t) \)</span> are time-dependent biases for user <span class="math notranslate nohighlight">\( u \)</span> and item <span class="math notranslate nohighlight">\( i \)</span>, respectively, that evolve over time, capturing temporal shifts in user preferences and item popularity.</p></li>
+<li><p><span class="math notranslate nohighlight">\( p_u^T q_i \)</span> represents the interaction between user and item latent factors, capturing the hidden features that influence user-item interactions.</p></li>
+<li><p><span class="math notranslate nohighlight">\( f(a_u, m_i) \)</span> integrates additional user attributes <span class="math notranslate nohighlight">\( a_u \)</span> (e.g., demographics) and item metadata <span class="math notranslate nohighlight">\( m_i \)</span> (e.g., category, genre) to regularize the model.</p></li>
+<li><p><span class="math notranslate nohighlight">\( \beta \cdot \sqrt{\frac{\log N}{N_i}} \)</span> introduces an exploration term inspired by <strong>multi-armed bandit</strong> strategies, encouraging the model to explore less-known or underrepresented items, while <span class="math notranslate nohighlight">\( \beta \)</span> controls the exploration-exploitation trade-off.</p></li>
+<li><p><span class="math notranslate nohighlight">\( w_{ij} = \frac{1}{P(u,i)} \)</span> is the inverse propensity score that adjusts for <strong>exposure bias</strong>, giving more weight to interactions that are underrepresented (less exposed) and down-weighting interactions from overexposed items.</p></li>
+</ul>
+<p>Let’s break down why this formulation works:</p>
+<ol class="arabic simple">
+<li><p><strong>Temporal Dynamics</strong>: By introducing time-dependent biases <span class="math notranslate nohighlight">\( b_u(t) \)</span> and <span class="math notranslate nohighlight">\( b_i(t) \)</span>, we ensure that the model captures how user preferences and item popularity evolve. This allows the recommendation system to stay current with shifting trends and user behavior.</p></li>
+<li><p><strong>Propensity Scoring</strong>: The inverse propensity score <span class="math notranslate nohighlight">\( w_{ij} = \frac{1}{P(u,i)} \)</span> mitigates exposure bias. Popular items that are frequently exposed (and thus have a high <span class="math notranslate nohighlight">\( P(u,i) \)</span>) are down-weighted, preventing the model from overfitting to them. Conversely, underrepresented items receive a higher weight, ensuring that the model does not ignore them.</p></li>
+<li><p><strong>Active Learning</strong>: The exploration term <span class="math notranslate nohighlight">\( \beta \cdot \sqrt{\frac{\log N}{N_i}} \)</span> ensures that the model balances exploration (trying less-known items) with exploitation (recommending items it is confident about). This is essential for filling in the gaps in sparse matrices and learning more about users’ true preferences. The inverse propensity score is applied here to ensure that exploration focuses on items that are not already overexposed.</p></li>
+<li><p><strong>Side Information</strong>: The function <span class="math notranslate nohighlight">\( f(a_u, m_i) \)</span> incorporates side information, such as user demographics and item metadata, to guide the model. By using this additional context, the model becomes more robust and can generalize better, especially when interaction data is sparse.</p></li>
+<li><p><strong>Continuous Learning</strong>: Retraining the model over time ensures that it continuously updates its latent factors and biases as new interactions are collected. This prevents the model from becoming outdated and ensures that it remains responsive to evolving user behavior and item characteristics.</p></li>
+</ol>
+<p>To put this combined model into practice, follow these steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Initialize the model</strong>: Start with random latent factors for users <span class="math notranslate nohighlight">\( U \)</span> and items <span class="math notranslate nohighlight">\( V \)</span>, as well as initial values for the biases and parameters associated with time, propensity, and exploration.</p></li>
+<li><p><strong>Incorporate time-dependent biases</strong>: Introduce time-based functions for both users and items, such as <span class="math notranslate nohighlight">\( b_u(t) = b_u + \alpha_u \cdot (t - t_0) \)</span>, to account for temporal shifts.</p></li>
+<li><p><strong>Apply propensity scores</strong>: Estimate the propensity score <span class="math notranslate nohighlight">\( P(u,i) \)</span> for each user-item pair. Use models like logistic regression or a click-through model to estimate these scores based on item popularity or user demographics.</p></li>
+<li><p><strong>Use active learning</strong>: Implement multi-armed bandit strategies like the <strong>Upper Confidence Bound (UCB)</strong> to explore underrepresented regions of the matrix. Compute the exploration term <span class="math notranslate nohighlight">\( \sqrt{\frac{\log N}{N_i}} \)</span>, and apply inverse propensity scoring to weight exploration efforts appropriately.</p></li>
+<li><p><strong>Add side information</strong>: Incorporate user attributes <span class="math notranslate nohighlight">\( a_u \)</span> and item metadata <span class="math notranslate nohighlight">\( m_i \)</span> into the prediction function. This helps the model learn from additional features and reduces overfitting to noisy or sparse interaction data.</p></li>
+<li><p><strong>Continuously retrain the model</strong>: As new interactions are collected, update the latent factors and biases regularly. Use online matrix factorization methods to update the model incrementally, ensuring that it remains current with real-time data.</p></li>
+</ol>
+<p>Imagine a streaming platform like Netflix that aims to provide personalized movie recommendations. By combining these techniques:</p>
+<ul class="simple">
+<li><p><strong>Temporal Dynamics</strong>: The model captures how users’ preferences evolve, such as a shift from comedy to drama.</p></li>
+<li><p><strong>Propensity Scoring</strong>: Popular blockbusters that everyone watches don’t dominate recommendations, allowing niche films to be explored.</p></li>
+<li><p><strong>Active Learning</strong>: The system occasionally recommends less popular, underrepresented movies to learn more about users’ potential interests.</p></li>
+<li><p><strong>Side Information</strong>: The model uses user demographics (e.g., age, region) and movie metadata (e.g., genre, release year) to fine-tune its predictions.</p></li>
+<li><p><strong>Continuous Learning</strong>: As users continue to watch new content, the model updates its understanding of their preferences in real-time.</p></li>
+</ul>
+<p>This combined approach leads to a balanced, adaptive recommendation system that avoids bias, improves predictions, and remains responsive to new data.</p>
+<p>By integrating these techniques, the matrix factorization model becomes dynamic, fair, and adaptive, capturing both short-term and long-term shifts in user preferences while mitigating various forms of bias. The model evolves alongside the data, ensuring that it provides timely, accurate, and diverse recommendations.</p>
+<p>This combined framework addresses key issues in traditional matrix factorization and helps build a recommendation system that is both robust and flexible. Each technique contributes to reducing bias, improving predictions, and ensuring that the model remains responsive to new data and evolving preferences.</p>
+</section>
+</section>
+<section id="application">
+<h2>Application<a class="headerlink" href="#application" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Setup the Environment and Libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
+
+<span class="c1"># For matrix factorization</span>
+<span class="kn">from</span> <span class="nn">scipy.sparse.linalg</span> <span class="kn">import</span> <span class="n">svds</span>
+
+<span class="c1"># Setting a random seed for reproducibility</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Prepare the Synthetic Dataset
+We will generate a synthetic user-item interaction dataset that includes:</p>
+<ul class="simple">
+<li><p>Temporal Dynamics: Simulated time-based interactions.</p></li>
+<li><p>Exposure Bias: Some items will be more popular and shown more frequently.</p></li>
+<li><p>User and Item Attributes: Features for users and items for regularization.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Number of users, items, and interactions over time</span>
+<span class="n">num_users</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">num_items</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">time_steps</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="c1"># Randomly generate user latent factors</span>
+<span class="n">user_factors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">num_users</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="c1"># Randomly generate item latent factors with some items having a higher propensity (popularity)</span>
+<span class="n">item_factors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">num_items</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">item_popularity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">num_items</span><span class="p">)</span>  <span class="c1"># Simulating exposure bias</span>
+
+<span class="c1"># Time-dependent preferences (users may change preferences over time)</span>
+<span class="n">time_bias</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="p">(</span><span class="n">time_steps</span><span class="p">,</span> <span class="n">num_users</span><span class="p">))</span>
+
+<span class="c1"># Creating the interaction matrix over time with bias towards popular items</span>
+<span class="k">def</span> <span class="nf">generate_interaction_matrix</span><span class="p">(</span><span class="n">user_factors</span><span class="p">,</span> <span class="n">item_factors</span><span class="p">,</span> <span class="n">time_bias</span><span class="p">,</span> <span class="n">item_popularity</span><span class="p">,</span> <span class="n">noise_level</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+    <span class="n">interaction_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_users</span><span class="p">,</span> <span class="n">num_items</span><span class="p">,</span> <span class="n">time_steps</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">time_steps</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_users</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_items</span><span class="p">):</span>
+                <span class="c1"># Simulated interaction with temporal dynamics and exposure bias</span>
+                <span class="n">interaction_matrix</span><span class="p">[</span><span class="n">u</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">user_factors</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">@</span> <span class="n">item_factors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="n">time_bias</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">u</span><span class="p">]</span> \
+                                              <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">item_popularity</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">noise_level</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">interaction_matrix</span>
+
+<span class="c1"># Generate the synthetic interaction matrix</span>
+<span class="n">interaction_matrix</span> <span class="o">=</span> <span class="n">generate_interaction_matrix</span><span class="p">(</span><span class="n">user_factors</span><span class="p">,</span> <span class="n">item_factors</span><span class="p">,</span> <span class="n">time_bias</span><span class="p">,</span> <span class="n">item_popularity</span><span class="p">)</span>
+
+<span class="c1"># Flatten the matrix for processing</span>
+<span class="n">interaction_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_users</span><span class="p">),</span> <span class="n">num_items</span> <span class="o">*</span> <span class="n">time_steps</span><span class="p">),</span>
+    <span class="s1">&#39;item&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_items</span><span class="p">),</span> <span class="n">time_steps</span><span class="p">),</span> <span class="n">num_users</span><span class="p">),</span>
+    <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">time_steps</span><span class="p">),</span> <span class="n">num_users</span> <span class="o">*</span> <span class="n">num_items</span><span class="p">),</span>
+    <span class="s1">&#39;rating&#39;</span><span class="p">:</span> <span class="n">interaction_matrix</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="p">})</span>
+
+<span class="c1"># Add some user attributes (e.g., age, location) and item attributes (e.g., genre)</span>
+<span class="n">user_attributes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_users</span><span class="p">),</span>
+    <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="n">num_users</span><span class="p">),</span>
+    <span class="s1">&#39;location&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">&#39;urban&#39;</span><span class="p">,</span> <span class="s1">&#39;suburban&#39;</span><span class="p">,</span> <span class="s1">&#39;rural&#39;</span><span class="p">],</span> <span class="n">num_users</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="n">item_attributes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;item&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_items</span><span class="p">),</span>
+    <span class="s1">&#39;genre&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">&#39;action&#39;</span><span class="p">,</span> <span class="s1">&#39;comedy&#39;</span><span class="p">,</span> <span class="s1">&#39;drama&#39;</span><span class="p">],</span> <span class="n">num_items</span><span class="p">),</span>
+    <span class="s1">&#39;release_year&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1980</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="n">num_items</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="c1"># Merge side information with interactions</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">interaction_df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">user_attributes</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;user&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">item_attributes</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;item&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Implementing the Combined Matrix Factorization Model</p>
+<p>We will now implement the combined matrix factorization model using a modified version of SVD (Singular Value Decomposition), where we:</p>
+<ul class="simple">
+<li><p>Incorporate temporal dynamics using time-based biases.</p></li>
+<li><p>Apply propensity scoring to adjust for exposure bias.</p></li>
+<li><p>Use active learning (Upper Confidence Bound, UCB) for exploration.</p></li>
+<li><p>Integrate side information for regularization.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CombinedMatrixFactorization</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_factors</span><span class="p">,</span> <span class="n">num_users</span><span class="p">,</span> <span class="n">num_items</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">regularization</span><span class="o">=</span><span class="mf">0.02</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_factors</span> <span class="o">=</span> <span class="n">num_factors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_users</span> <span class="o">=</span> <span class="n">num_users</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_items</span> <span class="o">=</span> <span class="n">num_items</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">learning_rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">regularization</span> <span class="o">=</span> <span class="n">regularization</span>
+
+        <span class="c1"># Initialize latent factors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_factors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">num_users</span><span class="p">,</span> <span class="n">num_factors</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">item_factors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">num_items</span><span class="p">,</span> <span class="n">num_factors</span><span class="p">))</span>
+
+        <span class="c1"># Time-dependent biases</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_bias</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_users</span><span class="p">,</span> <span class="n">time_steps</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">item_bias</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_items</span><span class="p">,</span> <span class="n">time_steps</span><span class="p">))</span>
+
+        <span class="c1"># Propensity scores for exposure bias</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">propensity_scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">num_items</span><span class="p">)</span>
+
+        <span class="c1"># UCB exploration term</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exploration_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_items</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">num_epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_epochs</span><span class="p">):</span>
+            <span class="n">total_loss</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+                <span class="n">user</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">])</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">])</span>
+                <span class="n">time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">])</span>
+                <span class="n">true_rating</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;rating&#39;</span><span class="p">]</span>
+
+                <span class="c1"># Compute prediction</span>
+                <span class="n">pred_rating</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user_factors</span><span class="p">[</span><span class="n">user</span><span class="p">]</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_factors</span><span class="p">[</span><span class="n">item</span><span class="p">]</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="n">user_bias</span><span class="p">[</span><span class="n">user</span><span class="p">,</span> <span class="n">time</span><span class="p">]</span> <span class="o">+</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="n">item_bias</span><span class="p">[</span><span class="n">item</span><span class="p">,</span> <span class="n">time</span><span class="p">]</span> <span class="o">+</span>
+                               <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">propensity_scores</span><span class="p">[</span><span class="n">item</span><span class="p">]))</span>
+
+                <span class="c1"># Calculate UCB exploration term</span>
+                <span class="n">ucb_exploration</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exploration_counts</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span>
+                                          <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exploration_counts</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+                
+                <span class="c1"># Add exploration term to the prediction</span>
+                <span class="n">pred_rating</span> <span class="o">+=</span> <span class="n">ucb_exploration</span>
+
+                <span class="c1"># Calculate the error</span>
+                <span class="n">error</span> <span class="o">=</span> <span class="n">true_rating</span> <span class="o">-</span> <span class="n">pred_rating</span>
+
+                <span class="c1"># Update latent factors with stochastic gradient descent (SGD)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">user_factors</span><span class="p">[</span><span class="n">user</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="p">(</span><span class="n">error</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_factors</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">-</span>
+                                                                 <span class="bp">self</span><span class="o">.</span><span class="n">regularization</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_factors</span><span class="p">[</span><span class="n">user</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">item_factors</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="p">(</span><span class="n">error</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_factors</span><span class="p">[</span><span class="n">user</span><span class="p">]</span> <span class="o">-</span>
+                                                                 <span class="bp">self</span><span class="o">.</span><span class="n">regularization</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_factors</span><span class="p">[</span><span class="n">item</span><span class="p">])</span>
+
+                <span class="c1"># Update biases</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">user_bias</span><span class="p">[</span><span class="n">user</span><span class="p">,</span> <span class="n">time</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="p">(</span><span class="n">error</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">regularization</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_bias</span><span class="p">[</span><span class="n">user</span><span class="p">,</span> <span class="n">time</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">item_bias</span><span class="p">[</span><span class="n">item</span><span class="p">,</span> <span class="n">time</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="p">(</span><span class="n">error</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">regularization</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_bias</span><span class="p">[</span><span class="n">item</span><span class="p">,</span> <span class="n">time</span><span class="p">])</span>
+
+                <span class="c1"># Update exploration counts</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">exploration_counts</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="c1"># Track the total loss</span>
+                <span class="n">total_loss</span> <span class="o">+=</span> <span class="n">error</span> <span class="o">**</span> <span class="mi">2</span>
+
+            <span class="c1"># Print progress</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">, Loss: </span><span class="si">{</span><span class="n">total_loss</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+        <span class="n">pred_rating</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user_factors</span><span class="p">[</span><span class="n">user</span><span class="p">]</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_factors</span><span class="p">[</span><span class="n">item</span><span class="p">]</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span>
+                       <span class="bp">self</span><span class="o">.</span><span class="n">user_bias</span><span class="p">[</span><span class="n">user</span><span class="p">,</span> <span class="n">time</span><span class="p">]</span> <span class="o">+</span>
+                       <span class="bp">self</span><span class="o">.</span><span class="n">item_bias</span><span class="p">[</span><span class="n">item</span><span class="p">,</span> <span class="n">time</span><span class="p">]</span> <span class="o">+</span>
+                       <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">propensity_scores</span><span class="p">[</span><span class="n">item</span><span class="p">]))</span>
+        <span class="c1"># UCB exploration term</span>
+        <span class="n">ucb_exploration</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exploration_counts</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span>
+                                  <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exploration_counts</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">pred_rating</span> <span class="o">+</span> <span class="n">ucb_exploration</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Splitting the data into training and testing sets</span>
+<span class="n">train_data</span><span class="p">,</span> <span class="n">test_data</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Initialize and train the combined matrix factorization model</span>
+<span class="n">num_factors</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">cmf_model</span> <span class="o">=</span> <span class="n">CombinedMatrixFactorization</span><span class="p">(</span><span class="n">num_factors</span><span class="p">,</span> <span class="n">num_users</span><span class="p">,</span> <span class="n">num_items</span><span class="p">)</span>
+<span class="n">cmf_model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">num_epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Predict ratings on test set and calculate RMSE</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">true_ratings</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">test_data</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">])</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">])</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">])</span>
+    <span class="n">true_ratings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;rating&#39;</span><span class="p">])</span>
+    <span class="n">preds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cmf_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">time</span><span class="p">))</span>
+
+<span class="c1"># Calculate RMSE</span>
+<span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">true_ratings</span><span class="p">,</span> <span class="n">preds</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;RMSE for combined matrix factorization: </span><span class="si">{</span><span class="n">rmse</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1, Loss: 5.371380709048709
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 2, Loss: 0.8316048082039055
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 3, Loss: 0.2989214002872452
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 4, Loss: 0.039496720079336856
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 5, Loss: 0.01870775835190221
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 6, Loss: 0.01667715566750287
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 7, Loss: 0.01595962168286774
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 8, Loss: 0.01564299834355057
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 9, Loss: 0.015487378312402723
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 10, Loss: 0.015404138081753616
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RMSE for combined matrix factorization: 0.12627746252350194
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">csr_matrix</span>
+
+<span class="c1"># Prepare for SVD</span>
+<span class="c1"># Aggregate ratings to handle duplicate entries</span>
+<span class="n">train_data_aggregated</span> <span class="o">=</span> <span class="n">train_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;item&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;rating&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="c1"># Pivot the aggregated DataFrame</span>
+<span class="n">train_pivot</span> <span class="o">=</span> <span class="n">train_data_aggregated</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;rating&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Convert the pivoted DataFrame to a sparse matrix</span>
+<span class="n">train_sparse</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">(</span><span class="n">train_pivot</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+<span class="c1"># Perform SVD on the sparse matrix</span>
+<span class="n">u</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">vt</span> <span class="o">=</span> <span class="n">svds</span><span class="p">(</span><span class="n">train_sparse</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">num_factors</span><span class="p">)</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span>
+
+<span class="c1"># Predict ratings for the test set</span>
+<span class="n">baseline_preds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">sigma</span><span class="p">),</span> <span class="n">vt</span><span class="p">)</span>
+
+<span class="c1"># Extract predictions for the test set users and items</span>
+<span class="n">test_data_aggregated</span> <span class="o">=</span> <span class="n">test_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;item&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;rating&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="c1"># Get the corresponding predictions for the test set users and items</span>
+<span class="n">test_baseline_preds</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">baseline_preds</span><span class="p">[</span><span class="n">user</span><span class="p">,</span> <span class="n">item</span><span class="p">]</span> <span class="k">for</span> <span class="n">user</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">test_data_aggregated</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">],</span> <span class="n">test_data_aggregated</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">])</span>
+<span class="p">]</span>
+
+<span class="c1"># Calculate RMSE for the baseline SVD</span>
+<span class="n">baseline_rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">test_data_aggregated</span><span class="p">[</span><span class="s1">&#39;rating&#39;</span><span class="p">],</span> <span class="n">test_baseline_preds</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;RMSE for standard SVD (baseline): </span><span class="si">{</span><span class="n">baseline_rmse</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RMSE for standard SVD (baseline): 0.3672481827139079
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Aggregate by taking the last period&#39;s interaction for each user-item pair</span>
+<span class="n">train_data_last_period</span> <span class="o">=</span> <span class="n">train_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;item&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="s1">&#39;max&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">train_data_last_period</span> <span class="o">=</span> <span class="n">train_data_last_period</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">])</span>
+
+<span class="c1"># Pivot the table to create the user-item matrix for the last period</span>
+<span class="n">train_pivot_last</span> <span class="o">=</span> <span class="n">train_data_last_period</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;rating&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Convert to sparse matrix and perform SVD</span>
+<span class="n">train_sparse_last</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">(</span><span class="n">train_pivot_last</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">u</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">vt</span> <span class="o">=</span> <span class="n">svds</span><span class="p">(</span><span class="n">train_sparse_last</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">num_factors</span><span class="p">)</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span>
+
+<span class="c1"># Predict ratings for the test set based on the last period</span>
+<span class="n">baseline_preds_last</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">sigma</span><span class="p">),</span> <span class="n">vt</span><span class="p">)</span>
+
+<span class="c1"># Compare predictions for the test set using the last period&#39;s data</span>
+<span class="n">test_data_last_period</span> <span class="o">=</span> <span class="n">test_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;item&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="s1">&#39;max&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">test_data_last_period</span> <span class="o">=</span> <span class="n">test_data_last_period</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">])</span>
+
+<span class="c1"># Get corresponding predictions</span>
+<span class="n">test_baseline_preds_last</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">baseline_preds_last</span><span class="p">[</span><span class="n">user</span><span class="p">,</span> <span class="n">item</span><span class="p">]</span> <span class="k">for</span> <span class="n">user</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">test_data_last_period</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">],</span> <span class="n">test_data_last_period</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">])</span>
+<span class="p">]</span>
+
+<span class="c1"># Calculate RMSE for the baseline using last period data</span>
+<span class="n">baseline_rmse_last</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">test_data_last_period</span><span class="p">[</span><span class="s1">&#39;rating&#39;</span><span class="p">],</span> <span class="n">test_baseline_preds_last</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;RMSE for standard SVD (using last period): </span><span class="si">{</span><span class="n">baseline_rmse_last</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RMSE for standard SVD (using last period): 0.3830291923679267
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot RMSE comparison for combined model, SVD (mean aggregation), and SVD (last period)</span>
+<span class="n">methods</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Combined Model&#39;</span><span class="p">,</span> <span class="s1">&#39;Standard SVD (Mean Aggregation)&#39;</span><span class="p">,</span> <span class="s1">&#39;Standard SVD (Last Period)&#39;</span><span class="p">]</span>
+<span class="n">rmse_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">rmse</span><span class="p">,</span> <span class="n">baseline_rmse</span><span class="p">,</span> <span class="n">baseline_rmse_last</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">methods</span><span class="p">,</span> <span class="n">rmse_values</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;RMSE&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Comparison of RMSE for Combined Model vs Standard SVD (Mean) vs Standard SVD (Last Period)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/777baa110e8efcb0443412f4853fe2e96e7d251ff98f5870cf656b8520454714.png" src="_images/777baa110e8efcb0443412f4853fe2e96e7d251ff98f5870cf656b8520454714.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="10-optimization.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Optimization</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="40-data-masking.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Data Masking</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-matrix-factorization">What Is Matrix Factorization?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-matrix-factorization-works">Why Matrix Factorization Works</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-the-differences-between-matrix-factorization-and-matrix-decomposition">Understanding the Differences Between Matrix Factorization and Matrix Decomposition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-the-math-behind-matrix-factorization-and-matrix-decomposition">Understanding the Math Behind Matrix Factorization and Matrix Decomposition</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-mathematical-framework">1. General Mathematical Framework</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-factorization-optimization-and-approximation">2. Matrix Factorization: Optimization and Approximation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-non-negative-matrix-factorization-nmf">Example: Non-negative Matrix Factorization (NMF)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-decomposition-exact-algebraic-methods">3. Matrix Decomposition: Exact Algebraic Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-eigenvalue-decomposition">Example: Eigenvalue Decomposition</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-mathematical-differences">4. Key Mathematical Differences</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#similarities">5. Similarities</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-can-svd-be-used-in-both-matrix-decomposition-and-matrix-factorization">Why Can SVD Be Used in Both Matrix Decomposition and Matrix Factorization?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svd-as-matrix-decomposition">1. SVD as Matrix Decomposition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svd-as-matrix-factorization">2. SVD as Matrix Factorization</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-svd-for-recommender-systems">Example: SVD for Recommender Systems</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-difference-exact-vs-approximation">Key Difference: Exact vs. Approximation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-can-svd-be-used-in-both">Why Can SVD Be Used in Both?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Conclusion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#algorithms-for-matrix-factorization">Algorithms for Matrix Factorization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alternating-least-squares-als">Alternating Least Squares (ALS)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#als-algorithm">ALS Algorithm:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-als-works">Why ALS Works:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stochastic-gradient-descent-sgd">Stochastic Gradient Descent (SGD)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sgd-algorithm">SGD Algorithm:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-sgd-works">Why SGD Works:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#weighted-alternating-least-squares-wals">Weighted Alternating Least Squares (WALS)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#wals-objective">WALS Objective:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-negative-matrix-factorization-nmf">Non-Negative Matrix Factorization (NMF)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nmf-objective">NMF Objective:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#probabilistic-matrix-factorization-pmf">Probabilistic Matrix Factorization (PMF)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmf-model">PMF Model:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#factorization-machines-fm">Factorization Machines (FM)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-of-matrix-factorization-methods">Comparison of Matrix Factorization Methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-applications-of-matrix-factorization">Real-World Applications of Matrix Factorization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendation-systems">Recommendation Systems</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#case-study-netflix-prize">Case Study: Netflix Prize</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#natural-language-processing-nlp">Natural Language Processing (NLP)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computer-vision">Computer Vision</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#state-of-the-art-in-matrix-factorization">State-of-the-Art in Matrix Factorization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-issues">Other Issues</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#temporal-dynamics-in-matrix-factorization">Temporal Dynamics in Matrix Factorization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#addressing-exposure-bias-in-matrix-factorization">Addressing Exposure Bias in Matrix Factorization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#active-learning-and-exploration-in-matrix-factorization">Active Learning and Exploration in Matrix Factorization</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regularization-with-side-information">Regularization with Side Information</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retraining-and-continuous-learning">Retraining and Continuous Learning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-the-approaches">Combining the Approaches</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#application">Application</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Mike Nguyen
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

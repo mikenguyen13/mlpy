@@ -215,23 +215,34 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="intro.html">
-                    Chapter 1: Introduction to Machine Learning and Artificial Intelligence
+                    Introduction to Machine Learning and Artificial Intelligence
                 </a>
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="_optimization.html">Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-supervised-ml.html">Supervised Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-advanced_linear_regression.html">Advanced Linear Regression Techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-optimization.html">Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-matrix_factorization.html">Matrix Factorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="40-data-masking.html">Data Masking</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Industry Applications</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="3-approximate-nearest-neighbors.html">Approximate Nearest Neighbors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4-credit-score.html">Credit Score Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sim_dat_bandits.html">Multi-Armed Bandits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="min_risk.html">More advanced</a></li>
-<li class="toctree-l1"><a class="reference internal" href="credit-approval.html">Credit Approval</a></li>
-<li class="toctree-l1"><a class="reference internal" href="credit-adjustment.html">Credit Adjustment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="firm-valuation.html">Firm Valuation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="50-credit-score.html">Credit Score Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="51-min_risk.html">Risk Minimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="51-min_risk_amount.html">Risk Minimization with Overdue Balance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="52-credit-approval.html">Credit Approval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="53-credit-adjustment.html">Credit Adjustment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="54-firm-valuation.html">Firm Valuation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="55-financial_fraud.html">Financial Fraud Detection</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="70-approximate-nearest-neighbors.html">Approximate Nearest Neighbors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="71-sim_dat_bandits.html">Multi-Armed Bandits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="72-data-anoy-geo.html">Data Anonymization Techniques for Geospatial Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="73-sample-splitting-time-series.html">Split Samples in Time Series</a></li>
 </ul>
 
     </div>
@@ -464,7 +475,6 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applications">Applications</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
             </nav>
         </div>
@@ -595,8 +605,8 @@ R(T) = T \mu^* - \sum_{t=1}^T \mu_{a_t}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated values: [0.14915631 0.52210932 0.48625763 0.99539302 0.760989   0.1701503
- 0.1915776  0.34115175 0.85734105 0.05478585]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated values: [0.55867946 0.45716315 0.52615901 0.85713461 0.16568091 0.82249044
+ 0.16326142 0.37510616 0.22261366 0.20110828]
 </pre></div>
 </div>
 </div>
@@ -643,8 +653,8 @@ UCB_i (t) = \hat{\mu}_i + \sqrt{\frac{2 \ln t}{n_i}}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated values: [0.14915631 0.52210932 0.48625763 0.99539302 0.760989   0.1701503
- 0.1915776  0.34115175 0.85734105 0.05478585]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated values: [0.55867946 0.45716315 0.52615901 0.85713461 0.16568091 0.82249044
+ 0.16326142 0.37510616 0.22261366 0.20110828]
 </pre></div>
 </div>
 </div>
@@ -690,8 +700,8 @@ UCB_i (t) = \hat{\mu}_i + \sqrt{\frac{2 \ln t}{n_i}}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Successes: [  1.   1.   0. 965.   0.   0.   0.   1.  13.   0.]
-Failures: [1. 2. 2. 4. 2. 2. 1. 1. 3. 1.]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Successes: [  1.   6.   0. 723.   1. 100.   1.   0.   1.   0.]
+Failures: [  2.   5.   3. 121.   3.  22.   2.   3.   3.   3.]
 </pre></div>
 </div>
 </div>
@@ -735,26 +745,16 @@ Failures: [1. 2. 2. 4. 2. 2. 1. 1. 3. 1.]
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated beta values: [[-4.18811054e-02 -5.76686108e-02 -9.55660940e-02 -6.14116128e-02
-  -2.09012132e-01]
- [-2.69611909e-01 -2.78705183e-01 -1.79543465e-01 -9.26437616e-02
-  -9.71837634e-02]
- [-3.33083324e-01 -2.52651385e-01 -3.19156163e-01 -6.83125569e-01
-  -3.35290587e-01]
- [-3.00467737e-01 -1.54410670e-01 -3.40915593e-01  1.07832829e-02
-  -1.07722033e-01]
- [-2.42237296e-01  1.37255424e-01 -8.63753225e-01 -8.76779119e-03
-  -2.70387902e-01]
- [-2.81536735e-01 -1.38880891e-01 -8.68862001e-02 -8.15497878e-02
-  -3.39912484e-01]
- [-2.11081451e-01 -1.25938685e-01 -6.50009732e-02 -7.97526458e-02
-  -1.22911190e-01]
- [-2.30866679e-01 -2.33171158e-01  6.74073763e-02 -2.08244699e-01
-  -1.70848785e-01]
- [-7.31335998e-01 -1.29179557e+00  5.37027553e-01  1.46193163e+00
-   1.20663803e+00]
- [ 1.82195012e-01 -6.63277737e-03 -1.35120108e-03 -1.15987907e-02
-   8.09158509e-02]]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated beta values: [[-0.4617186  -0.29153534 -0.59979805  0.36067564 -0.67480074]
+ [ 0.01642991 -0.25962069 -0.8623945  -0.19568133 -0.19891129]
+ [ 0.22326146  0.14461747 -0.91215977 -0.16667246 -0.61874456]
+ [-1.19038689  0.01422441 -0.88365165 -0.49651113 -0.25378214]
+ [-0.09532048  0.00122543 -0.17265656 -0.02566242 -0.09320148]
+ [-0.48664933 -0.12349825 -0.08577866 -0.64282911 -0.6948456 ]
+ [-0.07460877  0.01891447 -0.08887783 -0.05777743 -0.06051061]
+ [-0.19548292 -0.04814879 -0.06950959 -0.01779028 -0.12095301]
+ [-0.07106302  0.0868214   0.13931426  0.01497173  0.08913441]
+ [ 0.11515099  0.05957668 -0.11703575 -0.03454196 -0.08763479]]
 </pre></div>
 </div>
 </div>
@@ -777,10 +777,6 @@ Failures: [1. 2. 2. 4. 2. 2. 1. 1. 3. 1.]
 <li><p>Clinical Trials: Allocating treatments to patients to identify the most effective treatment.</p></li>
 <li><p>Recommendation Systems: Presenting items (e.g., movies, products) to users to maximize engagement.</p></li>
 </ul>
-</section>
-<section id="conclusion">
-<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
-<p>The Multi-Armed Bandit problem is a fundamental challenge in reinforcement learning and decision-making under uncertainty. By effectively balancing exploration and exploitation, various algorithms can achieve near-optimal performance in diverse settings. Understanding and applying these strategies can lead to significant improvements in fields ranging from online advertising to clinical trials and beyond.</p>
 </section>
 </section>
 
@@ -850,7 +846,6 @@ Failures: [1. 2. 2. 4. 2. 2. 1. 1. 3. 1.]
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applications">Applications</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
   </nav></div>
 

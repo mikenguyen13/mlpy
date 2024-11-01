@@ -1,0 +1,1052 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Supervised Machine Learning &#8212; Machine Learning in Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=1a96265c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=c72506b3" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=1a96265c" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/bootstrap.css?v=5340d9b1" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/theme.css?v=a243ae73" />
+    <link rel="stylesheet" type="text/css" href="_static/vendor/fontawesome/6.5.1/css/all.min.css?v=c786f70d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-NK1GQ8CXSN"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-NK1GQ8CXSN');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-NK1GQ8CXSN');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '05-supervised-ml';</script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/copybutton_funcs.js?v=776a791e"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/language_data.js?v=e49ba422"></script>
+    <script src="_static/searchtools.js?v=d19c4805"></script>
+    <script src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/scripts/bootstrap.js?v=3d67b3b1"></script>
+    <script src="_static/scripts/pydata-sphinx-theme.js?v=b2908668"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?v=95180707"></script>
+    <link rel="canonical" href="https://mikenguyen13.github.io/mlpy/05-supervised-ml.html" />
+    <link rel="icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Advanced Linear Regression Techniques" href="06-advanced_linear_regression.html" />
+    <link rel="prev" title="Introduction to Machine Learning and Artificial Intelligence" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Machine Learning in Python - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Machine Learning in Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Introduction to Machine Learning and Artificial Intelligence
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Supervised Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-advanced_linear_regression.html">Advanced Linear Regression Techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-optimization.html">Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-matrix_factorization.html">Matrix Factorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="40-data-masking.html">Data Masking</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Industry Applications</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="50-credit-score.html">Credit Score Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="51-min_risk.html">Risk Minimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="51-min_risk_amount.html">Risk Minimization with Overdue Balance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="52-credit-approval.html">Credit Approval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="53-credit-adjustment.html">Credit Adjustment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="54-firm-valuation.html">Firm Valuation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="55-financial_fraud.html">Financial Fraud Detection</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="70-approximate-nearest-neighbors.html">Approximate Nearest Neighbors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="71-sim_dat_bandits.html">Multi-Armed Bandits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="72-data-anoy-geo.html">Data Anonymization Techniques for Geospatial Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="73-sample-splitting-time-series.html">Split Samples in Time Series</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/edit/main/05-supervised-ml.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/issues/new?title=Issue%20on%20page%20%2F05-supervised-ml.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/05-supervised-ml.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Supervised Machine Learning</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discriminative-models">1. Discriminative Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparative-insights">Comparative Insights</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-models">1.1 Linear Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-formulation">Mathematical Formulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variations-of-linear-models">Variations of Linear Models</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-examples">Practical Examples</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#support-vector-machines">1.2 Support Vector Machines</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Mathematical Formulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variations-of-svms">Variations of SVMs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-and-use-cases">Applications and Use Cases</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-trees">1.3 Decision Trees</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#core-concepts">Core Concepts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variations-of-decision-trees">Variations of Decision Trees</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Practical Examples</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neural-networks">1.4 Neural Networks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#architectural-components">Architectural Components</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-neural-networks">Types of Neural Networks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">Mathematical Formulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">Practical Examples</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instance-based-learning">1.5 Instance-Based Learning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">Core Concepts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variations-of-instance-based-learning">Variations of Instance-Based Learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">Practical Examples</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-discriminant-analysis-lda">1.6 Linear Discriminant Analysis (LDA)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-foundations">Mathematical Foundations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variations-of-lda">Variations of LDA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">Practical Examples</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generative-models">2. Generative Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#probabilistic-generative-models">2.1 Probabilistic Generative Models</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-generative-models">2.2 Implicit Generative Models</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deterministic-generative-models">2.3 Deterministic Generative Models</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ensemble-methods">3. Ensemble Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bagging">3.1 Bagging</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#boosting">3.2 Boosting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stacking">3.3 Stacking</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#common-traits-of-ensemble-methods">Common Traits of Ensemble Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transition-to-the-next-chapter">Transition to the Next Chapter</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="supervised-machine-learning">
+<h1>Supervised Machine Learning<a class="headerlink" href="#supervised-machine-learning" title="Link to this heading">#</a></h1>
+<p>Supervised machine learning stands as a cornerstone in the vast landscape of artificial intelligence, embodying a sophisticated approach where models are trained to predict outcomes based on labeled training data. Imagine a seasoned instructor guiding a student through a series of meticulously crafted problems and solutions, gradually building their expertise. Similarly, in supervised learning, algorithms are provided with input features alongside their corresponding target labels, enabling them to learn the intricate mapping from inputs to desired outcomes.</p>
+<blockquote>
+<div><p><strong>Note:</strong> Supervised learning is analogous to a teacher-student relationship, where the algorithm learns from the “lessons” provided by the labeled data.</p>
+</div></blockquote>
+<p>In this chapter, we embark on a journey through the diverse paradigms of supervised learning, including discriminative models, generative models, and ensemble methods. We will unravel the high-level concepts of each approach, delve into their mathematical underpinnings, visualize their operational mechanics, and explore practical use cases that highlight their strengths and limitations. By the end of this chapter, you will not only grasp the theoretical foundations but also appreciate the creative nuances that make each model uniquely suited for specific applications.</p>
+<section id="discriminative-models">
+<h2>1. Discriminative Models<a class="headerlink" href="#discriminative-models" title="Link to this heading">#</a></h2>
+<p>Discriminative models are the artisans of supervised learning, crafting decision boundaries that elegantly separate different classes or predict target values for regression tasks. Unlike their generative counterparts, discriminative models eschew the modeling of the joint distribution of data and labels. Instead, they focus their intellectual prowess solely on the conditional probability of the label given the input data, denoted as <span class="math notranslate nohighlight">\(P(Y|X)\)</span> <span id="id1">[<a class="reference internal" href="_sources/1-markdown.html#id35" title="C. Cortes and V. Vapnik. Support-vector networks. Machine Learning, 1995.">CV95</a>]</span>.</p>
+<p>At the heart of discriminative models lies the objective to directly estimate <span class="math notranslate nohighlight">\( P(Y|X) \)</span>, the likelihood of the target label <span class="math notranslate nohighlight">\( Y \)</span> given the input features <span class="math notranslate nohighlight">\( X \)</span>. This direct approach contrasts sharply with generative models, which estimate the joint probability <span class="math notranslate nohighlight">\( P(X, Y) \)</span>, encompassing both the distribution of features and the labels. By honing in exclusively on the conditional probability, discriminative models often achieve superior classification accuracy, as they concentrate on learning the precise decision boundaries needed to differentiate between classes <span id="id2">[<a class="reference internal" href="_sources/1-markdown.html#id38" title="F. Rosenblatt. The perceptron: a probabilistic model for information storage and organization in the brain. Psychological Review, 1958.">Ros58</a>]</span>.</p>
+<p>Discriminative models encompass a variety of algorithms, each with its unique strengths, including:</p>
+<ul class="simple">
+<li><p><strong>Logistic Regression</strong>: A stalwart in binary classification, logistic regression leverages the sigmoid function to predict the probability that a given instance belongs to a specific class <span id="id3">[<a class="reference internal" href="_sources/1-markdown.html#id32" title="D. R. Cox. The regression analysis of binary sequences. Journal of the Royal Statistical Society, 1958.">Cox58</a>]</span>.</p></li>
+<li><p><strong>Support Vector Machines (SVMs)</strong>: SVMs craft optimal hyperplanes to maximize the margin between classes, offering robust performance in high-dimensional spaces <span id="id4">[<a class="reference internal" href="_sources/1-markdown.html#id35" title="C. Cortes and V. Vapnik. Support-vector networks. Machine Learning, 1995.">CV95</a>]</span>.</p></li>
+<li><p><strong>Neural Networks</strong>: These are the deep thinkers of machine learning, capable of capturing complex patterns through interconnected layers of neurons <span id="id5">[<a class="reference internal" href="_sources/1-markdown.html#id40" title="D. E. Rumelhart, G. E. Hinton, and R. J. Williams. Learning representations by back-propagating errors. Nature, 1986.">RHW86</a>]</span>.</p></li>
+</ul>
+<section id="comparative-insights">
+<h3>Comparative Insights<a class="headerlink" href="#comparative-insights" title="Link to this heading">#</a></h3>
+<p>While both model types excel in classification tasks and rely on labeled data, their approaches diverge significantly:</p>
+<ul class="simple">
+<li><p><strong>Similarities</strong>:</p>
+<ul>
+<li><p>Utilization in classification tasks with labeled data.</p></li>
+<li><p>Applicability to various input feature types, including numerical, categorical, and textual data.</p></li>
+</ul>
+</li>
+</ul>
+<p>To elucidate the distinctions between discriminative and generative models, consider the following comparison:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Characteristic</p></th>
+<th class="head"><p>Generative Models</p></th>
+<th class="head"><p>Discriminative Models</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Probability Modeled</strong></p></td>
+<td><p>Joint Probability (<span class="math notranslate nohighlight">\( P(X, Y) \)</span>)</p></td>
+<td><p>Conditional Probability ($ P(Y</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Goal</strong></p></td>
+<td><p>Understand data generation</p></td>
+<td><p>Optimize decision boundaries</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Examples</strong></p></td>
+<td><p>Naive Bayes, Gaussian Mixture Models</p></td>
+<td><p>Logistic Regression, SVMs, Neural Networks</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Flexibility</strong></p></td>
+<td><p>Can generate new data points</p></td>
+<td><p>Focused on classification/regression</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Training Complexity</strong></p></td>
+<td><p>Often more complex</p></td>
+<td><p>Typically simpler, boundary-focused</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Use Cases</strong></p></td>
+<td><p>Data augmentation, anomaly detection</p></td>
+<td><p>Classification, regression tasks</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="linear-models">
+<h2>1.1 Linear Models<a class="headerlink" href="#linear-models" title="Link to this heading">#</a></h2>
+<p>Linear models are the bedrock of many machine learning algorithms, prized for their simplicity and interpretability. They establish linear relationships between input features and target outputs, forming the foundational architecture upon which more complex models are built.</p>
+<section id="mathematical-formulation">
+<h3>Mathematical Formulation<a class="headerlink" href="#mathematical-formulation" title="Link to this heading">#</a></h3>
+<p>The general form of a linear model is expressed as:</p>
+<div class="math notranslate nohighlight">
+\[
+y = X\beta + \epsilon
+\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( X \)</span> represents the input features,</p></li>
+<li><p><span class="math notranslate nohighlight">\( \beta \)</span> denotes the parameters (weights) to be learned,</p></li>
+<li><p><span class="math notranslate nohighlight">\( \epsilon \)</span> is the error term.</p></li>
+</ul>
+</section>
+<section id="variations-of-linear-models">
+<h3>Variations of Linear Models<a class="headerlink" href="#variations-of-linear-models" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Simple Linear Regression</strong>: Models the relationship between a single input feature and the target variable.</p></li>
+<li><p><strong>Multiple Linear Regression</strong>: Extends the simple linear model to accommodate multiple input features, enhancing predictive power.</p></li>
+<li><p><strong>Regularized Linear Models</strong>: Introduce regularization to prevent overfitting by penalizing complex models.</p>
+<ul>
+<li><p><strong>Ridge Regression</strong>: Incorporates an <span class="math notranslate nohighlight">\( L_2 \)</span> penalty to shrink regression coefficients <span id="id6">[<a class="reference internal" href="_sources/1-markdown.html#id33" title="A. E. Hoerl and R. W. Kennard. Ridge regression: biased estimation for nonorthogonal problems. Technometrics, 1970.">HK70</a>]</span>.</p></li>
+<li><p><strong>Lasso Regression</strong>: Utilizes an <span class="math notranslate nohighlight">\( L_1 \)</span> penalty to enforce sparsity in model coefficients, effectively performing feature selection <span id="id7">[<a class="reference internal" href="_sources/1-markdown.html#id34" title="R. Tibshirani. Regression shrinkage and selection via the lasso. Journal of the Royal Statistical Society, 1996.">Tib96</a>]</span>.</p></li>
+<li><p><strong>Elastic Net</strong>: Combines both <span class="math notranslate nohighlight">\( L_1 \)</span> and <span class="math notranslate nohighlight">\( L_2 \)</span> penalties to balance regularization and sparsity, offering a middle ground between Ridge and Lasso <span id="id8">[<a class="reference internal" href="_sources/1-markdown.html#id34" title="R. Tibshirani. Regression shrinkage and selection via the lasso. Journal of the Royal Statistical Society, 1996.">Tib96</a>]</span>.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="practical-examples">
+<h3>Practical Examples<a class="headerlink" href="#practical-examples" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>Logistic Regression</strong>: Employed primarily for binary classification tasks, logistic regression learns the optimal decision boundary to separate classes by predicting the probability of class membership using the sigmoid function:</p>
+<div class="math notranslate nohighlight">
+\[
+  P(Y=1|X) = \frac{1}{1 + e^{-X\beta}}
+  \]</div>
+</li>
+<li><p><strong>Linear Regression</strong>: Utilized for predicting continuous values, such as housing prices or stock prices, linear regression aims to minimize the residual sum of squares between observed and predicted values.</p></li>
+<li><p><strong>Ridge and Lasso Regression</strong>: These extensions of linear regression incorporate regularization techniques to prevent overfitting. Ridge regression applies an <span class="math notranslate nohighlight">\( L_2 \)</span> penalty, while Lasso regression employs an <span class="math notranslate nohighlight">\( L_1 \)</span> penalty, encouraging model simplicity and interpretability <span id="id9">[<a class="reference internal" href="_sources/1-markdown.html#id33" title="A. E. Hoerl and R. W. Kennard. Ridge regression: biased estimation for nonorthogonal problems. Technometrics, 1970.">HK70</a>, <a class="reference internal" href="_sources/1-markdown.html#id34" title="R. Tibshirani. Regression shrinkage and selection via the lasso. Journal of the Royal Statistical Society, 1996.">Tib96</a>]</span>.</p></li>
+</ul>
+</section>
+</section>
+<section id="support-vector-machines">
+<h2>1.2 Support Vector Machines<a class="headerlink" href="#support-vector-machines" title="Link to this heading">#</a></h2>
+<p>Support Vector Machines (SVMs) are the precision instruments of supervised learning, adept at creating optimal decision boundaries known as hyperplanes to segregate classes within a dataset. The elegance of SVMs lies in their ability to maximize the margin between the closest data points (support vectors) from different classes, thereby enhancing generalization <span id="id10">[<a class="reference internal" href="_sources/1-markdown.html#id35" title="C. Cortes and V. Vapnik. Support-vector networks. Machine Learning, 1995.">CV95</a>]</span>.</p>
+<section id="id11">
+<h3>Mathematical Formulation<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<p>The optimization problem that SVMs solve is:</p>
+<div class="math notranslate nohighlight">
+\[
+\min_{w, b} \frac{1}{2} \|w\|^2 \quad \text{subject to } y_i (w^T x_i + b) \geq 1 \text{ for all } i
+\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( w \)</span> is the weight vector,</p></li>
+<li><p><span class="math notranslate nohighlight">\( b \)</span> is the bias term,</p></li>
+<li><p><span class="math notranslate nohighlight">\( y_i \)</span> are the class labels,</p></li>
+<li><p><span class="math notranslate nohighlight">\( x_i \)</span> are the input features.</p></li>
+</ul>
+</section>
+<section id="variations-of-svms">
+<h3>Variations of SVMs<a class="headerlink" href="#variations-of-svms" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Linear SVM</strong>: Utilizes a linear kernel to separate data linearly.</p></li>
+<li><p><strong>Non-Linear SVM</strong>: Employs kernel functions (e.g., polynomial, radial basis function (RBF)) to map input data into higher-dimensional spaces, enabling the separation of non-linearly separable data [&#64;cortes1995svm].</p></li>
+<li><p><strong>Soft Margin SVM</strong>: Introduces flexibility by allowing some misclassifications, thereby handling noisy data effectively.</p></li>
+</ul>
+</section>
+<section id="applications-and-use-cases">
+<h3>Applications and Use Cases<a class="headerlink" href="#applications-and-use-cases" title="Link to this heading">#</a></h3>
+<p>SVMs are particularly powerful in high-dimensional spaces and are widely used in applications such as text classification, image recognition, and bioinformatics, where the number of features can be exceptionally large .</p>
+</section>
+</section>
+<section id="decision-trees">
+<h2>1.3 Decision Trees<a class="headerlink" href="#decision-trees" title="Link to this heading">#</a></h2>
+<p>Decision Trees are the storytellers of machine learning, recursively partitioning data based on feature values to create a hierarchical structure of decisions. Their intuitive and interpretable nature makes them highly valuable for both classification and regression tasks.</p>
+<section id="core-concepts">
+<h3>Core Concepts<a class="headerlink" href="#core-concepts" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Recursive Partitioning</strong>: Data is split based on feature values, creating branches that lead to decisions or predictions.</p></li>
+<li><p><strong>Axis-Aligned Boundaries</strong>: Decision boundaries are typically aligned with feature axes, simplifying visualization and interpretation.</p></li>
+</ul>
+</section>
+<section id="variations-of-decision-trees">
+<h3>Variations of Decision Trees<a class="headerlink" href="#variations-of-decision-trees" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Classification Trees</strong>: Tailored for classification tasks, these trees predict discrete class labels.</p></li>
+<li><p><strong>Regression Trees</strong>: Designed to predict continuous values, regression trees estimate numerical targets.</p></li>
+<li><p><strong>Pruned Trees</strong>: Trees that have been trimmed to reduce overfitting by removing branches that have little predictive power.</p></li>
+<li><p><strong>Random Forests</strong>: An ensemble method that builds multiple decision trees using bagging (Bootstrap Aggregating) to enhance performance and reduce overfitting. Each tree is trained on a random subset of the data, and their predictions are aggregated through majority voting (classification) or averaging (regression) <span id="id12">[<a class="reference internal" href="_sources/1-markdown.html#id36" title="L. Breiman. Random forests. Machine Learning, 2001.">Bre01</a>]</span>.</p></li>
+<li><p><strong>Gradient Boosting</strong>: Constructs trees sequentially, where each new tree aims to correct the errors of its predecessors. This method minimizes a differentiable loss function using gradient descent, leading to highly accurate models <span id="id13">[<a class="reference internal" href="_sources/1-markdown.html#id37" title="J. H. Friedman. Greedy function approximation: a gradient boosting machine. The Annals of Statistics, 2001.">Fri01</a>]</span>.</p></li>
+</ul>
+</section>
+<section id="id14">
+<h3>Practical Examples<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Random Forests</strong>: By aggregating the predictions of numerous decision trees, Random Forests achieve high accuracy and robustness, making them suitable for tasks like fraud detection and feature importance analysis.</p></li>
+<li><p><strong>Gradient Boosting Machines (GBMs)</strong>: GBMs are instrumental in scenarios requiring high predictive performance, such as ranking systems and predictive maintenance.</p></li>
+</ul>
+</section>
+</section>
+<section id="neural-networks">
+<h2>1.4 Neural Networks<a class="headerlink" href="#neural-networks" title="Link to this heading">#</a></h2>
+<p>Neural networks are the avant-garde of supervised learning, inspired by the intricate architecture of the human brain. They possess the remarkable ability to learn complex representations and patterns from data through layers of interconnected neurons.</p>
+<section id="architectural-components">
+<h3>Architectural Components<a class="headerlink" href="#architectural-components" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Input Layer</strong>: Receives the initial data.</p></li>
+<li><p><strong>Hidden Layers</strong>: Perform transformations on the input data, enabling the network to learn abstract features.</p></li>
+<li><p><strong>Output Layer</strong>: Produces the final prediction or classification.</p></li>
+</ul>
+</section>
+<section id="types-of-neural-networks">
+<h3>Types of Neural Networks<a class="headerlink" href="#types-of-neural-networks" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Feedforward Neural Networks (FNN)</strong>: The most basic architecture where information flows in one direction—from input to output—without cycles <span id="id15">[]</span>.</p></li>
+<li><p><strong>Convolutional Neural Networks (CNNs)</strong>: Specialized for processing image and spatial data, CNNs utilize convolutional layers to extract spatial hierarchies of features, making them indispensable in computer vision tasks <span id="id16">[<a class="reference internal" href="_sources/1-markdown.html#id39" title="Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner. Gradient-based learning applied to document recognition. Proceedings of the IEEE, 1998.">LBBH98</a>]</span>.</p></li>
+<li><p><strong>Recurrent Neural Networks (RNNs)</strong>: Designed to handle sequential data, RNNs incorporate loops that allow information to persist, making them ideal for tasks like language modeling and time series prediction <span id="id17">[<a class="reference internal" href="_sources/1-markdown.html#id40" title="D. E. Rumelhart, G. E. Hinton, and R. J. Williams. Learning representations by back-propagating errors. Nature, 1986.">RHW86</a>]</span>.</p></li>
+<li><p><strong>Long Short-Term Memory (LSTM) Networks</strong>: A sophisticated variant of RNNs that mitigates the vanishing gradient problem, enabling the capture of long-range dependencies in sequential data <span id="id18">[<a class="reference internal" href="_sources/1-markdown.html#id40" title="D. E. Rumelhart, G. E. Hinton, and R. J. Williams. Learning representations by back-propagating errors. Nature, 1986.">RHW86</a>]</span>.</p></li>
+</ul>
+</section>
+<section id="id19">
+<h3>Mathematical Formulation<a class="headerlink" href="#id19" title="Link to this heading">#</a></h3>
+<p>A typical feedforward neural network computes its output as:</p>
+<div class="math notranslate nohighlight">
+\[
+y = f(Wx + b)
+\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( W \)</span> represents the weights,</p></li>
+<li><p><span class="math notranslate nohighlight">\( b \)</span> denotes the biases,</p></li>
+<li><p><span class="math notranslate nohighlight">\( f \)</span> is an activation function such as ReLU or sigmoid.</p></li>
+</ul>
+</section>
+<section id="id20">
+<h3>Practical Examples<a class="headerlink" href="#id20" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Image Recognition</strong>: CNNs excel in identifying objects within images, powering applications from facial recognition to autonomous driving.</p></li>
+<li><p><strong>Natural Language Processing</strong>: RNNs and LSTMs are pivotal in tasks like machine translation, sentiment analysis, and speech recognition.</p></li>
+<li><p><strong>Predictive Analytics</strong>: Neural networks are leveraged in forecasting stock prices, weather patterns, and user behavior.</p></li>
+</ul>
+</section>
+</section>
+<section id="instance-based-learning">
+<h2>1.5 Instance-Based Learning<a class="headerlink" href="#instance-based-learning" title="Link to this heading">#</a></h2>
+<p>Instance-based learning methods, such as K-Nearest Neighbors (KNN), adopt a pragmatic approach by storing training data and making predictions based on the similarity between instances. Rather than constructing an explicit model, these methods rely on the proximity of new data points to existing instances to inform their predictions.</p>
+<section id="id21">
+<h3>Core Concepts<a class="headerlink" href="#id21" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Memory-Based Learning</strong>: Stores all or a subset of the training data for use during prediction.</p></li>
+<li><p><strong>Similarity Metrics</strong>: Determines the closeness between instances using distance measures like Euclidean, Manhattan, or Minkowski distances [&#64;cover1967knn].</p></li>
+</ul>
+</section>
+<section id="variations-of-instance-based-learning">
+<h3>Variations of Instance-Based Learning<a class="headerlink" href="#variations-of-instance-based-learning" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Basic KNN</strong>: Utilizes the Euclidean distance to identify the k-nearest neighbors and makes predictions based on their majority class or average value <span id="id22">[<a class="reference internal" href="_sources/1-markdown.html#id41" title="T. M. Cover and P. E. Hart. Nearest neighbor pattern classification. IEEE Transactions on Information Theory, 1967.">CH67</a>]</span>.</p></li>
+<li><p><strong>Weighted KNN</strong>: Assigns weights to neighbors based on their distance, giving closer neighbors more influence in the prediction process.</p></li>
+<li><p><strong>Adaptive KNN</strong>: Dynamically adjusts the value of k based on the density of data points in different regions of the feature space.</p></li>
+</ul>
+</section>
+<section id="id23">
+<h3>Practical Examples<a class="headerlink" href="#id23" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Recommendation Systems</strong>: KNN can suggest products or content by identifying similar user preferences <span id="id24">[<a class="reference internal" href="_sources/1-markdown.html#id41" title="T. M. Cover and P. E. Hart. Nearest neighbor pattern classification. IEEE Transactions on Information Theory, 1967.">CH67</a>]</span>.</p></li>
+<li><p><strong>Medical Diagnostics</strong>: Instance-based methods assist in diagnosing diseases by comparing patient data to historical cases <span id="id25">[<a class="reference internal" href="_sources/1-markdown.html#id41" title="T. M. Cover and P. E. Hart. Nearest neighbor pattern classification. IEEE Transactions on Information Theory, 1967.">CH67</a>]</span>.</p></li>
+</ul>
+</section>
+</section>
+<section id="linear-discriminant-analysis-lda">
+<h2>1.6 Linear Discriminant Analysis (LDA)<a class="headerlink" href="#linear-discriminant-analysis-lda" title="Link to this heading">#</a></h2>
+<p>Linear Discriminant Analysis is the maestro of dimensionality reduction, projecting features onto a lower-dimensional space while maximizing class separation. By finding a linear combination of features that best discriminates between classes, LDA enhances the separability and effectiveness of subsequent classification tasks <span id="id26">[<a class="reference internal" href="_sources/1-markdown.html#id42" title="R. A. Fisher. The use of multiple measurements in taxonomic problems. Annals of Eugenics, 1936.">Fis36</a>]</span>.</p>
+<section id="mathematical-foundations">
+<h3>Mathematical Foundations<a class="headerlink" href="#mathematical-foundations" title="Link to this heading">#</a></h3>
+<p>LDA seeks to maximize the ratio of between-class variance to within-class variance, ensuring that classes are as distinct as possible in the transformed space. The optimization problem can be formalized as:</p>
+<div class="math notranslate nohighlight">
+\[
+\max_{w} \frac{w^T S_B w}{w^T S_W w}
+\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( S_B \)</span> is the between-class scatter matrix,</p></li>
+<li><p><span class="math notranslate nohighlight">\( S_W \)</span> is the within-class scatter matrix,</p></li>
+<li><p><span class="math notranslate nohighlight">\( w \)</span> is the projection vector.</p></li>
+</ul>
+</section>
+<section id="variations-of-lda">
+<h3>Variations of LDA<a class="headerlink" href="#variations-of-lda" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Classical LDA</strong>: Assumes that each class shares the same covariance matrix, leading to linear decision boundaries.</p></li>
+<li><p><strong>Quadratic Discriminant Analysis (QDA)</strong>: A variant where each class has its own covariance matrix, allowing for non-linear decision boundaries and greater flexibility <span id="id27">[<a class="reference internal" href="_sources/1-markdown.html#id42" title="R. A. Fisher. The use of multiple measurements in taxonomic problems. Annals of Eugenics, 1936.">Fis36</a>]</span>.</p></li>
+</ul>
+</section>
+<section id="id28">
+<h3>Practical Examples<a class="headerlink" href="#id28" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Face Recognition</strong>: LDA is employed to reduce the dimensionality of facial images while preserving discriminative features.</p></li>
+<li><p><strong>Speech Recognition</strong>: Enhances feature spaces to improve the accuracy of recognizing spoken words.</p></li>
+</ul>
+</section>
+</section>
+<section id="generative-models">
+<h2>2. Generative Models<a class="headerlink" href="#generative-models" title="Link to this heading">#</a></h2>
+<p>Generative models chart a fundamentally different course by modeling the joint distribution of input features and labels, denoted as <span class="math notranslate nohighlight">\( P(X, Y) \)</span>. Their ambition extends beyond mere prediction; they strive to understand the data generation process, empowering them to generate new data points and simulate the underlying distribution.</p>
+<section id="probabilistic-generative-models">
+<h3>2.1 Probabilistic Generative Models<a class="headerlink" href="#probabilistic-generative-models" title="Link to this heading">#</a></h3>
+<p>Probabilistic generative models harness the power of probability theory to model how data is generated, enabling both prediction and data synthesis.</p>
+<ul>
+<li><p><strong>Naive Bayes</strong>: A straightforward yet potent generative model grounded in Bayes’ theorem, Naive Bayes assumes independence between features. The class probability is computed as:</p>
+<div class="math notranslate nohighlight">
+\[
+  P(Y|X) = \frac{P(X|Y)P(Y)}{P(X)}
+  \]</div>
+<p>Despite the simplifying independence assumption, Naive Bayes often excels in text classification tasks like spam detection due to its simplicity and computational efficiency [&#64;duda1973pattern].</p>
+<p><em>Foundational Paper</em>: Duda, R. O., &amp; Hart, P. E. (1973). Pattern Classification and Scene Analysis. <em>Wiley</em> [&#64;duda1973pattern].</p>
+</li>
+<li><p><strong>Gaussian Mixture Models (GMMs)</strong>: These models assume that data is generated from a mixture of Gaussian distributions, facilitating clustering and density estimation. The likelihood of the data under a GMM is:</p>
+<div class="math notranslate nohighlight">
+\[
+  p(X) = \sum_{k=1}^K \pi_k \mathcal{N}(X|\mu_k, \Sigma_k)
+  \]</div>
+<p>where <span class="math notranslate nohighlight">\( \pi_k \)</span> is the mixture weight, and <span class="math notranslate nohighlight">\( \mu_k, \Sigma_k \)</span> are the mean and covariance of the k-th Gaussian component [&#64;mclachlan2000finite].</p>
+<p><em>Foundational Paper</em>: McLachlan, G., &amp; Peel, D. (2000). Finite Mixture Models. <em>Wiley</em> [&#64;mclachlan2000finite].</p>
+</li>
+<li><p><strong>Hidden Markov Models (HMMs)</strong>: Suited for sequential data, HMMs assume that the system transitions between hidden states according to certain probabilities, making them invaluable in areas like speech recognition and bioinformatics [&#64;rabiner1989tutorial].</p>
+<p><em>Foundational Paper</em>: Rabiner, L. R. (1989). A Tutorial on Hidden Markov Models and Selected Applications in Speech Recognition. <em>Proceedings of the IEEE</em> [&#64;rabiner1989tutorial].</p>
+</li>
+</ul>
+</section>
+<section id="implicit-generative-models">
+<h3>2.2 Implicit Generative Models<a class="headerlink" href="#implicit-generative-models" title="Link to this heading">#</a></h3>
+<p>Implicit generative models eschew explicit probability distributions, instead learning to generate data through adversarial or reconstruction-based frameworks.</p>
+<ul>
+<li><p><strong>Generative Adversarial Networks (GANs)</strong>: GANs consist of two competing networks—a generator and a discriminator—trained simultaneously. The generator endeavors to produce realistic data, while the discriminator strives to distinguish between real and generated data. This adversarial process fosters the creation of highly realistic synthetic data [&#64;goodfellow2014gan].</p>
+<p><em>Foundational Paper</em>: Goodfellow, I., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D., Ozair, S., Courville, A., &amp; Bengio, Y. (2014). Generative Adversarial Networks. <em>arXiv preprint</em> [&#64;goodfellow2014gan].</p>
+</li>
+</ul>
+</section>
+<section id="deterministic-generative-models">
+<h3>2.3 Deterministic Generative Models<a class="headerlink" href="#deterministic-generative-models" title="Link to this heading">#</a></h3>
+<p>Deterministic generative models focus on learning efficient representations of data, enabling reconstruction and generation without relying on stochastic processes.</p>
+<ul class="simple">
+<li><p><strong>Autoencoders</strong>: Comprising an encoder and a decoder, autoencoders learn to map input data to a latent representation and then reconstruct it. They are instrumental in tasks like dimensionality reduction, anomaly detection, and unsupervised feature learning [&#64;goodfellow2014gan].</p></li>
+<li><p><strong>Variational Autoencoders (VAEs)</strong>: VAEs extend autoencoders by incorporating probabilistic elements, enabling the generation of new data points by sampling from the learned latent distribution [&#64;goodfellow2014gan].</p></li>
+</ul>
+</section>
+</section>
+<section id="ensemble-methods">
+<h2>3. Ensemble Methods<a class="headerlink" href="#ensemble-methods" title="Link to this heading">#</a></h2>
+<p>Ensemble methods are the maestros of collaboration in supervised learning, orchestrating multiple models to enhance predictive performance and produce robust classifiers. By aggregating the predictions of individual models, ensembles mitigate variance, bolster accuracy, and improve generalizability.</p>
+<section id="bagging">
+<h3>3.1 Bagging<a class="headerlink" href="#bagging" title="Link to this heading">#</a></h3>
+<p>Bagging, short for Bootstrap Aggregating, diminishes variance by training multiple versions of a model on different subsets of the training data and averaging their predictions. Random Forests epitomize bagging by combining numerous decision trees to achieve superior performance and reduce the risk of overfitting [&#64;breiman1996bagging].</p>
+<p><em>Foundational Paper</em>: Breiman, L. (1996). Bagging Predictors. <em>Machine Learning</em> [&#64;breiman1996bagging].</p>
+</section>
+<section id="boosting">
+<h3>3.2 Boosting<a class="headerlink" href="#boosting" title="Link to this heading">#</a></h3>
+<p>Boosting is an ensemble technique that builds models sequentially, with each new model focusing on correcting the errors of its predecessors. This iterative process enhances the overall model’s performance by minimizing the residual errors.</p>
+<ul>
+<li><p><strong>AdaBoost</strong>: Assigns higher weights to misclassified examples, ensuring that subsequent models pay more attention to these challenging instances. The final model aggregates individual learners through a weighted sum, enhancing predictive accuracy [&#64;freund1997decision].</p>
+<p><em>Foundational Paper</em>: Freund, Y., &amp; Schapire, R. E. (1997). A Decision-Theoretic Generalization of On-Line Learning and an Application to Boosting. <em>Journal of Computer and System Sciences</em> [&#64;freund1997decision].</p>
+</li>
+<li><p><strong>Gradient Boosting Machines (GBMs)</strong>: Utilize gradient descent to minimize a loss function, adding weak learners sequentially to refine the model. GBMs are renowned for their high predictive performance and flexibility [&#64;friedman2001gradient].</p></li>
+<li><p><strong>XGBoost</strong>: An optimized and scalable implementation of gradient boosting, XGBoost incorporates regularization techniques to prevent overfitting, making it a favorite in machine learning competitions and real-world applications [&#64;friedman2001gradient].</p></li>
+</ul>
+</section>
+<section id="stacking">
+<h3>3.3 Stacking<a class="headerlink" href="#stacking" title="Link to this heading">#</a></h3>
+<p>Stacking is an ensemble method that combines the predictions of multiple base models using a meta-model. Unlike bagging and boosting, stacking trains base models in parallel and leverages their diverse strengths by feeding their predictions into a higher-level model, which then makes the final prediction.</p>
+</section>
+<section id="common-traits-of-ensemble-methods">
+<h3>Common Traits of Ensemble Methods<a class="headerlink" href="#common-traits-of-ensemble-methods" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Diversity</strong>: The efficacy of ensemble methods hinges on the diversity of the constituent models. Diverse models make different types of errors, allowing the ensemble to compensate for individual weaknesses.</p></li>
+<li><p><strong>Combining Weak Learners</strong>: Techniques like bagging and boosting synergize weak learners to form a strong predictor, amplifying overall performance.</p></li>
+<li><p><strong>Bias-Variance Tradeoff</strong>: Ensemble methods adeptly balance bias and variance, often reducing variance without significantly increasing bias, thereby enhancing model generalization.</p></li>
+</ul>
+<p>Ensemble methods are indispensable in supervised learning, enabling the construction of highly accurate and reliable models by harnessing the collective wisdom of multiple algorithms.</p>
+</section>
+<section id="transition-to-the-next-chapter">
+<h3>Transition to the Next Chapter<a class="headerlink" href="#transition-to-the-next-chapter" title="Link to this heading">#</a></h3>
+<p>Having navigated through the foundational concepts and diverse methodologies of supervised machine learning, we are now poised to delve deeper into each model type. The forthcoming chapters will explore their mathematical foundations, training procedures, and practical implementations in greater detail. Additionally, we will discuss strategies for selecting the appropriate model for specific problems and showcase real-world applications that demonstrate their utility and impact.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction to Machine Learning and Artificial Intelligence</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="06-advanced_linear_regression.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Advanced Linear Regression Techniques</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discriminative-models">1. Discriminative Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparative-insights">Comparative Insights</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-models">1.1 Linear Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-formulation">Mathematical Formulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variations-of-linear-models">Variations of Linear Models</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-examples">Practical Examples</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#support-vector-machines">1.2 Support Vector Machines</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Mathematical Formulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variations-of-svms">Variations of SVMs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-and-use-cases">Applications and Use Cases</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-trees">1.3 Decision Trees</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#core-concepts">Core Concepts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variations-of-decision-trees">Variations of Decision Trees</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Practical Examples</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neural-networks">1.4 Neural Networks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#architectural-components">Architectural Components</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-neural-networks">Types of Neural Networks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">Mathematical Formulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">Practical Examples</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instance-based-learning">1.5 Instance-Based Learning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">Core Concepts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variations-of-instance-based-learning">Variations of Instance-Based Learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">Practical Examples</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-discriminant-analysis-lda">1.6 Linear Discriminant Analysis (LDA)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-foundations">Mathematical Foundations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variations-of-lda">Variations of LDA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">Practical Examples</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generative-models">2. Generative Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#probabilistic-generative-models">2.1 Probabilistic Generative Models</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-generative-models">2.2 Implicit Generative Models</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deterministic-generative-models">2.3 Deterministic Generative Models</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ensemble-methods">3. Ensemble Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bagging">3.1 Bagging</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#boosting">3.2 Boosting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stacking">3.3 Stacking</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#common-traits-of-ensemble-methods">Common Traits of Ensemble Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transition-to-the-next-chapter">Transition to the Next Chapter</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Mike Nguyen
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1862 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Financial Fraud Detection &#8212; Machine Learning in Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=1a96265c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=c72506b3" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=1a96265c" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/bootstrap.css?v=5340d9b1" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/theme.css?v=a243ae73" />
+    <link rel="stylesheet" type="text/css" href="_static/vendor/fontawesome/6.5.1/css/all.min.css?v=c786f70d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-NK1GQ8CXSN"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-NK1GQ8CXSN');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-NK1GQ8CXSN');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '55-financial_fraud';</script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/copybutton_funcs.js?v=776a791e"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/language_data.js?v=e49ba422"></script>
+    <script src="_static/searchtools.js?v=d19c4805"></script>
+    <script src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/scripts/bootstrap.js?v=3d67b3b1"></script>
+    <script src="_static/scripts/pydata-sphinx-theme.js?v=b2908668"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?v=95180707"></script>
+    <link rel="canonical" href="https://mikenguyen13.github.io/mlpy/55-financial_fraud.html" />
+    <link rel="icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="60-text_sim.html" />
+    <link rel="prev" title="Firm Valuation" href="54-firm-valuation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Machine Learning in Python - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Machine Learning in Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Introduction to Machine Learning and Artificial Intelligence
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05-supervised-ml.html">Supervised Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-advanced_linear_regression.html">Advanced Linear Regression Techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-optimization.html">Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-matrix_factorization.html">Matrix Factorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="40-data-masking.html">Data Masking</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Industry Applications</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="50-credit-score.html">Credit Score Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="51-min_risk.html">Risk Minimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="51-min_risk_amount.html">Risk Minimization with Overdue Balance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="52-credit-approval.html">Credit Approval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="53-credit-adjustment.html">Credit Adjustment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="54-firm-valuation.html">Firm Valuation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Financial Fraud Detection</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="70-approximate-nearest-neighbors.html">Approximate Nearest Neighbors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="71-sim_dat_bandits.html">Multi-Armed Bandits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="72-data-anoy-geo.html">Data Anonymization Techniques for Geospatial Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="73-sample-splitting-time-series.html">Split Samples in Time Series</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/edit/main/55-financial_fraud.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/issues/new?title=Issue%20on%20page%20%2F55-financial_fraud.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/55-financial_fraud.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Financial Fraud Detection</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Financial Fraud Detection</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">1. Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-financial-fraud">2. Types of Financial Fraud</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transaction-fraud">2.1. Transaction Fraud</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#identity-related-fraud">2.2. Identity-Related Fraud</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#internal-fraud">2.3. Internal Fraud</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cyber-fraud">2.4. Cyber-Fraud</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-and-emerging-fraud-types">2.5. Advanced and Emerging Fraud Types</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methods-used-in-literature-for-fraud-detection">3. Methods Used in Literature for Fraud Detection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#supervised-learning-methods">3.1. Supervised Learning Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unsupervised-learning-methods">3.2. Unsupervised Learning Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#semi-supervised-and-reinforcement-learning-methods">3.3. Semi-Supervised and Reinforcement Learning Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hybrid-and-ensemble-methods">3.4. Hybrid and Ensemble Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#emerging-and-advanced-methods">3.5. Emerging and Advanced Methods</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics-used-in-fraud-detection">4. Evaluation Metrics Used in Fraud Detection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accuracy">4.1. Accuracy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#precision">4.2. Precision</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recall-sensitivity-true-positive-rate-tpr">4.3. Recall/Sensitivity/True Positive Rate (TPR)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#f-measure-f1-score">4.4. F-measure (F1 Score)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specificity-true-negative-rate-tnr">4.5. Specificity (True Negative Rate, TNR)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#area-under-the-receiver-operating-characteristic-curve-auc-roc">4.6. Area Under the Receiver Operating Characteristic Curve (AUC-ROC)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matthews-correlation-coefficient-mcc">4.7. Matthews Correlation Coefficient (MCC)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cost-based-metrics">4.8. Cost-Based Metrics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#precision-recall-curve">4.9. Precision-Recall Curve</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-challenges-in-financial-fraud-detection">5. Common Challenges in Financial Fraud Detection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#imbalanced-datasets">5.1. Imbalanced Datasets</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-concept-drift">5.2. Data/Concept Drift</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-selection-and-engineering">5.3. Feature Selection and Engineering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scalability-and-real-time-detection">5.4. Scalability and Real-Time Detection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretability-and-explainability">5.5. Interpretability and Explainability</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-privacy-and-security">5.6. Data Privacy and Security</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-false-positive-rates">5.7. High False Positive Rates</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#innovative-approaches-financial-fraud-detection-using-quantum-graph-neural-networks">6. Innovative Approaches: Financial Fraud Detection Using Quantum Graph Neural Networks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">6.1. Overview</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-contributions">6.2. Key Contributions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implications-and-future-directions">6.3. Implications and Future Directions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#create-feature-names">Create feature names</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#create-dataframe">Create DataFrame</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#display-class-distribution">Display class distribution</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="financial-fraud-detection">
+<h1>Financial Fraud Detection<a class="headerlink" href="#financial-fraud-detection" title="Link to this heading">#</a></h1>
+<p>Financial fraud is a pervasive and evolving threat that undermines the integrity of financial systems, erodes trust among stakeholders, and results in substantial economic losses worldwide. As financial transactions become increasingly digitized and complex, the methods employed by fraudsters continue to advance, necessitating sophisticated detection and prevention mechanisms. This chapter offers an in-depth exploration of financial fraud detection, encompassing a comprehensive classification of fraud types, detailed methodologies utilized in the literature, evaluation metrics, common challenges, innovative approaches, and a thorough Python-based data pipeline demonstration using synthetic data.</p>
+<p>. <a class="reference internal" href="#10-references"><span class="xref myst">References</span></a></p>
+<hr class="docutils" />
+<section id="introduction">
+<h2>1. Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>Financial fraud encompasses a broad spectrum of illicit activities aimed at deceiving individuals, organizations, or institutions for financial gain. The proliferation of digital technologies, online banking, and e-commerce has significantly expanded the avenues through which fraudsters operate, making detection and prevention increasingly challenging. Effective fraud detection systems are critical for mitigating financial losses, maintaining stakeholder trust, and ensuring compliance with regulatory standards.</p>
+<p>The dynamic and adaptive nature of financial fraud necessitates the continuous evolution of detection methodologies. Traditional rule-based systems are often insufficient in capturing the sophisticated and subtle patterns indicative of fraudulent behavior. Consequently, the integration of advanced machine learning (ML) and artificial intelligence (AI) techniques has become indispensable in developing robust and scalable fraud detection frameworks.</p>
+<p>This chapter delves into the multifaceted domain of financial fraud detection, providing a detailed classification of fraud types, exploring a wide array of detection methodologies, discussing essential evaluation metrics, addressing common challenges, showcasing innovative approaches, and presenting a comprehensive Python-based data pipeline using synthetic data for practical understanding.</p>
+</section>
+<hr class="docutils" />
+<section id="types-of-financial-fraud">
+<h2>2. Types of Financial Fraud<a class="headerlink" href="#types-of-financial-fraud" title="Link to this heading">#</a></h2>
+<p>Financial fraud can be classified based on various dimensions, including the nature of the fraud, the target, the perpetrator, and the method of execution. A nuanced understanding of these categories is essential for developing targeted and effective detection strategies. Below is a comprehensive classification tailored to encompass a broad spectrum of fraudulent activities.</p>
+<section id="transaction-fraud">
+<h3>2.1. Transaction Fraud<a class="headerlink" href="#transaction-fraud" title="Link to this heading">#</a></h3>
+<p><strong>Transaction fraud</strong> involves deceitful activities aimed at manipulating financial transactions to illegitimately gain funds. This category includes:</p>
+<ul class="simple">
+<li><p><strong>Credit Card Fraud:</strong> Unauthorized use of credit card information to make purchases or withdraw cash. Subtypes include:</p>
+<ul>
+<li><p><strong>Card Not Present (CNP) Fraud:</strong> Occurs in online or phone transactions where the physical card is not required.</p></li>
+<li><p><strong>Card Present Fraud:</strong> Involves physical misuse of the card, such as cloning or skimming.</p></li>
+</ul>
+</li>
+<li><p><strong>Wire Transfer Fraud:</strong> Unauthorized initiation of electronic funds transfers, often facilitated through phishing or malware attacks.</p></li>
+<li><p><strong>Account Takeover (ATO):</strong> Gaining unauthorized access to a legitimate user’s account to perform fraudulent transactions.</p></li>
+</ul>
+</section>
+<section id="identity-related-fraud">
+<h3>2.2. Identity-Related Fraud<a class="headerlink" href="#identity-related-fraud" title="Link to this heading">#</a></h3>
+<p><strong>Identity-related fraud</strong> entails acquiring and using someone else’s personal information without consent, typically for financial gain. This includes:</p>
+<ul class="simple">
+<li><p><strong>Synthetic Identity Fraud:</strong> Combining real and fabricated information to create a new identity used for fraudulent activities.</p></li>
+<li><p><strong>Medical Identity Theft:</strong> Using another person’s identity to obtain medical services or drugs, often leading to inflated medical bills.</p></li>
+<li><p><strong>Social Security Fraud:</strong> Misusing social security numbers to gain employment, receive benefits, or commit other fraudulent acts.</p></li>
+</ul>
+</section>
+<section id="internal-fraud">
+<h3>2.3. Internal Fraud<a class="headerlink" href="#internal-fraud" title="Link to this heading">#</a></h3>
+<p><strong>Internal fraud</strong> refers to fraudulent activities perpetrated by individuals within an organization. Types include:</p>
+<ul class="simple">
+<li><p><strong>Embezzlement:</strong> Misappropriation of funds entrusted to an employee’s care.</p></li>
+<li><p><strong>Payroll Fraud:</strong> Manipulating payroll systems to receive unauthorized payments, such as ghost employees or inflated salaries.</p></li>
+<li><p><strong>Expense Reimbursement Fraud:</strong> Submitting false expense claims for personal gain.</p></li>
+</ul>
+</section>
+<section id="cyber-fraud">
+<h3>2.4. Cyber-Fraud<a class="headerlink" href="#cyber-fraud" title="Link to this heading">#</a></h3>
+<p><strong>Cyber-fraud</strong> encompasses fraudulent activities executed through digital platforms and technologies. It includes:</p>
+<ul class="simple">
+<li><p><strong>Phishing:</strong> Deceptive attempts to obtain sensitive information by masquerading as a trustworthy entity.</p></li>
+<li><p><strong>Ransomware Attacks:</strong> Encrypting an organization’s data and demanding payment for its release.</p></li>
+<li><p><strong>Business Email Compromise (BEC):</strong> Targeting employees with access to company finances through deceptive emails to initiate unauthorized transactions.</p></li>
+</ul>
+</section>
+<section id="advanced-and-emerging-fraud-types">
+<h3>2.5. Advanced and Emerging Fraud Types<a class="headerlink" href="#advanced-and-emerging-fraud-types" title="Link to this heading">#</a></h3>
+<p>Beyond the primary categories, several advanced and emerging types of financial fraud have gained prominence:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Fraud Type</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Securities Fraud</strong></p></td>
+<td><p>Manipulation of stock prices, insider trading, or dissemination of false information to deceive investors.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Mortgage Fraud</strong></p></td>
+<td><p>Misrepresentation in mortgage applications, property valuations, or foreclosure processes.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Insurance Fraud</strong></p></td>
+<td><p>Filing false or exaggerated insurance claims to receive unwarranted payouts, including health, auto, and property.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Money Laundering</strong></p></td>
+<td><p>Concealing the origins of illicitly obtained money, typically by transferring through complex transactions.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Cryptocurrency Fraud</strong></p></td>
+<td><p>Scams involving digital currencies, such as fake ICOs (Initial Coin Offerings), exchange hacks, or Ponzi schemes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Tax Fraud</strong></p></td>
+<td><p>Deliberate falsification of information on tax returns to reduce tax liability or avoid taxes.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Vendor Fraud</strong></p></td>
+<td><p>Manipulating vendor relationships to receive unauthorized payments or services.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Ponzi and Pyramid Schemes</strong></p></td>
+<td><p>Investment scams promising high returns with little risk, relying on new investors to pay returns to earlier ones.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Understanding these diverse types of financial fraud is crucial for developing comprehensive detection and prevention strategies tailored to each fraud’s unique characteristics.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="methods-used-in-literature-for-fraud-detection">
+<h2>3. Methods Used in Literature for Fraud Detection<a class="headerlink" href="#methods-used-in-literature-for-fraud-detection" title="Link to this heading">#</a></h2>
+<p>The landscape of financial fraud detection has been significantly shaped by advancements in machine learning, artificial intelligence, and statistical methodologies. Researchers and practitioners have developed and employed a myriad of techniques to identify and prevent fraudulent activities. This section categorizes these methods into supervised, unsupervised, semi-supervised, reinforcement learning, and hybrid approaches, providing a detailed overview of each.</p>
+<section id="supervised-learning-methods">
+<h3>3.1. Supervised Learning Methods<a class="headerlink" href="#supervised-learning-methods" title="Link to this heading">#</a></h3>
+<p>Supervised learning involves training models on labeled datasets where the outcome (fraudulent or legitimate) is known. These methods are widely used due to their effectiveness in classification tasks.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Method</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+<th class="head"><p><strong>Advantages</strong></p></th>
+<th class="head"><p><strong>Disadvantages</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Support Vector Machine (SVM)</strong></p></td>
+<td><p>Constructs hyperplanes in high-dimensional space to separate classes. Utilizes kernel functions to handle non-linear data.</p></td>
+<td><p>Effective in high-dimensional spaces; Robust against overfitting with clear margin separation.</p></td>
+<td><p>Computationally intensive with large datasets; Less effective with overlapping classes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Decision Trees</strong></p></td>
+<td><p>Models decisions and their possible consequences as a tree-like structure. Splits data based on feature values to predict the target variable.</p></td>
+<td><p>Easy to interpret and visualize; Handles both numerical and categorical data.</p></td>
+<td><p>Prone to overfitting; Can become complex with large datasets.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Logistic Regression</strong></p></td>
+<td><p>Estimates the probability of a binary outcome using the logistic function based on input features.</p></td>
+<td><p>Simple and interpretable; Efficient for linearly separable data.</p></td>
+<td><p>Limited to linear decision boundaries; Less effective with complex relationships.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Naive Bayes</strong></p></td>
+<td><p>Probabilistic classifiers based on Bayes’ theorem, assuming feature independence.</p></td>
+<td><p>Fast and efficient; Performs well with high-dimensional data.</p></td>
+<td><p>Independence assumption may not hold; Less accurate when features are correlated.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Random Forest</strong></p></td>
+<td><p>An ensemble method that builds multiple decision trees and aggregates their predictions.</p></td>
+<td><p>High accuracy and robustness; Handles large datasets with high dimensionality.</p></td>
+<td><p>Less interpretable than single decision trees; Can be computationally intensive.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Gradient Boosting Machines (GBM)</strong></p></td>
+<td><p>Builds trees sequentially, where each tree attempts to correct the errors of the previous one. Examples include XGBoost, LightGBM, and CatBoost.</p></td>
+<td><p>High predictive performance; Handles various data types and complexities.</p></td>
+<td><p>Prone to overfitting if not properly tuned; Computationally intensive.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>K-Nearest Neighbors (K-NN)</strong></p></td>
+<td><p>Classifies instances based on the majority class among the K nearest neighbors in the feature space.</p></td>
+<td><p>Simple and easy to implement; No training phase required.</p></td>
+<td><p>Computationally intensive during prediction; Sensitive to the choice of K and distance metric.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Neural Networks (ANN)</strong></p></td>
+<td><p>Composed of interconnected layers of neurons that can model complex, non-linear relationships in data.</p></td>
+<td><p>Capable of capturing complex patterns; Highly flexible and adaptable.</p></td>
+<td><p>Requires large amounts of data; Computationally intensive and less interpretable.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="unsupervised-learning-methods">
+<h3>3.2. Unsupervised Learning Methods<a class="headerlink" href="#unsupervised-learning-methods" title="Link to this heading">#</a></h3>
+<p>Unsupervised learning deals with unlabeled data, aiming to identify inherent structures or patterns. These methods are particularly useful for anomaly detection in fraud.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Method</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+<th class="head"><p><strong>Advantages</strong></p></th>
+<th class="head"><p><strong>Disadvantages</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>K-Means Clustering</strong></p></td>
+<td><p>Partitions data into K clusters based on distance metrics, grouping similar data points together.</p></td>
+<td><p>Simple and scalable; Effective with well-separated clusters.</p></td>
+<td><p>Requires specification of K; Sensitive to initial centroid placement and outliers.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>DBSCAN (Density-Based Spatial Clustering of Applications with Noise)</strong></p></td>
+<td><p>Identifies clusters based on density, effectively detecting outliers and arbitrary-shaped clusters.</p></td>
+<td><p>Does not require specifying the number of clusters; Effective at identifying outliers.</p></td>
+<td><p>Struggles with varying density; Computationally intensive with large datasets.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Isolation Forest</strong></p></td>
+<td><p>An ensemble method that isolates anomalies by randomly partitioning the data.</p></td>
+<td><p>Effective for high-dimensional data; Handles large datasets efficiently.</p></td>
+<td><p>May struggle with data containing multiple types of anomalies; Parameter tuning required.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>One-Class SVM</strong></p></td>
+<td><p>Learns a decision boundary around the majority class to identify outliers.</p></td>
+<td><p>Effective for novelty detection; Can handle non-linear boundaries with kernel functions.</p></td>
+<td><p>Sensitive to parameter selection; Less effective with high-dimensional data.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Principal Component Analysis (PCA)</strong></p></td>
+<td><p>Reduces dimensionality by transforming data into principal components, highlighting variance and potential anomalies.</p></td>
+<td><p>Effective for dimensionality reduction; Enhances computational efficiency.</p></td>
+<td><p>May not capture complex, non-linear relationships; Interpretation of components can be challenging.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="semi-supervised-and-reinforcement-learning-methods">
+<h3>3.3. Semi-Supervised and Reinforcement Learning Methods<a class="headerlink" href="#semi-supervised-and-reinforcement-learning-methods" title="Link to this heading">#</a></h3>
+<p>These methods leverage both labeled and unlabeled data or learn optimal actions through interaction with an environment.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Method</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+<th class="head"><p><strong>Advantages</strong></p></th>
+<th class="head"><p><strong>Disadvantages</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Semi-Supervised Learning</strong></p></td>
+<td><p>Combines a small amount of labeled data with a large amount of unlabeled data during training.</p></td>
+<td><p>Utilizes abundant unlabeled data; Can improve learning accuracy with limited labeled data.</p></td>
+<td><p>Complexity in model training; Requires appropriate balance between labeled and unlabeled data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Reinforcement Learning (RL)</strong></p></td>
+<td><p>Learns optimal actions through trial and error interactions with the environment, receiving rewards or penalties based on actions taken.</p></td>
+<td><p>Capable of learning sequential decision-making processes; Adaptable to dynamic environments.</p></td>
+<td><p>Requires significant computational resources; Challenges in defining appropriate reward structures.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="hybrid-and-ensemble-methods">
+<h3>3.4. Hybrid and Ensemble Methods<a class="headerlink" href="#hybrid-and-ensemble-methods" title="Link to this heading">#</a></h3>
+<p>Hybrid and ensemble methods combine multiple algorithms or techniques to enhance predictive performance and robustness.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Method</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+<th class="head"><p><strong>Advantages</strong></p></th>
+<th class="head"><p><strong>Disadvantages</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Ensemble Learning</strong></p></td>
+<td><p>Combines the predictions of multiple models to improve overall performance. Techniques include Bagging, Boosting, and Stacking.</p></td>
+<td><p>Enhances predictive accuracy; Reduces overfitting; Increases robustness against individual model weaknesses.</p></td>
+<td><p>Increased computational complexity; Reduced interpretability.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Hybrid Models</strong></p></td>
+<td><p>Integrates different types of models or combines multiple methodologies (e.g., combining supervised and unsupervised learning) to leverage their complementary strengths.</p></td>
+<td><p>Can capture a broader range of patterns and anomalies; Flexible in adapting to complex data structures.</p></td>
+<td><p>Complexity in model integration; Potential challenges in parameter tuning and optimization.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Voting Classifiers</strong></p></td>
+<td><p>Aggregates predictions from multiple classifiers using majority voting or weighted voting schemes.</p></td>
+<td><p>Simple to implement; Can improve overall classification performance.</p></td>
+<td><p>Requires diverse base classifiers for maximum effectiveness; May still be biased towards majority classes.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="emerging-and-advanced-methods">
+<h3>3.5. Emerging and Advanced Methods<a class="headerlink" href="#emerging-and-advanced-methods" title="Link to this heading">#</a></h3>
+<p>Recent advancements have introduced novel methodologies to enhance fraud detection capabilities further.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Method</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+<th class="head"><p><strong>Advantages</strong></p></th>
+<th class="head"><p><strong>Disadvantages</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Graph Neural Networks (GNNs)</strong></p></td>
+<td><p>Models relational data as graphs, capturing intricate relationships between entities (e.g., transactions, accounts) to detect fraud patterns.</p></td>
+<td><p>Effective at modeling complex relational data; Can uncover hidden patterns and connections.</p></td>
+<td><p>Computationally intensive; Requires appropriate graph structure and representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Deep Learning Architectures</strong></p></td>
+<td><p>Advanced neural network structures, including Convolutional Neural Networks (CNNs) and Long Short-Term Memory (LSTM) networks, capable of capturing spatial and temporal dependencies in data.</p></td>
+<td><p>High capacity for learning complex, non-linear relationships; Suitable for large-scale data.</p></td>
+<td><p>Requires large datasets and substantial computational resources; Less interpretable.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Quantum Machine Learning</strong></p></td>
+<td><p>Integrates quantum computing principles with machine learning algorithms to enhance processing capabilities and handle large, complex datasets more efficiently.</p></td>
+<td><p>Potential for significant speedups in processing; Capable of handling high-dimensional data more effectively.</p></td>
+<td><p>Currently in nascent stages; Requires specialized hardware and expertise.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Autoencoders for Anomaly Detection</strong></p></td>
+<td><p>Unsupervised neural networks that learn compressed representations of data, useful for reconstructing normal transactions and identifying anomalies based on reconstruction errors.</p></td>
+<td><p>Effective for dimensionality reduction and anomaly detection; Can capture non-linear relationships.</p></td>
+<td><p>Requires careful tuning; May not perform well with highly imbalanced data without modifications.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Transfer Learning</strong></p></td>
+<td><p>Utilizes knowledge gained from one domain or task to improve learning in another related domain or task, enhancing model performance with limited data.</p></td>
+<td><p>Reduces training time; Can improve performance with limited labeled data.</p></td>
+<td><p>May require substantial computational resources; Effectiveness depends on the similarity between domains.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<hr class="docutils" />
+<section id="evaluation-metrics-used-in-fraud-detection">
+<h2>4. Evaluation Metrics Used in Fraud Detection<a class="headerlink" href="#evaluation-metrics-used-in-fraud-detection" title="Link to this heading">#</a></h2>
+<p>Evaluating the performance of fraud detection models is critical to ensure their effectiveness and reliability. Given the typically imbalanced nature of fraud datasets, where fraudulent instances are significantly rarer than legitimate ones, selecting appropriate evaluation metrics is essential.</p>
+<section id="accuracy">
+<h3>4.1. Accuracy<a class="headerlink" href="#accuracy" title="Link to this heading">#</a></h3>
+<p><strong>Accuracy</strong> measures the proportion of correctly classified instances out of the total instances.</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}
+\]</div>
+<ul class="simple">
+<li><p><strong>Pros:</strong> Simple to understand and compute.</p></li>
+<li><p><strong>Cons:</strong> Can be misleading in imbalanced datasets, as a model may achieve high accuracy by predominantly predicting the majority class.</p></li>
+</ul>
+</section>
+<section id="precision">
+<h3>4.2. Precision<a class="headerlink" href="#precision" title="Link to this heading">#</a></h3>
+<p><strong>Precision</strong> (also known as Positive Predictive Value) measures the proportion of true positive predictions among all positive predictions made by the model.</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Precision} = \frac{TP}{TP + FP}
+\]</div>
+<ul class="simple">
+<li><p><strong>Pros:</strong> Indicates the model’s ability to avoid false positives.</p></li>
+<li><p><strong>Cons:</strong> Does not account for false negatives, potentially overlooking undetected fraud cases.</p></li>
+</ul>
+</section>
+<section id="recall-sensitivity-true-positive-rate-tpr">
+<h3>4.3. Recall/Sensitivity/True Positive Rate (TPR)<a class="headerlink" href="#recall-sensitivity-true-positive-rate-tpr" title="Link to this heading">#</a></h3>
+<p><strong>Recall</strong> (also known as Sensitivity or True Positive Rate) measures the proportion of actual positive instances correctly identified by the model.</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Recall} = \frac{TP}{TP + FN}
+\]</div>
+<ul class="simple">
+<li><p><strong>Pros:</strong> Reflects the model’s ability to detect actual fraud cases.</p></li>
+<li><p><strong>Cons:</strong> Does not account for false positives, which can lead to unnecessary investigations.</p></li>
+</ul>
+</section>
+<section id="f-measure-f1-score">
+<h3>4.4. F-measure (F1 Score)<a class="headerlink" href="#f-measure-f1-score" title="Link to this heading">#</a></h3>
+<p><strong>F1 Score</strong> is the harmonic mean of precision and recall, providing a balance between the two.</p>
+<div class="math notranslate nohighlight">
+\[
+F1 = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}
+\]</div>
+<ul class="simple">
+<li><p><strong>Pros:</strong> Balances precision and recall, especially useful when seeking a trade-off between the two.</p></li>
+<li><p><strong>Cons:</strong> Does not consider true negatives, which might be relevant in certain contexts.</p></li>
+</ul>
+</section>
+<section id="specificity-true-negative-rate-tnr">
+<h3>4.5. Specificity (True Negative Rate, TNR)<a class="headerlink" href="#specificity-true-negative-rate-tnr" title="Link to this heading">#</a></h3>
+<p><strong>Specificity</strong> measures the proportion of actual negative instances correctly identified by the model.</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Specificity} = \frac{TN}{TN + FP}
+\]</div>
+<ul class="simple">
+<li><p><strong>Pros:</strong> Indicates the model’s ability to correctly identify legitimate transactions.</p></li>
+<li><p><strong>Cons:</strong> Does not account for false negatives, potentially missing fraudulent activities.</p></li>
+</ul>
+</section>
+<section id="area-under-the-receiver-operating-characteristic-curve-auc-roc">
+<h3>4.6. Area Under the Receiver Operating Characteristic Curve (AUC-ROC)<a class="headerlink" href="#area-under-the-receiver-operating-characteristic-curve-auc-roc" title="Link to this heading">#</a></h3>
+<p><strong>AUC-ROC</strong> evaluates the model’s ability to distinguish between classes across various threshold settings.</p>
+<ul class="simple">
+<li><p><strong>Pros:</strong> Provides a single metric summarizing the model’s discriminative ability; Robust to class imbalance.</p></li>
+<li><p><strong>Cons:</strong> Does not provide information about the optimal threshold; Can be less informative for highly imbalanced datasets.</p></li>
+</ul>
+</section>
+<section id="matthews-correlation-coefficient-mcc">
+<h3>4.7. Matthews Correlation Coefficient (MCC)<a class="headerlink" href="#matthews-correlation-coefficient-mcc" title="Link to this heading">#</a></h3>
+<p><strong>MCC</strong> is a metric that considers true and false positives and negatives, providing a balanced measure even with class imbalance.</p>
+<div class="math notranslate nohighlight">
+\[
+\text{MCC} = \frac{TP \times TN - FP \times FN}{\sqrt{(TP + FP)(TP + FN)(TN + FP)(TN + FN)}}
+\]</div>
+<ul class="simple">
+<li><p><strong>Pros:</strong> Produces a value between -1 and +1, where +1 indicates perfect prediction, 0 no better than random, and -1 indicates total disagreement between prediction and observation.</p></li>
+<li><p><strong>Cons:</strong> More complex to interpret compared to simpler metrics.</p></li>
+</ul>
+</section>
+<section id="cost-based-metrics">
+<h3>4.8. Cost-Based Metrics<a class="headerlink" href="#cost-based-metrics" title="Link to this heading">#</a></h3>
+<p>In real-world applications, the cost of different types of errors (false positives vs. false negatives) varies. Cost-based metrics incorporate the financial implications of these errors into the evaluation.</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Cost} = FP \times \text{Cost}_{FP} + FN \times \text{Cost}_{FN}
+\]</div>
+<ul class="simple">
+<li><p><strong>Pros:</strong> Aligns model evaluation with business objectives and financial implications.</p></li>
+<li><p><strong>Cons:</strong> Requires accurate estimation of the costs associated with different types of errors.</p></li>
+</ul>
+</section>
+<section id="precision-recall-curve">
+<h3>4.9. Precision-Recall Curve<a class="headerlink" href="#precision-recall-curve" title="Link to this heading">#</a></h3>
+<p>A precision-recall curve plots precision against recall for different threshold values, providing insights into the trade-offs between the two metrics.</p>
+<ul class="simple">
+<li><p><strong>Pros:</strong> More informative than ROC curves for imbalanced datasets.</p></li>
+<li><p><strong>Cons:</strong> Does not account for true negatives.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="common-challenges-in-financial-fraud-detection">
+<h2>5. Common Challenges in Financial Fraud Detection<a class="headerlink" href="#common-challenges-in-financial-fraud-detection" title="Link to this heading">#</a></h2>
+<p>Detecting financial fraud is fraught with challenges that stem from the nature of fraudulent activities, data limitations, and evolving tactics of fraudsters. Understanding these challenges is crucial for developing effective detection systems.</p>
+<section id="imbalanced-datasets">
+<h3>5.1. Imbalanced Datasets<a class="headerlink" href="#imbalanced-datasets" title="Link to this heading">#</a></h3>
+<p><strong>Issue:</strong> In financial datasets, fraudulent instances are typically much rarer than legitimate ones, leading to class imbalance. This imbalance can bias models towards predicting the majority class, reducing their effectiveness in detecting fraud.</p>
+<p><strong>Solutions:</strong></p>
+<ul class="simple">
+<li><p><strong>Oversampling Techniques:</strong> Methods like SMOTE (Synthetic Minority Over-sampling Technique) generate synthetic samples for the minority class to balance the dataset.</p></li>
+<li><p><strong>Undersampling Techniques:</strong> Reducing the number of majority class samples to balance the class distribution.</p></li>
+<li><p><strong>Cost-Sensitive Learning:</strong> Assigning higher misclassification costs to the minority class to penalize false negatives more severely.</p></li>
+<li><p><strong>Anomaly Detection Approaches:</strong> Focusing on identifying outliers rather than balancing classes.</p></li>
+</ul>
+</section>
+<section id="data-concept-drift">
+<h3>5.2. Data/Concept Drift<a class="headerlink" href="#data-concept-drift" title="Link to this heading">#</a></h3>
+<p><strong>Issue:</strong> Fraud patterns evolve over time as fraudsters adapt their tactics, leading to changes in data distributions. This phenomenon, known as concept drift, can degrade model performance if not addressed.</p>
+<p><strong>Solutions:</strong></p>
+<ul class="simple">
+<li><p><strong>Continuous Model Updating:</strong> Regularly retraining models with new data to capture evolving patterns.</p></li>
+<li><p><strong>Adaptive Learning Algorithms:</strong> Models that can dynamically adjust to new patterns without complete retraining.</p></li>
+<li><p><strong>Monitoring and Drift Detection:</strong> Implementing systems to detect when drift occurs and trigger model updates or alerts.</p></li>
+</ul>
+</section>
+<section id="feature-selection-and-engineering">
+<h3>5.3. Feature Selection and Engineering<a class="headerlink" href="#feature-selection-and-engineering" title="Link to this heading">#</a></h3>
+<p><strong>Issue:</strong> Identifying relevant features that effectively capture fraud patterns is critical. Irrelevant or redundant features can degrade model performance and increase computational complexity.</p>
+<p><strong>Solutions:</strong></p>
+<ul class="simple">
+<li><p><strong>Statistical Methods:</strong> Techniques like correlation analysis and mutual information to identify relevant features.</p></li>
+<li><p><strong>Dimensionality Reduction:</strong> Methods like PCA (Principal Component Analysis) to reduce feature space while retaining essential information.</p></li>
+<li><p><strong>Domain Expertise:</strong> Leveraging knowledge from financial experts to select and engineer meaningful features.</p></li>
+</ul>
+</section>
+<section id="scalability-and-real-time-detection">
+<h3>5.4. Scalability and Real-Time Detection<a class="headerlink" href="#scalability-and-real-time-detection" title="Link to this heading">#</a></h3>
+<p><strong>Issue:</strong> Handling large volumes of transactions in real-time requires efficient algorithms and robust infrastructure, posing computational and scalability challenges.</p>
+<p><strong>Solutions:</strong></p>
+<ul class="simple">
+<li><p><strong>Distributed Computing:</strong> Utilizing frameworks like Hadoop or Spark to process large datasets in parallel.</p></li>
+<li><p><strong>Efficient Algorithms:</strong> Employing lightweight models optimized for speed and low latency.</p></li>
+<li><p><strong>Incremental Learning:</strong> Updating models incrementally without retraining from scratch, enabling real-time adaptability.</p></li>
+</ul>
+</section>
+<section id="interpretability-and-explainability">
+<h3>5.5. Interpretability and Explainability<a class="headerlink" href="#interpretability-and-explainability" title="Link to this heading">#</a></h3>
+<p><strong>Issue:</strong> Stakeholders often require explanations for fraud detection decisions to ensure trust, compliance, and actionable insights. Black-box models may hinder this transparency.</p>
+<p><strong>Solutions:</strong></p>
+<ul class="simple">
+<li><p><strong>Model-Agnostic Methods:</strong> Techniques like SHAP (SHapley Additive exPlanations) and LIME (Local Interpretable Model-agnostic Explanations) provide explanations for complex models.</p></li>
+<li><p><strong>Interpretable Models:</strong> Choosing inherently interpretable models like decision trees or logistic regression when possible.</p></li>
+<li><p><strong>Hybrid Approaches:</strong> Combining complex models with simpler, interpretable models to balance performance and explainability.</p></li>
+</ul>
+</section>
+<section id="data-privacy-and-security">
+<h3>5.6. Data Privacy and Security<a class="headerlink" href="#data-privacy-and-security" title="Link to this heading">#</a></h3>
+<p><strong>Issue:</strong> Handling sensitive financial data requires stringent adherence to data privacy laws and security standards. Ensuring data protection while enabling effective fraud detection is challenging.</p>
+<p><strong>Solutions:</strong></p>
+<ul class="simple">
+<li><p><strong>Data Anonymization:</strong> Removing or obfuscating personally identifiable information (PII) to protect privacy.</p></li>
+<li><p><strong>Secure Data Storage and Transmission:</strong> Implementing encryption and secure protocols to safeguard data.</p></li>
+<li><p><strong>Compliance with Regulations:</strong> Adhering to standards like GDPR (General Data Protection Regulation) and PCI DSS (Payment Card Industry Data Security Standard).</p></li>
+</ul>
+</section>
+<section id="high-false-positive-rates">
+<h3>5.7. High False Positive Rates<a class="headerlink" href="#high-false-positive-rates" title="Link to this heading">#</a></h3>
+<p><strong>Issue:</strong> High false positive rates can lead to unnecessary investigations, customer dissatisfaction, and increased operational costs.</p>
+<p><strong>Solutions:</strong></p>
+<ul class="simple">
+<li><p><strong>Threshold Optimization:</strong> Adjusting classification thresholds to balance precision and recall.</p></li>
+<li><p><strong>Model Calibration:</strong> Ensuring predicted probabilities accurately reflect true likelihoods.</p></li>
+<li><p><strong>Post-Processing Techniques:</strong> Implementing additional verification steps for flagged transactions to reduce false positives.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="innovative-approaches-financial-fraud-detection-using-quantum-graph-neural-networks">
+<h2>6. Innovative Approaches: Financial Fraud Detection Using Quantum Graph Neural Networks<a class="headerlink" href="#innovative-approaches-financial-fraud-detection-using-quantum-graph-neural-networks" title="Link to this heading">#</a></h2>
+<p>As the field of financial fraud detection advances, integrating cutting-edge technologies promises to enhance detection capabilities beyond traditional methods. One such promising approach is the utilization of <strong>Quantum Graph Neural Networks (QGNNs)</strong>, which combines the strengths of quantum computing with graph-based neural networks.</p>
+<section id="overview">
+<h3>6.1. Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h3>
+<p>Quantum computing leverages principles of quantum mechanics to perform computations at speeds unattainable by classical computers for certain tasks. When integrated with <strong>Graph Neural Networks (GNNs)</strong>, which excel at modeling relational data, QGNNs offer a powerful framework for detecting complex fraud patterns in financial networks.</p>
+</section>
+<section id="key-contributions">
+<h3>6.2. Key Contributions<a class="headerlink" href="#key-contributions" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Quantum Enhancement:</strong> QGNNs utilize quantum algorithms to perform parallel computations, enabling the processing of large and complex graph-structured datasets more efficiently than classical counterparts.</p></li>
+<li><p><strong>Graph-Based Modeling:</strong> Financial transactions and entities (e.g., accounts, merchants) are represented as nodes and edges in a graph, capturing intricate relationships and dependencies that are indicative of fraudulent behavior.</p></li>
+<li><p><strong>Improved Accuracy:</strong> Empirical studies, such as the one by Innan et al. (2024), have demonstrated that QGNNs can achieve superior performance in fraud detection tasks compared to traditional machine learning models.</p></li>
+</ul>
+</section>
+<section id="implications-and-future-directions">
+<h3>6.3. Implications and Future Directions<a class="headerlink" href="#implications-and-future-directions" title="Link to this heading">#</a></h3>
+<p>The integration of quantum computing with GNNs heralds a new era in financial fraud detection, offering unprecedented computational capabilities and model exprp_y=0,
+class_sep=class_sep,
+random_state=42)</p>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="create-feature-names">
+<h1>Create feature names<a class="headerlink" href="#create-feature-names" title="Link to this heading">#</a></h1>
+<p>feature_names = [f’Feature_{i}’ for i in range(1, n_features + 1)]</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="create-dataframe">
+<h1>Create DataFrame<a class="headerlink" href="#create-dataframe" title="Link to this heading">#</a></h1>
+<p>data = pd.DataFrame(X, columns=feature_names)
+data[‘Class’] = y</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="display-class-distribution">
+<h1>Display class distribution<a class="headerlink" href="#display-class-distribution" title="Link to this heading">#</a></h1>
+<p>print(data[‘Class’].value_counts())</p>
+<p>}</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_classification</span>
+
+<span class="c1"># Set random seed for reproducibility</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Parameters for synthetic data</span>
+<span class="n">n_samples</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># Total number of transactions</span>
+<span class="n">n_features</span> <span class="o">=</span> <span class="mi">20</span>     <span class="c1"># Number of features</span>
+<span class="n">n_informative</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># Number of informative features</span>
+<span class="n">n_redundant</span> <span class="o">=</span> <span class="mi">5</span>     <span class="c1"># Number of redundant features</span>
+<span class="n">n_clusters_per_class</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">class_sep</span> <span class="o">=</span> <span class="mf">1.5</span>     <span class="c1"># Separation between classes</span>
+
+<span class="c1"># Generate synthetic dataset using make_classification</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="n">n_samples</span><span class="p">,</span>
+                           <span class="n">n_features</span><span class="o">=</span><span class="n">n_features</span><span class="p">,</span>
+                           <span class="n">n_informative</span><span class="o">=</span><span class="n">n_informative</span><span class="p">,</span>
+                           <span class="n">n_redundant</span><span class="o">=</span><span class="n">n_redundant</span><span class="p">,</span>
+                           <span class="n">n_clusters_per_class</span><span class="o">=</span><span class="n">n_clusters_per_class</span><span class="p">,</span>
+                           <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mf">0.99</span><span class="p">],</span>  <span class="c1"># Imbalance: 1% fraud</span>
+                           <span class="n">flip_y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                           <span class="n">class_sep</span><span class="o">=</span><span class="n">class_sep</span><span class="p">,</span>
+                           <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="c1"># Create feature names</span>
+<span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Feature_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+
+<span class="c1"># Create DataFrame</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;Class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span>
+
+
+<span class="c1"># Display class distribution</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Class&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Class
+0    990
+1     10
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="c1"># Check for missing values</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+
+<span class="c1"># Assuming no missing values, proceed to scaling</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+
+<span class="c1"># Scale features</span>
+<span class="n">data_scaled</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">data_scaled</span><span class="p">[</span><span class="n">feature_names</span><span class="p">]</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data_scaled</span><span class="p">[</span><span class="n">feature_names</span><span class="p">])</span>
+
+<span class="c1"># Display scaled features</span>
+<span class="n">data_scaled</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Feature_1     0
+Feature_2     0
+Feature_3     0
+Feature_4     0
+Feature_5     0
+Feature_6     0
+Feature_7     0
+Feature_8     0
+Feature_9     0
+Feature_10    0
+Feature_11    0
+Feature_12    0
+Feature_13    0
+Feature_14    0
+Feature_15    0
+Feature_16    0
+Feature_17    0
+Feature_18    0
+Feature_19    0
+Feature_20    0
+Class         0
+dtype: int64
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Feature_1</th>
+      <th>Feature_2</th>
+      <th>Feature_3</th>
+      <th>Feature_4</th>
+      <th>Feature_5</th>
+      <th>Feature_6</th>
+      <th>Feature_7</th>
+      <th>Feature_8</th>
+      <th>Feature_9</th>
+      <th>Feature_10</th>
+      <th>...</th>
+      <th>Feature_12</th>
+      <th>Feature_13</th>
+      <th>Feature_14</th>
+      <th>Feature_15</th>
+      <th>Feature_16</th>
+      <th>Feature_17</th>
+      <th>Feature_18</th>
+      <th>Feature_19</th>
+      <th>Feature_20</th>
+      <th>Class</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.105607</td>
+      <td>-0.783826</td>
+      <td>1.203067</td>
+      <td>0.314324</td>
+      <td>0.548552</td>
+      <td>-2.297065</td>
+      <td>-0.350325</td>
+      <td>0.973582</td>
+      <td>-0.622701</td>
+      <td>-0.297700</td>
+      <td>...</td>
+      <td>0.223241</td>
+      <td>0.582408</td>
+      <td>0.458274</td>
+      <td>0.485744</td>
+      <td>-0.109906</td>
+      <td>0.350670</td>
+      <td>1.099691</td>
+      <td>0.575851</td>
+      <td>0.058040</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.526478</td>
+      <td>0.660880</td>
+      <td>-1.653958</td>
+      <td>-0.123984</td>
+      <td>0.163485</td>
+      <td>0.184245</td>
+      <td>-1.610202</td>
+      <td>-1.564630</td>
+      <td>1.703904</td>
+      <td>-1.422734</td>
+      <td>...</td>
+      <td>1.184711</td>
+      <td>0.066779</td>
+      <td>0.839415</td>
+      <td>1.224582</td>
+      <td>-0.140908</td>
+      <td>-0.278888</td>
+      <td>-1.350465</td>
+      <td>-2.071507</td>
+      <td>-2.242089</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.777513</td>
+      <td>-0.890851</td>
+      <td>0.742163</td>
+      <td>0.079666</td>
+      <td>0.198336</td>
+      <td>-1.549060</td>
+      <td>0.952135</td>
+      <td>0.275218</td>
+      <td>-1.189706</td>
+      <td>0.224192</td>
+      <td>...</td>
+      <td>-0.175983</td>
+      <td>-0.029821</td>
+      <td>-0.845702</td>
+      <td>-0.065747</td>
+      <td>-0.532438</td>
+      <td>1.233912</td>
+      <td>0.789697</td>
+      <td>-0.047222</td>
+      <td>0.010995</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.999119</td>
+      <td>-2.096719</td>
+      <td>1.395647</td>
+      <td>-0.910380</td>
+      <td>-1.603204</td>
+      <td>0.579091</td>
+      <td>0.299013</td>
+      <td>0.514536</td>
+      <td>-2.185686</td>
+      <td>0.515427</td>
+      <td>...</td>
+      <td>-1.335274</td>
+      <td>0.329072</td>
+      <td>-0.182691</td>
+      <td>0.577634</td>
+      <td>0.627886</td>
+      <td>-0.485171</td>
+      <td>-1.049490</td>
+      <td>0.017905</td>
+      <td>1.103530</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.455525</td>
+      <td>0.691483</td>
+      <td>1.382891</td>
+      <td>1.979137</td>
+      <td>0.266028</td>
+      <td>-1.085762</td>
+      <td>-0.744825</td>
+      <td>-0.674336</td>
+      <td>-0.566915</td>
+      <td>0.080263</td>
+      <td>...</td>
+      <td>-0.167413</td>
+      <td>1.279580</td>
+      <td>-1.101795</td>
+      <td>-1.621224</td>
+      <td>0.553198</td>
+      <td>-1.069132</td>
+      <td>0.504031</td>
+      <td>1.226638</td>
+      <td>0.013900</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 21 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Create interaction features</span>
+<span class="n">data_scaled</span><span class="p">[</span><span class="s1">&#39;Feature_1_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_scaled</span><span class="p">[</span><span class="s1">&#39;Feature_1&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">data_scaled</span><span class="p">[</span><span class="s1">&#39;Feature_2&#39;</span><span class="p">]</span>
+<span class="n">data_scaled</span><span class="p">[</span><span class="s1">&#39;Feature_3_4&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_scaled</span><span class="p">[</span><span class="s1">&#39;Feature_3&#39;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">data_scaled</span><span class="p">[</span><span class="s1">&#39;Feature_4&#39;</span><span class="p">]</span>
+
+<span class="c1"># Example: Create polynomial features</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
+
+<span class="n">poly</span> <span class="o">=</span> <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">interaction_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">poly_features</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data_scaled</span><span class="p">[</span><span class="n">feature_names</span><span class="p">])</span>
+
+<span class="c1"># Create DataFrame for polynomial features</span>
+<span class="n">poly_feature_names</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(</span><span class="n">feature_names</span><span class="p">)</span>
+<span class="n">poly_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">poly_features</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">poly_feature_names</span><span class="p">)</span>
+
+<span class="c1"># Concatenate with the original scaled data</span>
+<span class="n">data_final</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">data_scaled</span><span class="p">,</span> <span class="n">poly_df</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Drop original features to reduce dimensionality for demonstration</span>
+<span class="n">data_final</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Display final features</span>
+<span class="n">data_final</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Class</th>
+      <th>Feature_1_2</th>
+      <th>Feature_3_4</th>
+      <th>Feature_1^2</th>
+      <th>Feature_1 Feature_2</th>
+      <th>Feature_1 Feature_3</th>
+      <th>Feature_1 Feature_4</th>
+      <th>Feature_1 Feature_5</th>
+      <th>Feature_1 Feature_6</th>
+      <th>Feature_1 Feature_7</th>
+      <th>...</th>
+      <th>Feature_17^2</th>
+      <th>Feature_17 Feature_18</th>
+      <th>Feature_17 Feature_19</th>
+      <th>Feature_17 Feature_20</th>
+      <th>Feature_18^2</th>
+      <th>Feature_18 Feature_19</th>
+      <th>Feature_18 Feature_20</th>
+      <th>Feature_19^2</th>
+      <th>Feature_19 Feature_20</th>
+      <th>Feature_20^2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>-0.082778</td>
+      <td>1.133047</td>
+      <td>0.011153</td>
+      <td>-0.082778</td>
+      <td>0.127053</td>
+      <td>0.033195</td>
+      <td>0.057931</td>
+      <td>-0.242587</td>
+      <td>-0.036997</td>
+      <td>...</td>
+      <td>0.122970</td>
+      <td>0.385629</td>
+      <td>0.201934</td>
+      <td>0.020353</td>
+      <td>1.209320</td>
+      <td>0.633258</td>
+      <td>0.063826</td>
+      <td>0.331604</td>
+      <td>0.033422</td>
+      <td>0.003369</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>-0.347939</td>
+      <td>2.859562</td>
+      <td>0.277179</td>
+      <td>-0.347939</td>
+      <td>0.870773</td>
+      <td>0.065275</td>
+      <td>-0.086071</td>
+      <td>-0.097001</td>
+      <td>0.847736</td>
+      <td>...</td>
+      <td>0.077779</td>
+      <td>0.376629</td>
+      <td>0.577719</td>
+      <td>0.625293</td>
+      <td>1.823757</td>
+      <td>2.797499</td>
+      <td>3.027863</td>
+      <td>4.291142</td>
+      <td>4.644503</td>
+      <td>5.026962</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>-0.692648</td>
+      <td>0.471140</td>
+      <td>0.604526</td>
+      <td>-0.692648</td>
+      <td>0.577041</td>
+      <td>0.061941</td>
+      <td>0.154209</td>
+      <td>-1.204414</td>
+      <td>0.740297</td>
+      <td>...</td>
+      <td>1.522538</td>
+      <td>0.974417</td>
+      <td>-0.058267</td>
+      <td>0.013567</td>
+      <td>0.623622</td>
+      <td>-0.037291</td>
+      <td>0.008683</td>
+      <td>0.002230</td>
+      <td>-0.000519</td>
+      <td>0.000121</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>2.094872</td>
+      <td>2.858210</td>
+      <td>0.998239</td>
+      <td>2.094872</td>
+      <td>-1.394418</td>
+      <td>0.909578</td>
+      <td>1.601792</td>
+      <td>-0.578581</td>
+      <td>-0.298750</td>
+      <td>...</td>
+      <td>0.235391</td>
+      <td>0.509183</td>
+      <td>-0.008687</td>
+      <td>-0.535401</td>
+      <td>1.101430</td>
+      <td>-0.018791</td>
+      <td>-1.158144</td>
+      <td>0.000321</td>
+      <td>0.019759</td>
+      <td>1.217779</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>1.006471</td>
+      <td>-0.066750</td>
+      <td>2.118553</td>
+      <td>1.006471</td>
+      <td>2.012832</td>
+      <td>2.880683</td>
+      <td>0.387210</td>
+      <td>-1.580354</td>
+      <td>-1.084112</td>
+      <td>...</td>
+      <td>1.143043</td>
+      <td>-0.538875</td>
+      <td>-1.311438</td>
+      <td>-0.014861</td>
+      <td>0.254047</td>
+      <td>0.618263</td>
+      <td>0.007006</td>
+      <td>1.504640</td>
+      <td>0.017050</td>
+      <td>0.000193</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 213 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="ch">#!pip install imbalanced-learn</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">imblearn.over_sampling</span> <span class="kn">import</span> <span class="n">SMOTE</span>
+
+<span class="c1"># Separate features and target</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">data_final</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Class&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">data_final</span><span class="p">[</span><span class="s1">&#39;Class&#39;</span><span class="p">]</span>
+
+<span class="c1"># Split data into training and testing sets with stratification</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+                                                    <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                                                    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+                                                    <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Apply SMOTE to training data</span>
+<span class="n">sm</span> <span class="o">=</span> <span class="n">SMOTE</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">X_train_res</span><span class="p">,</span> <span class="n">y_train_res</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Check new class distribution</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y_train_res</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Class
+0    792
+1    792
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+
+<span class="c1"># Initialize Random Forest with hyperparameters</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                            <span class="n">max_depth</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                            <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+                            <span class="n">class_weight</span><span class="o">=</span><span class="s1">&#39;balanced&#39;</span><span class="p">)</span>
+
+<span class="c1"># Train the model on resampled data</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_res</span><span class="p">,</span> <span class="n">y_train_res</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomForestClassifier(class_weight=&#x27;balanced&#x27;, max_depth=10, random_state=42)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">RandomForestClassifier</label><div class="sk-toggleable__content"><pre>RandomForestClassifier(class_weight=&#x27;balanced&#x27;, max_depth=10, random_state=42)</pre></div></div></div></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="p">(</span><span class="n">accuracy_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span>
+                             <span class="n">f1_score</span><span class="p">,</span> <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">,</span>
+                             <span class="n">classification_report</span><span class="p">)</span>
+
+<span class="c1"># Predict on test set</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">y_proba</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># Calculate evaluation metrics</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">precision</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">recall</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">f1</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">roc_auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_proba</span><span class="p">)</span>
+<span class="n">conf_matrix</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="c1"># Display metrics</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Precision: </span><span class="si">{</span><span class="n">precision</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Recall (TPR): </span><span class="si">{</span><span class="n">recall</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;F1 Score: </span><span class="si">{</span><span class="n">f1</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;ROC AUC: </span><span class="si">{</span><span class="n">roc_auc</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Confusion Matrix:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">conf_matrix</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 0.9900
+Precision: 0.0000
+Recall (TPR): 0.0000
+F1 Score: 0.0000
+ROC AUC: 0.9268
+Confusion Matrix:
+[[198   0]
+ [  2   0]]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\ProgramData\anaconda3\envs\mlpy\lib\site-packages\sklearn\metrics\_classification.py:1334: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 due to no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="ch">#!pip install seaborn</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="c1"># Plot confusion matrix</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">conf_matrix</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span>
+            <span class="n">xticklabels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Legitimate&#39;</span><span class="p">,</span> <span class="s1">&#39;Fraud&#39;</span><span class="p">],</span>
+            <span class="n">yticklabels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Legitimate&#39;</span><span class="p">,</span> <span class="s1">&#39;Fraud&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Actual&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion Matrix&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Feature importance</span>
+<span class="n">importances</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">feature_importances_</span>
+<span class="n">feature_names_final</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span>
+<span class="n">feature_importance</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">importances</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">feature_names_final</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Plot top 10 feature importances</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">feature_importance</span><span class="p">[:</span><span class="mi">10</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">feature_importance</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Top 10 Feature Importances&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Importance Score&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Features&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/461977e20a12c0de40a6d8e80217edf43a39acc57741630cd0e3070f144a820d.png" src="_images/461977e20a12c0de40a6d8e80217edf43a39acc57741630cd0e3070f144a820d.png" />
+<img alt="_images/b772e4784cb2814d245ecab6404e185f1ac46376482af425d5e6ce847ec3ad01.png" src="_images/b772e4784cb2814d245ecab6404e185f1ac46376482af425d5e6ce847ec3ad01.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">docutils</span><span class="o">==</span><span class="mf">0.18</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting docutils==0.18
+  Using cached docutils-0.18-py2.py3-none-any.whl.metadata (2.9 kB)
+Using cached docutils-0.18-py2.py3-none-any.whl (569 kB)
+Installing collected packages: docutils
+  Attempting uninstall: docutils
+    Found existing installation: docutils 0.20
+    Uninstalling docutils-0.20:
+      Successfully uninstalled docutils-0.20
+Successfully installed docutils-0.18
+Note: you may need to restart the kernel to use updated packages.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ERROR: pip&#39;s dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+sphinx 7.4.7 requires docutils&lt;0.22,&gt;=0.20, but you have docutils 0.18 which is incompatible.
+sphinxcontrib-bibtex 2.6.3 requires docutils!=0.18.*,!=0.19.*,&gt;=0.8, but you have docutils 0.18 which is incompatible.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">uninstall</span> <span class="n">docutils</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>^C
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Note: you may need to restart the kernel to use updated packages.Found existing installation: docutils 0.18
+Uninstalling docutils-0.18:
+  Would remove:
+    c:\programdata\anaconda3\envs\mlpy\lib\site-packages\docutils-0.18.dist-info\*
+    c:\programdata\anaconda3\envs\mlpy\lib\site-packages\docutils\*
+    c:\programdata\anaconda3\envs\mlpy\scripts\rst2html.py
+    c:\programdata\anaconda3\envs\mlpy\scripts\rst2html4.py
+    c:\programdata\anaconda3\envs\mlpy\scripts\rst2html5.py
+    c:\programdata\anaconda3\envs\mlpy\scripts\rst2latex.py
+    c:\programdata\anaconda3\envs\mlpy\scripts\rst2man.py
+    c:\programdata\anaconda3\envs\mlpy\scripts\rst2odt.py
+    c:\programdata\anaconda3\envs\mlpy\scripts\rst2odt_prepstyles.py
+    c:\programdata\anaconda3\envs\mlpy\scripts\rst2pseudoxml.py
+    c:\programdata\anaconda3\envs\mlpy\scripts\rst2s5.py
+    c:\programdata\anaconda3\envs\mlpy\scripts\rst2xetex.py
+    c:\programdata\anaconda3\envs\mlpy\scripts\rst2xml.py
+    c:\programdata\anaconda3\envs\mlpy\scripts\rstpep2html.py
+Proceed (Y/n)? 
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="54-firm-valuation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Firm Valuation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="60-text_sim.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">&lt;no title&gt;</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Financial Fraud Detection</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">1. Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-financial-fraud">2. Types of Financial Fraud</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transaction-fraud">2.1. Transaction Fraud</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#identity-related-fraud">2.2. Identity-Related Fraud</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#internal-fraud">2.3. Internal Fraud</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cyber-fraud">2.4. Cyber-Fraud</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-and-emerging-fraud-types">2.5. Advanced and Emerging Fraud Types</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methods-used-in-literature-for-fraud-detection">3. Methods Used in Literature for Fraud Detection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#supervised-learning-methods">3.1. Supervised Learning Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unsupervised-learning-methods">3.2. Unsupervised Learning Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#semi-supervised-and-reinforcement-learning-methods">3.3. Semi-Supervised and Reinforcement Learning Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hybrid-and-ensemble-methods">3.4. Hybrid and Ensemble Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#emerging-and-advanced-methods">3.5. Emerging and Advanced Methods</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics-used-in-fraud-detection">4. Evaluation Metrics Used in Fraud Detection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accuracy">4.1. Accuracy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#precision">4.2. Precision</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recall-sensitivity-true-positive-rate-tpr">4.3. Recall/Sensitivity/True Positive Rate (TPR)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#f-measure-f1-score">4.4. F-measure (F1 Score)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specificity-true-negative-rate-tnr">4.5. Specificity (True Negative Rate, TNR)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#area-under-the-receiver-operating-characteristic-curve-auc-roc">4.6. Area Under the Receiver Operating Characteristic Curve (AUC-ROC)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matthews-correlation-coefficient-mcc">4.7. Matthews Correlation Coefficient (MCC)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cost-based-metrics">4.8. Cost-Based Metrics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#precision-recall-curve">4.9. Precision-Recall Curve</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-challenges-in-financial-fraud-detection">5. Common Challenges in Financial Fraud Detection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#imbalanced-datasets">5.1. Imbalanced Datasets</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-concept-drift">5.2. Data/Concept Drift</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-selection-and-engineering">5.3. Feature Selection and Engineering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scalability-and-real-time-detection">5.4. Scalability and Real-Time Detection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretability-and-explainability">5.5. Interpretability and Explainability</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-privacy-and-security">5.6. Data Privacy and Security</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-false-positive-rates">5.7. High False Positive Rates</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#innovative-approaches-financial-fraud-detection-using-quantum-graph-neural-networks">6. Innovative Approaches: Financial Fraud Detection Using Quantum Graph Neural Networks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">6.1. Overview</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-contributions">6.2. Key Contributions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implications-and-future-directions">6.3. Implications and Future Directions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#create-feature-names">Create feature names</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#create-dataframe">Create DataFrame</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#display-class-distribution">Display class distribution</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Mike Nguyen
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

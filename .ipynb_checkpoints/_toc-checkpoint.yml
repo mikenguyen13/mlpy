@@ -6,15 +6,24 @@ root: intro # landing page
 parts:
   - caption: Theory
     chapters:
-    - file: _optimization.md
+      - file: 05-supervised-ml.md
+      - file: 06-advanced_linear_regression.md
+      - file: 07-regularized.ipynb
+      - file: 10-optimization.md
+      - file: 15-matrix_factorization.ipynb
+      - file: 40-data-masking.ipynb
   - caption: Industry Applications
     chapters:
-    - file: 3-approximate-nearest-neighbors.ipynb
-    - file: 4-credit-score.ipynb
-    - file: sim_dat_bandits.ipynb
-    - file: min_risk.ipynb
-    - file: credit-approval.ipynb
-    - file: credit-adjustment.ipynb
-    - file: firm-valuation.ipynb
-    - file: text_sim.ipynb
-    - file: text_sim_viet.ipynb
+      - file: 50-credit-score.ipynb
+      - file: 51-min_risk.ipynb
+      - file: 51-min_risk_amount.ipynb
+      - file: 52-credit-approval.ipynb
+      - file: 53-credit-adjustment.ipynb
+      - file: 54-firm-valuation.ipynb
+      - file: 55-financial_fraud.ipynb
+      - file: 60-text_sim.ipynb
+      - file: 61-text_sim_viet.ipynb
+      - file: 70-approximate-nearest-neighbors.ipynb
+      - file: 71-sim_dat_bandits.ipynb
+      - file: 72-data-anoy-geo.ipynb
+      - file: 73-sample-splitting-time-series.ipynb
