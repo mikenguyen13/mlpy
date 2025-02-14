@@ -241,6 +241,9 @@
 <li class="toctree-l1"><a class="reference internal" href="71-sim_dat_bandits.html">Multi-Armed Bandits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="72-data-anoy-geo.html">Data Anonymization Techniques for Geospatial Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="73-sample-splitting-time-series.html">Split Samples in Time Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="74-leads-allocation.html">Maximizing Profits with a Simple Integer Linear Program in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="75-conversion-model.html">Conversion Model in Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="76-two-sided-matching.html">Two-Sided Matching &amp; Ranking for Credit Cards</a></li>
 </ul>
 
     </div>
@@ -475,8 +478,8 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sentence-BERT (SBERT)</span>
-<span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sentence_transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">SentenceTransformer</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="c1"># Initialize SBERT model</span>
 <span class="n">sbert_model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s1">&#39;all-MiniLM-L6-v2&#39;</span><span class="p">)</span>  <span class="c1"># A lightweight and efficient model</span>
@@ -494,7 +497,7 @@ document.write(`
 <span class="c1"># Generate embeddings</span>
 <span class="n">industry_embedding_sbert</span> <span class="o">=</span> <span class="n">sbert_model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">industry_text</span><span class="p">)</span>
 <span class="n">website_embeddings_sbert</span> <span class="o">=</span> <span class="n">sbert_model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">website_texts</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">cosine_similarity</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics.pairwise</span><span class="w"> </span><span class="kn">import</span> <span class="n">cosine_similarity</span>
 
 <span class="c1"># Compute similarities</span>
 <span class="n">similarities_sbert</span> <span class="o">=</span> <span class="n">cosine_similarity</span><span class="p">([</span><span class="n">industry_embedding_sbert</span><span class="p">],</span> <span class="n">website_embeddings_sbert</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -511,7 +514,7 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># LaBSE (Language-agnostic BERT Sentence Embedding)</span>
-<span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sentence_transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">SentenceTransformer</span>
 
 <span class="c1"># Initialize LaBSE model</span>
 <span class="n">labse_model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s1">&#39;sentence-transformers/LaBSE&#39;</span><span class="p">)</span>
@@ -527,7 +530,7 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TF-IDF with Cosine Similarity</span>
-<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfidfVectorizer</span>
 
 <span class="c1"># Combine all texts for fitting the vectorizer</span>
 <span class="n">all_texts</span> <span class="o">=</span> <span class="p">[</span><span class="n">industry_text</span><span class="p">]</span> <span class="o">+</span> <span class="n">website_texts</span>
@@ -549,7 +552,7 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Comparing the Methods</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="c1"># Create a DataFrame to store similarity scores</span>
 <span class="n">df_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>

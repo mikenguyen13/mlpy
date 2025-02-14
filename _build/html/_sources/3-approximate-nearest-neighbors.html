@@ -241,6 +241,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../71-sim_dat_bandits.html">Multi-Armed Bandits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../72-data-anoy-geo.html">Data Anonymization Techniques for Geospatial Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../73-sample-splitting-time-series.html">Split Samples in Time Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../74-leads-allocation.html">Maximizing Profits with a Simple Integer Linear Program in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../75-conversion-model.html">Conversion Model in Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../76-two-sided-matching.html">Two-Sided Matching &amp; Ranking for Credit Cards</a></li>
 </ul>
 
     </div>
@@ -526,8 +529,8 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate a random dataset</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="n">d</span> <span class="o">=</span> <span class="mi">100</span> <span class="c1"># number of dimensions</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
@@ -708,8 +711,8 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">annoy</span> <span class="kn">import</span> <span class="n">AnnoyIndex</span>
-<span class="kn">import</span> <span class="nn">random</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">annoy</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnnoyIndex</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>  <span class="c1"># Length of item vector that will be indexed</span>
 </pre></div>
@@ -899,7 +902,7 @@ Faiss introduces a solution that is not only faster but also more efficient than
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">faiss</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">faiss</span>
 </pre></div>
 </div>
 </div>

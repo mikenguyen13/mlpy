@@ -241,6 +241,9 @@
 <li class="toctree-l1"><a class="reference internal" href="71-sim_dat_bandits.html">Multi-Armed Bandits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="72-data-anoy-geo.html">Data Anonymization Techniques for Geospatial Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="73-sample-splitting-time-series.html">Split Samples in Time Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="74-leads-allocation.html">Maximizing Profits with a Simple Integer Linear Program in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="75-conversion-model.html">Conversion Model in Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="76-two-sided-matching.html">Two-Sided Matching &amp; Ranking for Credit Cards</a></li>
 </ul>
 
     </div>
@@ -606,15 +609,15 @@ document.write(`
 <p>Tokenization replaces sensitive data elements with tokens while maintaining the original format, making it useful for payment card processing.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">import</span> <span class="nn">string</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">string</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="c1"># Sample data creation</span>
 <span class="n">sample_ssns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;123-45-6789&#39;</span><span class="p">,</span> <span class="s1">&#39;987-65-4321&#39;</span><span class="p">,</span> <span class="s1">&#39;555-44-3333&#39;</span><span class="p">,</span> <span class="s1">&#39;111-22-3333&#39;</span><span class="p">,</span> <span class="s1">&#39;222-33-4444&#39;</span><span class="p">]</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;SSN&#39;</span><span class="p">:</span> <span class="n">sample_ssns</span><span class="p">})</span>
 
-<span class="k">def</span> <span class="nf">tokenize</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">tokenize</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
     <span class="n">token_dict</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
         <span class="n">token</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">digits</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">8</span><span class="p">))</span>
@@ -645,9 +648,9 @@ document.write(`
 <p>The technique allows for meaningful aggregate analysis without exposing individual entries, making it ideal for large-scale data analysis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="k">def</span> <span class="nf">add_noise</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_noise</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
     <span class="n">noise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">laplace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">epsilon</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
     <span class="n">noisy_data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">+</span> <span class="n">noise</span>
     <span class="k">return</span> <span class="n">noisy_data</span>
@@ -719,13 +722,13 @@ document.write(`
 <p>This technique is commonly used for sensitive structured data, such as credit card numbers.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="c1"># Sample data creation</span>
 <span class="n">sample_credit_cards</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;1234-5678-9876-5432&#39;</span><span class="p">,</span> <span class="s1">&#39;4321-8765-6789-1234&#39;</span><span class="p">,</span> <span class="s1">&#39;5678-1234-9876-5432&#39;</span><span class="p">,</span> <span class="s1">&#39;8765-4321-1234-5678&#39;</span><span class="p">]</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;CreditCard&#39;</span><span class="p">:</span> <span class="n">sample_credit_cards</span><span class="p">})</span>
 
-<span class="k">def</span> <span class="nf">format_preserving_encryption</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">format_preserving_encryption</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
     <span class="n">encrypted_data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)))</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">encrypted_data</span>
 

@@ -241,6 +241,9 @@
 <li class="toctree-l1"><a class="reference internal" href="71-sim_dat_bandits.html">Multi-Armed Bandits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="72-data-anoy-geo.html">Data Anonymization Techniques for Geospatial Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="73-sample-splitting-time-series.html">Split Samples in Time Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="74-leads-allocation.html">Maximizing Profits with a Simple Integer Linear Program in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="75-conversion-model.html">Conversion Model in Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="76-two-sided-matching.html">Two-Sided Matching &amp; Ranking for Credit Cards</a></li>
 </ul>
 
     </div>
@@ -459,22 +462,22 @@ document.write(`
 <h1>Risk Minimization with Overdue Balance<a class="headerlink" href="#risk-minimization-with-overdue-balance" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Dropout</span><span class="p">,</span> <span class="n">Concatenate</span><span class="p">,</span> <span class="n">Attention</span>
-<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Model</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">KFold</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">classification_report</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras.layers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Dropout</span><span class="p">,</span> <span class="n">Concatenate</span><span class="p">,</span> <span class="n">Attention</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">KFold</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">classification_report</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
 
 <span class="c1"># Set random seed for reproducibility</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 
 <span class="c1"># Generate synthetic dataset</span>
-<span class="n">n_samples</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">n_samples</span> <span class="o">=</span> <span class="mi">100</span>
 
 <span class="c1"># Generate ovd_days (overdue days)</span>
 <span class="n">ovd_days</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_samples</span><span class="p">)</span>
@@ -509,7 +512,7 @@ document.write(`
 <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 
 <span class="c1"># Plot class imbalance</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Class Distribution of Default&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
@@ -533,7 +536,7 @@ document.write(`
 <span class="n">X_holdout_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_holdout</span><span class="p">)</span>
 
 <span class="c1"># Define function to create model architectures</span>
-<span class="k">def</span> <span class="nf">create_model</span><span class="p">(</span><span class="n">model_type</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_model</span><span class="p">(</span><span class="n">model_type</span><span class="p">):</span>
     <span class="n">input_layer</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],))</span>
     <span class="n">shared</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">)(</span><span class="n">input_layer</span><span class="p">)</span>
     <span class="n">shared</span> <span class="o">=</span> <span class="n">Dropout</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)(</span><span class="n">shared</span><span class="p">)</span>
@@ -659,45 +662,45 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>           ovd_days    ovd_amount      default     feature_1     feature_2  \
-count  10000.000000  10000.000000  10000.00000  10000.000000  10000.000000   
-mean      59.313900    542.243953      0.00990      0.495761      0.498892   
-std       34.725189    263.281575      0.09901      0.286700      0.289545   
-min        0.000000      0.000000      0.00000      0.000006      0.000017   
-25%       29.000000    316.187446      0.00000      0.245967      0.248293   
-50%       59.000000    539.157497      0.00000      0.496876      0.495843   
-75%       89.000000    771.944865      0.00000      0.739443      0.752686   
-max      119.000000    999.824630      1.00000      0.999789      0.999972   
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>         ovd_days  ovd_amount     default   feature_1   feature_2   feature_3  \
+count  100.000000  100.000000  100.000000  100.000000  100.000000  100.000000   
+mean    57.290000  521.560060    0.020000    0.491455    0.520535    0.559295   
+std     34.084356  265.139375    0.140705    0.279351    0.312287    0.307534   
+min      1.000000  104.969905    0.000000    0.014393    0.010838    0.011354   
+25%     31.250000  305.724173    0.000000    0.265685    0.281990    0.303574   
+50%     59.000000  484.591963    0.000000    0.520286    0.553967    0.583512   
+75%     87.250000  781.173654    0.000000    0.702778    0.794555    0.844001   
+max    116.000000  988.198243    1.000000    0.990054    0.990505    0.999718   
 
-          feature_3     feature_4     feature_5     feature_6     feature_7  \
-count  10000.000000  10000.000000  10000.000000  10000.000000  10000.000000   
-mean       0.499342      0.500178      0.501649      0.502764      0.494686   
-std        0.288470      0.288659      0.286013      0.288550      0.290175   
-min        0.000105      0.000008      0.000151      0.000130      0.000101   
-25%        0.249627      0.253157      0.255038      0.250508      0.239096   
-50%        0.502451      0.499075      0.502132      0.508444      0.495424   
-75%        0.748365      0.752430      0.751997      0.753400      0.745842   
-max        0.999957      0.999940      0.999875      0.999867      0.999992   
+        feature_4   feature_5   feature_6   feature_7   feature_8   feature_9  \
+count  100.000000  100.000000  100.000000  100.000000  100.000000  100.000000   
+mean     0.432970    0.481340    0.515847    0.448254    0.508675    0.538588   
+std      0.275124    0.281296    0.289133    0.289906    0.296913    0.292093   
+min      0.014545    0.051824    0.004632    0.010996    0.021269    0.017874   
+25%      0.183861    0.241114    0.250972    0.201410    0.248852    0.264138   
+50%      0.400013    0.435397    0.535428    0.423319    0.534214    0.558295   
+75%      0.635269    0.733431    0.753085    0.665799    0.746253    0.800449   
+max      0.980033    0.989960    0.996874    0.984402    0.987668    0.997934   
 
-          feature_8     feature_9    feature_10    feature_11    feature_12  \
-count  10000.000000  10000.000000  10000.000000  10000.000000  10000.000000   
-mean       0.499073      0.500733      0.494486      0.502005      0.507230   
-std        0.289016      0.289189      0.287636      0.290217      0.289288   
-min        0.000029      0.000028      0.000057      0.000079      0.000037   
-25%        0.246153      0.249201      0.243906      0.251347      0.254635   
-50%        0.501943      0.499742      0.493326      0.500331      0.510379   
-75%        0.748935      0.753876      0.739227      0.755896      0.758447   
-max        0.999976      0.999731      0.999921      0.999774      0.999989   
+       feature_10  feature_11  feature_12  feature_13  feature_14  feature_15  \
+count  100.000000  100.000000  100.000000  100.000000  100.000000  100.000000   
+mean     0.524193    0.471828    0.511864    0.506697    0.488865    0.479238   
+std      0.308144    0.293155    0.296533    0.278509    0.279970    0.301545   
+min      0.006386    0.009771    0.004940    0.005759    0.023639    0.011031   
+25%      0.252341    0.200431    0.237170    0.301686    0.233271    0.205039   
+50%      0.599410    0.486051    0.511026    0.529383    0.520009    0.454793   
+75%      0.777409    0.710317    0.745670    0.716644    0.710958    0.761420   
+max      0.997125    0.996334    0.986630    0.999414    0.994139    0.996697   
 
-         feature_13    feature_14    feature_15    feature_16  
-count  10000.000000  10000.000000  10000.000000  10000.000000  
-mean       0.503108      0.501439      0.500060      0.500604  
-std        0.287794      0.288828      0.287144      0.288411  
-min        0.000007      0.000026      0.000005      0.000040  
-25%        0.253871      0.251344      0.253360      0.254564  
-50%        0.503139      0.499560      0.503197      0.496113  
-75%        0.751065      0.751064      0.745185      0.748139  
-max        0.999852      0.999885      0.999983      0.999910  
+       feature_16  
+count  100.000000  
+mean     0.512624  
+std      0.294719  
+min      0.012108  
+25%      0.262452  
+50%      0.524355  
+75%      0.770576  
+max      0.979970  
 ovd_days      0
 ovd_amount    0
 default       0
@@ -720,324 +723,67 @@ feature_16    0
 dtype: int64
 Class distribution for &#39;default&#39;:
 default
-0    0.9901
-1    0.0099
+0    0.98
+1    0.02
 Name: proportion, dtype: float64
 </pre></div>
 </div>
-<img alt="_images/9340e97aeb213ef11e2d82578ba5eebbbdb6d417549c3d1791e9f9fd96793246.png" src="_images/9340e97aeb213ef11e2d82578ba5eebbbdb6d417549c3d1791e9f9fd96793246.png" />
+<img alt="_images/297a55b628c0e5169b3fea99827d8af321f5257812e58dbf61d640f4df3320a4.png" src="_images/297a55b628c0e5169b3fea99827d8af321f5257812e58dbf61d640f4df3320a4.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Evaluating model: MTAN
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/44 [..............................] - ETA: 7s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-24/44 [===============&gt;..............] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-44/44 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/44 [..............................] - ETA: 5s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-29/44 [==================&gt;...........] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-44/44 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/44 [..............................] - ETA: 4s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-34/44 [======================&gt;.......] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-44/44 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/44 [..............................] - ETA: 4s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-32/44 [====================&gt;.........] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-44/44 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/44 [..............................] - ETA: 4s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-31/44 [====================&gt;.........] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-44/44 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MTAN - Cross-Validation Accuracy: 0.9899
-MTAN - Cross-Validation MSE: 75781.9665
-
- 1/47 [..............................] - ETA: 1s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-29/47 [=================&gt;............] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-47/47 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Evaluating model on holdout set: MTAN
-MTAN - Binary Accuracy: 0.9913
-MTAN - Features Prediction MSE: 73045.2218
+1/1 [==============================] - 0s 131ms/step
+1/1 [==============================] - 0s 148ms/step
+1/1 [==============================] - 0s 139ms/step
+1/1 [==============================] - 0s 193ms/step
+1/1 [==============================] - 0s 221ms/step
+MTAN - Cross-Validation Accuracy: 0.9714
+MTAN - Cross-Validation MSE: 334973.8320
+1/1 [==============================] - 0s 95ms/step
+Evaluating model on holdout set: MTAN
+MTAN - Binary Accuracy: 1.0000
+MTAN - Features Prediction MSE: 299751.3324
 
 Evaluating model: Cross-Stitch
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/44 [..............................] - ETA: 4s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-33/44 [=====================&gt;........] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-44/44 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/44 [..............................] - ETA: 5s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-29/44 [==================&gt;...........] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-44/44 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/44 [..............................] - ETA: 4s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-32/44 [====================&gt;.........] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-44/44 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/44 [..............................] - ETA: 4s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-35/44 [======================&gt;.......] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-44/44 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/44 [..............................] - ETA: 4s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-33/44 [=====================&gt;........] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-44/44 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cross-Stitch - Cross-Validation Accuracy: 0.9899
-Cross-Stitch - Cross-Validation MSE: 71232.1553
-
- 1/47 [..............................] - ETA: 1s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-32/47 [===================&gt;..........] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-47/47 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Evaluating model on holdout set: Cross-Stitch
-Cross-Stitch - Binary Accuracy: 0.9913
-Cross-Stitch - Features Prediction MSE: 73962.1374
+1/1 [==============================] - 0s 130ms/step
+1/1 [==============================] - 0s 176ms/step
+1/1 [==============================] - 0s 127ms/step
+1/1 [==============================] - 0s 142ms/step
+1/1 [==============================] - 0s 156ms/step
+Cross-Stitch - Cross-Validation Accuracy: 0.9714
+Cross-Stitch - Cross-Validation MSE: 335785.5626
+1/1 [==============================] - 0s 46ms/step
+Evaluating model on holdout set: Cross-Stitch
+Cross-Stitch - Binary Accuracy: 1.0000
+Cross-Stitch - Features Prediction MSE: 300668.7235
 
 Evaluating model: MTL-DNN
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/44 [..............................] - ETA: 4s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-32/44 [====================&gt;.........] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-44/44 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/44 [..............................] - ETA: 5s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-27/44 [=================&gt;............] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-44/44 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/44 [..............................] - ETA: 4s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-28/44 [==================&gt;...........] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-44/44 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/44 [..............................] - ETA: 5s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-29/44 [==================&gt;...........] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-44/44 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/44 [..............................] - ETA: 4s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-29/44 [==================&gt;...........] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-44/44 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MTL-DNN - Cross-Validation Accuracy: 0.9899
-MTL-DNN - Cross-Validation MSE: 71227.8495
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/47 [..............................] - ETA: 1s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-27/47 [================&gt;.............] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-47/47 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Evaluating model on holdout set: MTL-DNN
-MTL-DNN - Binary Accuracy: 0.9913
-MTL-DNN - Features Prediction MSE: 73215.2875
+1/1 [==============================] - 0s 101ms/step
+1/1 [==============================] - 0s 136ms/step
+1/1 [==============================] - 0s 142ms/step
+1/1 [==============================] - 0s 121ms/step
+1/1 [==============================] - 0s 164ms/step
+MTL-DNN - Cross-Validation Accuracy: 0.9714
+MTL-DNN - Cross-Validation MSE: 331800.2659
+1/1 [==============================] - 0s 85ms/step
+Evaluating model on holdout set: MTL-DNN
+MTL-DNN - Binary Accuracy: 1.0000
+MTL-DNN - Features Prediction MSE: 294710.4139
 
 Evaluating model: HPS
+1/1 [==============================] - 0s 126ms/step
+1/1 [==============================] - 0s 120ms/step
+1/1 [==============================] - 0s 119ms/step
+1/1 [==============================] - 0s 152ms/step
+1/1 [==============================] - 0s 101ms/step
+HPS - Cross-Validation Accuracy: 0.9714
+HPS - Cross-Validation MSE: 336172.2703
+1/1 [==============================] - 0s 69ms/step
+Evaluating model on holdout set: HPS
+HPS - Binary Accuracy: 1.0000
+HPS - Features Prediction MSE: 300673.4797
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/44 [..............................] - ETA: 5s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-33/44 [=====================&gt;........] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-44/44 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/44 [..............................] - ETA: 5s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-14/44 [========&gt;.....................] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-39/44 [=========================&gt;....] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-44/44 [==============================] - 0s 3ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/44 [..............................] - ETA: 4s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-38/44 [========================&gt;.....] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-44/44 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/44 [..............................] - ETA: 5s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-29/44 [==================&gt;...........] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-44/44 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/44 [..............................] - ETA: 4s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-32/44 [====================&gt;.........] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-44/44 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>HPS - Cross-Validation Accuracy: 0.9899
-HPS - Cross-Validation MSE: 70592.4558
-
- 1/47 [..............................] - ETA: 1s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-33/47 [====================&gt;.........] - ETA: 0s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-47/47 [==============================] - 0s 2ms/step
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Evaluating model on holdout set: HPS
-HPS - Binary Accuracy: 0.9913
-HPS - Features Prediction MSE: 72960.4803
-</pre></div>
-</div>
-<img alt="_images/8b5ccd8647ede61d66e442047c6979615580ea4852f4417a67b501666b481b9d.png" src="_images/8b5ccd8647ede61d66e442047c6979615580ea4852f4417a67b501666b481b9d.png" />
-<img alt="_images/6e171c6889ab29633d06c757a40f87ec996a72a1dbad97549297babfaf91c822.png" src="_images/6e171c6889ab29633d06c757a40f87ec996a72a1dbad97549297babfaf91c822.png" />
+<img alt="_images/6b39a232555159e4fa92abe36320bf61b95880ca33b25f22ebff1fe378ac9bf2.png" src="_images/6b39a232555159e4fa92abe36320bf61b95880ca33b25f22ebff1fe378ac9bf2.png" />
+<img alt="_images/6ce185089fbbff61c7886f61d6ed0fb206b05d305bd8ecbb1a38d4e9df2999a2.png" src="_images/6ce185089fbbff61c7886f61d6ed0fb206b05d305bd8ecbb1a38d4e9df2999a2.png" />
 </div>
 </div>
 </section>

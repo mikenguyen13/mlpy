@@ -241,6 +241,9 @@
 <li class="toctree-l1"><a class="reference internal" href="71-sim_dat_bandits.html">Multi-Armed Bandits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="72-data-anoy-geo.html">Data Anonymization Techniques for Geospatial Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="73-sample-splitting-time-series.html">Split Samples in Time Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="74-leads-allocation.html">Maximizing Profits with a Simple Integer Linear Program in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="75-conversion-model.html">Conversion Model in Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="76-two-sided-matching.html">Two-Sided Matching &amp; Ranking for Credit Cards</a></li>
 </ul>
 
     </div>
@@ -667,17 +670,17 @@ Finance Perspective::</p>
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;KMP_DUPLICATE_LIB_OK&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;True&#39;</span>
-<span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
-<span class="kn">from</span> <span class="nn">torch_geometric.nn</span> <span class="kn">import</span> <span class="n">GCNConv</span>
-<span class="kn">import</span> <span class="nn">lightgbm</span> <span class="k">as</span> <span class="nn">lgb</span>
-<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">r2_score</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch_geometric.nn</span><span class="w"> </span><span class="kn">import</span> <span class="n">GCNConv</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">lightgbm</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">lgb</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">r2_score</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 </pre></div>
 </div>
 </div>
@@ -685,53 +688,53 @@ Finance Perspective::</p>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
 <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">7</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">torch</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
-<span class="ne">----&gt; </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">torch_geometric.nn</span> <span class="kn">import</span> <span class="n">GCNConv</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">import</span> <span class="nn">lightgbm</span> <span class="k">as</span> <span class="nn">lgb</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<span class="ne">----&gt; </span><span class="mi">7</span> <span class="kn">from</span><span class="w"> </span><span class="nn">torch_geometric.nn</span><span class="w"> </span><span class="kn">import</span> <span class="n">GCNConv</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">import</span><span class="w"> </span><span class="nn">lightgbm</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">lgb</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
 
 <span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">ProgramData</span>\<span class="n">anaconda3</span>\<span class="n">envs</span>\<span class="n">mlpy</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">torch_geometric</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">17</span>
-<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="kn">from</span> <span class="nn">.debug</span> <span class="kn">import</span> <span class="n">is_debug_enabled</span><span class="p">,</span> <span class="n">debug</span><span class="p">,</span> <span class="n">set_debug</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="kn">import</span> <span class="nn">torch_geometric.utils</span>
-<span class="ne">---&gt; </span><span class="mi">17</span> <span class="kn">import</span> <span class="nn">torch_geometric.data</span>
-<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="kn">import</span> <span class="nn">torch_geometric.sampler</span>
-<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="kn">import</span> <span class="nn">torch_geometric.loader</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="kn">from</span><span class="w"> </span><span class="nn">.debug</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_debug_enabled</span><span class="p">,</span> <span class="n">debug</span><span class="p">,</span> <span class="n">set_debug</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="kn">import</span><span class="w"> </span><span class="nn">torch_geometric.utils</span>
+<span class="ne">---&gt; </span><span class="mi">17</span> <span class="kn">import</span><span class="w"> </span><span class="nn">torch_geometric.data</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="kn">import</span><span class="w"> </span><span class="nn">torch_geometric.sampler</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="kn">import</span><span class="w"> </span><span class="nn">torch_geometric.loader</span>
 
 <span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">ProgramData</span>\<span class="n">anaconda3</span>\<span class="n">envs</span>\<span class="n">mlpy</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">torch_geometric</span>\<span class="n">data</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">10</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">.data</span> <span class="kn">import</span> <span class="n">Data</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="kn">from</span> <span class="nn">.hetero_data</span> <span class="kn">import</span> <span class="n">HeteroData</span>
-<span class="ne">---&gt; </span><span class="mi">10</span> <span class="kn">from</span> <span class="nn">.batch</span> <span class="kn">import</span> <span class="n">Batch</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="kn">from</span> <span class="nn">.temporal</span> <span class="kn">import</span> <span class="n">TemporalData</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="kn">from</span> <span class="nn">.database</span> <span class="kn">import</span> <span class="n">Database</span><span class="p">,</span> <span class="n">SQLiteDatabase</span><span class="p">,</span> <span class="n">RocksDatabase</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">from</span><span class="w"> </span><span class="nn">.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">Data</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="kn">from</span><span class="w"> </span><span class="nn">.hetero_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">HeteroData</span>
+<span class="ne">---&gt; </span><span class="mi">10</span> <span class="kn">from</span><span class="w"> </span><span class="nn">.batch</span><span class="w"> </span><span class="kn">import</span> <span class="n">Batch</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="kn">from</span><span class="w"> </span><span class="nn">.temporal</span><span class="w"> </span><span class="kn">import</span> <span class="n">TemporalData</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="kn">from</span><span class="w"> </span><span class="nn">.database</span><span class="w"> </span><span class="kn">import</span> <span class="n">Database</span><span class="p">,</span> <span class="n">SQLiteDatabase</span><span class="p">,</span> <span class="n">RocksDatabase</span>
 
 <span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">ProgramData</span>\<span class="n">anaconda3</span>\<span class="n">envs</span>\<span class="n">mlpy</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">torch_geometric</span>\<span class="n">data</span>\<span class="n">batch</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">12</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">from</span> <span class="nn">torch_geometric.data.collate</span> <span class="kn">import</span> <span class="n">collate</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="kn">from</span> <span class="nn">torch_geometric.data.data</span> <span class="kn">import</span> <span class="n">BaseData</span><span class="p">,</span> <span class="n">Data</span>
-<span class="ne">---&gt; </span><span class="mi">12</span> <span class="kn">from</span> <span class="nn">torch_geometric.data.dataset</span> <span class="kn">import</span> <span class="n">IndexType</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="kn">from</span> <span class="nn">torch_geometric.data.separate</span> <span class="kn">import</span> <span class="n">separate</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="k">class</span> <span class="nc">DynamicInheritance</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">from</span><span class="w"> </span><span class="nn">torch_geometric.data.collate</span><span class="w"> </span><span class="kn">import</span> <span class="n">collate</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="kn">from</span><span class="w"> </span><span class="nn">torch_geometric.data.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseData</span><span class="p">,</span> <span class="n">Data</span>
+<span class="ne">---&gt; </span><span class="mi">12</span> <span class="kn">from</span><span class="w"> </span><span class="nn">torch_geometric.data.dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">IndexType</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="kn">from</span><span class="w"> </span><span class="nn">torch_geometric.data.separate</span><span class="w"> </span><span class="kn">import</span> <span class="n">separate</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="k">class</span><span class="w"> </span><span class="nc">DynamicInheritance</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
 <span class="g g-Whitespace">     </span><span class="mi">17</span>     <span class="c1"># A meta class that sets the base class of a `Batch` object, e.g.:</span>
 <span class="g g-Whitespace">     </span><span class="mi">18</span>     <span class="c1"># * `Batch(Data)` in case `Data` objects are batched together</span>
 <span class="g g-Whitespace">     </span><span class="mi">19</span>     <span class="c1"># * `Batch(HeteroData)` in case `HeteroData` objects are batched together</span>
 
 <span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">ProgramData</span>\<span class="n">anaconda3</span>\<span class="n">envs</span>\<span class="n">mlpy</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">torch_geometric</span>\<span class="n">data</span>\<span class="n">dataset</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">23</span>
-<span class="g g-Whitespace">     </span><span class="mi">20</span> <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
-<span class="g g-Whitespace">     </span><span class="mi">22</span> <span class="kn">from</span> <span class="nn">torch_geometric.data.data</span> <span class="kn">import</span> <span class="n">BaseData</span>
-<span class="ne">---&gt; </span><span class="mi">23</span> <span class="kn">from</span> <span class="nn">torch_geometric.io</span> <span class="kn">import</span> <span class="n">fs</span>
+<span class="g g-Whitespace">     </span><span class="mi">20</span> <span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tensor</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span> <span class="kn">from</span><span class="w"> </span><span class="nn">torch_geometric.data.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseData</span>
+<span class="ne">---&gt; </span><span class="mi">23</span> <span class="kn">from</span><span class="w"> </span><span class="nn">torch_geometric.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">fs</span>
 <span class="g g-Whitespace">     </span><span class="mi">25</span> <span class="n">IndexType</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">slice</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">]</span>
 <span class="g g-Whitespace">     </span><span class="mi">26</span> <span class="n">MISSING</span> <span class="o">=</span> <span class="s1">&#39;???&#39;</span>
 
 <span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">ProgramData</span>\<span class="n">anaconda3</span>\<span class="n">envs</span>\<span class="n">mlpy</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">torch_geometric</span>\<span class="n">io</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">.txt_array</span> <span class="kn">import</span> <span class="n">parse_txt_array</span><span class="p">,</span> <span class="n">read_txt_array</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">.tu</span> <span class="kn">import</span> <span class="n">read_tu_data</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">.planetoid</span> <span class="kn">import</span> <span class="n">read_planetoid_data</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span><span class="w"> </span><span class="nn">.txt_array</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_txt_array</span><span class="p">,</span> <span class="n">read_txt_array</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span><span class="w"> </span><span class="nn">.tu</span><span class="w"> </span><span class="kn">import</span> <span class="n">read_tu_data</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span><span class="w"> </span><span class="nn">.planetoid</span><span class="w"> </span><span class="kn">import</span> <span class="n">read_planetoid_data</span>
 
 <span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">ProgramData</span>\<span class="n">anaconda3</span>\<span class="n">envs</span>\<span class="n">mlpy</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">torch_geometric</span>\<span class="n">io</span>\<span class="n">txt_array</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">3</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">fsspec</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">torch</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">import</span><span class="w"> </span><span class="nn">fsspec</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tensor</span>
 
 <span class="ne">ModuleNotFoundError</span>: No module named &#39;fsspec&#39;
 </pre></div>
@@ -802,13 +805,13 @@ Finance Perspective::</p>
 <h4>LSTM for Time Series Data<a class="headerlink" href="#lstm-for-time-series-data" title="Link to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LSTMTimeSeries</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">,</span> <span class="n">num_layers</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">LSTMTimeSeries</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">,</span> <span class="n">num_layers</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">LSTMTimeSeries</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lstm</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">num_layers</span><span class="p">,</span> <span class="n">batch_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="n">lstm_out</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lstm</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">final_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">lstm_out</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:])</span>  <span class="c1"># Last time step</span>
         <span class="k">return</span> <span class="n">final_output</span>
@@ -821,8 +824,8 @@ Finance Perspective::</p>
 <h4>GNN with Time Series<a class="headerlink" href="#gnn-with-time-series" title="Link to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">GNNWithTimeSeries</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph_input_dim</span><span class="p">,</span> <span class="n">graph_hidden_dim</span><span class="p">,</span> <span class="n">graph_output_dim</span><span class="p">,</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">GNNWithTimeSeries</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph_input_dim</span><span class="p">,</span> <span class="n">graph_hidden_dim</span><span class="p">,</span> <span class="n">graph_output_dim</span><span class="p">,</span>
                  <span class="n">time_input_dim</span><span class="p">,</span> <span class="n">time_hidden_dim</span><span class="p">,</span> <span class="n">time_output_dim</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">GNNWithTimeSeries</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="c1"># GNN layers</span>
@@ -835,7 +838,7 @@ Finance Perspective::</p>
         <span class="c1"># Final output layer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fc_final</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">graph_output_dim</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph_features</span><span class="p">,</span> <span class="n">time_features</span><span class="p">,</span> <span class="n">edge_index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph_features</span><span class="p">,</span> <span class="n">time_features</span><span class="p">,</span> <span class="n">edge_index</span><span class="p">):</span>
         <span class="c1"># GNN forward pass</span>
         <span class="n">gnn_out</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">graph_features</span><span class="p">,</span> <span class="n">edge_index</span><span class="p">))</span>
         <span class="n">gnn_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">gnn_out</span><span class="p">,</span> <span class="n">edge_index</span><span class="p">)</span>
@@ -879,7 +882,7 @@ Integrated Modeling: Combining GNN and LSTM allows the model to consider both te
 <p>Calculate industry-specific valuation caps for each firm to enforce realistic valuation predictions based on public firms.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_caps</span><span class="p">(</span><span class="n">firm_ids</span><span class="p">,</span> <span class="n">industries</span><span class="p">,</span> <span class="n">valuations</span><span class="p">,</span> <span class="n">growth_cap_multiplier</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">compute_caps</span><span class="p">(</span><span class="n">firm_ids</span><span class="p">,</span> <span class="n">industries</span><span class="p">,</span> <span class="n">valuations</span><span class="p">,</span> <span class="n">growth_cap_multiplier</span><span class="p">):</span>
     <span class="n">caps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">NUM_FIRMS</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>  <span class="c1"># Initialize with infinity</span>
     <span class="k">for</span> <span class="n">industry</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NUM_INDUSTRIES</span><span class="p">):</span>
         <span class="n">peer_vals</span> <span class="o">=</span> <span class="n">valuations</span><span class="p">[(</span><span class="n">industries</span> <span class="o">==</span> <span class="n">industry</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">is_public</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -916,7 +919,7 @@ Industry-Based Constraints:</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">loss_history</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="k">def</span> <span class="nf">train_gnn_with_time_series</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">graph_features</span><span class="p">,</span> <span class="n">time_features</span><span class="p">,</span> <span class="n">edge_index</span><span class="p">,</span> <span class="n">valuations</span><span class="p">,</span> <span class="n">caps_tensor</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">train_gnn_with_time_series</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">graph_features</span><span class="p">,</span> <span class="n">time_features</span><span class="p">,</span> <span class="n">edge_index</span><span class="p">,</span> <span class="n">valuations</span><span class="p">,</span> <span class="n">caps_tensor</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
     <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
         <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
@@ -1063,7 +1066,7 @@ Epoch 100/100, Loss: 12305.6621
     <span class="n">node_embeddings</span> <span class="o">=</span> <span class="n">all_preds</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
 
 
-<span class="k">def</span> <span class="nf">validate_model</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">valuations</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_model</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">valuations</span><span class="p">):</span>
     <span class="n">target</span> <span class="o">=</span> <span class="n">valuations</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">mask</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
     <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
@@ -1124,7 +1127,7 @@ R-squared (R2): 0.0866
 <p>Monitor the training process to ensure the model is learning effectively.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_loss_history</span><span class="p">():</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_loss_history</span><span class="p">():</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">loss_history</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Epoch&#39;</span><span class="p">)</span>
@@ -1167,7 +1170,7 @@ R-squared (R2): 0.0866
 <span class="n">y_train</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">train_mask</span><span class="p">]</span>
 
 <span class="c1"># Function to train LightGBM quantile model</span>
-<span class="k">def</span> <span class="nf">train_lightgbm_quantile</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">quantile</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">train_lightgbm_quantile</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">quantile</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
     <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;boosting_type&#39;</span><span class="p">:</span> <span class="s1">&#39;gbdt&#39;</span><span class="p">,</span>
         <span class="s1">&#39;objective&#39;</span><span class="p">:</span> <span class="s1">&#39;quantile&#39;</span><span class="p">,</span>
@@ -1275,7 +1278,7 @@ R-squared (R2): 0.0866
 <span class="n">latest_liquidity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">NUM_FIRMS</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>  <span class="c1"># 20% liquidity discount</span>
 <span class="n">latest_control</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">NUM_FIRMS</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span>    <span class="c1"># 30% control premium</span>
 
-<span class="k">def</span> <span class="nf">adjust_valuations</span><span class="p">(</span><span class="n">bounded_lower</span><span class="p">,</span> <span class="n">bounded_upper</span><span class="p">,</span> <span class="n">liquidity_discounts</span><span class="p">,</span> <span class="n">control_premiums</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">adjust_valuations</span><span class="p">(</span><span class="n">bounded_lower</span><span class="p">,</span> <span class="n">bounded_upper</span><span class="p">,</span> <span class="n">liquidity_discounts</span><span class="p">,</span> <span class="n">control_premiums</span><span class="p">):</span>
     <span class="n">adjusted_lower</span> <span class="o">=</span> <span class="n">bounded_lower</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">liquidity_discounts</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">control_premiums</span><span class="p">)</span>
     <span class="n">adjusted_upper</span> <span class="o">=</span> <span class="n">bounded_upper</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">liquidity_discounts</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">control_premiums</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">adjusted_lower</span><span class="p">,</span> <span class="n">adjusted_upper</span>

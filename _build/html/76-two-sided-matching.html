@@ -744,10 +744,10 @@ $<span class="math notranslate nohighlight">\(
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">random</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
 
 <span class="c1"># -------------------------------------------------------</span>
 <span class="c1"># 1. GENERATE RANDOM DATA</span>
@@ -763,7 +763,7 @@ $<span class="math notranslate nohighlight">\(
 <span class="n">BANKS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Bank A&quot;</span><span class="p">,</span> <span class="s2">&quot;Bank B&quot;</span><span class="p">,</span> <span class="s2">&quot;Bank C&quot;</span><span class="p">,</span> <span class="s2">&quot;Bank D&quot;</span><span class="p">,</span> <span class="s2">&quot;Bank E&quot;</span><span class="p">]</span>
 <span class="n">REWARD_TYPES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Cashback&quot;</span><span class="p">,</span> <span class="s2">&quot;Miles&quot;</span><span class="p">,</span> <span class="s2">&quot;Points&quot;</span><span class="p">]</span>
 
-<span class="k">def</span> <span class="nf">generate_random_cards</span><span class="p">(</span><span class="n">n_cards</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_random_cards</span><span class="p">(</span><span class="n">n_cards</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate &#39;n_cards&#39; credit card records with random attributes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -800,7 +800,7 @@ $<span class="math notranslate nohighlight">\(
     <span class="n">df_cards</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">card_records</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">df_cards</span>
 
-<span class="k">def</span> <span class="nf">generate_random_customers</span><span class="p">(</span><span class="n">n_customers</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_random_customers</span><span class="p">(</span><span class="n">n_customers</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate &#39;n_customers&#39; user/customer records with random attributes.</span>
 <span class="sd">    Each user will have:</span>
@@ -853,7 +853,7 @@ $<span class="math notranslate nohighlight">\(
 <span class="c1"># -------------------------------------------------------</span>
 <span class="c1"># 2. FILTERING FUNCTION (HARD CONSTRAINTS)</span>
 <span class="c1"># -------------------------------------------------------</span>
-<span class="k">def</span> <span class="nf">filter_cards</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">df_cards</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">filter_cards</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">df_cards</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Hard constraints:</span>
 <span class="sd">    - customer&#39;s credit score &gt;= card&#39;s min score</span>
@@ -869,7 +869,7 @@ $<span class="math notranslate nohighlight">\(
 <span class="c1"># 3. UTILITY &amp; REVENUE CALCULATIONS</span>
 <span class="c1"># -------------------------------------------------------</span>
 
-<span class="k">def</span> <span class="nf">probability_of_approval</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">card</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">probability_of_approval</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">card</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Toy model:</span>
 <span class="sd">    Probability of approval depends on how much the customer&#39;s score</span>
@@ -884,7 +884,7 @@ $<span class="math notranslate nohighlight">\(
     <span class="n">prob</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">prob</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">prob</span>
 
-<span class="k">def</span> <span class="nf">probability_of_acceptance</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">card</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">probability_of_acceptance</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">card</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Toy model for acceptance:</span>
 <span class="sd">    - If reward matches user preference =&gt; 0.7 base, else 0.4</span>
@@ -903,7 +903,7 @@ $<span class="math notranslate nohighlight">\(
     <span class="n">prob</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">prob</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">prob</span>
 
-<span class="k">def</span> <span class="nf">user_utility_score</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">card</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">user_utility_score</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">card</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Simple heuristic-based user utility:</span>
 <span class="sd">    - +5 if reward matches user&#39;s preference</span>
@@ -942,7 +942,7 @@ $<span class="math notranslate nohighlight">\(
 <span class="c1"># -------------------------------------------------------</span>
 <span class="c1"># 4. RECOMMEND CARDS FOR A SINGLE CUSTOMER</span>
 <span class="c1"># -------------------------------------------------------</span>
-<span class="k">def</span> <span class="nf">recommend_cards_for_customer</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">df_cards</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">recommend_cards_for_customer</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">df_cards</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Filter -&gt; compute scores -&gt; rank -&gt; return top_k.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -987,7 +987,7 @@ $<span class="math notranslate nohighlight">\(
 <span class="c1">#      (a) total revenue across all customers</span>
 <span class="c1">#      (b) average top-1 user utility across all customers</span>
 <span class="c1"># -------------------------------------------------------</span>
-<span class="k">def</span> <span class="nf">evaluate_system_for_alphas</span><span class="p">(</span><span class="n">df_customers</span><span class="p">,</span> <span class="n">df_cards</span><span class="p">,</span> <span class="n">alpha_values</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">]):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">evaluate_system_for_alphas</span><span class="p">(</span><span class="n">df_customers</span><span class="p">,</span> <span class="n">df_cards</span><span class="p">,</span> <span class="n">alpha_values</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">]):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    For each alpha in alpha_values:</span>
 <span class="sd">      - Temporarily set each customer&#39;s alpha to that alpha</span>

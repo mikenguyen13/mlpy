@@ -666,11 +666,11 @@ Once you have an estimate of <span class="math notranslate nohighlight">\(P(\tex
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
 
 <span class="c1"># For reproducibility</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
@@ -707,7 +707,7 @@ Once you have an estimate of <span class="math notranslate nohighlight">\(P(\tex
 <span class="c1"># For individuals NOT in the random group, an &quot;old model&quot; decides who to text.</span>
 <span class="c1"># For those in the random group, we text them with a fixed 50% probability.</span>
 <span class="c1">###############################################################################</span>
-<span class="k">def</span> <span class="nf">old_model_prob</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">old_model_prob</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">):</span>
     <span class="c1"># A simple logistic function based on X1 and X2</span>
     <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">x1</span> <span class="o">+</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="n">x2</span><span class="p">)))</span>
 
@@ -733,7 +733,7 @@ Once you have an estimate of <span class="math notranslate nohighlight">\(P(\tex
 <span class="c1"># Only those who are texted can respond.</span>
 <span class="c1"># We simulate the response probability using features X3 and X4.</span>
 <span class="c1">###############################################################################</span>
-<span class="k">def</span> <span class="nf">prob_respond</span><span class="p">(</span><span class="n">x3</span><span class="p">,</span> <span class="n">x4</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">prob_respond</span><span class="p">(</span><span class="n">x3</span><span class="p">,</span> <span class="n">x4</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span> <span class="p">(</span><span class="mf">0.4</span> <span class="o">*</span> <span class="n">x3</span> <span class="o">-</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">x4</span><span class="p">)))</span>
 
 <span class="c1"># Initialize an array for responses</span>
@@ -753,7 +753,7 @@ Once you have an estimate of <span class="math notranslate nohighlight">\(P(\tex
 <span class="c1"># -----------------------------------------------------------------------------</span>
 <span class="c1"># Among those who responded, simulate bank acceptance based on X2 and X5.</span>
 <span class="c1">###############################################################################</span>
-<span class="k">def</span> <span class="nf">prob_accept</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">x5</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">prob_accept</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">x5</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span> <span class="p">(</span><span class="mf">0.3</span> <span class="o">*</span> <span class="n">x2</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">x5</span><span class="p">)))</span>
 
 <span class="n">accepted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
@@ -803,7 +803,7 @@ Once you have an estimate of <span class="math notranslate nohighlight">\(P(\tex
 <span class="n">model_respond</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">model_respond</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_texted</span><span class="p">,</span> <span class="n">y_respond</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">df_texted</span><span class="p">[</span><span class="s1">&#39;weight_ipw&#39;</span><span class="p">])</span>
 
-<span class="k">def</span> <span class="nf">predict_respond_if_texted</span><span class="p">(</span><span class="n">X_new</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">predict_respond_if_texted</span><span class="p">(</span><span class="n">X_new</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">model_respond</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_new</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
 
 <span class="c1"># 5.3 Model &quot;accepted&quot; among those who responded.</span>
@@ -814,12 +814,12 @@ Once you have an estimate of <span class="math notranslate nohighlight">\(P(\tex
 <span class="n">model_accept</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">model_accept</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_responded</span><span class="p">,</span> <span class="n">y_accepted</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">predict_bank_accept</span><span class="p">(</span><span class="n">X_new</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">predict_bank_accept</span><span class="p">(</span><span class="n">X_new</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">model_accept</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_new</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
 
 <span class="c1"># 5.4 Combine the two probabilities:</span>
 <span class="c1"># Final sign-up probability if texted = P(respond | texted, X) * P(accept | responded, X)</span>
-<span class="k">def</span> <span class="nf">predict_final_if_texted</span><span class="p">(</span><span class="n">X_new</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">predict_final_if_texted</span><span class="p">(</span><span class="n">X_new</span><span class="p">):</span>
     <span class="n">p_resp</span> <span class="o">=</span> <span class="n">predict_respond_if_texted</span><span class="p">(</span><span class="n">X_new</span><span class="p">)</span>
     <span class="n">p_acc</span> <span class="o">=</span> <span class="n">predict_bank_accept</span><span class="p">(</span><span class="n">X_new</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">p_resp</span> <span class="o">*</span> <span class="n">p_acc</span>
@@ -905,7 +905,7 @@ P(\text{final} \mid \text{texted}=1, X) = P(\text{respond}=1 \mid X) \times P(\t
 <h3>Important Nuances<a class="headerlink" href="#important-nuances" title="Link to this heading">#</a></h3>
 <section id="ipw-reliance">
 <h4>IPW Reliance<a class="headerlink" href="#ipw-reliance" title="Link to this heading">#</a></h4>
-<p>In Stage B, we used <span class="math notranslate nohighlight">\(1 / \text{propensity_to_be_texted}\)</span> as sample weights to address who historically got texted. If your random subset is large enough, you can build a robust model for “texted=1” vs. “not texted=0” that generalizes to the entire population.<br />
+<p>In Stage B, we used 1 / propensity_to_be_texted as sample weights to address who historically got texted. If your random subset is large enough, you can build a robust model for “texted=1” vs. “not texted=0” that generalizes to the entire population.<br />
 You can refine weighting strategies (e.g., trim or cap extreme weights).</p>
 </section>
 <section id="bank-acceptance">

@@ -243,6 +243,9 @@
 <li class="toctree-l1"><a class="reference internal" href="71-sim_dat_bandits.html">Multi-Armed Bandits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="72-data-anoy-geo.html">Data Anonymization Techniques for Geospatial Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="73-sample-splitting-time-series.html">Split Samples in Time Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="74-leads-allocation.html">Maximizing Profits with a Simple Integer Linear Program in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="75-conversion-model.html">Conversion Model in Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="76-two-sided-matching.html">Two-Sided Matching &amp; Ranking for Credit Cards</a></li>
 </ul>
 
     </div>
@@ -566,22 +569,22 @@ R(T) = T \mu^* - \sum_{t=1}^T \mu_{a_t}
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="k">class</span> <span class="nc">EpsilonGreedy</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_arms</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">EpsilonGreedy</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_arms</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_arms</span> <span class="o">=</span> <span class="n">n_arms</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="n">epsilon</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_arms</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_arms</span><span class="p">)</span>
     
-    <span class="k">def</span> <span class="nf">select_arm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">select_arm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_arms</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
     
-    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chosen_arm</span><span class="p">,</span> <span class="n">reward</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chosen_arm</span><span class="p">,</span> <span class="n">reward</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">]</span>
         <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">]</span>
@@ -605,8 +608,8 @@ R(T) = T \mu^* - \sum_{t=1}^T \mu_{a_t}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated values: [0.68938076 0.30039331 0.31864242 0.55685491 0.63974092 0.16368959
- 0.20460775 0.32663808 0.3753893  0.6461065 ]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated values: [0.66121479 0.63715198 0.4317669  0.03165892 0.46475527 0.01298573
+ 0.59699428 0.99747134 0.20475713 0.01141786]
 </pre></div>
 </div>
 </div>
@@ -620,13 +623,13 @@ UCB_i (t) = \hat{\mu}_i + \sqrt{\frac{2 \ln t}{n_i}}
 \)</span>$</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UCB1</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_arms</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">UCB1</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_arms</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_arms</span> <span class="o">=</span> <span class="n">n_arms</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_arms</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_arms</span><span class="p">)</span>
     
-    <span class="k">def</span> <span class="nf">select_arm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">select_arm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">total_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="p">)</span>
         <span class="k">if</span> <span class="mi">0</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="p">)</span>
@@ -634,7 +637,7 @@ UCB_i (t) = \hat{\mu}_i + \sqrt{\frac{2 \ln t}{n_i}}
             <span class="n">ucb_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">total_counts</span><span class="p">))</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">ucb_values</span><span class="p">)</span>
     
-    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chosen_arm</span><span class="p">,</span> <span class="n">reward</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chosen_arm</span><span class="p">,</span> <span class="n">reward</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">]</span>
         <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">]</span>
@@ -653,8 +656,8 @@ UCB_i (t) = \hat{\mu}_i + \sqrt{\frac{2 \ln t}{n_i}}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated values: [0.68938076 0.30039331 0.31864242 0.55685491 0.63974092 0.16368959
- 0.20460775 0.32663808 0.3753893  0.6461065 ]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated values: [0.66121479 0.63715198 0.4317669  0.03165892 0.46475527 0.01298573
+ 0.59699428 0.99747134 0.20475713 0.01141786]
 </pre></div>
 </div>
 </div>
@@ -670,17 +673,17 @@ UCB_i (t) = \hat{\mu}_i + \sqrt{\frac{2 \ln t}{n_i}}
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ThompsonSampling</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_arms</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">ThompsonSampling</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_arms</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_arms</span> <span class="o">=</span> <span class="n">n_arms</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">successes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_arms</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">failures</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_arms</span><span class="p">)</span>
     
-    <span class="k">def</span> <span class="nf">select_arm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">select_arm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">beta</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">successes</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">failures</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
     
-    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chosen_arm</span><span class="p">,</span> <span class="n">reward</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chosen_arm</span><span class="p">,</span> <span class="n">reward</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">reward</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">successes</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
@@ -700,8 +703,8 @@ UCB_i (t) = \hat{\mu}_i + \sqrt{\frac{2 \ln t}{n_i}}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Successes: [ 61.   5.   4.  35. 329.   3.   0.   3.  11. 154.]
-Failures: [ 41.   9.  10.  31. 167.   8.   6.   9.  17.  97.]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Successes: [  0.  12.   0.   0.   0.   0.   0. 974.   1.   0.]
+Failures: [1. 1. 1. 1. 1. 1. 1. 2. 2. 2.]
 </pre></div>
 </div>
 </div>
@@ -715,17 +718,17 @@ Failures: [ 41.   9.  10.  31. 167.   8.   6.   9.  17.  97.]
 <p>In contextual bandits, the decision-making process is conditioned on the context <span class="math notranslate nohighlight">\(x_t\)</span> available at each time step <span class="math notranslate nohighlight">\(t\)</span>. The objective is to learn a policy that maps contexts to arms, maximizing the cumulative reward.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ContextualBandit</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_arms</span><span class="p">,</span> <span class="n">n_features</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">ContextualBandit</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_arms</span><span class="p">,</span> <span class="n">n_features</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_arms</span> <span class="o">=</span> <span class="n">n_arms</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_features</span> <span class="o">=</span> <span class="n">n_features</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_arms</span><span class="p">,</span> <span class="n">n_features</span><span class="p">))</span>
     
-    <span class="k">def</span> <span class="nf">select_arm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">select_arm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
         <span class="n">means</span> <span class="o">=</span> <span class="n">context</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="o">.</span><span class="n">T</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">means</span><span class="p">)</span>
     
-    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chosen_arm</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">reward</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chosen_arm</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">reward</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">context</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">reward</span> <span class="o">-</span> <span class="n">x</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">[</span><span class="n">chosen_arm</span><span class="p">])</span> <span class="o">*</span> <span class="n">x</span>
 
@@ -745,16 +748,26 @@ Failures: [ 41.   9.  10.  31. 167.   8.   6.   9.  17.  97.]
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated beta values: [[-0.7261821  -0.59311302 -0.14791038 -0.18479997 -0.56418083]
- [-0.26553296 -0.6293445   0.02559575  0.03434534 -0.21331706]
- [ 0.06694129  0.28175289  0.3263419  -0.15662175  0.38866766]
- [-0.27852281 -0.4379015  -0.24835678 -0.64751958 -0.69561334]
- [-0.78417637  0.02071664 -0.15410988  0.01556134 -0.88819534]
- [-0.05779773 -0.32515711 -0.09882127  0.28491598 -0.12559452]
- [-0.15317811 -0.27006679 -0.18948673 -0.04745555 -0.08103359]
- [ 0.55694393 -0.48739759 -0.01252385 -0.4317254  -0.38838356]
- [-0.17268967 -0.2423782  -0.27177583 -0.09475155 -0.11100693]
- [-0.34478075 -0.13146383 -0.54009013  0.05728585 -1.14187497]]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated beta values: [[-1.01740343e-01 -2.79075316e-01 -1.52380857e-01 -7.17281768e-01
+  -4.04258130e-01]
+ [-5.08943635e-01 -2.23122622e-01  1.37532383e-01 -3.23211631e-01
+   5.47200435e-03]
+ [-1.58124136e-01  2.17903632e-01 -8.99696719e-01 -1.38908619e-01
+  -1.68979111e-01]
+ [ 7.17738979e-04 -1.22119836e-02 -3.91398739e-02 -2.09177459e-02
+  -4.60766252e-02]
+ [-2.94780463e-02 -2.82985323e-01  3.65041529e-02 -2.30243397e-01
+  -1.06986193e-01]
+ [ 2.91146929e-02  2.56112928e-03 -1.90673206e-02 -2.53639487e-02
+   1.99558345e-02]
+ [-5.04164470e-01 -7.91863635e-01 -4.62466830e-01 -5.83367903e-02
+  -2.16126442e-01]
+ [-1.08721934e+00 -1.81812383e-01  9.49125096e-02 -6.10673857e-01
+  -9.73926314e-01]
+ [ 3.32252834e-02 -4.88894043e-02 -1.92608194e-01 -1.43147541e-01
+  -2.45023408e-01]
+ [-8.57642360e-03  1.65040547e-03  1.94706662e-02  2.40544337e-02
+  -2.26689377e-02]]
 </pre></div>
 </div>
 </div>

@@ -241,6 +241,9 @@
 <li class="toctree-l1"><a class="reference internal" href="71-sim_dat_bandits.html">Multi-Armed Bandits</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Anonymization Techniques for Geospatial Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="73-sample-splitting-time-series.html">Split Samples in Time Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="74-leads-allocation.html">Maximizing Profits with a Simple Integer Linear Program in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="75-conversion-model.html">Conversion Model in Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="76-two-sided-matching.html">Two-Sided Matching &amp; Ranking for Credit Cards</a></li>
 </ul>
 
     </div>
@@ -481,7 +484,7 @@ document.write(`
 <p>For example, latitude and longitude values can be rounded to reduce precision, making it harder to identify exact locations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="c1"># Sample DataFrame</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
@@ -568,10 +571,10 @@ document.write(`
 <p>Adding spatial noise involves randomly perturbing the latitude and longitude values. This can help anonymize the data while preserving overall geographic trends.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
 
 <span class="c1"># Function to add noise to latitude and longitude</span>
-<span class="k">def</span> <span class="nf">add_spatial_noise</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">noise_level</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_spatial_noise</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">noise_level</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
     <span class="n">noisy_lat</span> <span class="o">=</span> <span class="n">lat</span> <span class="o">+</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">noise_level</span><span class="p">,</span> <span class="n">noise_level</span><span class="p">)</span>
     <span class="n">noisy_lon</span> <span class="o">=</span> <span class="n">lon</span> <span class="o">+</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">noise_level</span><span class="p">,</span> <span class="n">noise_level</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">noisy_lat</span><span class="p">,</span> <span class="n">noisy_lon</span>
@@ -625,8 +628,8 @@ document.write(`
       <td>100000</td>
       <td>34.1</td>
       <td>-118.2</td>
-      <td>34.057083</td>
-      <td>-118.250292</td>
+      <td>34.059981</td>
+      <td>-118.238397</td>
     </tr>
     <tr>
       <th>1</th>
@@ -636,8 +639,8 @@ document.write(`
       <td>150000</td>
       <td>37.8</td>
       <td>-122.4</td>
-      <td>37.782905</td>
-      <td>-122.426229</td>
+      <td>37.773625</td>
+      <td>-122.409683</td>
     </tr>
     <tr>
       <th>2</th>
@@ -647,8 +650,8 @@ document.write(`
       <td>200000</td>
       <td>40.7</td>
       <td>-74.0</td>
-      <td>40.710975</td>
-      <td>-74.008233</td>
+      <td>40.714259</td>
+      <td>-74.014925</td>
     </tr>
   </tbody>
 </table>
@@ -667,9 +670,9 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">skmob</span> <span class="kn">import</span> <span class="n">TrajDataFrame</span>
-<span class="kn">from</span> <span class="nn">skmob.preprocessing</span> <span class="kn">import</span> <span class="n">clustering</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skmob</span><span class="w"> </span><span class="kn">import</span> <span class="n">TrajDataFrame</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skmob.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">clustering</span>
 
 <span class="c1"># Sample data creation (Make sure to replace this with your actual data)</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
@@ -699,7 +702,7 @@ document.write(`
 3  34.0525 -118.2440 2024-10-01 03:00:00        0
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\miken\AppData\Local\Temp\ipykernel_73744\3519784660.py:9: FutureWarning: &#39;H&#39; is deprecated and will be removed in a future version, please use &#39;h&#39; instead.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\miken\AppData\Local\Temp\ipykernel_41900\3519784660.py:9: FutureWarning: &#39;H&#39; is deprecated and will be removed in a future version, please use &#39;h&#39; instead.
   &#39;datetime&#39;: pd.date_range(start=&#39;2024-10-01&#39;, periods=4, freq=&#39;H&#39;)  # Sample datetime values
 </pre></div>
 </div>
@@ -711,7 +714,7 @@ document.write(`
 <p>To anonymize sensitive numerical data, such as wealth, binning can be used. This involves converting continuous values into discrete categories.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="c1"># Sample data creation (Make sure to replace this with your actual data)</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
@@ -753,7 +756,7 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">faker</span> <span class="kn">import</span> <span class="n">Faker</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">faker</span><span class="w"> </span><span class="kn">import</span> <span class="n">Faker</span>
 
 <span class="n">fake</span> <span class="o">=</span> <span class="n">Faker</span><span class="p">()</span>
 <span class="c1"># Replace place names with synthetic city names</span>
@@ -796,37 +799,37 @@ document.write(`
       <th>0</th>
       <td>50000</td>
       <td>Low</td>
-      <td>North Erikshire</td>
+      <td>North Jamiehaven</td>
     </tr>
     <tr>
       <th>1</th>
       <td>120000</td>
       <td>Medium</td>
-      <td>Mendozafort</td>
+      <td>Dianashire</td>
     </tr>
     <tr>
       <th>2</th>
       <td>180000</td>
       <td>High</td>
-      <td>Tammyton</td>
+      <td>Harperburgh</td>
     </tr>
     <tr>
       <th>3</th>
       <td>75000</td>
       <td>Low</td>
-      <td>New Juan</td>
+      <td>North Isaac</td>
     </tr>
     <tr>
       <th>4</th>
       <td>210000</td>
       <td>NaN</td>
-      <td>Joneston</td>
+      <td>Jonesshire</td>
     </tr>
     <tr>
       <th>5</th>
       <td>130000</td>
       <td>Medium</td>
-      <td>South Jaime</td>
+      <td>New Rebecca</td>
     </tr>
   </tbody>
 </table>
@@ -838,8 +841,8 @@ document.write(`
 <p>Synthetic data generation involves creating new data points that mimic the statistical properties of the original dataset. This can help preserve the privacy of individuals while maintaining data utility for analysis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="c1"># Sample data creation (Make sure to replace this with your actual data)</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
@@ -862,18 +865,18 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data after generating synthetic values:
    latitude  longitude  wealth  latitude_synthetic  longitude_synthetic  \
-0     34.05    -118.25   50000           34.666672          -109.202091   
-1     36.16    -115.15  120000           37.084587          -141.048762   
-2     40.71     -74.01  180000           35.503760          -122.633777   
-3     37.77    -122.42   75000           36.019232           -98.048757   
-4     34.05    -118.25  210000           37.328326           -80.744612   
+0     34.05    -118.25   50000           37.626981          -108.046584   
+1     36.16    -115.15  120000           36.572908           -85.686989   
+2     40.71     -74.01  180000           36.295661          -111.777879   
+3     37.77    -122.42   75000           37.919928           -92.096191   
+4     34.05    -118.25  210000           33.903809          -112.847466   
 
    wealth_synthetic  
-0     196412.605081  
-1     211228.130691  
-2     109456.315324  
-3     310971.375837  
-4     206447.320845  
+0     132102.651047  
+1     205510.559245  
+2     225397.696175  
+3      81459.109297  
+4     116999.668456  
 </pre></div>
 </div>
 </div>
@@ -884,8 +887,8 @@ document.write(`
 <p>Combining multiple anonymization techniques can provide a higher level of privacy protection. For example, spatial noise can be added along with binning of wealth values.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="c1"># Sample data creation (Make sure to replace this with your actual data)</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
@@ -896,7 +899,7 @@ document.write(`
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
 <span class="c1"># Function to add spatial noise</span>
-<span class="k">def</span> <span class="nf">add_spatial_noise</span><span class="p">(</span><span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">noise_level</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_spatial_noise</span><span class="p">(</span><span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">noise_level</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
     <span class="c1"># Adding noise to latitude and longitude</span>
     <span class="n">noisy_latitude</span> <span class="o">=</span> <span class="n">latitude</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">noise_level</span><span class="p">)</span>
     <span class="n">noisy_longitude</span> <span class="o">=</span> <span class="n">longitude</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">noise_level</span><span class="p">)</span>
@@ -914,11 +917,11 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data after combining anonymization techniques:
    latitude  longitude  wealth  latitude_combined  longitude_combined  \
-0     34.05    -118.25   50000          34.061377         -118.241111   
-1     36.16    -115.15  120000          36.156883         -115.134458   
-2     40.71     -74.01  180000          40.693232          -74.016372   
-3     37.77    -122.42   75000          37.770480         -122.409198   
-4     34.05    -118.25  210000          34.052612         -118.258973   
+0     34.05    -118.25   50000          34.037773         -118.248208   
+1     36.16    -115.15  120000          36.173337         -115.160427   
+2     40.71     -74.01  180000          40.707068          -74.003298   
+3     37.77    -122.42   75000          37.758970         -122.410622   
+4     34.05    -118.25  210000          34.030625         -118.251980   
 
   wealth_combined  
 0             Low  
@@ -937,10 +940,10 @@ document.write(`
 <p>For example, we can randomly swap the wealth values between different locations in the dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="c1"># Function to swap values in the wealth column randomly</span>
-<span class="k">def</span> <span class="nf">swap_values</span><span class="p">(</span><span class="n">column</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">swap_values</span><span class="p">(</span><span class="n">column</span><span class="p">):</span>
     <span class="n">shuffled</span> <span class="o">=</span> <span class="n">column</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
     <span class="k">return</span> <span class="n">shuffled</span>
 
@@ -989,48 +992,48 @@ document.write(`
       <td>34.05</td>
       <td>-118.25</td>
       <td>50000</td>
-      <td>34.061377</td>
-      <td>-118.241111</td>
+      <td>34.037773</td>
+      <td>-118.248208</td>
       <td>Low</td>
-      <td>75000</td>
+      <td>180000</td>
     </tr>
     <tr>
       <th>1</th>
       <td>36.16</td>
       <td>-115.15</td>
       <td>120000</td>
-      <td>36.156883</td>
-      <td>-115.134458</td>
+      <td>36.173337</td>
+      <td>-115.160427</td>
       <td>Medium</td>
-      <td>120000</td>
+      <td>210000</td>
     </tr>
     <tr>
       <th>2</th>
       <td>40.71</td>
       <td>-74.01</td>
       <td>180000</td>
-      <td>40.693232</td>
-      <td>-74.016372</td>
+      <td>40.707068</td>
+      <td>-74.003298</td>
       <td>High</td>
-      <td>210000</td>
+      <td>75000</td>
     </tr>
     <tr>
       <th>3</th>
       <td>37.77</td>
       <td>-122.42</td>
       <td>75000</td>
-      <td>37.770480</td>
-      <td>-122.409198</td>
+      <td>37.758970</td>
+      <td>-122.410622</td>
       <td>Low</td>
-      <td>180000</td>
+      <td>120000</td>
     </tr>
     <tr>
       <th>4</th>
       <td>34.05</td>
       <td>-118.25</td>
       <td>210000</td>
-      <td>34.052612</td>
-      <td>-118.258973</td>
+      <td>34.030625</td>
+      <td>-118.251980</td>
       <td>NaN</td>
       <td>50000</td>
     </tr>

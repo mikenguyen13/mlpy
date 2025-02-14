@@ -241,6 +241,9 @@
 <li class="toctree-l1"><a class="reference internal" href="71-sim_dat_bandits.html">Multi-Armed Bandits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="72-data-anoy-geo.html">Data Anonymization Techniques for Geospatial Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="73-sample-splitting-time-series.html">Split Samples in Time Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="74-leads-allocation.html">Maximizing Profits with a Simple Integer Linear Program in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="75-conversion-model.html">Conversion Model in Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="76-two-sided-matching.html">Two-Sided Matching &amp; Ranking for Credit Cards</a></li>
 </ul>
 
     </div>
@@ -480,7 +483,7 @@ Implementation by <a class="reference external" href="https://docs.swarms.world/
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TOGETHER_API_KEY&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;dd26ca3ddf031d1c399077914b9824f9e7f9dc5c256d872c14d8a23383731ed2&quot;</span>
 </pre></div>
@@ -490,10 +493,10 @@ Implementation by <a class="reference external" href="https://docs.swarms.world/
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Advanced Mixture-of-Agents example – 3 layers</span>
-<span class="kn">import</span> <span class="nn">asyncio</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">together</span>
-<span class="kn">from</span> <span class="nn">together</span> <span class="kn">import</span> <span class="n">AsyncTogether</span><span class="p">,</span> <span class="n">Together</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">together</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">together</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncTogether</span><span class="p">,</span> <span class="n">Together</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">Together</span><span class="p">()</span>
 <span class="n">async_client</span> <span class="o">=</span> <span class="n">AsyncTogether</span><span class="p">()</span>
@@ -511,7 +514,7 @@ Implementation by <a class="reference external" href="https://docs.swarms.world/
 <span class="s2">Responses from models:&quot;&quot;&quot;</span>
 <span class="n">layers</span> <span class="o">=</span> <span class="mi">3</span>
 
-<span class="k">def</span> <span class="nf">getFinalSystemPrompt</span><span class="p">(</span><span class="n">system_prompt</span><span class="p">,</span> <span class="n">results</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">getFinalSystemPrompt</span><span class="p">(</span><span class="n">system_prompt</span><span class="p">,</span> <span class="n">results</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Construct a system prompt for layers 2+ that includes the previous responses to synthesize.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">(</span>
         <span class="n">system_prompt</span>
@@ -519,7 +522,7 @@ Implementation by <a class="reference external" href="https://docs.swarms.world/
         <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">element</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">element</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">)])</span>
     <span class="p">)</span>
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">run_llm</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">prev_response</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">run_llm</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">prev_response</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Run a single LLM call with a model while accounting for previous responses + rate limits.&quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">sleep_time</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -549,7 +552,7 @@ Implementation by <a class="reference external" href="https://docs.swarms.world/
             <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">sleep_time</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the main loop of the MOA process.&quot;&quot;&quot;</span>
     <span class="n">results</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">run_llm</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">reference_models</span><span class="p">])</span>
 
@@ -604,10 +607,10 @@ Implementation by <a class="reference external" href="https://docs.swarms.world/
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
-<span class="kn">import</span> <span class="nn">nest_asyncio</span>
-<span class="kn">import</span> <span class="nn">together</span>
-<span class="kn">from</span> <span class="nn">together</span> <span class="kn">import</span> <span class="n">AsyncTogether</span><span class="p">,</span> <span class="n">Together</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">nest_asyncio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">together</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">together</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncTogether</span><span class="p">,</span> <span class="n">Together</span>
 
 <span class="n">nest_asyncio</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span>  <span class="c1"># Allows nested event loops</span>
 
@@ -627,7 +630,7 @@ Implementation by <a class="reference external" href="https://docs.swarms.world/
 
 <span class="n">layers</span> <span class="o">=</span> <span class="mi">3</span>
 
-<span class="k">def</span> <span class="nf">get_final_system_prompt</span><span class="p">(</span><span class="n">system_prompt</span><span class="p">,</span> <span class="n">results</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_final_system_prompt</span><span class="p">(</span><span class="n">system_prompt</span><span class="p">,</span> <span class="n">results</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Construct a system prompt for layers 2+ that includes the previous responses to synthesize.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">(</span>
         <span class="n">system_prompt</span>
@@ -635,7 +638,7 @@ Implementation by <a class="reference external" href="https://docs.swarms.world/
         <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">element</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">element</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">)])</span>
     <span class="p">)</span>
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">run_llm</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">prev_response</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">run_llm</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">prev_response</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Run a single LLM call with a model while accounting for previous responses + rate limits.&quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">sleep_time</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">]:</span>  <span class="c1"># Increasing wait times for retry</span>
         <span class="k">try</span><span class="p">:</span>
@@ -667,7 +670,7 @@ Implementation by <a class="reference external" href="https://docs.swarms.world/
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model </span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2"> is not available. Skipping.&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># Skip unavailable model</span>
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the main loop of the MOA process.&quot;&quot;&quot;</span>
     <span class="n">results</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">run_llm</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">reference_models</span><span class="p">])</span>
 

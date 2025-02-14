@@ -241,6 +241,9 @@
 <li class="toctree-l1"><a class="reference internal" href="71-sim_dat_bandits.html">Multi-Armed Bandits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="72-data-anoy-geo.html">Data Anonymization Techniques for Geospatial Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="73-sample-splitting-time-series.html">Split Samples in Time Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="74-leads-allocation.html">Maximizing Profits with a Simple Integer Linear Program in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="75-conversion-model.html">Conversion Model in Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="76-two-sided-matching.html">Two-Sided Matching &amp; Ranking for Credit Cards</a></li>
 </ul>
 
     </div>
@@ -511,9 +514,9 @@ The institution profits by charging interest on approved credit, but it incurs l
 <p>Here’s a look at the data preparation:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
 
 <span class="c1"># Set the seed for reproducibility</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
@@ -586,9 +589,9 @@ The institution profits by charging interest on approved credit, but it incurs l
 <p>We start by defining the input features and creating a series of shared layers. These shared layers extract common representations from the customer data (like customer demographics, spending patterns, etc.) before making predictions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Dense</span>
-<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Model</span>
-<span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Dropout</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras.layers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Dense</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras.layers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dropout</span>
 
 <span class="n">input_layer</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">X_scaled</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],))</span>  <span class="c1"># Input for customer features</span>
 <span class="n">shared</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">kernel_initializer</span><span class="o">=</span><span class="s1">&#39;he_normal&#39;</span><span class="p">)(</span><span class="n">input_layer</span><span class="p">)</span>
@@ -612,7 +615,7 @@ The institution profits by charging interest on approved credit, but it incurs l
 <p>We create specific output layers for each prediction task:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Concatenate</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras.layers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Concatenate</span>
 
 <span class="n">approval_output</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;sigmoid&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;approved&quot;</span><span class="p">)(</span>
     <span class="n">shared</span>
@@ -693,7 +696,7 @@ $$</p></li>
 <h4>Breakdown of the Loss Function<a class="headerlink" href="#breakdown-of-the-loss-function" title="Link to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
 
 <span class="c1"># User-defined parameters for constraints</span>
 <span class="n">lookahead_months</span> <span class="o">=</span> <span class="mi">6</span>  <span class="c1"># Example: looking ahead 6 months</span>
@@ -703,7 +706,7 @@ $$</p></li>
 <span class="n">max_interest_rate</span> <span class="o">=</span> <span class="mf">0.6</span>  <span class="c1"># Maximum interest rate</span>
 <span class="n">min_interest_rate</span> <span class="o">=</span> <span class="mf">0.22</span> <span class="c1"># Minimum interest rate </span>
 
-<span class="k">def</span> <span class="nf">task1_custom_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">task1_custom_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
     <span class="c1"># Ground truth values</span>
     <span class="n">true_approved</span> <span class="o">=</span> <span class="n">y_true</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>  
     <span class="n">true_credit_limit</span> <span class="o">=</span> <span class="n">y_true</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>  
@@ -843,20 +846,28 @@ $$</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/32 [..............................] - ETA: 5s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 1/32 [..............................] - ETA: 7s
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-23/32 [====================&gt;.........] - ETA: 0s
+10/32 [========&gt;.....................] - ETA: 0s
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-32/32 [==============================] - 0s 2ms/step
+19/32 [================&gt;.............] - ETA: 0s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>New Profit: 2,266.14
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+28/32 [=========================&gt;....] - ETA: 0s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+32/32 [==============================] - 0s 7ms/step
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>New Profit: 0.00
 Actual Profit: -10,231,358.18
-Can make 10,233,624.32 more
+Can make 10,231,358.18 more
 </pre></div>
 </div>
 </div>
@@ -867,7 +878,7 @@ Can make 10,233,624.32 more
 <p>Credit approval is a binary classification task. Here, we’ll calculate metrics like accuracy, precision, recall, and the AUC-ROC.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">,</span> <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">confusion_matrix</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">,</span> <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">confusion_matrix</span>
 
 <span class="c1"># Predicted and actual approval values</span>
 <span class="n">pred_approved</span> <span class="o">=</span> <span class="p">(</span><span class="n">pred_approval_prob</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>  <span class="c1"># Convert probabilities to binary approvals</span>
@@ -895,8 +906,8 @@ Can make 10,233,624.32 more
 <span class="c1"># Visualize the ROC Curve for Approval Prediction</span>
 <span class="c1"># The ROC curve helps visualize the trade-off between the true positive rate and false positive rate at different thresholds.</span>
 
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_curve</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">roc_curve</span>
 
 <span class="c1"># Calculate ROC curve</span>
 <span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">actual_approved</span><span class="p">,</span> <span class="n">pred_approval_prob</span><span class="p">)</span>
@@ -915,17 +926,21 @@ Can make 10,233,624.32 more
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Credit Approval Prediction - Evaluation Metrics:
-Accuracy: 0.4890
-Precision: 0.4890
-Recall: 1.0000
-F1-Score: 0.6568
-AUC-ROC: 0.4778
+Accuracy: 0.5110
+Precision: 0.0000
+Recall: 0.0000
+F1-Score: 0.0000
+AUC-ROC: 0.4771
 Confusion Matrix:
-[[  0 511]
- [  0 489]]
+[[511   0]
+ [489   0]]
 </pre></div>
 </div>
-<img alt="_images/5005a3b58f1ec25dd8f0c088d8b312a417d0defec6d10689303840d7b5c263fc.png" src="_images/5005a3b58f1ec25dd8f0c088d8b312a417d0defec6d10689303840d7b5c263fc.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\ProgramData\anaconda3\envs\mlpy\lib\site-packages\sklearn\metrics\_classification.py:1334: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 due to no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+</pre></div>
+</div>
+<img alt="_images/908815d372f60b319b16894c006846fd7f3049d6479715d47ba159f248eb8243.png" src="_images/908815d372f60b319b16894c006846fd7f3049d6479715d47ba159f248eb8243.png" />
 </div>
 </div>
 </section>
@@ -934,7 +949,7 @@ Confusion Matrix:
 <p>Credit limit is a continuous variable, so we’ll use regression metrics like Mean Absolute Error (MAE), Mean Squared Error (MSE), and R-squared (R²) to evaluate the predictions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">r2_score</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">r2_score</span>
 
 <span class="c1"># Predicted and actual credit limits</span>
 <span class="n">actual_credit_limit</span> <span class="o">=</span> <span class="n">y_credit_limit</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
@@ -964,12 +979,12 @@ Confusion Matrix:
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Credit Limit Prediction - Evaluation Metrics:
-MAE: 55118.70
-MSE: 3715312748.29
-R-squared: -4.4858
+MAE: 55126.10
+MSE: 3716148355.79
+R-squared: -4.4870
 </pre></div>
 </div>
-<img alt="_images/5b95801e92a4e6464d03639b792aa39a294716d56bf7d55fa9862285470870ee.png" src="_images/5b95801e92a4e6464d03639b792aa39a294716d56bf7d55fa9862285470870ee.png" />
+<img alt="_images/6b6cf2aecab06ddf3d641b0c2fc56c39dada730337738b14cd6dee03d9262e86.png" src="_images/6b6cf2aecab06ddf3d641b0c2fc56c39dada730337738b14cd6dee03d9262e86.png" />
 </div>
 </div>
 </section>
@@ -1005,12 +1020,12 @@ R-squared: -4.4858
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interest Rate Prediction - Evaluation Metrics:
-MAE: 0.1957
-MSE: 0.0501
-R-squared: -3.2370
+MAE: 0.3394
+MSE: 0.1371
+R-squared: -10.5901
 </pre></div>
 </div>
-<img alt="_images/46448c0c9beaea6bad7303d2815bc43f146d4c69f59c6aba6a6022c5b86e9e0a.png" src="_images/46448c0c9beaea6bad7303d2815bc43f146d4c69f59c6aba6a6022c5b86e9e0a.png" />
+<img alt="_images/e9fd741485d498f4c9d1c703a7e05f35a44c2fb66adb20416cf383554d5cb460.png" src="_images/e9fd741485d498f4c9d1c703a7e05f35a44c2fb66adb20416cf383554d5cb460.png" />
 </div>
 </div>
 </section>
@@ -1054,18 +1069,14 @@ R-squared: -3.2370
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Default Risk Prediction - Evaluation Metrics:
-Accuracy: 0.4950
-Precision: 0.0000
-Recall: 0.0000
-F1-Score: 0.0000
-AUC-ROC: 0.4904
+Accuracy: 0.4980
+Precision: 0.5022
+Recall: 0.6772
+F1-Score: 0.5767
+AUC-ROC: 0.4939
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\ProgramData\anaconda3\envs\mlpy\lib\site-packages\sklearn\metrics\_classification.py:1334: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 due to no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-</pre></div>
-</div>
-<img alt="_images/a8af793e81ee980c9696d752b2380a55ca7699619b20e6e11347d6d84c389ab5.png" src="_images/a8af793e81ee980c9696d752b2380a55ca7699619b20e6e11347d6d84c389ab5.png" />
+<img alt="_images/f2e41b46a0ee6ad4d83e6c780e648fe2f2eb96dbc58b2a75927131e387f67274.png" src="_images/f2e41b46a0ee6ad4d83e6c780e648fe2f2eb96dbc58b2a75927131e387f67274.png" />
 </div>
 </div>
 </section>
@@ -1101,9 +1112,9 @@ AUC-ROC: 0.4904
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Profit Prediction - Evaluation Metrics:
-MAE: 15559.23
-MSE: 912451843.57
-R-squared: -0.1297
+MAE: 15558.13
+MSE: 912406517.33
+R-squared: -0.1296
 </pre></div>
 </div>
 <img alt="_images/6fb752bb997667c789c21dfaa9195af80de73f21ccd9fdaa7c721964018ebfe5.png" src="_images/6fb752bb997667c789c21dfaa9195af80de73f21ccd9fdaa7c721964018ebfe5.png" />
