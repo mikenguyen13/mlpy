@@ -1,0 +1,1251 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Two-Sided Matching &amp; Ranking for Credit Cards &#8212; Machine Learning in Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=1a96265c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=c72506b3" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=1a96265c" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/bootstrap.css?v=5340d9b1" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/theme.css?v=a243ae73" />
+    <link rel="stylesheet" type="text/css" href="_static/vendor/fontawesome/6.5.1/css/all.min.css?v=c786f70d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-NK1GQ8CXSN"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-NK1GQ8CXSN');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-NK1GQ8CXSN');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '76-two-sided-matching';</script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/copybutton_funcs.js?v=776a791e"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/language_data.js?v=e49ba422"></script>
+    <script src="_static/searchtools.js?v=d19c4805"></script>
+    <script src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/scripts/bootstrap.js?v=3d67b3b1"></script>
+    <script src="_static/scripts/pydata-sphinx-theme.js?v=b2908668"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?v=95180707"></script>
+    <link rel="canonical" href="https://mikenguyen13.github.io/mlpy/76-two-sided-matching.html" />
+    <link rel="icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Conversion Model in Banks" href="75-conversion-model.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Machine Learning in Python - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Machine Learning in Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Introduction to Machine Learning and Artificial Intelligence
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05-supervised-ml.html">Supervised Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-advanced_linear_regression.html">Advanced Linear Regression Techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-optimization.html">Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-matrix_factorization.html">Matrix Factorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="40-data-masking.html">Data Masking</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Industry Applications</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="50-credit-score.html">Credit Score Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="51-min_risk.html">Risk Minimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="51-min_risk_amount.html">Risk Minimization with Overdue Balance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="52-credit-approval.html">Credit Approval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="53-credit-adjustment.html">Credit Adjustment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="54-firm-valuation.html">Firm Valuation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="55-financial_fraud.html">Financial Fraud Detection</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="70-approximate-nearest-neighbors.html">Approximate Nearest Neighbors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="71-sim_dat_bandits.html">Multi-Armed Bandits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="72-data-anoy-geo.html">Data Anonymization Techniques for Geospatial Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="73-sample-splitting-time-series.html">Split Samples in Time Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="74-leads-allocation.html">Maximizing Profits with a Simple Integer Linear Program in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="75-conversion-model.html">Conversion Model in Banks</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Two-Sided Matching &amp; Ranking for Credit Cards</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/edit/main/76-two-sided-matching.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/mikenguyen13/mlpy/issues/new?title=Issue%20on%20page%20%2F76-two-sided-matching.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/76-two-sided-matching.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Two-Sided Matching & Ranking for Credit Cards</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understand-the-two-sided-nature-of-the-market">1. Understand the Two-Sided Nature of the Market</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overall-pipeline-flow">2. Overall Pipeline / Flow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hard-vs-soft-criteria-handling">3. Hard vs. Soft Criteria Handling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-model-considerations">4. Data &amp; Model Considerations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-data-you-might-need">A. Data You Might Need</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-models-to-consider">B. Models to Consider</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-objective-optimization">5. Multi-Objective Optimization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ranking-mechanism-and-presentation">6. Ranking Mechanism and Presentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-steps-to-start-implementation">7. Practical Steps to Start Implementation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-nuances">8. Additional Nuances</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="two-sided-matching-ranking-for-credit-cards">
+<h1>Two-Sided Matching &amp; Ranking for Credit Cards<a class="headerlink" href="#two-sided-matching-ranking-for-credit-cards" title="Link to this heading">#</a></h1>
+<p>Below is a high-level framework to build a two-sided matching system for credit cards, balancing your revenue (fees) and customers’ utility (satisfaction). It also covers ranking multiple recommendations rather than suggesting just one.</p>
+<hr class="docutils" />
+<section id="understand-the-two-sided-nature-of-the-market">
+<h2>1. Understand the Two-Sided Nature of the Market<a class="headerlink" href="#understand-the-two-sided-nature-of-the-market" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Supply Side (Banks &amp; Cards)</strong></p>
+<ul class="simple">
+<li><p>Each bank has multiple credit card products.</p></li>
+<li><p>Attributes include:</p>
+<ul>
+<li><p>APR or interest rate</p></li>
+<li><p>Annual fee</p></li>
+<li><p>Rewards structure (cashback, miles, points, etc.)</p></li>
+<li><p>Sign-up bonus</p></li>
+<li><p>Issuance constraints (e.g., min. credit score)</p></li>
+</ul>
+</li>
+<li><p><em>Platform revenue:</em> Different cards/banks pay different referral commissions.</p></li>
+</ul>
+</li>
+<li><p><strong>Demand Side (Customers)</strong></p>
+<ul class="simple">
+<li><p>Each customer has attributes like:</p>
+<ul>
+<li><p>Credit score &amp; income</p></li>
+<li><p>Spending habits &amp; preferences</p></li>
+</ul>
+</li>
+<li><p>They want a card that best suits their needs (max utility).</p></li>
+<li><p>“Hard constraints”: Must meet credit score, location, income requirements.</p></li>
+<li><p>“Soft preferences”: Type of rewards, brand preference, annual fee tolerance, etc.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Key:</strong> You need an approach that accounts for both sides: maximizing platform revenue (fees) and user satisfaction (utility).</p>
+</section>
+<hr class="docutils" />
+<section id="overall-pipeline-flow">
+<h2>2. Overall Pipeline / Flow<a class="headerlink" href="#overall-pipeline-flow" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Filtering / Eligibility Check (Hard Constraints)</strong></p>
+<ul class="simple">
+<li><p>Eliminate cards the customer cannot qualify for (score, income, location).</p></li>
+</ul>
+</li>
+<li><p><strong>Utility Modeling (Soft Criteria)</strong></p>
+<ul class="simple">
+<li><p>For each (customer, card) pair that survives the filter, compute a “user preference score.”</p></li>
+<li><p>This can be done via heuristic (rule-based) or ML (learning-to-rank, collaborative filtering).</p></li>
+</ul>
+</li>
+<li><p><strong>Revenue Modeling</strong></p>
+<ul class="simple">
+<li><p>Estimate expected revenue per (customer, card):<br />
+$<span class="math notranslate nohighlight">\(
+  \text{expected\_revenue} = \text{commission}(card) \times P(\text{approval}) \times P(\text{acceptance})
+\)</span>$</p></li>
+</ul>
+</li>
+<li><p><strong>Combine Utility &amp; Revenue</strong></p>
+<ul class="simple">
+<li><p>Use a weighted combination or multi-objective approach:<br />
+$<span class="math notranslate nohighlight">\(
+  \text{Final Score} = \alpha \cdot \text{Utility} + (1 - \alpha) \cdot \text{Revenue}
+\)</span>$</p></li>
+</ul>
+</li>
+<li><p><strong>Ranking &amp; Output</strong></p>
+<ul class="simple">
+<li><p>Rank feasible cards by final score and present top N suggestions.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="hard-vs-soft-criteria-handling">
+<h2>3. Hard vs. Soft Criteria Handling<a class="headerlink" href="#hard-vs-soft-criteria-handling" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Hard Criteria (Filters)</strong></p>
+<ul>
+<li><p>Credit score thresholds, minimum income, region restrictions.</p></li>
+<li><p>Any card failing these should be removed from consideration.</p></li>
+</ul>
+</li>
+<li><p><strong>Soft Criteria (Preferences)</strong></p>
+<ul>
+<li><p>Rewards type (cashback, points, miles).</p></li>
+<li><p>Annual fee tolerance.</p></li>
+<li><p>Brand preference.</p></li>
+<li><p>Use a scoring formula or ML model to assess how well each card meets user’s preferences.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="data-model-considerations">
+<h2>4. Data &amp; Model Considerations<a class="headerlink" href="#data-model-considerations" title="Link to this heading">#</a></h2>
+<section id="a-data-you-might-need">
+<h3>A. Data You Might Need<a class="headerlink" href="#a-data-you-might-need" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Historical Interactions</strong></p>
+<ul class="simple">
+<li><p>Which cards were shown to which users.</p></li>
+<li><p>Which card they chose (if any), approval status, ongoing usage, etc.</p></li>
+</ul>
+</li>
+<li><p><strong>Card Metadata</strong></p>
+<ul class="simple">
+<li><p>Commissions, APR, annual fees, reward structures.</p></li>
+</ul>
+</li>
+<li><p><strong>User Features</strong></p>
+<ul class="simple">
+<li><p>Demographics, credit profile, stated preferences.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="b-models-to-consider">
+<h3>B. Models to Consider<a class="headerlink" href="#b-models-to-consider" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Approval Probability Model</strong></p>
+<ul class="simple">
+<li><p>Probability of being approved given user’s credit score, income, etc.</p></li>
+</ul>
+</li>
+<li><p><strong>Acceptance / Conversion Model</strong></p>
+<ul class="simple">
+<li><p>Probability the user will actually apply if shown the card.</p></li>
+</ul>
+</li>
+<li><p><strong>User Satisfaction / Retention Model</strong></p>
+<ul class="simple">
+<li><p>If data exists, predict how satisfied the user will be over time.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+<hr class="docutils" />
+<section id="multi-objective-optimization">
+<h2>5. Multi-Objective Optimization<a class="headerlink" href="#multi-objective-optimization" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Weighted Sum Approach</strong><br />
+$<span class="math notranslate nohighlight">\(
+  \text{Final Score} = \alpha \cdot U(\text{user}, \text{card}) \;+\; (1-\alpha)\times R(\text{user}, \text{card})
+\)</span>$</p>
+<ul class="simple">
+<li><p>Adjust <span class="math notranslate nohighlight">\(\alpha\)</span> via experiments (A/B tests).</p></li>
+</ul>
+</li>
+<li><p><strong>Pareto Frontier</strong></p>
+<ul class="simple">
+<li><p>More advanced. Finds non-dominated solutions in terms of user utility &amp; revenue.</p></li>
+</ul>
+</li>
+<li><p><strong>Constraint-Based</strong></p>
+<ul class="simple">
+<li><p>E.g., “We want at least X user utility,” then maximize revenue (or vice versa).</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="ranking-mechanism-and-presentation">
+<h2>6. Ranking Mechanism and Presentation<a class="headerlink" href="#ranking-mechanism-and-presentation" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Top-K Ranking</strong></p>
+<ul class="simple">
+<li><p>Sort the feasible cards by the final score and present the top N.</p></li>
+<li><p>Optionally label them (“Best for Travel,” “No Annual Fee,” etc.) to help users.</p></li>
+</ul>
+</li>
+<li><p><strong>Diversity / Exploration</strong></p>
+<ul class="simple">
+<li><p>Consider a diversity factor if you don’t want all top recommendations from the same bank.</p></li>
+</ul>
+</li>
+<li><p><strong>Explainability</strong></p>
+<ul class="simple">
+<li><p>Show users why you’re recommending a certain card (higher approval chance, great rewards match, etc.).</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="practical-steps-to-start-implementation">
+<h2>7. Practical Steps to Start Implementation<a class="headerlink" href="#practical-steps-to-start-implementation" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Data Collection &amp; Cleaning</strong></p>
+<ul class="simple">
+<li><p>Gather accurate card data (APR, fees, commissions) and user data (score, preferences).</p></li>
+</ul>
+</li>
+<li><p><strong>Rule-Based Filter (Hard Constraints)</strong></p>
+<ul class="simple">
+<li><p>Immediately remove cards that don’t meet basic eligibility.</p></li>
+</ul>
+</li>
+<li><p><strong>Utility &amp; Revenue Estimation</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">expected_revenue</span> <span class="pre">=</span> <span class="pre">commission</span> <span class="pre">*</span> <span class="pre">prob_approve</span> <span class="pre">*</span> <span class="pre">prob_accept</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">user_utility_score</span></code> can be a simple rule-based or an ML model.</p></li>
+</ul>
+</li>
+<li><p><strong>Combine Scores</strong><br />
+$<span class="math notranslate nohighlight">\(
+  \text{final\_score} = \alpha \times \text{user\_utility\_score} \;+\; (1-\alpha)\times \text{expected\_revenue}
+\)</span>$</p></li>
+<li><p><strong>Ranking &amp; Display</strong></p>
+<ul class="simple">
+<li><p>Sort by <code class="docutils literal notranslate"><span class="pre">final_score</span></code> and present the top options.</p></li>
+</ul>
+</li>
+<li><p><strong>A/B Testing &amp; Iteration</strong></p>
+<ul class="simple">
+<li><p>Experiment with different <span class="math notranslate nohighlight">\(\alpha\)</span>, different scoring methods, and measure outcomes.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="additional-nuances">
+<h2>8. Additional Nuances<a class="headerlink" href="#additional-nuances" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Regulatory / Compliance</strong></p>
+<ul>
+<li><p>Ensure no discrimination or violation of lending regulations.</p></li>
+</ul>
+</li>
+<li><p><strong>Bank Preferences</strong></p>
+<ul>
+<li><p>If banks want specific types of customers, integrate their preference as another factor in your model or constraints.</p></li>
+</ul>
+</li>
+<li><p><strong>Cold Start Problems</strong></p>
+<ul>
+<li><p>For new users/cards, rely on aggregate or attribute-based estimations until real interaction data is available.</p></li>
+</ul>
+</li>
+<li><p><strong>Online Learning / Bandit Approaches</strong></p>
+<ul>
+<li><p>Advanced techniques to adapt in real time based on user responses.</p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<section id="conclusion">
+<h3>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Filter</strong> out ineligible cards.</p></li>
+<li><p><strong>Score</strong> each candidate on both user utility and expected revenue.</p></li>
+<li><p><strong>Combine</strong> those scores via a multi-objective method.</p></li>
+<li><p><strong>Rank</strong> feasible cards and present top picks (not just one).</p></li>
+<li><p><strong>Iterate</strong> through A/B testing to optimize both user satisfaction and your revenue.</p></li>
+</ol>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="c1"># -------------------------------------------------------</span>
+<span class="c1"># 1. GENERATE RANDOM DATA</span>
+<span class="c1">#    - 30 card products</span>
+<span class="c1">#    - 1000 customers</span>
+<span class="c1"># -------------------------------------------------------</span>
+
+<span class="c1"># For reproducibility, set a random seed</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Let&#39;s define some sets of possible attributes</span>
+<span class="n">BANKS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Bank A&quot;</span><span class="p">,</span> <span class="s2">&quot;Bank B&quot;</span><span class="p">,</span> <span class="s2">&quot;Bank C&quot;</span><span class="p">,</span> <span class="s2">&quot;Bank D&quot;</span><span class="p">,</span> <span class="s2">&quot;Bank E&quot;</span><span class="p">]</span>
+<span class="n">REWARD_TYPES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Cashback&quot;</span><span class="p">,</span> <span class="s2">&quot;Miles&quot;</span><span class="p">,</span> <span class="s2">&quot;Points&quot;</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">generate_random_cards</span><span class="p">(</span><span class="n">n_cards</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate &#39;n_cards&#39; credit card records with random attributes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">card_records</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_cards</span><span class="p">):</span>
+        <span class="n">bank</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">BANKS</span><span class="p">)</span>
+        <span class="n">card_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">bank</span><span class="si">}</span><span class="s2"> Card #</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="c1"># Randomly assign min credit score (range: 600-750)</span>
+        <span class="n">credit_score_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">751</span><span class="p">)</span>
+
+        <span class="c1"># Random commission (platform revenue) in dollars</span>
+        <span class="n">commission</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">201</span><span class="p">)</span>  <span class="c1"># e.g. between $50 - $200</span>
+
+        <span class="c1"># APR range ~ [10%, 25%]</span>
+        <span class="n">apr</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Annual fee: 0, 49, 99, 199, etc.</span>
+        <span class="n">annual_fee_options</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">199</span><span class="p">]</span>
+        <span class="n">annual_fee</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">annual_fee_options</span><span class="p">)</span>
+
+        <span class="c1"># Reward type</span>
+        <span class="n">reward_type</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">REWARD_TYPES</span><span class="p">)</span>
+
+        <span class="n">card_records</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s2">&quot;Bank&quot;</span><span class="p">:</span> <span class="n">bank</span><span class="p">,</span>
+            <span class="s2">&quot;Card&quot;</span><span class="p">:</span> <span class="n">card_name</span><span class="p">,</span>
+            <span class="s2">&quot;CreditScoreMin&quot;</span><span class="p">:</span> <span class="n">credit_score_min</span><span class="p">,</span>
+            <span class="s2">&quot;Commission&quot;</span><span class="p">:</span> <span class="n">commission</span><span class="p">,</span>
+            <span class="s2">&quot;APR&quot;</span><span class="p">:</span> <span class="n">apr</span><span class="p">,</span>
+            <span class="s2">&quot;AnnualFee&quot;</span><span class="p">:</span> <span class="n">annual_fee</span><span class="p">,</span>
+            <span class="s2">&quot;RewardType&quot;</span><span class="p">:</span> <span class="n">reward_type</span>
+        <span class="p">})</span>
+    <span class="n">df_cards</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">card_records</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df_cards</span>
+
+<span class="k">def</span> <span class="nf">generate_random_customers</span><span class="p">(</span><span class="n">n_customers</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate &#39;n_customers&#39; user/customer records with random attributes.</span>
+<span class="sd">    Each user will have:</span>
+<span class="sd">      - CreditScore</span>
+<span class="sd">      - Income</span>
+<span class="sd">      - RewardPreference</span>
+<span class="sd">      - MaxAnnualFee</span>
+<span class="sd">      - Possibly brand preference (soft preference for a particular bank)</span>
+<span class="sd">      - alpha: trade-off factor (0 to 1) between utility vs. revenue</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">customer_records</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># We&#39;ll define some brand preference probability distribution</span>
+    <span class="n">brand_prefs</span> <span class="o">=</span> <span class="n">BANKS</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;NoPreference&quot;</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_customers</span><span class="p">):</span>
+        <span class="c1"># Credit score in [600..800]</span>
+        <span class="n">credit_score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">801</span><span class="p">)</span>
+        <span class="c1"># Income in [30k..150k]</span>
+        <span class="n">income</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">30000</span><span class="p">,</span> <span class="mi">150001</span><span class="p">)</span>
+
+        <span class="c1"># Reward preference</span>
+        <span class="n">reward_pref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">REWARD_TYPES</span><span class="p">)</span>
+
+        <span class="c1"># Max annual fee tolerance (0..200 in steps)</span>
+        <span class="n">max_fee</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">199</span><span class="p">])</span>
+
+        <span class="c1"># Brand preference (soft). Could be &quot;NoPreference&quot; or one of the 5 banks</span>
+        <span class="n">brand_pref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">brand_prefs</span><span class="p">)</span>
+
+        <span class="c1"># alpha in [0..1], the weighting for utility vs. revenue</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">customer_records</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s2">&quot;CustomerID&quot;</span><span class="p">:</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;CreditScore&quot;</span><span class="p">:</span> <span class="n">credit_score</span><span class="p">,</span>
+            <span class="s2">&quot;Income&quot;</span><span class="p">:</span> <span class="n">income</span><span class="p">,</span>
+            <span class="s2">&quot;RewardPreference&quot;</span><span class="p">:</span> <span class="n">reward_pref</span><span class="p">,</span>
+            <span class="s2">&quot;MaxAnnualFee&quot;</span><span class="p">:</span> <span class="n">max_fee</span><span class="p">,</span>
+            <span class="s2">&quot;BrandPreference&quot;</span><span class="p">:</span> <span class="n">brand_pref</span><span class="p">,</span>
+            <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="n">alpha</span>
+        <span class="p">})</span>
+    <span class="n">df_customers</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">customer_records</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df_customers</span>
+
+<span class="c1"># Generate the data</span>
+<span class="n">df_cards</span> <span class="o">=</span> <span class="n">generate_random_cards</span><span class="p">(</span><span class="n">n_cards</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">df_customers</span> <span class="o">=</span> <span class="n">generate_random_customers</span><span class="p">(</span><span class="n">n_customers</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="c1"># -------------------------------------------------------</span>
+<span class="c1"># 2. FILTERING FUNCTION (HARD CONSTRAINTS)</span>
+<span class="c1"># -------------------------------------------------------</span>
+<span class="k">def</span> <span class="nf">filter_cards</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">df_cards</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Hard constraints:</span>
+<span class="sd">    - customer&#39;s credit score &gt;= card&#39;s min score</span>
+<span class="sd">    - card&#39;s annual fee &lt;= customer&#39;s maxAnnualFee</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">eligible</span> <span class="o">=</span> <span class="n">df_cards</span><span class="p">[</span>
+        <span class="p">(</span><span class="n">df_cards</span><span class="p">[</span><span class="s2">&quot;CreditScoreMin&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">customer</span><span class="p">[</span><span class="s2">&quot;CreditScore&quot;</span><span class="p">])</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">df_cards</span><span class="p">[</span><span class="s2">&quot;AnnualFee&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">customer</span><span class="p">[</span><span class="s2">&quot;MaxAnnualFee&quot;</span><span class="p">])</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">eligible</span>
+
+<span class="c1"># -------------------------------------------------------</span>
+<span class="c1"># 3. UTILITY &amp; REVENUE CALCULATIONS</span>
+<span class="c1"># -------------------------------------------------------</span>
+
+<span class="k">def</span> <span class="nf">probability_of_approval</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">card</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Toy model:</span>
+<span class="sd">    Probability of approval depends on how much the customer&#39;s score</span>
+<span class="sd">    exceeds the card&#39;s min required score.</span>
+<span class="sd">    We&#39;ll clamp the probability to [0, 0.95].</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">gap</span> <span class="o">=</span> <span class="n">customer</span><span class="p">[</span><span class="s2">&quot;CreditScore&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">card</span><span class="p">[</span><span class="s2">&quot;CreditScoreMin&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">gap</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">0.0</span>
+    <span class="c1"># Make a base ~ 0.5, plus gap * 0.005</span>
+    <span class="n">prob</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">+</span> <span class="p">(</span><span class="n">gap</span> <span class="o">*</span> <span class="mf">0.005</span><span class="p">)</span>
+    <span class="n">prob</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">prob</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">prob</span>
+
+<span class="k">def</span> <span class="nf">probability_of_acceptance</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">card</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Toy model for acceptance:</span>
+<span class="sd">    - If reward matches user preference =&gt; 0.7 base, else 0.4</span>
+<span class="sd">    - If bank matches user brand preference =&gt; add +0.1</span>
+<span class="sd">    Cap at 0.95</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">prob</span> <span class="o">=</span> <span class="mf">0.4</span>
+    <span class="k">if</span> <span class="n">card</span><span class="p">[</span><span class="s2">&quot;RewardType&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">customer</span><span class="p">[</span><span class="s2">&quot;RewardPreference&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+        <span class="n">prob</span> <span class="o">=</span> <span class="mf">0.7</span>
+
+    <span class="c1"># brand preference effect</span>
+    <span class="k">if</span> <span class="n">customer</span><span class="p">[</span><span class="s2">&quot;BrandPreference&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">card</span><span class="p">[</span><span class="s2">&quot;Bank&quot;</span><span class="p">]:</span>
+        <span class="n">prob</span> <span class="o">+=</span> <span class="mf">0.1</span>
+
+    <span class="c1"># clamp</span>
+    <span class="n">prob</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">prob</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">prob</span>
+
+<span class="k">def</span> <span class="nf">user_utility_score</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">card</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Simple heuristic-based user utility:</span>
+<span class="sd">    - +5 if reward matches user&#39;s preference</span>
+<span class="sd">    - + up to 5 points if APR is low</span>
+<span class="sd">    - + up to 5 points if annual fee is low</span>
+<span class="sd">    - +3 if brand matches user brand preference</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># reward match</span>
+    <span class="k">if</span> <span class="n">card</span><span class="p">[</span><span class="s2">&quot;RewardType&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">customer</span><span class="p">[</span><span class="s2">&quot;RewardPreference&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+        <span class="n">score</span> <span class="o">+=</span> <span class="mi">5</span>
+
+    <span class="c1"># APR: the lower the better</span>
+    <span class="n">apr</span> <span class="o">=</span> <span class="n">card</span><span class="p">[</span><span class="s2">&quot;APR&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">apr</span> <span class="o">&lt;=</span> <span class="mi">12</span><span class="p">:</span>
+        <span class="n">score</span> <span class="o">+=</span> <span class="mi">5</span>
+    <span class="k">elif</span> <span class="n">apr</span> <span class="o">&lt;=</span> <span class="mi">16</span><span class="p">:</span>
+        <span class="n">score</span> <span class="o">+=</span> <span class="mi">3</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">score</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1"># annual fee</span>
+    <span class="k">if</span> <span class="n">card</span><span class="p">[</span><span class="s2">&quot;AnnualFee&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">score</span> <span class="o">+=</span> <span class="mi">5</span>
+    <span class="k">elif</span> <span class="n">card</span><span class="p">[</span><span class="s2">&quot;AnnualFee&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">50</span><span class="p">:</span>
+        <span class="n">score</span> <span class="o">+=</span> <span class="mi">3</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">score</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1"># brand preference</span>
+    <span class="k">if</span> <span class="n">customer</span><span class="p">[</span><span class="s2">&quot;BrandPreference&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">card</span><span class="p">[</span><span class="s2">&quot;Bank&quot;</span><span class="p">]:</span>
+        <span class="n">score</span> <span class="o">+=</span> <span class="mi">3</span>
+
+    <span class="k">return</span> <span class="n">score</span>
+
+<span class="c1"># -------------------------------------------------------</span>
+<span class="c1"># 4. RECOMMEND CARDS FOR A SINGLE CUSTOMER</span>
+<span class="c1"># -------------------------------------------------------</span>
+<span class="k">def</span> <span class="nf">recommend_cards_for_customer</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">df_cards</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Filter -&gt; compute scores -&gt; rank -&gt; return top_k.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Filter</span>
+    <span class="n">eligible</span> <span class="o">=</span> <span class="n">filter_cards</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">df_cards</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">eligible</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">customer</span><span class="p">[</span><span class="s2">&quot;alpha&quot;</span><span class="p">]</span>
+    <span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">eligible</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">prob_approve</span> <span class="o">=</span> <span class="n">probability_of_approval</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">card</span><span class="p">)</span>
+        <span class="n">prob_accept</span> <span class="o">=</span> <span class="n">probability_of_acceptance</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">card</span><span class="p">)</span>
+        <span class="n">expected_revenue</span> <span class="o">=</span> <span class="n">card</span><span class="p">[</span><span class="s2">&quot;Commission&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">prob_approve</span> <span class="o">*</span> <span class="n">prob_accept</span>
+        <span class="n">utility</span> <span class="o">=</span> <span class="n">user_utility_score</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">card</span><span class="p">)</span>
+        <span class="n">final_score</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">utility</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="n">expected_revenue</span>
+
+        <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s2">&quot;Bank&quot;</span><span class="p">:</span> <span class="n">card</span><span class="p">[</span><span class="s2">&quot;Bank&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;Card&quot;</span><span class="p">:</span> <span class="n">card</span><span class="p">[</span><span class="s2">&quot;Card&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;CreditScoreMin&quot;</span><span class="p">:</span> <span class="n">card</span><span class="p">[</span><span class="s2">&quot;CreditScoreMin&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;Commission&quot;</span><span class="p">:</span> <span class="n">card</span><span class="p">[</span><span class="s2">&quot;Commission&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;APR&quot;</span><span class="p">:</span> <span class="n">card</span><span class="p">[</span><span class="s2">&quot;APR&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;AnnualFee&quot;</span><span class="p">:</span> <span class="n">card</span><span class="p">[</span><span class="s2">&quot;AnnualFee&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;RewardType&quot;</span><span class="p">:</span> <span class="n">card</span><span class="p">[</span><span class="s2">&quot;RewardType&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;ProbApproval&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">prob_approve</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+            <span class="s2">&quot;ProbAcceptance&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">prob_accept</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+            <span class="s2">&quot;UserUtility&quot;</span><span class="p">:</span> <span class="n">utility</span><span class="p">,</span>
+            <span class="s2">&quot;ExpectedRevenue&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">expected_revenue</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="s2">&quot;FinalScore&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">final_score</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="p">})</span>
+
+    <span class="n">df_recs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
+    <span class="n">df_recs</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;FinalScore&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">df_recs</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df_recs</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">top_k</span><span class="p">)</span>
+
+<span class="c1"># -------------------------------------------------------</span>
+<span class="c1"># 5. EVALUATE THE SYSTEM FOR MULTIPLE ALPHAS</span>
+<span class="c1">#    - We&#39;ll compute:</span>
+<span class="c1">#      (a) total revenue across all customers</span>
+<span class="c1">#      (b) average top-1 user utility across all customers</span>
+<span class="c1"># -------------------------------------------------------</span>
+<span class="k">def</span> <span class="nf">evaluate_system_for_alphas</span><span class="p">(</span><span class="n">df_customers</span><span class="p">,</span> <span class="n">df_cards</span><span class="p">,</span> <span class="n">alpha_values</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    For each alpha in alpha_values:</span>
+<span class="sd">      - Temporarily set each customer&#39;s alpha to that alpha</span>
+<span class="sd">      - For each customer, get top recommended card (top-1)</span>
+<span class="sd">      - Sum expected revenue, average user utility</span>
+<span class="sd">    Return a DataFrame summarizing the results.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="n">alpha_values</span><span class="p">:</span>
+        <span class="n">total_revenue</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">total_utility</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">count_valid</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">cust</span> <span class="ow">in</span> <span class="n">df_customers</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="c1"># Make a copy of the customer&#39;s data but override alpha</span>
+            <span class="n">customer</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">cust</span><span class="p">)</span>
+            <span class="n">customer</span><span class="p">[</span><span class="s2">&quot;alpha&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">alpha</span>
+
+            <span class="c1"># Get top recommended card</span>
+            <span class="n">df_top</span> <span class="o">=</span> <span class="n">recommend_cards_for_customer</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">df_cards</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">df_top</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="c1"># We only have one row here</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="n">df_top</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">total_revenue</span> <span class="o">+=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;ExpectedRevenue&quot;</span><span class="p">]</span>
+                <span class="n">total_utility</span> <span class="o">+=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;UserUtility&quot;</span><span class="p">]</span>
+                <span class="n">count_valid</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">count_valid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">avg_utility</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">avg_utility</span> <span class="o">=</span> <span class="n">total_utility</span> <span class="o">/</span> <span class="n">count_valid</span>
+
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s2">&quot;Alpha&quot;</span><span class="p">:</span> <span class="n">alpha</span><span class="p">,</span>
+            <span class="s2">&quot;TotalExpectedRevenue&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">total_revenue</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="s2">&quot;AvgUserUtility_top1&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">avg_utility</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="p">})</span>
+
+    <span class="n">df_eval</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df_eval</span>
+
+<span class="c1"># -------------------------------------------------------</span>
+<span class="c1"># 6. RUN THE EVALUATION &amp; AGGREGATE RESULTS</span>
+<span class="c1"># -------------------------------------------------------</span>
+<span class="c1"># Choose a set of alpha values</span>
+<span class="n">alpha_vals</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+<span class="n">df_evaluation</span> <span class="o">=</span> <span class="n">evaluate_system_for_alphas</span><span class="p">(</span><span class="n">df_customers</span><span class="p">,</span> <span class="n">df_cards</span><span class="p">,</span> <span class="n">alpha_values</span><span class="o">=</span><span class="n">alpha_vals</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== System Evaluation for Different alpha Values ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_evaluation</span><span class="p">)</span>
+
+<span class="c1"># We&#39;ll do a simple plot: alpha vs. total revenue &amp; avg user utility</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df_evaluation</span><span class="p">[</span><span class="s2">&quot;Alpha&quot;</span><span class="p">],</span> <span class="n">df_evaluation</span><span class="p">[</span><span class="s2">&quot;TotalExpectedRevenue&quot;</span><span class="p">],</span> <span class="s1">&#39;g-o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Total Revenue&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df_evaluation</span><span class="p">[</span><span class="s2">&quot;Alpha&quot;</span><span class="p">],</span> <span class="n">df_evaluation</span><span class="p">[</span><span class="s2">&quot;AvgUserUtility_top1&quot;</span><span class="p">],</span> <span class="s1">&#39;b-o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Avg Utility&quot;</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Alpha (weight on User Utility)&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Total Expected Revenue&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Average User Utility (top-1)&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Trade-off: Utility vs. Revenue by Alpha&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># -------------------------------------------------------</span>
+<span class="c1"># 7. DEMONSTRATE A &#39;CUSTOMER JOURNEY&#39;</span>
+<span class="c1">#    - We&#39;ll pick one random customer and show the recommended cards list</span>
+<span class="c1"># -------------------------------------------------------</span>
+<span class="n">random_customer_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_customers</span><span class="p">))</span>
+<span class="n">customer_journey</span> <span class="o">=</span> <span class="n">df_customers</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">random_customer_index</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== Example Customer Journey ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Selected Customer ID: </span><span class="si">{</span><span class="n">customer_journey</span><span class="p">[</span><span class="s1">&#39;CustomerID&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Customer Attributes:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">customer_journey</span><span class="p">)</span>
+
+<span class="c1"># Now let&#39;s see the top-5 recommended cards for this customer</span>
+<span class="n">df_customer_recs</span> <span class="o">=</span> <span class="n">recommend_cards_for_customer</span><span class="p">(</span><span class="n">customer_journey</span><span class="p">,</span> <span class="n">df_cards</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">df_customer_recs</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No eligible cards for this customer.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Recommended Cards (Top-5):</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">df_customer_recs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== System Evaluation for Different alpha Values ===
+   Alpha  TotalExpectedRevenue  AvgUserUtility_top1
+0    0.0              81079.28                 9.88
+1    0.1              81078.76                 9.90
+2    0.3              81069.87                 9.94
+3    0.5              81000.01                10.05
+4    0.7              80782.55                10.20
+5    0.9              77609.98                10.98
+6    1.0              63217.95                11.59
+</pre></div>
+</div>
+<img alt="_images/58025281d7f767fdfadb5d1c29de12ff21bab6b12bd6ff64879cecdac5cc7be4.png" src="_images/58025281d7f767fdfadb5d1c29de12ff21bab6b12bd6ff64879cecdac5cc7be4.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== Example Customer Journey ===
+Selected Customer ID: 524
+Customer Attributes:
+{&#39;CustomerID&#39;: 524, &#39;CreditScore&#39;: 707, &#39;Income&#39;: 38210, &#39;RewardPreference&#39;: &#39;Cashback&#39;, &#39;MaxAnnualFee&#39;: 99, &#39;BrandPreference&#39;: &#39;Bank E&#39;, &#39;alpha&#39;: 0.61}
+
+Recommended Cards (Top-5):
+      Bank             Card  CreditScoreMin  Commission    APR  AnnualFee  \
+0  Bank A  Bank A Card #27             602         152  12.47         49   
+1  Bank E  Bank E Card #28             650         108  14.85          0   
+2  Bank D  Bank D Card #12             639         131  18.10         29   
+3  Bank C  Bank C Card #21             662         145  19.55         95   
+4  Bank D   Bank D Card #4             620         107  17.87         95   
+
+  RewardType  ProbApproval  ProbAcceptance  UserUtility  ExpectedRevenue  \
+0   Cashback         0.950             0.7           11           101.08   
+1   Cashback         0.785             0.8           16            67.82   
+2   Cashback         0.840             0.7            9            77.03   
+3   Cashback         0.725             0.7            7            73.59   
+4   Cashback         0.935             0.7            7            70.03   
+
+   FinalScore  
+0       46.13  
+1       36.21  
+2       35.53  
+3       32.97  
+4       31.58  
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="75-conversion-model.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Conversion Model in Banks</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understand-the-two-sided-nature-of-the-market">1. Understand the Two-Sided Nature of the Market</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overall-pipeline-flow">2. Overall Pipeline / Flow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hard-vs-soft-criteria-handling">3. Hard vs. Soft Criteria Handling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-model-considerations">4. Data &amp; Model Considerations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-data-you-might-need">A. Data You Might Need</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-models-to-consider">B. Models to Consider</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-objective-optimization">5. Multi-Objective Optimization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ranking-mechanism-and-presentation">6. Ranking Mechanism and Presentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-steps-to-start-implementation">7. Practical Steps to Start Implementation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-nuances">8. Additional Nuances</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Mike Nguyen
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

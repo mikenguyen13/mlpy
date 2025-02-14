@@ -27,3 +27,6 @@ parts:
       - file: 71-sim_dat_bandits.ipynb
       - file: 72-data-anoy-geo.ipynb
       - file: 73-sample-splitting-time-series.ipynb
+      - file: 74-leads-allocation.ipynb
+      - file: 75-conversion-model.ipynb
+      - file: 76-two-sided-matching.ipynb

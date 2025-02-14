@@ -243,6 +243,9 @@
 <li class="toctree-l1"><a class="reference internal" href="71-sim_dat_bandits.html">Multi-Armed Bandits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="72-data-anoy-geo.html">Data Anonymization Techniques for Geospatial Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="73-sample-splitting-time-series.html">Split Samples in Time Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="74-leads-allocation.html">Maximizing Profits with a Simple Integer Linear Program in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="75-conversion-model.html">Conversion Model in Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="76-two-sided-matching.html">Two-Sided Matching &amp; Ranking for Credit Cards</a></li>
 </ul>
 
     </div>
@@ -455,7 +458,6 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of Contents</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-linear-regression">Basic Linear Regression <a id="Basic-Linear-Regression"></a></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations-of-basic-linear-regression">Limitations of Basic Linear Regression</a></li>
 </ul>
@@ -627,8 +629,6 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation-techniques">Cross-Validation Techniques</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-and-summary">Conclusion and Summary <a id="Conclusion"></a></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References <a id="References"></a></a></li>
 </ul>
             </nav>
         </div>
@@ -643,32 +643,6 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="advanced-linear-regression-techniques">
 <h1>Advanced Linear Regression Techniques<a class="headerlink" href="#advanced-linear-regression-techniques" title="Link to this heading">#</a></h1>
 <p>Linear regression serves as the foundation for many predictive modeling techniques in supervised machine learning. While the basic linear regression model is powerful, it often suffers from limitations such as overfitting, especially when dealing with high-dimensional data or multicollinearity among features. To address these challenges, various regularization methods have been developed, expanding the family of linear regression into more robust and flexible models. This chapter explores these advances.</p>
-<section id="table-of-contents">
-<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading">#</a></h2>
-<ol class="arabic simple">
-<li><p><a class="reference internal" href="#Introduction"><span class="xref myst">Introduction to Regularized Linear Regression</span></a></p></li>
-<li><p><a class="reference internal" href="#Ridge-Regression"><span class="xref myst">Ridge Regression</span></a></p></li>
-<li><p><a class="reference internal" href="#Lasso-Regression"><span class="xref myst">Lasso Regression</span></a></p></li>
-<li><p><a class="reference internal" href="#Elastic-Net"><span class="xref myst">Elastic Net</span></a></p></li>
-<li><p><a class="reference internal" href="#Additional-Methods"><span class="xref myst">Additional Regularized Linear Regression Methods</span></a></p>
-<ul class="simple">
-<li><p><a class="reference internal" href="#Least-Angle-Regression"><span class="xref myst">Least Angle Regression (LARS)</span></a></p></li>
-<li><p><a class="reference internal" href="#Adaptive-Lasso"><span class="xref myst">Adaptive Lasso</span></a></p></li>
-<li><p><a class="reference internal" href="#Fused-Lasso"><span class="xref myst">Fused Lasso</span></a></p></li>
-<li><p><a class="reference internal" href="#Group-Lasso"><span class="xref myst">Group Lasso</span></a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#Comparison"><span class="xref myst">Comparison of Regularized Regression Techniques</span></a></p></li>
-<li><p><a class="reference internal" href="#Theoretical-Insights"><span class="xref myst">Theoretical Insights into Regularization</span></a></p></li>
-<li><p><a class="reference internal" href="#Practical-Implementations"><span class="xref myst">Practical Implementations with Python</span></a></p></li>
-<li><p><a class="reference internal" href="#Use-Cases"><span class="xref myst">Use Cases in Real-World Scenarios</span></a></p></li>
-<li><p><a class="reference internal" href="#Challenges"><span class="xref myst">Challenges in Regularization</span></a></p></li>
-<li><p><a class="reference internal" href="#Tuning-Parameters"><span class="xref myst">Tuning Regularization Parameters</span></a></p></li>
-<li><p><a class="reference internal" href="#Conclusion"><span class="xref myst">Conclusion and Summary</span></a></p></li>
-<li><p><a class="reference internal" href="#References"><span class="xref myst">References</span></a></p></li>
-</ol>
-</section>
-<hr class="docutils" />
 <section id="basic-linear-regression">
 <h2>Basic Linear Regression <a id="Basic-Linear-Regression"></a><a class="headerlink" href="#basic-linear-regression" title="Link to this heading">#</a></h2>
 <p>Linear regression is a fundamental technique in statistics and machine learning for modeling the relationship between a dependent variable (<span class="math notranslate nohighlight">\(y\)</span>) and one or more independent variables (<span class="math notranslate nohighlight">\(X\)</span>). The goal is to fit a linear equation of the form:</p>
@@ -2098,44 +2072,8 @@ P_{\lambda}(\beta_j) =
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean cross-validation score (MSE) for Ridge Regression: </span><span class="si">{</span><span class="n">mean_cv_score</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="conclusion-and-summary">
-<h2>Conclusion and Summary <a id="Conclusion"></a><a class="headerlink" href="#conclusion-and-summary" title="Link to this heading">#</a></h2>
-<p>In this overview of advanced linear regression techniques, we have explored various regularized regression models, including Ridge Regression, Lasso Regression, Elastic Net, and their advanced variants. Each of these models has unique strengths and weaknesses, making them suitable for specific types of problems.</p>
-</section>
 <hr class="docutils" />
-<section id="references">
-<h2>References <a id="References"></a><a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
-<div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@article</span><span class="p">{</span><span class="nl">tibshirani1996lasso</span><span class="p">,</span>
-<span class="w">  </span><span class="na">title</span><span class="p">=</span><span class="s">{Regression Shrinkage and Selection via the Lasso}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">author</span><span class="p">=</span><span class="s">{Tibshirani, R.}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">journal</span><span class="p">=</span><span class="s">{Journal of the Royal Statistical Society}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">year</span><span class="p">=</span><span class="s">{1996}</span>
-<span class="p">}</span>
-
-<span class="nc">@article</span><span class="p">{</span><span class="nl">hoerl1970ridge</span><span class="p">,</span>
-<span class="w">  </span><span class="na">title</span><span class="p">=</span><span class="s">{Ridge Regression: Biased Estimation for Nonorthogonal Problems}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">author</span><span class="p">=</span><span class="s">{Hoerl, A. E., &amp; Kennard, R. W.}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">journal</span><span class="p">=</span><span class="s">{Technometrics}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">year</span><span class="p">=</span><span class="s">{1970}</span>
-<span class="p">}</span>
-
-<span class="nc">@article</span><span class="p">{</span><span class="nl">friedman2001gradient</span><span class="p">,</span>
-<span class="w">  </span><span class="na">title</span><span class="p">=</span><span class="s">{Greedy Function Approximation: A Gradient Boosting Machine}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">author</span><span class="p">=</span><span class="s">{Friedman, J. H.}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">journal</span><span class="p">=</span><span class="s">{The Annals of Statistics}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">year</span><span class="p">=</span><span class="s">{2001}</span>
-<span class="p">}</span>
-
-<span class="nc">@article</span><span class="p">{</span><span class="nl">breiman1996bagging</span><span class="p">,</span>
-<span class="w">  </span><span class="na">title</span><span class="p">=</span><span class="s">{Bagging Predictors}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">author</span><span class="p">=</span><span class="s">{Breiman, L.}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">journal</span><span class="p">=</span><span class="s">{Machine Learning}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">year</span><span class="p">=</span><span class="s">{1996}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
+</section>
 </section>
 </section>
 
@@ -2203,7 +2141,6 @@ P_{\lambda}(\beta_j) =
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of Contents</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-linear-regression">Basic Linear Regression <a id="Basic-Linear-Regression"></a></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations-of-basic-linear-regression">Limitations of Basic Linear Regression</a></li>
 </ul>
@@ -2375,8 +2312,6 @@ P_{\lambda}(\beta_j) =
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation-techniques">Cross-Validation Techniques</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-and-summary">Conclusion and Summary <a id="Conclusion"></a></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References <a id="References"></a></a></li>
 </ul>
   </nav></div>
 
