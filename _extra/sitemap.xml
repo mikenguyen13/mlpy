@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://mikenguyen13.github.io/mlpy/</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/intro.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/05-supervised-ml.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/06-advanced_linear_regression.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/07-regularized.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/10-optimization.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/15-matrix_factorization.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/40-data-masking.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/50-credit-score.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/51-min_risk.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/51-min_risk_amount.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/52-credit-approval.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/53-credit-adjustment.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/54-firm-valuation.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/55-financial_fraud.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/60-text_sim.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/61-text_sim_viet.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/70-approximate-nearest-neighbors.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/71-sim_dat_bandits.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/72-data-anoy-geo.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/73-sample-splitting-time-series.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/74-leads-allocation.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/75-conversion-model.html</loc><lastmod>2026-07-06</lastmod></url>
+  <url><loc>https://mikenguyen13.github.io/mlpy/76-two-sided-matching.html</loc><lastmod>2026-07-06</lastmod></url>
+</urlset>

@@ -72,8 +72,13 @@ launch_buttons:
 
 #######################################################################################
 # Advanced and power-user settings
-# sphinx:
+sphinx:
+  config:
+    # Copy sitemap.xml + robots.txt verbatim into the built site root so Google
+    # can discover all pages (jupyter-book has no built-in sitemap).
+    html_extra_path:
+      - _extra
+    html_baseurl: "https://mikenguyen13.github.io/mlpy/"
 #   extra_extensions:   # A list of extra extensions to load by Sphinx (added to those already used by JB).
 #   local_extensions:   # A list of local extensions to load by sphinx specified by "name: path" items
 #   recursive_update: false # A boolean indicating whether to overwrite the Sphinx config (true) or recursively update (false)
-#   config:   # key-value pairs to directly over-ride the Sphinx configuration
