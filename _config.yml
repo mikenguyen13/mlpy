@@ -79,6 +79,17 @@ sphinx:
     html_extra_path:
       - _extra
     html_baseurl: "https://mikenguyen13.github.io/mlpy/"
+    # sphinxext-opengraph: auto-generates <meta name="description"> plus
+    # open-graph / twitter-card tags on every page from its first paragraph.
+    # Without it the 41 content pages ship no description at all, so Google
+    # has to invent snippets and social shares render bare.
+    ogp_site_url: "https://mikenguyen13.github.io/mlpy/"
+    ogp_site_name: "Machine Learning in Python"
+    ogp_image: "https://mikenguyen13.github.io/mlpy/_static/logo.png"
+    ogp_description_length: 200
+    ogp_enable_meta_description: true
+  extra_extensions:
+    - sphinxext.opengraph
 #   extra_extensions:   # A list of extra extensions to load by Sphinx (added to those already used by JB).
 #   local_extensions:   # A list of local extensions to load by sphinx specified by "name: path" items
 #   recursive_update: false # A boolean indicating whether to overwrite the Sphinx config (true) or recursively update (false)
